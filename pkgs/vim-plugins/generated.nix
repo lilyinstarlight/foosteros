@@ -26,5 +26,16 @@ let
     };
   };
 
+  vim-sonicpi = buildVimPluginFrom2Nix {
+    pname = "vim-sonicpi";
+    version = "2020-03-26";
+    src = fetchFromGitHub {
+      owner = "fkmclane";
+      repo = "vim-sonicpi";
+      rev = "6365b2587ac65f8a4a82febd0c2cfa00638cc6d2";
+      sha256 = "02w8zb1bzmwwy1zfl038dbrjgk331amrh5d1ljwdhqm4hssg2d5w";
+    };
+  };
+
 });
 in lib.fix' (lib.extends overrides packages)
