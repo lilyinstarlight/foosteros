@@ -33,9 +33,9 @@
 
   environment.etc = {
     issue.source = lib.mkForce (pkgs.writeText "issue" ''
-  
+
       Welcome to [1;35mFoosterOS/2[0m [1;34mWarp[0m - \l
-  
+
     '');
   };
 
@@ -47,7 +47,8 @@
   };
 
   environment.systemPackages = with pkgs; [
-    file htop tmux fooster.neovim git
+    file htop tmux fooster.neovim
+    git gitAndTools.delta silver-searcher
   ];
 
   programs.fish.enable = true;

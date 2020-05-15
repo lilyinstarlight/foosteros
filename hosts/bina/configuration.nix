@@ -8,7 +8,7 @@
 
   networking.hostName = "bina";
 
-  # networking.wireless.enable = true; 
+  # networking.wireless.enable = true;
   networking.interfaces.ens33.useDHCP = true;
 
   environment.systemPackages = with pkgs; [
