@@ -100,37 +100,37 @@ pkgs.neovim.override {
 
     packages.fooster = with pkgs; {
       start = [
-        vimPlugins.vim-nix
         vimPlugins.lightline-vim
+        vimPlugins.vim-abolish
+        vimPlugins.vim-better-whitespace
+        vimPlugins.vim-commentary
         vimPlugins.vim-easy-align
+        vimPlugins.vim-eunuch
+        vimPlugins.vim-expand-region
+        vimPlugins.vim-fugitive
+        vimPlugins.vim-multiple-cursors
+        vimPlugins.vim-nix
         vimPlugins.vim-peekaboo
         vimPlugins.vim-plug
-        vimPlugins.vim-slash
-        vimPlugins.jellybeans-vim
-        vimPlugins.vim-better-whitespace
         vimPlugins.vim-qml
-        vimPlugins.vim-expand-region
-        vimPlugins.vim-multiple-cursors
-        vimPlugins.vim-abolish
-        vimPlugins.vim-commentary
-        vimPlugins.vim-eunuch
-        vimPlugins.vim-fugitive
         vimPlugins.vim-repeat
+        vimPlugins.vim-slash
         vimPlugins.vim-sleuth
         vimPlugins.vim-speeddating
         vimPlugins.vim-surround
         vimPlugins.vim-visual-increment
         vimPlugins.vimwiki
 
-        fooster.vimPlugins.vim-fish
         fooster.vimPlugins.hexmode
+        fooster.vimPlugins.jellybeans-vim
+        fooster.vimPlugins.vim-fish
+        fooster.vimPlugins.vim-interestingwords
+        fooster.vimPlugins.vim-lilypond-integrator
+        fooster.vimPlugins.vim-magnum
+        fooster.vimPlugins.vim-radical
         fooster.vimPlugins.vim-resolve
         fooster.vimPlugins.vim-sonicpi
         fooster.vimPlugins.vim-spl
-        fooster.vimPlugins.vim-lilypond-integrator
-        fooster.vimPlugins.vim-interestingwords
-        fooster.vimPlugins.vim-magnum
-        fooster.vimPlugins.vim-radical
         fooster.vimPlugins.vim-zeek
       ];
     };
