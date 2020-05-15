@@ -37,5 +37,16 @@ let
     };
   };
 
+  vim-spl = buildVimPluginFrom2Nix {
+    pname = "vim-spl";
+    version = "2018-10-19";
+    src = fetchFromGitHub {
+      owner = "fkmclane";
+      repo = "vim-spl";
+      rev = "f89da952dc4c08b0d830370d40cd53886d402547";
+      sha256 = "14na2k3f22sg43b0p83q1wiilma5c3b3jz790m35zxgnh1w70fnh";
+    };
+  };
+
 });
 in lib.fix' (lib.extends overrides packages)
