@@ -15,6 +15,17 @@ let
     };
   };
 
+  vim-interestingwords = buildVimPluginFrom2Nix {
+    pname = "vim-interestingwords";
+    version = "2019-11-02";
+    src = fetchFromGitHub {
+      owner = "lfv89";
+      repo = "vim-interestingwords";
+      rev = "2128a825184ef931eeccb193c8009c77c9681c3a";
+      sha256 = "1iai2z4mma9kb3hrkfaf22d1ay15ryyvp065is4psmwzm5176jdf";
+    };
+  };
+
   vim-lilypond-integrator = buildVimPluginFrom2Nix {
     pname = "vim-lilypond-integrator";
     version = "2016-03-26";
