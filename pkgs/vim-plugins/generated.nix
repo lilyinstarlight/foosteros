@@ -103,5 +103,16 @@ let
     };
   };
 
+  vim-zeek = buildVimPluginFrom2Nix {
+    pname = "vim-zeek";
+    version = "2019-08-26";
+    src = fetchFromGitHub {
+      owner = "zeek";
+      repo = "vim-zeek";
+      rev = "7e45b6cd94024330da2d70325ff7a9024aa4a1b3";
+      sha256 = "00k08pys7k2rmzs44bki8hzp6vfwa8qlbf2qqzrk5swlqnk8djnz";
+    };
+  };
+
 });
 in lib.fix' (lib.extends overrides packages)
