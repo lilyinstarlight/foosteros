@@ -37,6 +37,17 @@ let
     };
   };
 
+  vim-radical = buildVimPluginFrom2Nix {
+    pname = "vim-radical";
+    version = "2019-11-23";
+    src = fetchFromGitHub {
+      owner = "glts";
+      repo = "vim-radical";
+      rev = "15aaf234ed09978d0cd7ae02e9ecd6cf01f0882e";
+      sha256 = "1aj8kqz3wssqxkmg3sf4zj39fqdbg6ywknlfk96y7za3968g0sfr";
+    };
+  };
+
   vim-resolve = buildVimPluginFrom2Nix {
     pname = "vim-resolve";
     version = "2019-01-19";
