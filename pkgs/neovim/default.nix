@@ -98,9 +98,40 @@ pkgs.neovim.override {
       let g:vimwiki_list=[{'path': '$HOME/docs'}]
     '';
 
-    packages.fooster = with pkgs.vimPlugins; {
+    packages.fooster = with pkgs; {
       start = [
-        vim-nix
+        vimPlugins.vim-nix
+        vimPlugins.lightline-vim
+        vimPlugins.vim-easy-align
+        vimPlugins.vim-peekaboo
+        vimPlugins.vim-plug
+        vimPlugins.vim-slash
+        vimPlugins.jellybeans-vim
+        vimPlugins.vim-better-whitespace
+        vimPlugins.vim-qml
+        vimPlugins.vim-expand-region
+        vimPlugins.vim-multiple-cursors
+        vimPlugins.vim-abolish
+        vimPlugins.vim-commentary
+        vimPlugins.vim-eunuch
+        vimPlugins.vim-fugitive
+        vimPlugins.vim-repeat
+        vimPlugins.vim-sleuth
+        vimPlugins.vim-speeddating
+        vimPlugins.vim-surround
+        vimPlugins.vim-visual-increment
+        vimPlugins.vimwiki
+
+        fooster.vimPlugins.vim-fish
+        fooster.vimPlugins.hexmode
+        fooster.vimPlugins.vim-resolve
+        fooster.vimPlugins.vim-sonicpi
+        fooster.vimPlugins.vim-spl
+        fooster.vimPlugins.vim-lilypond-integrator
+        fooster.vimPlugins.vim-interestingwords
+        fooster.vimPlugins.vim-magnum
+        fooster.vimPlugins.vim-radical
+        fooster.vimPlugins.vim-zeek
       ];
     };
   };
