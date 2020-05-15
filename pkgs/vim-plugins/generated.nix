@@ -26,6 +26,17 @@ let
     };
   };
 
+  vim-magnum = buildVimPluginFrom2Nix {
+    pname = "vim-magnum";
+    version = "2019-11-12";
+    src = fetchFromGitHub {
+      owner = "glts";
+      repo = "vim-magnum";
+      rev = "7a30761b935d72bada5bbe90162a6afdb77c858d";
+      sha256 = "1fwjmpj3m4p1izd103sc3647xxcq2xp36islablf1qvxl13m3dkl";
+    };
+  };
+
   vim-resolve = buildVimPluginFrom2Nix {
     pname = "vim-resolve";
     version = "2019-01-19";
