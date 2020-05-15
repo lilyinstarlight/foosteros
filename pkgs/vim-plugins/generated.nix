@@ -15,5 +15,16 @@ let
     };
   };
 
+  vim-resolve = buildVimPluginFrom2Nix {
+    pname = "vim-resolve";
+    version = "2019-01-19";
+    src = fetchFromGitHub {
+      owner = "fkmclane";
+      repo = "vim-resolve";
+      rev = "a8eaa0156fd6a8f3b0806be51397005f2df693b1";
+      sha256 = "11nddnjz751kdj18h5gp4qsvc4w8zfqfip1rw8lcci837254j7dg";
+    };
+  };
+
 });
 in lib.fix' (lib.extends overrides packages)
