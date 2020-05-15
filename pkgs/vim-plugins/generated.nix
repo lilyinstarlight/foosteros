@@ -15,6 +15,17 @@ let
     };
   };
 
+  vim-fish = buildVimPluginFrom2Nix {
+    pname = "vim-fish";
+    version = "2020-04-13";
+    src = fetchFromGitHub {
+      owner = "NovaDev94";
+      repo = "vim-fish";
+      rev = "9e48a9dbb54bf1a8d5b8c00220ec77f802eb113d";
+      sha256 = "0zp46cry13728g5lzms3akz6c1jggyx3a1wa9xmdvfykg2lb0ww9";
+    };
+  };
+
   vim-interestingwords = buildVimPluginFrom2Nix {
     pname = "vim-interestingwords";
     version = "2019-11-02";
