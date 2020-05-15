@@ -15,6 +15,17 @@ let
     };
   };
 
+  vim-lilypond-integrator = buildVimPluginFrom2Nix {
+    pname = "vim-lilypond-integrator";
+    version = "2016-03-26";
+    src = fetchFromGitHub {
+      owner = "gisraptor";
+      repo = "vim-lilypond-integrator";
+      rev = "7fc48f2e19092a8c8f8e400e2a9afe8c27c90d17";
+      sha256 = "0znj10wrz0ggli2l25fvj05qa7r32hbghx24qp8msbdc4vyl3vjx";
+    };
+  };
+
   vim-resolve = buildVimPluginFrom2Nix {
     pname = "vim-resolve";
     version = "2019-01-19";
