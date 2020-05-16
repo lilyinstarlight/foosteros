@@ -18,7 +18,7 @@
   programs.sway = {
     enable = true;
     extraPackages = with pkgs; [
-      swaylock swayidle xwayland alacritty
+      swaylock swayidle wofi xwayland alacritty
     ];
   };
 
