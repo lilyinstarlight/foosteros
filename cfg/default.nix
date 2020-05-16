@@ -37,7 +37,21 @@
       Welcome to [1;35mFoosterOS/2[0m [1;34mWarp[0m - \l
 
     '');
-  };
+
+    os-release.text = lib.mkForce ''
+        NAME=FoosterOS
+        ID=nixos
+        VERSION="Warp"
+        VERSION_CODENAME=${lib.toLower config.system.nixos.codeName}
+        VERSION_ID="${config.system.nixos.version}"
+        PRETTY_NAME="FoosterOS/2 Warp"
+        LOGO="nix-snowflake"
+        HOME_URL="https://fooster.io/"
+        DOCUMENTATION_URL="https://nixos.org/learn.html"
+        SUPPORT_URL="https://nixos.org/community.html"
+        BUG_REPORT_URL="https://github.com/NixOS/nixpkgs/issues"
+      '';
+    };
 
   nixpkgs = {
     config.allowUnfree = true;
