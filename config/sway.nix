@@ -291,7 +291,7 @@
     extraPackages = with pkgs; [
       swaylock swayidle xwayland
       wofi i3status alacritty
-      arc-theme bibata-cursors papirus-icon-theme nerdfonts
+      arc-theme bibata-cursors papirus-icon-theme monofur-nerdfont
       slurp grim wl-clipboard
     ];
   };
