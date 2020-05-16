@@ -9,7 +9,11 @@
 
   boot.loader = {
     efi.canTouchEfiVariables = true;
-    systemd-boot.enable = true;
+
+    systemd-boot = {
+      enable = true;
+      bootName = "FoosterOS/2 Warp";
+    };
   };
 
   networking.domain = "fooster.network";

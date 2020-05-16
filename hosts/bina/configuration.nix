@@ -3,7 +3,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../cfg/default.nix
+    ../../config/default.nix
   ];
 
   networking.hostName = "bina";
