@@ -211,6 +211,115 @@
     include /etc/sway/config.d/*
   '';
 
+  environment.etc."i3status.conf".text = ''
+    general {
+        colors = true
+
+        color_good = "#d7d7d7"
+        color_degraded = "#ea2828"
+        color_bad = "#ea2828"
+
+        interval = 1
+    }
+
+    order += "load"
+    order += "cpu_temperature 0"
+    order += "volume master"
+    order += "wireless wlp3s0"
+    order += "battery 0"
+    order += "disk /"
+    order += "tztime local"
+
+    load {
+        format = "cpu: %1min"
+    }
+
+    cpu_temperature 0 {
+        format = "temp: %degrees °C"
+    }
+
+    volume master {
+        format = "vol: %volume"
+        format_muted = "vol: mute"
+    }
+
+    wireless wlp3s0 {
+        format_up = "wlan: %essid"
+        format_down = "wlan: off"
+    }
+
+    battery 0 {
+        integer_battery_capacity = true
+        low_threshold = 12
+
+        status_chr = "^"
+        status_bat = ""
+        status_unk = "?"
+        status_full = ""
+
+        format = "batt: %status%percentage"
+        format_down = "batt: none"
+    }
+
+    disk / {
+        format = "disk: %avail"
+    }
+
+    tztime local {
+        format = "%H:%M"
+    }
+  '';
+
+  environment.etc."i3status.tmux.conf".text = ''
+    general {
+        colors = true
+
+        color_good = "#d7d7d7"
+        color_degraded = "#ea2828"
+        color_bad = "#ea2828"
+
+        interval = 1
+
+        output_format = "none"
+        separator = " • "
+    }
+
+    order += "load"
+    order += "cpu_temperature 0"
+    order += "battery 0"
+    order += "disk /"
+    order += "tztime local"
+
+    load {
+        format = "cpu: %1min"
+    }
+
+    cpu_temperature 0 {
+        format = "temp: %degrees °C"
+    }
+
+    battery 0 {
+        integer_battery_capacity = true
+        low_threshold = 12
+
+        status_chr = "^"
+        status_bat = ""
+        status_unk = "?"
+        status_full = ""
+
+        format = "batt: %status%percentage"
+        format_down = "batt: none"
+    }
+
+    disk / {
+        format = "disk: %avail"
+    }
+
+    tztime local {
+        format = "%H:%M"
+    }
+  '';
+
   programs.sway = {
     enable = true;
     extraPackages = with pkgs; [
