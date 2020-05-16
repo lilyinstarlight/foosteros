@@ -64,6 +64,7 @@
 
   environment.systemPackages = with pkgs; [
     file htop tmux fooster.neovim python3
+    cachix
     git gitAndTools.delta silver-searcher
   ];
 
