@@ -44,17 +44,16 @@
     '');
 
     os-release.text = lib.mkForce ''
-        NAME=FoosterOS
+        NAME=NixOS
         ID=nixos
-        VERSION="Warp"
+        VERSION="${config.system.nixos.version} (${config.system.nixos.codeName})"
         VERSION_CODENAME=${lib.toLower config.system.nixos.codeName}
         VERSION_ID="${config.system.nixos.version}"
         PRETTY_NAME="FoosterOS/2 Warp"
         LOGO="nix-snowflake"
         HOME_URL="https://fooster.io/"
         DOCUMENTATION_URL="https://nixos.org/learn.html"
-        SUPPORT_URL="https://nixos.org/community.html"
-        BUG_REPORT_URL="https://github.com/NixOS/nixpkgs/issues"
+        BUG_REPORT_URL="https://github.com/fkmclane/foosteros/issues"
       '';
     };
 
