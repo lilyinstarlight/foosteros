@@ -6,7 +6,7 @@
     ../../config/default.nix
   ];
 
-  networking.hostName = "bina";
+  networking.hostName = "bina.fooster.network";
 
   # networking.wireless.enable = true;
   networking.interfaces.ens33.useDHCP = true;
@@ -32,7 +32,7 @@
   services.nullmailer = {
     enable = true;
     config = {
-      me = config.networking.hostName + "." + config.networking.domain;
+      me = config.networking.hostName;
       defaultdomain = "fooster.network";
       allmailfrom = "lily@fooster.network";
       adminaddr = "logs@fooster.network";

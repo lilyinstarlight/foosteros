@@ -16,8 +16,6 @@
     };
   };
 
-  networking.domain = "fooster.network";
-
   networking.useDHCP = false;
   networking.useNetworkd = true;
 
