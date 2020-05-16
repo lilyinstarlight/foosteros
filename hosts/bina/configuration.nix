@@ -19,7 +19,7 @@
   environment.etc."sway/config.d/bina".text = ''
     ### ouputs
     #output eDP-1 resolution 2880x1800 position 0 0 scale 2
-    output Virtual-1 resolution 2880x1800 position 0 0 scale 2
+    output Virtual-1 resolution 2560x1600 position 0 0 scale 2
 
     ### inputs
     #input "1739:1751:Apple_SPI_Touchpad" {

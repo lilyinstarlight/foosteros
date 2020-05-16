@@ -15,14 +15,14 @@
     set $browser qutebrowser
 
     ### global settings
-    font Monofur 24
+    font Monofur 12
     focus_follows_mouse yes
     mouse_warping output
 
     ### desktop settings
-    default_border normal 4
-    default_floating_border normal 4
-    gaps inner 24
+    default_border normal 2
+    default_floating_border normal 2
+    gaps inner 12
 
     ### color settings
     set $lock $lock -c 000000 --bshlcolor 222222 --insidecolor 121212 --insidevercolor 222222 --insidewrongcolor 121212 --keyhlcolor aa4444 --linecolor 121212 --ringcolor 121212 --ringvercolor 222222 --ringwrongcolor ff0000 --separatorcolor 121212 --textcolor aa4444
@@ -185,7 +185,7 @@
     bar {
         position top
 
-        font Monofur 24
+        font Monofur 12
         colors {
             background #121212
             statusline #d7d7d7
