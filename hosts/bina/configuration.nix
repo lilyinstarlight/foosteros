@@ -43,4 +43,6 @@
   # services.tlp.enable = true;
 
   virtualisation.vmware.guest.enable = true;
+
+  system.stateVersion = "20.09";
 }

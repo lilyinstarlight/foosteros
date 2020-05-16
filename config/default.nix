@@ -89,6 +89,4 @@
     extraGroups = [ "wheel" ];
     shell = pkgs.fish;
   };
-
-  system.stateVersion = "20.03";
 }

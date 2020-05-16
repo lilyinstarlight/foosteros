@@ -100,6 +100,7 @@ pkgs.neovim.override {
 
     packages.fooster = with pkgs; {
       start = [
+        vimPlugins.jellybeans-vim
         vimPlugins.lightline-vim
         vimPlugins.vim-abolish
         vimPlugins.vim-better-whitespace
@@ -122,7 +123,6 @@ pkgs.neovim.override {
         vimPlugins.vimwiki
 
         fooster.vimPlugins.hexmode
-        fooster.vimPlugins.jellybeans-vim
         fooster.vimPlugins.vim-fish
         fooster.vimPlugins.vim-interestingwords
         fooster.vimPlugins.vim-lilypond-integrator
