@@ -40,5 +40,7 @@
     # remotesFile = "";
   };
 
+  # services.tlp.enable = true;
+
   virtualisation.vmware.guest.enable = true;
 }

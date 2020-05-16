@@ -2,14 +2,15 @@
 
 {
   imports = [
+    ../modules/systemd-boot/systemd-boot.nix
     # ./nvim.nix
     # ./sway.nix
   ];
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  system.nixos.label = "FoosterOS";
+  boot.loader = {
+    efi.canTouchEfiVariables = true;
+    systemd-boot.enable = true;
+  };
 
   networking.domain = "fooster.network";
 
@@ -61,7 +62,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    file htop tmux fooster.neovim
+    file htop tmux fooster.neovim python3
     git gitAndTools.delta silver-searcher
   ];
 
