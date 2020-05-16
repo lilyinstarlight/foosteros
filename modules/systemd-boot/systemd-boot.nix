@@ -60,15 +60,25 @@ in
       '';
     };
 
+    bootName = mkOption {
+      default = "NixOS";
+
+      type = types.str;
+
+      description = ''
+        Name to put in boot entry titles.
+      '';
+    };
+
     configurationLimit = mkOption {
       default = null;
       example = 120;
       type = types.nullOr types.int;
       description = ''
-        Maximum number of latest generations in the boot menu. 
+        Maximum number of latest generations in the boot menu.
         Useful to prevent boot partition running out of disk space.
 
-        <literal>null</literal> means no limit i.e. all generations 
+        <literal>null</literal> means no limit i.e. all generations
         that were not garbage collected yet.
       '';
     };
@@ -140,7 +150,7 @@ in
         install = importlib.util.module_from_spec(install_spec)
         install_spec.loader.exec_module(install)
 
-        install.BOOT_ENTRY = """title FoosterOS/2 Warp{profile}
+        install.BOOT_ENTRY = """title ${cfg.bootName}{profile}
         version Generation {generation} {description}
         linux {kernel}
         initrd {initrd}
