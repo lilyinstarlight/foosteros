@@ -4,23 +4,13 @@
   imports = [
     ./hardware-configuration.nix
     ../../config/default.nix
+    ../../config/sway.nix
   ];
 
   networking.hostName = "bina.fooster.network";
 
   # networking.wireless.enable = true;
   networking.interfaces.ens33.useDHCP = true;
-
-  environment.systemPackages = with pkgs; [
-    qutebrowser firefox google-chrome
-  ];
-
-  programs.sway = {
-    enable = true;
-    extraPackages = with pkgs; [
-      swaylock swayidle wofi xwayland alacritty
-    ];
-  };
 
   # services.printing.enable = true;
 

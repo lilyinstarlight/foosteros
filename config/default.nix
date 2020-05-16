@@ -3,8 +3,6 @@
 {
   imports = [
     ../modules/systemd-boot/systemd-boot.nix
-    # ./nvim.nix
-    # ./sway.nix
   ];
 
   boot.loader = {
