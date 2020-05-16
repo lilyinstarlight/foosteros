@@ -1,11 +1,11 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
     qutebrowser firefox google-chrome
   ];
 
-  environment.etc."sway/config".text = ''
+  environment.etc."sway/config".text = lib.mkDefault ''
     ### variables
     set $mod mod4
     set $term alacritty
@@ -211,7 +211,7 @@
     include /etc/sway/config.d/*
   '';
 
-  environment.etc."i3status.conf".text = ''
+  environment.etc."xdg/i3status/config".text = lib.mkDefault ''
     general {
         colors = true
 
@@ -225,8 +225,6 @@
     order += "load"
     order += "cpu_temperature 0"
     order += "volume master"
-    order += "wireless wlp3s0"
-    order += "battery 0"
     order += "disk /"
     order += "tztime local"
 
@@ -243,24 +241,6 @@
         format_muted = "vol: mute"
     }
 
-    wireless wlp3s0 {
-        format_up = "wlan: %essid"
-        format_down = "wlan: off"
-    }
-
-    battery 0 {
-        integer_battery_capacity = true
-        low_threshold = 12
-
-        status_chr = "^"
-        status_bat = ""
-        status_unk = "?"
-        status_full = ""
-
-        format = "batt: %status%percentage"
-        format_down = "batt: none"
-    }
-
     disk / {
         format = "disk: %avail"
     }
@@ -270,7 +250,7 @@
     }
   '';
 
-  environment.etc."i3status.tmux.conf".text = ''
+  environment.etc."xdg/i3status/tmux".text = lib.mkDefault ''
     general {
         colors = true
 
@@ -286,7 +266,6 @@
 
     order += "load"
     order += "cpu_temperature 0"
-    order += "battery 0"
     order += "disk /"
     order += "tztime local"
 
@@ -296,19 +275,6 @@
 
     cpu_temperature 0 {
         format = "temp: %degrees °C"
-    }
-
-    battery 0 {
-        integer_battery_capacity = true
-        low_threshold = 12
-
-        status_chr = "^"
-        status_bat = ""
-        status_unk = "?"
-        status_full = ""
-
-        format = "batt: %status%percentage"
-        format_down = "batt: none"
     }
 
     disk / {
