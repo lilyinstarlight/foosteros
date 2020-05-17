@@ -44,22 +44,6 @@
         subpull = "submodule foreach git pull";
         uppull = "pull upstream master";
       };
-      delta = {
-        enable = true;
-        options = [ "--dark" ];
-      };
-    };
-
-    xdg.userDirs = {
-      enable = true;
-      desktop = "$HOME";
-      documents = "$HOME/docs";
-      download = "$HOME/tmp";
-      music = "$HOME/music";
-      pictures = "$HOME/pics";
-      publicShare = "$HOME/public";
-      templates = "$HOME/.templates";
-      videos = "$HOME/vids";
     };
   };
 }

@@ -25,6 +25,13 @@
 
   time.timeZone = "America/New_York";
 
+  nixpkgs = {
+    config.allowUnfree = true;
+    overlays = [
+      (self: super: (import ../pkgs/default.nix { pkgs = super; }))
+    ];
+  };
+
   environment.variables = {
     EDITOR = "vi";
     VISUAL = "vi";
@@ -40,24 +47,36 @@
     '');
 
     os-release.text = lib.mkForce ''
-        NAME=NixOS
-        ID=nixos
-        VERSION="${config.system.nixos.version} (${config.system.nixos.codeName})"
-        VERSION_CODENAME=${lib.toLower config.system.nixos.codeName}
-        VERSION_ID="${config.system.nixos.version}"
-        PRETTY_NAME="FoosterOS/2 Warp"
-        LOGO="nix-snowflake"
-        HOME_URL="https://fooster.io/"
-        DOCUMENTATION_URL="https://nixos.org/learn.html"
-        BUG_REPORT_URL="https://github.com/fkmclane/foosteros/issues"
-      '';
-    };
+      NAME=NixOS
+      ID=nixos
+      VERSION="${config.system.nixos.version} (${config.system.nixos.codeName})"
+      VERSION_CODENAME=${lib.toLower config.system.nixos.codeName}
+      VERSION_ID="${config.system.nixos.version}"
+      PRETTY_NAME="FoosterOS/2 Warp"
+      LOGO="nix-snowflake"
+      HOME_URL="https://fooster.io/"
+      DOCUMENTATION_URL="https://nixos.org/learn.html"
+      BUG_REPORT_URL="https://github.com/fkmclane/foosteros/issues"
+    '';
 
-  nixpkgs = {
-    config.allowUnfree = true;
-    overlays = [
-      (self: super: (import ../pkgs/default.nix { pkgs = super; }))
-    ];
+    "xdg/user-dirs.default".text = ''
+      XDG_DESKTOP_DIR=$HOME
+      XDG_DOCUMENTS_DIR=$HOME/docs
+      XDG_DOWNLOAD_DIR=$HOME/tmp
+      XDG_MUSIC_DIR=$HOME/music
+      XDG_PICTURES_DIR=$HOME/pics
+      XDG_PUBLICSHARE_DIR=$HOME/public
+      XDG_TEMPLATES_DIR=$HOME/.templates
+      XDG_VIDEOS_DIR=$HOME/vids
+    '';
+
+    gitconfig.text = ''
+      [core]
+      	pager = "${pkgs.gitAndTools.delta}/bin/delta --dark"
+
+      [interactive]
+      	diffFilter = "${pkgs.gitAndTools.delta}/bin/delta --dark --color-only"
+    '';
   };
 
   environment.systemPackages = with pkgs; [
