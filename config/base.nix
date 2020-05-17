@@ -79,11 +79,4 @@
 
     libinput.enable = true;
   };
-
-  users.users.lily = {
-    description = "Lily Foster";
-    isNormalUser = true;
-    extraGroups = [ "wheel" ];
-    shell = pkgs.fish;
-  };
 }

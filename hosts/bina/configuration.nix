@@ -3,8 +3,11 @@
 {
   imports = [
     ./hardware-configuration.nix
+
     ../../config/base.nix
     ../../config/sway.nix
+
+    ../../config/lily.nix
   ];
 
   networking.hostName = "bina.fooster.network";
