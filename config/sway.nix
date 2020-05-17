@@ -122,15 +122,15 @@
 
     #### modes
     mode "resize" {
-        bindsym h resize grow width 20 px or 20 ppt
-        bindsym j resize shrink height 20 px or 20 ppt
-        bindsym k resize grow height 20 px or 20 ppt
-        bindsym l resize shrink width 20 px or 20 ppt
+        bindsym h resize grow width 10 px or 10 ppt
+        bindsym j resize shrink height 10 px or 10 ppt
+        bindsym k resize grow height 10 px or 10 ppt
+        bindsym l resize shrink width 10 px or 10 ppt
 
-        bindsym down resize shrink height 20 px or 20 ppt
-        bindsym left resize grow width 20 px or 20 ppt
-        bindsym right resize shrink width 20 px or 20 ppt
-        bindsym up resize grow height 20 px or 20 ppt
+        bindsym down resize shrink height 10 px or 10 ppt
+        bindsym left resize grow width 10 px or 10 ppt
+        bindsym right resize shrink width 10 px or 10 ppt
+        bindsym up resize grow height 10 px or 10 ppt
 
         bindsym return mode "default"
         bindsym escape mode "default"
