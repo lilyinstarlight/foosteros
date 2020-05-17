@@ -291,7 +291,7 @@
   programs.sway = {
     enable = true;
     extraPackages = with pkgs; [
-      brightnessctl
+      brightnessctl jq
       swaylock swayidle
       i3status mako wofi alacritty
       arc-theme bibata-cursors papirus-icon-theme monofur-nerdfont
