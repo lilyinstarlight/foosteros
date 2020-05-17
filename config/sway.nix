@@ -25,13 +25,13 @@
     gaps inner 12
 
     ### color settings
-    set $lock $lock -c 000000 --bshlcolor 222222 --insidecolor 121212 --insidevercolor 222222 --insidewrongcolor 121212 --keyhlcolor aa4444 --linecolor 121212 --ringcolor 121212 --ringvercolor 222222 --ringwrongcolor ff0000 --separatorcolor 121212 --textcolor aa4444
+    set $lock $lock -c 000000 --bshlcolor 333333 --insidecolor 222222 --insidevercolor 333333 --insidewrongcolor 222222 --keyhlcolor f29bd4 --linecolor 222222 --ringcolor 222222 --ringvercolor 333333 --ringwrongcolor aa4444 --separatorcolor 222222 --textcolor f29bd4
 
-    client.background #aa4444
-    client.focused #222222 #222222 #aa4444 #aa4444 #aa4444
-    client.focused_inactive #222222 #222222 #aa4444 #aa4444 #884444
-    client.unfocused #222222 #222222 #884444 #aa4444 #444444
-    client.urgent #aa4444 #aa4444 #222222 #aa4444 #444444
+    client.background #f29bd4
+    client.focused #333333 #333333 #f29bd4 #f29bd4 #f29bd4
+    client.focused_inactive #333333 #333333 #f29bd4 #f29bd4 #996185
+    client.unfocused #333333 #333333 #996185 #f29bd4 #444444
+    client.urgent #f29bd4 #f29bd4 #333333 #f29bd4 #444444
 
     ### rules
 
@@ -187,14 +187,14 @@
 
         font Monofur Nerd Font 12
         colors {
-            background #121212
-            statusline #d7d7d7
-            separator #aa4444
+            background #222222
+            statusline #dadada
+            separator #f29bd4
 
-            focused_workspace #aa4444 #aa4444 #222222
-            active_workspace #884444 #aa4444 #222222
-            inactive_workspace #222222 #222222 #aa4444
-            urgent_workspace #222222 #ea2828 #222222
+            focused_workspace #f29bd4 #f29bd4 #333333
+            active_workspace #996185 #f29bd4 #333333
+            inactive_workspace #333333 #333333 #f29bd4
+            urgent_workspace #333333 #aa4444 #333333
         }
 
         strip_workspace_numbers yes
@@ -215,9 +215,9 @@
     general {
         colors = true
 
-        color_good = "#d7d7d7"
-        color_degraded = "#ea2828"
-        color_bad = "#ea2828"
+        color_good = "#dadada"
+        color_degraded = "#aa4444"
+        color_bad = "#aa4444"
 
         interval = 1
 
@@ -256,9 +256,9 @@
     general {
         colors = true
 
-        color_good = "#d7d7d7"
-        color_degraded = "#ea2828"
-        color_bad = "#ea2828"
+        color_good = "#dadada"
+        color_degraded = "#aa4444"
+        color_bad = "#aa4444"
 
         interval = 1
 

@@ -46,9 +46,9 @@
     general {
         colors = true
 
-        color_good = "#d7d7d7"
-        color_degraded = "#ea2828"
-        color_bad = "#ea2828"
+        color_good = "#dadada"
+        color_degraded = "#aa4444"
+        color_bad = "#aa4444"
 
         interval = 1
 
@@ -82,9 +82,9 @@
     general {
         colors = true
 
-        color_good = "#d7d7d7"
-        color_degraded = "#ea2828"
-        color_bad = "#ea2828"
+        color_good = "#dadada"
+        color_degraded = "#aa4444"
+        color_bad = "#aa4444"
 
         interval = 1
 
@@ -113,9 +113,9 @@
   #  general {
   #      colors = true
 
-  #      color_good = "#d7d7d7"
-  #      color_degraded = "#ea2828"
-  #      color_bad = "#ea2828"
+  #      color_good = "#dadada"
+  #      color_degraded = "#aa4444"
+  #      color_bad = "#aa4444"
 
   #      interval = 1
   #
@@ -174,9 +174,9 @@
   #  general {
   #      colors = true
 
-  #      color_good = "#d7d7d7"
-  #      color_degraded = "#ea2828"
-  #      color_bad = "#ea2828"
+  #      color_good = "#dadada"
+  #      color_degraded = "#aa4444"
+  #      color_bad = "#aa4444"
 
   #      interval = 1
 
