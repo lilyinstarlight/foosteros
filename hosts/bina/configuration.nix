@@ -3,7 +3,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../config/default.nix
+    ../../config/base.nix
     ../../config/sway.nix
   ];
 
