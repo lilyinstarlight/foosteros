@@ -39,6 +39,71 @@
     #}
   '';
 
+  environment.etc."xdg/i3status/config".text = ''
+    general {
+        colors = true
+
+        color_good = "#d7d7d7"
+        color_degraded = "#ea2828"
+        color_bad = "#ea2828"
+
+        interval = 1
+    }
+
+    order += "load"
+    order += "volume master"
+    order += "disk /"
+    order += "tztime local"
+
+    load {
+        format = "cpu: %1min"
+    }
+
+    volume master {
+        format = "vol: %volume"
+        format_muted = "vol: mute"
+    }
+
+    disk / {
+        format = "disk: %avail"
+    }
+
+    tztime local {
+        format = "%H:%M"
+    }
+  '';
+
+  environment.etc."xdg/i3status/tmux".text = ''
+    general {
+        colors = true
+
+        color_good = "#d7d7d7"
+        color_degraded = "#ea2828"
+        color_bad = "#ea2828"
+
+        interval = 1
+
+        output_format = "none"
+        separator = " • "
+    }
+
+    order += "load"
+    order += "disk /"
+    order += "tztime local"
+
+    load {
+        format = "cpu: %1min"
+    }
+
+    disk / {
+        format = "disk: %avail"
+    }
+
+    tztime local {
+        format = "%H:%M"
+    }
+  '';
+
   #environment.etc."xdg/i3status/config".text = ''
   #  general {
   #      colors = true
