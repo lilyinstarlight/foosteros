@@ -139,19 +139,19 @@
     bindsym $mod+t mode "resize"
 
     #### buttons
-    bindsym xf86monbrightnessdown exec brightnessctl -10%
-    bindsym xf86monbrightnessup exec brightnessctl +10%
-    bindsym shift+xf86monbrightnessdown exec brightnessctl -1%
-    bindsym shift+xf86monbrightnessup exec brightnessctl +1%
-    bindsym $mod+xf86monbrightnessdown exec brightnessctl 0%
-    bindsym $mod+xf86monbrightnessup exec brightnessctl 100%
+    bindsym xf86monbrightnessdown exec brightnessctl -c backlight -10%
+    bindsym xf86monbrightnessup exec brightnessctl -c backlight +10%
+    bindsym shift+xf86monbrightnessdown exec brightnessctl -c backlight -1%
+    bindsym shift+xf86monbrightnessup exec brightnessctl -c backlight +1%
+    bindsym $mod+xf86monbrightnessdown exec brightnessctl -c backlight 0%
+    bindsym $mod+xf86monbrightnessup exec brightnessctl -c backlight 100%
 
-    bindsym xf86kbdbrightnessdown exec brightnessctl -10%
-    bindsym xf86kbdbrightnessup exec brightnessctl +10%
-    bindsym shift+xf86kbdbrightnessdown exec brightnessctl -1%
-    bindsym shift+xf86kbdbrightnessup exec brightnessctl +1%
-    bindsym $mod+xf86kbdbrightnessdown exec brightnessctl 0%
-    bindsym $mod+xf86kbdbrightnessup exec brightnessctl 100%
+    bindsym xf86kbdbrightnessdown exec brightnessctl -c leds -10%
+    bindsym xf86kbdbrightnessup exec brightnessctl -c leds +10%
+    bindsym shift+xf86kbdbrightnessdown exec brightnessctl -c leds -1%
+    bindsym shift+xf86kbdbrightnessup exec brightnessctl -c leds +1%
+    bindsym $mod+xf86kbdbrightnessdown exec brightnessctl -c leds 0%
+    bindsym $mod+xf86kbdbrightnessup exec brightnessctl -c leds 100%
 
     bindsym xf86audiolowervolume exec amixer -q -D pulse sset Master 10%-
     bindsym xf86audioraisevolume exec amixer -q -D pulse sset Master 10%+
