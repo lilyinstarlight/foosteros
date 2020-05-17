@@ -21,6 +21,16 @@
       functions = {
         fish_greeting = "";
       };
+      shellAliases = {
+        ls = "ls --color=tty -h";
+        df = "df -h";
+        du = "du -h";
+        free = "free -h";
+        bc = "bc -l";
+        curl = "curl -L";
+        cget = "command curl -fLJO --progress-bar --retry 10 -C -";
+      };
+      promptInit = "fish_vi_key_bindings";
     };
 
     programs.git = {
@@ -37,6 +47,18 @@
         enable = true;
         options = [ "--dark" ];
       };
+    };
+
+    xdg.userDirs = {
+      enable = true;
+      desktop = "$HOME";
+      documents = "$HOME/docs";
+      download = "$HOME/tmp";
+      music = "$HOME/music";
+      pictures = "$HOME/pics";
+      publicShare = "$HOME/public";
+      templates = "$HOME/.templates";
+      videos = "$HOME/vids";
     };
   };
 }
