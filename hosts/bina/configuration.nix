@@ -51,6 +51,8 @@
         color_bad = "#ea2828"
 
         interval = 1
+
+        output_format = "i3bar"
     }
 
     order += "load"
@@ -116,6 +118,8 @@
   #      color_bad = "#ea2828"
 
   #      interval = 1
+  #
+  #      output_format = "i3bar"
   #  }
 
   #  order += "load"
