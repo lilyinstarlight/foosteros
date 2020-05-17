@@ -95,7 +95,7 @@ pkgs.neovim.override {
       "vimwiki
       let g:vimwiki_global_ext=0
       let g:vimwiki_dir_link='index'
-      let g:vimwiki_list=[{'path': '$HOME/docs'}]
+      let g:vimwiki_list=[{'path': '$HOME/docs/wiki'}]
     '';
 
     packages.fooster = with pkgs; {
