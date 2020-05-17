@@ -139,19 +139,19 @@
     bindsym $mod+t mode "resize"
 
     #### buttons
-    bindsym xf86monbrightnessdown exec xbacklight -10
-    bindsym xf86monbrightnessup exec xbacklight +10
-    bindsym shift+xf86monbrightnessdown exec xbacklight -1
-    bindsym shift+xf86monbrightnessup exec xbacklight +1
-    bindsym $mod+xf86monbrightnessdown exec xbacklight 0
-    bindsym $mod+xf86monbrightnessup exec xbacklight 100
+    bindsym xf86monbrightnessdown exec brightnessctl -10%
+    bindsym xf86monbrightnessup exec brightnessctl +10%
+    bindsym shift+xf86monbrightnessdown exec brightnessctl -1%
+    bindsym shift+xf86monbrightnessup exec brightnessctl +1%
+    bindsym $mod+xf86monbrightnessdown exec brightnessctl 0%
+    bindsym $mod+xf86monbrightnessup exec brightnessctl 100%
 
-    bindsym xf86kbdbrightnessdown exec kbdbacklight -10
-    bindsym xf86kbdbrightnessup exec kbdbacklight +10
-    bindsym shift+xf86kbdbrightnessdown exec kbdbacklight -1
-    bindsym shift+xf86kbdbrightnessup exec kbdbacklight +1
-    bindsym $mod+xf86kbdbrightnessdown exec kbdbacklight 0
-    bindsym $mod+xf86kbdbrightnessup exec kbdbacklight 100
+    bindsym xf86kbdbrightnessdown exec brightnessctl -10%
+    bindsym xf86kbdbrightnessup exec brightnessctl +10%
+    bindsym shift+xf86kbdbrightnessdown exec brightnessctl -1%
+    bindsym shift+xf86kbdbrightnessup exec brightnessctl +1%
+    bindsym $mod+xf86kbdbrightnessdown exec brightnessctl 0%
+    bindsym $mod+xf86kbdbrightnessup exec brightnessctl 100%
 
     bindsym xf86audiolowervolume exec amixer -q -D pulse sset Master 10%-
     bindsym xf86audioraisevolume exec amixer -q -D pulse sset Master 10%+
@@ -291,10 +291,12 @@
   programs.sway = {
     enable = true;
     extraPackages = with pkgs; [
-      swaylock swayidle xwayland
-      wofi i3status alacritty
+      brightnessctl
+      swaylock swayidle
+      i3status mako wofi alacritty
       arc-theme bibata-cursors papirus-icon-theme monofur-nerdfont
       slurp grim wl-clipboard
+      xwayland
     ];
   };
 }
