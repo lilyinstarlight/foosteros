@@ -7,22 +7,24 @@
   imports = [ ];
 
   boot.initrd.availableKernelModules = [ "ata_piix" "mptspi" "uhci_hcd" "ehci_pci" "sd_mod" "sr_mod" ];
-  boot.initrd.kernelModules = [ ];
+  boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
+  boot.initrd.luks.devices."nixos".device = "/dev/disk/by-uuid/5eafa2c4-9bdf-4614-9251-16d7c386a580";
+
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/085b53ae-492f-43f6-846a-2ef1002b255d";
-      fsType = "ext4";
+    { device = "/dev/disk/by-uuid/b877be2e-c185-4452-af3c-ed851503ad08";
+      fsType = "btrfs";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/1E8B-EF31";
+    { device = "/dev/disk/by-uuid/5337-D77A";
       fsType = "vfat";
     };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/f24fa29d-fbd0-4dfd-828f-9145e0013dc0"; }
+    [ { device = "/dev/disk/by-uuid/57ebfb47-96e6-4112-afd4-c5eb248d539b"; }
     ];
 
   nix.maxJobs = lib.mkDefault 2;

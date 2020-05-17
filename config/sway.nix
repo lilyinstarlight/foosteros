@@ -15,7 +15,7 @@
     set $browser qutebrowser
 
     ### global settings
-    font Monofur 12
+    font Monofur Nerd Font 12
     focus_follows_mouse yes
     mouse_warping output
 
@@ -185,7 +185,7 @@
     bar {
         position top
 
-        font Monofur 12
+        font Monofur Nerd Font 12
         colors {
             background #121212
             statusline #d7d7d7
