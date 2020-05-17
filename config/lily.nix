@@ -18,6 +18,7 @@
   home-manager.users.lily = { pkgs, ... }: {
     programs.fish = {
       enable = true;
+      plugins = pkgs.callPackage ../misc/fish-plugins/default.nix {};
       functions = {
         fish_greeting = "";
       };
