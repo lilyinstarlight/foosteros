@@ -5,6 +5,22 @@
     qutebrowser firefox google-chrome
   ];
 
+  environment.etc."gtk-3.0/settings.ini".text = lib.mkDefault ''
+    [Settings]
+    gtk-theme-name=Arc-Dark
+    gtk-icon-theme-name=Papirus
+    gtk-font-name=Monofur Nerd Font 12
+    gtk-cursor-theme-name=Bibata_Oil
+    gtk-application-prefer-dark-theme=true
+  '';
+
+  environment.etc."gtk-2.0/gtkrc".text = lib.mkDefault ''
+    gtk-theme-name="Arc-Dark"
+    gtk-icon-theme-name="Papirus"
+    gtk-font-name="Monofur Nerd Font 12"
+    gtk-cursor-theme-name="Bibata_Oil"
+  '';
+
   environment.etc."sway/config".text = lib.mkDefault ''
     ### variables
     set $mod mod4
@@ -208,6 +224,13 @@
     #exec_always pgrep polkit-gnome || run /usr/libexec/polkit-gnome-authentication-agent-1
     #exec_always setbg
 
+
+    ### desktop environment
+    exec_always gsettings set org.gnome.desktop.interface gtk-theme "Arc-Dark"
+    exec_always gsettings set org.gnome.desktop.interface icon-theme "Papirus"
+    exec_always gsettings set org.gnome.desktop.interface cursor-theme "Bibata_Oil"
+    seat seat0 xcursor_theme "Bibata_Oil"
+
     include /etc/sway/config.d/*
   '';
 
@@ -290,13 +313,17 @@
 
   programs.sway = {
     enable = true;
+    wrapperFeatures.gtk = true;
     extraPackages = with pkgs; [
-      brightnessctl jq
+      brightnessctl jq glib
       swaylock swayidle
       i3status mako wofi alacritty
       arc-theme bibata-cursors papirus-icon-theme monofur-nerdfont
       slurp grim wl-clipboard
       xwayland
     ];
+    extraSessionCommands = ''
+      export WLR_NO_HARDWARE_CURSORS=1
+    '';
   };
 }
