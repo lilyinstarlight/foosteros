@@ -200,6 +200,7 @@
     bindsym $mod+shift+print exec grim -g "$(slurp)" "$HOME"/tmp/screenshot.png
 
     ### desktop elements
+    output * background #111111 solid_color
     bar {
         position top
 
