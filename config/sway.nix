@@ -5,7 +5,7 @@
     qutebrowser firefox google-chrome
   ];
 
-  environment.etc."gtk-3.0/settings.ini".text = lib.mkDefault ''
+  environment.etc."xdg/gtk-3.0/settings.ini".text = lib.mkDefault ''
     [Settings]
     gtk-theme-name=Arc-Dark
     gtk-icon-theme-name=Papirus
@@ -14,7 +14,7 @@
     gtk-application-prefer-dark-theme=true
   '';
 
-  environment.etc."gtk-2.0/gtkrc".text = lib.mkDefault ''
+  environment.etc."xdg/gtk-2.0/gtkrc".text = lib.mkDefault ''
     gtk-theme-name="Arc-Dark"
     gtk-icon-theme-name="Papirus"
     gtk-font-name="Monofur Nerd Font 12"
