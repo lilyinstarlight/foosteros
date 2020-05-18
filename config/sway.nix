@@ -5,6 +5,8 @@
     qutebrowser firefox google-chrome
   ];
 
+  fonts.fonts = with pkgs; [ monofur-nerdfont ];
+
   environment.etc."xdg/gtk-3.0/settings.ini".text = lib.mkDefault ''
     [Settings]
     gtk-theme-name=Arc-Dark
@@ -318,11 +320,12 @@
       brightnessctl jq glib
       swaylock swayidle
       i3status mako wofi alacritty
-      arc-theme bibata-cursors papirus-icon-theme monofur-nerdfont
+      arc-theme bibata-cursors papirus-icon-theme
       slurp grim wl-clipboard
       xwayland
     ];
     extraSessionCommands = ''
+      export XDG_SESSION_TYPE=wayland
       export WLR_NO_HARDWARE_CURSORS=1
     '';
   };
