@@ -59,7 +59,7 @@
       BUG_REPORT_URL="https://github.com/fkmclane/foosteros/issues"
     '';
 
-    "xdg/user-dirs.default".text = ''
+    "xdg/user-dirs.defaults".text = ''
       XDG_DESKTOP_DIR=$HOME
       XDG_DOCUMENTS_DIR=$HOME/docs
       XDG_DOWNLOAD_DIR=$HOME/tmp
