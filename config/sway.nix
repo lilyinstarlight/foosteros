@@ -9,7 +9,7 @@
 
   environment.etc."xdg/gtk-3.0/settings.ini".text = lib.mkDefault ''
     [Settings]
-    gtk-theme-name=Arc-Dark
+    gtk-theme-name=Materia-Fooster
     gtk-icon-theme-name=Papirus
     gtk-font-name=Monofur Nerd Font 12
     gtk-cursor-theme-name=Bibata_Oil
@@ -17,7 +17,7 @@
   '';
 
   environment.etc."xdg/gtk-2.0/gtkrc".text = lib.mkDefault ''
-    gtk-theme-name="Arc-Dark"
+    gtk-theme-name="Materia-Fooster"
     gtk-icon-theme-name="Papirus"
     gtk-font-name="Monofur Nerd Font 12"
     gtk-cursor-theme-name="Bibata_Oil"
@@ -229,7 +229,7 @@
 
 
     ### desktop environment
-    exec_always gsettings set org.gnome.desktop.interface gtk-theme "Arc-Dark"
+    exec_always gsettings set org.gnome.desktop.interface gtk-theme "Materia-Fooster"
     exec_always gsettings set org.gnome.desktop.interface icon-theme "Papirus"
     exec_always gsettings set org.gnome.desktop.interface cursor-theme "Bibata_Oil"
     seat seat0 xcursor_theme "Bibata_Oil"
@@ -321,7 +321,7 @@
       brightnessctl jq glib
       swaylock swayidle
       i3status mako wofi alacritty
-      arc-theme bibata-cursors papirus-icon-theme
+      fooster.materia-theme bibata-cursors papirus-icon-theme
       slurp grim wl-clipboard
       xwayland
     ];
