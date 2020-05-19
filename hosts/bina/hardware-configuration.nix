@@ -11,20 +11,20 @@
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
-  boot.initrd.luks.devices."nixos".device = "/dev/disk/by-uuid/5eafa2c4-9bdf-4614-9251-16d7c386a580";
+  boot.initrd.luks.devices."nixos".device = "/dev/disk/by-partlabel/nixos";
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/b877be2e-c185-4452-af3c-ed851503ad08";
+    { device = "/dev/disk/by-label/root";
       fsType = "btrfs";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/5337-D77A";
+    { device = "/dev/disk/by-label/boot";
       fsType = "vfat";
     };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/57ebfb47-96e6-4112-afd4-c5eb248d539b"; }
+    [ { device = "/dev/disk/by-label/swap"; }
     ];
 
   nix.maxJobs = lib.mkDefault 2;
