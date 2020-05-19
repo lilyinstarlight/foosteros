@@ -54,7 +54,7 @@
       VERSION_ID="${config.system.nixos.version}"
       PRETTY_NAME="FoosterOS/2 Warp"
       LOGO="nix-snowflake"
-      HOME_URL="https://fooster.io/"
+      HOME_URL="https://github.com/fkmclane/foosteros"
       DOCUMENTATION_URL="https://nixos.org/learn.html"
       BUG_REPORT_URL="https://github.com/fkmclane/foosteros/issues"
     '';
@@ -70,7 +70,7 @@
       XDG_VIDEOS_DIR=$HOME/vids
     '';
 
-    gitconfig.text = ''
+    gitconfig.text = lib.mkDefault ''
       [core]
       	pager = "${pkgs.gitAndTools.delta}/bin/delta --dark"
 
