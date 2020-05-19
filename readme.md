@@ -13,7 +13,7 @@ Feel free to take any pieces in this repository that you would like! Please don'
     sgdisk -og /dev/sda
     sgdisk -n 1:0:+512M -c 1:esp -t 1:ef00 /dev/sda
     sgdisk -n 2:0:0 -c 2:nixos -t 2:8e00 /dev/sda
-    mkfs.vfat -F32 -n esp /dev/sda1
+    mkfs.fat -F32 -n esp /dev/sda1
     cryptsetup luksFormat /dev/sda2
     cryptsetup open /dev/sda2 nixos
     pvcreate /dev/mapper/nixos
