@@ -319,7 +319,7 @@
     wrapperFeatures.gtk = true;
     extraPackages = with pkgs; [
       brightnessctl jq glib
-      swaylock swayidle
+      swaybg swaylock swayidle
       i3status mako wofi alacritty
       fooster.materia-theme bibata-cursors papirus-icon-theme
       slurp grim wl-clipboard
