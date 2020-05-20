@@ -2,6 +2,7 @@
 
 {
   environment.systemPackages = with pkgs; [
+    petty
     qutebrowser firefox google-chrome
   ];
 
@@ -313,6 +314,20 @@
         format = "%H:%M"
     }
   '';
+
+  environment.etc."petty/pettyrc".text = ''
+    shell=${pkgs.bashInteractive}
+    session1=sway
+  '';
+
+  environment.etc."sessions/sway".source = pkgs.writeScript "sway" ''
+    #!/bin/sh
+    mkdir -p "$HOME"/.local/share/sway
+    exec sway -d >"$HOME"/.local/share/sway/sway.log 2>&1
+  '';
+
+  users.defaultUserShell = pkgs.petty;
+  users.users.root.shell = pkgs.bashInteractive;
 
   programs.sway = {
     enable = true;

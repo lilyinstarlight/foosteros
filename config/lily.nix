@@ -12,7 +12,7 @@
     description = "Lily Foster";
     isNormalUser = true;
     extraGroups = [ "wheel" ];
-    shell = pkgs.fish;
+    shell = pkgs.petty;
   };
 
   home-manager.users.lily = { pkgs, ... }: {
@@ -45,5 +45,10 @@
         uppull = "pull upstream master";
       };
     };
+
+    home.file.".config/petty/pettyrc".text = ''
+      shell=fish
+      session1=sway
+    '';
   };
 }
