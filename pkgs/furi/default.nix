@@ -1,6 +1,6 @@
 { stdenv, python3Packages, fetchFromGitHub }:
 
-stdenv.mkDerivation rev {
+stdenv.mkDerivation rec {
   name = "furi";
   version = "0.1b2";
 
@@ -8,7 +8,7 @@ stdenv.mkDerivation rev {
     owner = "fkmclane";
     repo = "uri";
     rev = "v${version}";
-    sha256 = "";
+    sha256 = "1d5mm6v6abssc2x6hsb9pj8b72fin3ykl6v8rzc7cxmkl3krm185";
   };
 
   pythonPath = with python3Packages; [

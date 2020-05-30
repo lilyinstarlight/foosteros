@@ -1,6 +1,6 @@
 { stdenv, python3Packages, fetchFromGitHub }:
 
-stdenv.mkDerivation rev {
+stdenv.mkDerivation rec {
   name = "fpaste";
   version = "0.1b2";
 
@@ -8,7 +8,7 @@ stdenv.mkDerivation rev {
     owner = "fkmclane";
     repo = "paste";
     rev = "v${version}";
-    sha256 = "";
+    sha256 = "16dz3b6av2m2lzbgx5s9k3d8x0pz2qb4iwijdk15nm0hjyzz5mlp";
   };
 
   pythonPath = with python3Packages; [

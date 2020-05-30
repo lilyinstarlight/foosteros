@@ -1,6 +1,6 @@
 { stdenv, python3Packages, fetchFromGitHub }:
 
-stdenv.mkDerivation rev {
+stdenv.mkDerivation rec {
   name = "ftmp";
   version = "0.1b2";
 
@@ -8,7 +8,7 @@ stdenv.mkDerivation rev {
     owner = "fkmclane";
     repo = "tmp";
     rev = "v${version}";
-    sha256 = "";
+    sha256 = "0vc0dacjby14v7dxk8ya6l9jr7w64jxh3msrlfql8l6liysa49vq";
   };
 
   pythonPath = with python3Packages; [
