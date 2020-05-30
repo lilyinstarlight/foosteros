@@ -112,7 +112,6 @@ pkgs.neovim.override {
         vimPlugins.vim-multiple-cursors
         vimPlugins.vim-nix
         vimPlugins.vim-peekaboo
-        vimPlugins.vim-plug
         vimPlugins.vim-qml
         vimPlugins.vim-repeat
         vimPlugins.vim-slash
@@ -126,7 +125,6 @@ pkgs.neovim.override {
         fooster.vimPlugins.vim-fish
         fooster.vimPlugins.vim-interestingwords
         fooster.vimPlugins.vim-lilypond-integrator
-        fooster.vimPlugins.vim-magnum
         fooster.vimPlugins.vim-radical
         fooster.vimPlugins.vim-resolve
         fooster.vimPlugins.vim-sonicpi
