@@ -10,7 +10,8 @@
     ../../config/lily.nix
   ];
 
-  networking.hostName = "bina.fooster.network";
+  networking.hostName = "bina";
+  networking.domain = "fooster.network";
 
   # networking.wireless.enable = true;
   networking.interfaces.ens33.useDHCP = true;
