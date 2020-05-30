@@ -42,7 +42,7 @@
   environment.etc = {
     issue.source = lib.mkForce (pkgs.writeText "issue" ''
 
-      Welcome to [1;35mFoosterOS/2[0m [1;34mWarp[0m - \l
+      Welcome to [35;1mFoosterOS/2[0m [34;1mWarp[0m - \l
 
     '');
 
