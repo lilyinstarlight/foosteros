@@ -29,6 +29,5 @@ stdenv.mkDerivation rec {
     description = "Command line utility for FoosterTMP";
     homepage = "https://github.com/fkmclane/tmp";
     license = licenses.mit;
-    platforms = platforms.all;
   };
 }

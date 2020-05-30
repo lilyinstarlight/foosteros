@@ -28,6 +28,5 @@ stdenv.mkDerivation rec {
     description = "Command line utility for FoosterPASTE";
     homepage = "https://github.com/fkmclane/paste";
     license = licenses.mit;
-    platforms = platforms.all;
   };
 }

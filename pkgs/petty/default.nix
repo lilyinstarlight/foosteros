@@ -22,7 +22,6 @@ stdenv.mkDerivation rec {
     description = "TTY session starter";
     homepage = "https://github.com/fkmclane/petty";
     license = licenses.mit;
-    platforms = platforms.all;
   };
 
   passthru.shellPath = "/bin/petty";
