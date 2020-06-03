@@ -2,13 +2,13 @@
 
 stdenv.mkDerivation rec {
   pname = "petty";
-  version = "0.2";
+  version = "0.3";
 
   src = fetchFromGitHub {
     owner = "fkmclane";
     repo = pname;
     rev = "v${version}";
-    sha256 = "12v21wa1m22kvyy6x9csdajmq36j905hl4pakajjbhpx27cf1m96";
+    sha256 = "1cr17m88w1254fwfw50myppqkpw02q0ihy6lhjjz5kidjkgp06ba";
   };
 
   dontConfigure = true;
