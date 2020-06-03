@@ -41,6 +41,9 @@
     #    scroll_button 273
     #    scroll_method on_button_down
     #}
+
+    ### desktop services
+    exec_always systemctl --user start swaynag-battery
   '';
 
   environment.etc."xdg/i3status/config".text = ''
@@ -58,6 +61,7 @@
 
     order += "load"
     order += "volume master"
+    order += "battery 1"
     order += "disk /"
     order += "tztime local"
 
@@ -68,6 +72,19 @@
     volume master {
         format = "vol: %volume"
         format_muted = "vol: mute"
+    }
+
+    battery 1 {
+        integer_battery_capacity = true
+        low_threshold = 12
+
+        status_chr = "^"
+        status_bat = ""
+        status_unk = "?"
+        status_full = ""
+
+        format = "batt: %status%percentage"
+        format_down = "batt: none"
     }
 
     disk / {
@@ -94,11 +111,25 @@
     }
 
     order += "load"
+    order += "battery 1"
     order += "disk /"
     order += "tztime local"
 
     load {
         format = "cpu: %1min"
+    }
+
+    battery 1 {
+        integer_battery_capacity = true
+        low_threshold = 12
+
+        status_chr = "^"
+        status_bat = ""
+        status_unk = "?"
+        status_full = ""
+
+        format = "batt: %status%percentage"
+        format_down = "batt: none"
     }
 
     disk / {
@@ -240,6 +271,11 @@
   };
 
   # services.tlp.enable = true;
+
+  services.swaynag-battery = {
+    install = true;
+    powerSupply = "BAT1";
+  };
 
   virtualisation.vmware.guest.enable = true;
 
