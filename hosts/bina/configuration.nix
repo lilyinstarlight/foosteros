@@ -41,9 +41,6 @@
     #    scroll_button 273
     #    scroll_method on_button_down
     #}
-
-    ### desktop services
-    exec_always systemctl --user start swaynag-battery
   '';
 
   environment.etc."xdg/i3status/config".text = ''
@@ -273,7 +270,7 @@
   # services.tlp.enable = true;
 
   services.swaynag-battery = {
-    install = true;
+    enable = true;
     powerSupply = "BAT1";
   };
 

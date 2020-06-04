@@ -4,6 +4,7 @@
   imports = [
     ../modules/boot/systemd-boot/systemd-boot.nix
     ../modules/services/misc/swaynag-battery.nix
+    ../modules/programs/sway.nix
   ];
 
   boot.loader = {

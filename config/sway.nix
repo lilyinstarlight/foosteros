@@ -24,7 +24,7 @@
     gtk-cursor-theme-name="Bibata_Oil"
   '';
 
-  environment.etc."sway/config".text = lib.mkDefault ''
+  environment.etc."sway/config.d/fooster".text = lib.mkDefault ''
     ### variables
     set $mod mod4
     set $term alacritty
@@ -228,14 +228,11 @@
     #exec_always pgrep polkit-gnome || run /usr/libexec/polkit-gnome-authentication-agent-1
     #exec_always setbg
 
-
     ### desktop environment
     exec_always gsettings set org.gnome.desktop.interface gtk-theme "Materia-Fooster"
     exec_always gsettings set org.gnome.desktop.interface icon-theme "Papirus"
     exec_always gsettings set org.gnome.desktop.interface cursor-theme "Bibata_Oil"
     seat seat0 xcursor_theme "Bibata_Oil"
-
-    include /etc/sway/config.d/*
   '';
 
   environment.etc."xdg/i3status/config".text = lib.mkDefault ''

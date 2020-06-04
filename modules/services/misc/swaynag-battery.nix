@@ -65,13 +65,14 @@ in
   config = mkIf (cfg.enable || cfg.install) {
     systemd.user.services.swaynag-battery = {
       description = "Low battery notification";
+      partOf = [ "graphical-session.target" ];
 
       serviceConfig = {
         Type = "simple";
         ExecStart = "${pkgs.swaynag-battery}/bin/swaynag-battery --threshold ${toString cfg.threshold} --interval ${cfg.interval} --uevent /sys/class/power_supply/${cfg.powerSupply}/uevent";
       };
     } // optionalAttrs cfg.enable {
-      wantedBy = [ "default.target" ];
+      wantedBy = [ "sway-session.target" ];
     };
 
     environment.systemPackages = [ cfg.package ];
