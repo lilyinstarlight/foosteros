@@ -2,7 +2,7 @@
 
 stdenv.mkDerivation rec {
   name = "fpaste";
-  version = "0.1b2";
+  version = "0.1b5";
 
   src = fetchFromGitHub {
     owner = "fkmclane";
@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
   };
 
   pythonPath = with python3Packages; [
-    requests
+    httpx
   ];
 
   nativeBuildInputs = with python3Packages; [
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
 
   dontBuild = true;
 
-  installPhase = "install -D contrib/fpaste $out/bin/fpaste";
+  installPhase = "install -D util/fpaste $out/bin/fpaste";
   postFixup = "wrapPythonPrograms";
 
   meta = with stdenv.lib; {

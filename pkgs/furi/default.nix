@@ -2,7 +2,7 @@
 
 stdenv.mkDerivation rec {
   name = "furi";
-  version = "0.1b2";
+  version = "0.1b3";
 
   src = fetchFromGitHub {
     owner = "fkmclane";
@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
   };
 
   pythonPath = with python3Packages; [
-    requests
+    httpx
   ];
 
   nativeBuildInputs = with python3Packages; [
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
 
   dontBuild = true;
 
-  installPhase = "install -D contrib/furi $out/bin/furi";
+  installPhase = "install -D util/furi $out/bin/furi";
   postFixup = "wrapPythonPrograms";
 
   meta = with stdenv.lib; {

@@ -2,7 +2,7 @@
 
 stdenv.mkDerivation rec {
   name = "ftmp";
-  version = "0.1b2";
+  version = "0.1b3";
 
   src = fetchFromGitHub {
     owner = "fkmclane";
@@ -12,8 +12,7 @@ stdenv.mkDerivation rec {
   };
 
   pythonPath = with python3Packages; [
-    requests
-    requests-toolbelt
+    httpx
   ];
 
   nativeBuildInputs = with python3Packages; [
@@ -22,7 +21,7 @@ stdenv.mkDerivation rec {
 
   dontBuild = true;
 
-  installPhase = "install -D contrib/ftmp $out/bin/ftmp";
+  installPhase = "install -D util/ftmp $out/bin/ftmp";
   postFixup = "wrapPythonPrograms";
 
   meta = with stdenv.lib; {
