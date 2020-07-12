@@ -38,8 +38,10 @@
       enable = true;
       userName = "Foster McLane";
       userEmail = "fkmclane@gmail.com";
-      pull.ff = "only";
-      extraConfig.init.templateDir = "~/.config/git/template";
+      extraConfig = {
+        pull.ff = "only";
+        init.templateDir = "~/.config/git/template";
+      };
       aliases = {
         kill = "!sh -c 'git reset HEAD --hard && git clean -xdf'";
         subupd = "submodule update --init";
