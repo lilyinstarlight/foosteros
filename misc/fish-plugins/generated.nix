@@ -7,9 +7,10 @@
     src = fetchFromGitHub {
       owner = "franciscolourenco";
       repo = "done";
-      rev = "4503af92f5425b4169d3915f7c9297437f42bfe1";
-      sha256 = "0blw12azcq8f5fd26lyfd6bshg60b1ra9ldcpmb8jk7c7ban7ynp";
+      rev = "9351f5a9f4ae6c73dd6f18e41364e63a77be5d90";
+      sha256 = "0ffkhm0ap96kixrck3r3fnmc1iq1wl018iqb7wjwf6miqwxhlb7v";
     };
+    meta.homepage = "https://github.com/franciscolourenco/done/";
   }
 
   {
@@ -20,6 +21,7 @@
       rev = "245e38ff3c03654271039f119078b721b7a26d3b";
       sha256 = "078wzrppw62dz297860n2qdljnnpmhpaj60gw5cl4dbfcij24335";
     };
+    meta.homepage = "https://github.com/fishpkg/fish-humanize-duration/";
   }
 
 ]
