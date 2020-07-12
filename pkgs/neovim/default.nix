@@ -112,6 +112,7 @@ pkgs.neovim.override {
         vimPlugins.vim-multiple-cursors
         vimPlugins.vim-nix
         vimPlugins.vim-peekaboo
+        vimPlugins.vim-ps1
         vimPlugins.vim-qml
         vimPlugins.vim-repeat
         vimPlugins.vim-slash
