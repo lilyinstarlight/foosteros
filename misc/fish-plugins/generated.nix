@@ -10,7 +10,6 @@
       rev = "9351f5a9f4ae6c73dd6f18e41364e63a77be5d90";
       sha256 = "0ffkhm0ap96kixrck3r3fnmc1iq1wl018iqb7wjwf6miqwxhlb7v";
     };
-    meta.homepage = "https://github.com/franciscolourenco/done/";
   }
 
   {
@@ -21,7 +20,6 @@
       rev = "245e38ff3c03654271039f119078b721b7a26d3b";
       sha256 = "078wzrppw62dz297860n2qdljnnpmhpaj60gw5cl4dbfcij24335";
     };
-    meta.homepage = "https://github.com/fishpkg/fish-humanize-duration/";
   }
 
 ]
