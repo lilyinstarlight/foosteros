@@ -38,13 +38,19 @@
       enable = true;
       userName = "Foster McLane";
       userEmail = "fkmclane@gmail.com";
+      pull.ff = "only";
+      extraConfig.init.templateDir = "~/.config/git/template";
       aliases = {
         kill = "!sh -c 'git reset HEAD --hard && git clean -xdf'";
         subupd = "submodule update --init";
         subpull = "submodule foreach git pull";
-        uppull = "pull upstream master";
+        uppull = "pull upstream HEAD";
       };
     };
+
+    home.file.".config/git/template/HEAD".text = ''
+      ref: refs/heads/main
+    '';
 
     home.file.".config/petty/pettyrc".text = ''
       shell=fish
