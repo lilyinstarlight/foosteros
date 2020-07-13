@@ -8,6 +8,10 @@
   home-manager.useUserPackages = true;
   home-manager.useGlobalPkgs = true;
 
+  environment.systemPackages = with pkgs; [
+    pridecat
+  ];
+
   users.users.lily = {
     description = "Lily Foster";
     isNormalUser = true;
@@ -39,6 +43,7 @@
       userName = "Foster McLane";
       userEmail = "fkmclane@gmail.com";
       extraConfig = {
+        core.pager = "${pkgs.pridecat}/bin/pridecat --trans -f | ${pkgs.gitAndTools.delta}/bin/delta --dark";
         pull.ff = "only";
         init.templateDir = "~/.config/git/template";
       };
