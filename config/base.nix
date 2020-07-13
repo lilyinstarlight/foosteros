@@ -85,6 +85,7 @@
     file htop tmux fooster.neovim python3
     cachix fooster.fpaste fooster.ftmp fooster.furi
     git gitAndTools.delta silver-searcher
+    pridecat
   ];
 
   programs.fish.enable = true;

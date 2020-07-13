@@ -6,6 +6,7 @@
   };
 
   petty = pkgs.callPackage ./petty/default.nix {};
+  pridecat = pkgs.callPackage ./pridecat/default.nix {};
   swaynag-battery = pkgs.callPackage ./swaynag-battery/default.nix {};
 
   fooster = pkgs.recurseIntoAttrs {
