@@ -17,7 +17,7 @@
   networking.interfaces.ens33.useDHCP = true;
 
   environment.systemPackages = with pkgs; [
-    pass-wayland
+    gnupg pass-wayland
     vimpc
   ];
 
@@ -249,6 +249,8 @@
   #      format = "%H:%M"
   #  }
   #'';
+
+  programs.gnupg.agent.enable = true;
 
   # services.printing.enable = true;
 
