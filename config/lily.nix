@@ -44,8 +44,8 @@
       userEmail = "fkmclane@gmail.com";
       extraConfig = {
         core.pager = "${pkgs.pridecat}/bin/pridecat --trans -f | ${pkgs.gitAndTools.delta}/bin/delta --dark";
+        init.defaultBranch = "main";
         pull.ff = "only";
-        init.templateDir = "~/.config/git/template";
       };
       aliases = {
         kill = "!sh -c 'git reset HEAD --hard && git clean -xdf'";
@@ -54,10 +54,6 @@
         uppull = "pull upstream HEAD";
       };
     };
-
-    home.file.".config/git/template/HEAD".text = ''
-      ref: refs/heads/main
-    '';
 
     home.file.".config/petty/pettyrc".text = ''
       shell=fish
