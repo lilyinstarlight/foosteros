@@ -18,6 +18,7 @@
 
   environment.systemPackages = with pkgs; [
     pass-wayland
+    vimpc
   ];
 
   environment.etc."sway/config.d/bina".text = ''
