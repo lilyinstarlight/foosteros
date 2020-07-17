@@ -275,7 +275,12 @@
     powerSupply = "BAT1";
   };
 
-  services.mopidy-user.enable = true;
+  services.mopidy-user = {
+    enable = true;
+    extensionPackages = with pkgs; [
+      mopidy-spotify mopidy-iris mopidy-mpd
+    ];
+  };
 
   virtualisation.vmware.guest.enable = true;
 
