@@ -267,7 +267,7 @@
       allmailfrom = "lily@fooster.network";
       adminaddr = "logs@fooster.network";
     };
-    # remotesFile = "";
+    # remotesFile = "/etc/nixos/secrets/nullmailer-remotes";
   };
 
   # services.tlp.enable = true;
@@ -281,6 +281,9 @@
     enable = true;
     extensionPackages = with pkgs; [
       mopidy-spotify mopidy-iris mopidy-mpd
+    ];
+    extraConfigFiles = [
+      "$HOME/.config/mopidy/mopidy.conf"
     ];
   };
 
