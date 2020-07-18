@@ -1,4 +1,6 @@
 /configuration.nix
 /hardware-configuration.nix
 /result
-/secrets
+
+/secrets/*
+!/secrets/.keep
