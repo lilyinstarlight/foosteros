@@ -40,8 +40,9 @@
 
     programs.git = {
       enable = true;
-      userName = "Foster McLane";
-      userEmail = "fkmclane@gmail.com";
+      userName = "Lily Foster";
+      userEmail = "lily@lily.flowers";
+      signing.key = "2E23AF668B14BA1F";
       extraConfig = {
         core.pager = "${pkgs.pridecat}/bin/pridecat --trans -f | ${pkgs.gitAndTools.delta}/bin/delta --dark";
         init.defaultBranch = "main";
