@@ -1,0 +1,80 @@
+From cddfe822878782999e21e363de94b62083534dbd Mon Sep 17 00:00:00 2001
+From: Brent Lintner <brent.lintner@gmail.com>
+Date: Tue, 21 Jul 2020 01:11:36 -0400
+Subject: [PATCH] Inkscape 1.0's --export-file option changed to
+ --export-filename.
+
+Post beta change?
+
+Also removed the -n check since it will always be true?
+---
+ src/chrome/render-asset.sh  |  8 +++++---
+ src/gtk-2.0/render-asset.sh |  9 ++++++---
+ src/gtk/render-asset.sh     | 12 ++++++------
+ 3 files changed, 17 insertions(+), 12 deletions(-)
+
+diff --git a/src/chrome/render-asset.sh b/src/chrome/render-asset.sh
+index 0d63e37e..719f1f08 100755
+--- a/src/chrome/render-asset.sh
++++ b/src/chrome/render-asset.sh
+@@ -5,10 +5,12 @@ RENDER_SVG="$(command -v rendersvg)" || true
+ INKSCAPE="$(command -v inkscape)" || true
+ OPTIPNG="$(command -v optipng)" || true
+ 
+-if "$INKSCAPE" --help | grep -e "--export-png" > /dev/null; then
+-  EXPORT_FILE_OPTION="--export-png"
+-else
++if "$INKSCAPE" --help | grep -e "--export-filename" > /dev/null; then
++  EXPORT_FILE_OPTION="--export-filename"
++elif "$INKSCAPE" --help | grep -e "--export-file" > /dev/null; then
+   EXPORT_FILE_OPTION="--export-file"
++elif "$INKSCAPE" --help | grep -e "--export-png" > /dev/null; then
++  EXPORT_FILE_OPTION="--export-png"
+ fi
+ 
+ i="$1"
+diff --git a/src/gtk-2.0/render-asset.sh b/src/gtk-2.0/render-asset.sh
+index b82421de..75921120 100755
+--- a/src/gtk-2.0/render-asset.sh
++++ b/src/gtk-2.0/render-asset.sh
+@@ -33,11 +33,14 @@ if [[ -n "${RENDER_SVG}" ]]; then
+                 --zoom ${ZOOM} \
+                 "$SRC_FILE" "$ASSETS_DIR/$i.png"
+ else
+-  if "$INKSCAPE" --help | grep -e "--export-png" > /dev/null; then
+-    EXPORT_FILE_OPTION="--export-png"
+-  else
++  if "$INKSCAPE" --help | grep -e "--export-filename" > /dev/null; then
++    EXPORT_FILE_OPTION="--export-filename"
++  elif "$INKSCAPE" --help | grep -e "--export-file" > /dev/null; then
+     EXPORT_FILE_OPTION="--export-file"
++  elif "$INKSCAPE" --help | grep -e "--export-png" > /dev/null; then
++    EXPORT_FILE_OPTION="--export-png"
+   fi
++
+   "$INKSCAPE" --export-id="$i" \
+               --export-id-only \
+               --export-dpi=${DPI} \
+diff --git a/src/gtk/render-asset.sh b/src/gtk/render-asset.sh
+index 6ab2e4ce..a854bc46 100755
+--- a/src/gtk/render-asset.sh
++++ b/src/gtk/render-asset.sh
+@@ -5,12 +5,12 @@ RENDER_SVG="$(command -v rendersvg)" || true
+ INKSCAPE="$(command -v inkscape)" || true
+ OPTIPNG="$(command -v optipng)" || true
+ 
+-if [ -n "$INKSCAPE" ] ; then
+-  if "$INKSCAPE" --help | grep -e "--export-png" > /dev/null; then
+-    EXPORT_FILE_OPTION="--export-png"
+-  else
+-    EXPORT_FILE_OPTION="--export-file"
+-  fi
++if "$INKSCAPE" --help | grep -e "--export-filename" > /dev/null; then
++  EXPORT_FILE_OPTION="--export-filename"
++elif "$INKSCAPE" --help | grep -e "--export-file" > /dev/null; then
++  EXPORT_FILE_OPTION="--export-file"
++elif "$INKSCAPE" --help | grep -e "--export-png" > /dev/null; then
++  EXPORT_FILE_OPTION="--export-png"
+ fi
+ 
+ SRC_FILE="assets.svg"

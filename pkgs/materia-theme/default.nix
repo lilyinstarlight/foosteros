@@ -10,6 +10,8 @@ pkgs.materia-theme.overrideAttrs (attrs: rec {
     sha256 = "0g4b7363hzs7z9xghldlz9aakmzzp18hhx32frb6qxy04lna2lwk";
   };
 
+  patches = [ ./inkscape-1.0-fix.patch ];
+
   nativeBuildInputs = attrs.nativeBuildInputs ++ (with pkgs; [ sassc inkscape optipng ]);
 
   installPhase = ''
