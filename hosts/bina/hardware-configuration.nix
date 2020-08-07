@@ -27,5 +27,7 @@
     [ { device = "/dev/disk/by-label/swap"; }
     ];
 
+  hardware.video.hidpi.enable = true;
+
   nix.maxJobs = lib.mkDefault 2;
 }
