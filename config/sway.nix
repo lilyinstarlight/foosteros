@@ -3,6 +3,7 @@
 {
   environment.systemPackages = with pkgs; [
     petty
+    neofetch
     qutebrowser firefox google-chrome
   ];
 
