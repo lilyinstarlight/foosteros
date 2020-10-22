@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
   postFixup = "wrapPythonPrograms";
 
   meta = with stdenv.lib; {
-    description = "Command line utility for FoosterURI";
+    description = "Command line utility for FoosterNET Redirect";
     homepage = "https://github.com/lilyinstarlight/uri";
     license = licenses.mit;
   };

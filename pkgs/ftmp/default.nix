@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
   postFixup = "wrapPythonPrograms";
 
   meta = with stdenv.lib; {
-    description = "Command line utility for FoosterTMP";
+    description = "Command line utility for FoosterNET Temp";
     homepage = "https://github.com/lilyinstarlight/tmp";
     license = licenses.mit;
   };

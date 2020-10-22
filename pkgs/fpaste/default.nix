@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
   postFixup = "wrapPythonPrograms";
 
   meta = with stdenv.lib; {
-    description = "Command line utility for FoosterPASTE";
+    description = "Command line utility for FoosterNET Paste";
     homepage = "https://github.com/lilyinstarlight/paste";
     license = licenses.mit;
   };
