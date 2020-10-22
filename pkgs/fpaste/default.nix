@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
     owner = "lilyinstarlight";
     repo = "paste";
     rev = "v${version}";
-    sha256 = "0rrl9ms0hijqpxhnfmm7y7h1z2nn9m14rnflcbmc9z0567zhj8w6";
+    sha256 = "0jfjgawkym0vi4s5v32sxib8anv32xp2bkn1rrx6yx33365xxyzm";
   };
 
   pythonPath = with python3Packages; [
