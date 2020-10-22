@@ -129,7 +129,7 @@ pkgs.neovim.override {
         fooster.vimPlugins.vim-lilypond-integrator
         fooster.vimPlugins.vim-radical
         fooster.vimPlugins.vim-resolve
-        fooster.vimPlugins.vim-sonicpi
+        fooster.vimPlugins.vim-sonic-pi
         fooster.vimPlugins.vim-spl
         fooster.vimPlugins.vim-zeek
       ];
