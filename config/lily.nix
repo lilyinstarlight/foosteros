@@ -10,6 +10,7 @@
 
   environment.systemPackages = with pkgs; [
     pridecat
+    ripgrep-all
   ];
 
   users.users.lily = {

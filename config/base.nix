@@ -57,9 +57,9 @@
       VERSION_ID="${config.system.nixos.version}"
       PRETTY_NAME="FoosterOS/2 Warp"
       LOGO="nix-snowflake"
-      HOME_URL="https://github.com/fkmclane/foosteros"
+      HOME_URL="https://github.com/lilyinstarlight/foosteros"
       DOCUMENTATION_URL="https://nixos.org/learn.html"
-      BUG_REPORT_URL="https://github.com/fkmclane/foosteros/issues"
+      BUG_REPORT_URL="https://github.com/lilyinstarlight/foosteros/issues"
     '';
 
     "xdg/user-dirs.defaults".text = ''
@@ -85,7 +85,7 @@
   environment.systemPackages = with pkgs; [
     file htop tmux fooster.neovim python3
     cachix fooster.fpaste fooster.ftmp fooster.furi
-    git gitAndTools.delta silver-searcher
+    git gitAndTools.delta ripgrep
   ];
 
   programs.fish.enable = true;
