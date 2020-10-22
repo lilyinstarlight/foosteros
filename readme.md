@@ -12,7 +12,6 @@ Feel free to take any pieces in this repository that you would like! Please don'
     ```
     nix-channel --update
     nix-env -iA nixos.{bc,git}
-
     nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixos
     nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
     nix-channel --update
