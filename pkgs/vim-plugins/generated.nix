@@ -29,12 +29,12 @@ let
 
   vim-interestingwords = buildVimPluginFrom2Nix {
     pname = "vim-interestingwords";
-    version = "2019-11-02";
+    version = "2020-07-31";
     src = fetchFromGitHub {
       owner = "lfv89";
       repo = "vim-interestingwords";
-      rev = "2128a825184ef931eeccb193c8009c77c9681c3a";
-      sha256 = "1iai2z4mma9kb3hrkfaf22d1ay15ryyvp065is4psmwzm5176jdf";
+      rev = "4c558ceda824126e124ddffbc3d8bdeb3e977cc9";
+      sha256 = "1332lv8d7m454a30w8r2pjnb31cjixp1v1kfgly0pa70br49df2g";
     };
     meta.homepage = "https://github.com/lfv89/vim-interestingwords/";
   };
@@ -79,36 +79,36 @@ let
     pname = "vim-resolve";
     version = "2019-01-19";
     src = fetchFromGitHub {
-      owner = "fkmclane";
+      owner = "lilyinstarlight";
       repo = "vim-resolve";
       rev = "a8eaa0156fd6a8f3b0806be51397005f2df693b1";
       sha256 = "11nddnjz751kdj18h5gp4qsvc4w8zfqfip1rw8lcci837254j7dg";
     };
-    meta.homepage = "https://github.com/fkmclane/vim-resolve/";
+    meta.homepage = "https://github.com/lilyinstarlight/vim-resolve/";
   };
 
-  vim-sonicpi = buildVimPluginFrom2Nix {
-    pname = "vim-sonicpi";
-    version = "2020-03-26";
+  vim-sonic-pi = buildVimPluginFrom2Nix {
+    pname = "vim-sonic-pi";
+    version = "2020-10-18";
     src = fetchFromGitHub {
-      owner = "fkmclane";
-      repo = "vim-sonicpi";
-      rev = "6365b2587ac65f8a4a82febd0c2cfa00638cc6d2";
-      sha256 = "02w8zb1bzmwwy1zfl038dbrjgk331amrh5d1ljwdhqm4hssg2d5w";
+      owner = "lilyinstarlight";
+      repo = "vim-sonic-pi";
+      rev = "27f7874b4c04984e9d8c51a01fb74be30da1aedf";
+      sha256 = "13zwq4r9zvpf5pi8d4gd6ydsvv0rb4k9knyka8jy6lqysz7xy9v2";
     };
-    meta.homepage = "https://github.com/fkmclane/vim-sonicpi/";
+    meta.homepage = "https://github.com/lilyinstarlight/vim-sonic-pi/";
   };
 
   vim-spl = buildVimPluginFrom2Nix {
     pname = "vim-spl";
     version = "2018-10-19";
     src = fetchFromGitHub {
-      owner = "fkmclane";
+      owner = "lilyinstarlight";
       repo = "vim-spl";
       rev = "f89da952dc4c08b0d830370d40cd53886d402547";
       sha256 = "14na2k3f22sg43b0p83q1wiilma5c3b3jz790m35zxgnh1w70fnh";
     };
-    meta.homepage = "https://github.com/fkmclane/vim-spl/";
+    meta.homepage = "https://github.com/lilyinstarlight/vim-spl/";
   };
 
   vim-zeek = buildVimPluginFrom2Nix {
