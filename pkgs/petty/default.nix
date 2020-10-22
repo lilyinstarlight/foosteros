@@ -5,7 +5,7 @@ stdenv.mkDerivation rec {
   version = "0.3";
 
   src = fetchFromGitHub {
-    owner = "fkmclane";
+    owner = "lilyinstarlight";
     repo = pname;
     rev = "v${version}";
     sha256 = "1cr17m88w1254fwfw50myppqkpw02q0ihy6lhjjz5kidjkgp06ba";
@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "TTY session starter";
-    homepage = "https://github.com/fkmclane/petty";
+    homepage = "https://github.com/lilyinstarlight/petty";
     license = licenses.mit;
   };
 

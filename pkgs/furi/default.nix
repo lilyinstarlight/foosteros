@@ -2,10 +2,10 @@
 
 stdenv.mkDerivation rec {
   name = "furi";
-  version = "0.1b3";
+  version = "0.1b4";
 
   src = fetchFromGitHub {
-    owner = "fkmclane";
+    owner = "lilyinstarlight";
     repo = "uri";
     rev = "v${version}";
     sha256 = "1a3d60cg8j7c781skbhna26nphn6zwv2rwfc6r6cv3vhspwz1mj5";
@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Command line utility for FoosterURI";
-    homepage = "https://github.com/fkmclane/uri";
+    homepage = "https://github.com/lilyinstarlight/uri";
     license = licenses.mit;
   };
 }
