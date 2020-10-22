@@ -34,7 +34,7 @@ Feel free to take any pieces in this repository that you would like! Please don'
 4. Make parent directories and clone this repository into /mnt/etc/nixos.
     ```
     mkdir -p /mnt/etc
-    git clone https://github.com/fkmclane/foosteros.git /mnt/etc/nixos
+    git clone https://github.com/lilyinstarlight/foosteros.git /mnt/etc/nixos
     ```
 5. Symlink configuration.nix and hardware-configuration.nix from the target system under hosts to /etc/nixos (hardware-configuration.nix can be generated if desired).
     ```
