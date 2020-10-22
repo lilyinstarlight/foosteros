@@ -106,6 +106,7 @@ pkgs.neovim.override {
         vimPlugins.vim-better-whitespace
         vimPlugins.vim-commentary
         vimPlugins.vim-easy-align
+        vimPlugins.vim-elixir
         vimPlugins.vim-eunuch
         vimPlugins.vim-expand-region
         vimPlugins.vim-fugitive
