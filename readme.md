@@ -12,6 +12,7 @@ Feel free to take any pieces in this repository that you would like! Please don'
     ```
     nix-channel --update
     nix-env -iA nixos.{bc,git}
+    nix-channel --remove nixos
     nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixos
     nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
     nix-channel --update
@@ -53,12 +54,17 @@ Feel free to take any pieces in this repository that you would like! Please don'
     ```
     nixos-install
     ```
-8. Reboot into the new system and login as root.
+8. Set the password for user account "lily" and add home-manager channel to install.
+    ```
+    nixos-enter --root /mnt
+    passwd lily
+    nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+    nix-channel --update
+    exit
+    ```
+9. Reboot into the new system.
     ```
     systemctl reboot
     ```
-9. Set the password for user account "lily".
-    ```
-    passwd lily
-    ```
-10. Logout and your FoosterOS/2 Warp system is setup and ready to go!
+
+Your FoosterOS/2 Warp system is setup and ready to go!
