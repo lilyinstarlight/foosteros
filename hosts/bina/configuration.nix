@@ -19,6 +19,7 @@
   environment.systemPackages = with pkgs; [
     gnupg pass-wayland
     vimpc
+    sonic-pi sonic-pi-tool
   ];
 
   environment.etc."sway/config.d/bina".text = ''
