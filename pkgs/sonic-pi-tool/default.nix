@@ -26,11 +26,15 @@ python3Packages.buildPythonApplication rec {
   ];
 
   installPhase = ''
-    mkdir -p $out/bin
-    cp sonic-pi-tool.py $out/bin/sonic-pi-tool
-    chmod +x $out/bin/sonic-pi-tool
+    mkdir -p "$out/bin"
+    cp sonic-pi-tool.py "$out/bin/sonic-pi-tool"
+    chmod +x "$out/bin/sonic-pi-tool"
 
-    substituteInPlace $out/bin/sonic-pi-tool --replace 'default_paths = (' 'default_paths = ('"'"'${pkgs.sonic-pi}/app'"'"','"$(echo -e '\n')"
+    substituteInPlace "$out/bin/sonic-pi-tool" --replace 'default_paths = (' 'default_paths = ('"'"'${pkgs.sonic-pi}/app'"'"', '
+
+    wrapProgram "$out/bin/sonic-pi-tool" \
+      --prefix PATH : ${pkgs.ruby}/bin:${pkgs.bash}/bin:${pkgs.supercollider}/bin:${pkgs.jack2Full}/bin \
+      --set AUBIO_LIB "${pkgs.aubio}/lib/libaubio.so"
   '';
 
   meta = with stdenv.lib; {
