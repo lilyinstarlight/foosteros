@@ -58,7 +58,6 @@ Feel free to take any pieces in this repository that you would like! Please don'
     nixos-enter --root /mnt
     passwd lily
     nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-    nix-channel --update
     exit
     ```
 9. Reboot into the new system.
