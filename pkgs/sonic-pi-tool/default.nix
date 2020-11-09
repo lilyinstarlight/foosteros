@@ -6,9 +6,9 @@ python3Packages.buildPythonApplication rec {
 
   src = fetchFromGitHub {
     owner = "emlyn";
-    repo = "sonic-pi-tool";
+    repo = pname;
     rev = version;
-    sha256 = "1cr17m88w1254fwfw50myppqkpw02q0ihy6lhjjz5kidjkgp06ba";
+    sha256 = "01xsdhg6jqk5bavcb83mbf7fcpaq3g8pqmfvnqwn7ypv67zwihgd";
   };
 
   propagatedBuildInputs = with pkgs; [ sonic-pi python3Packages.click python3Packages.oscpy python3Packages.psutil ];
