@@ -26,6 +26,7 @@ python3Packages.buildPythonApplication rec {
   ];
 
   installPhase = ''
+    mkdir -p $out/bin
     cp sonic-pi-tool.py $out/bin/sonic-pi-tool
     chmod +x $out/bin/sonic-pi-tool
 
