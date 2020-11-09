@@ -2,12 +2,13 @@
 
 python3Packages.buildPythonApplication rec {
   pname = "sonic-pi-tool";
-  version = "8f03380";
+  version = "0.0.0.9999";
 
   src = fetchFromGitHub {
     owner = "emlyn";
     repo = pname;
-    rev = version;
+    #rev = "v${version}";
+    rev = "8f03380495ab3449cd6abaf9d8659e63818dc58a";
     sha256 = "01xsdhg6jqk5bavcb83mbf7fcpaq3g8pqmfvnqwn7ypv67zwihgd";
   };
 
