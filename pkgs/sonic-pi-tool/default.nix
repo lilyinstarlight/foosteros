@@ -13,6 +13,9 @@ python3Packages.buildPythonApplication rec {
   };
 
   propagatedBuildInputs = with pkgs; [ sonic-pi python3Packages.click python3Packages.oscpy python3Packages.psutil ];
+
+  dontUseSetuptoolsBuild = true;
+  dontUsePipInstall = true;
   dontUseSetuptoolsCheck = true;
 
   patches = [
