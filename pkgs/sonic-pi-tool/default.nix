@@ -30,7 +30,7 @@ python3Packages.buildPythonApplication rec {
     cp sonic-pi-tool.py $out/bin/sonic-pi-tool
     chmod +x $out/bin/sonic-pi-tool
 
-    substituteInPlace $out/bin/sonic-pi-tool --replace 'default_paths = (' 'default_paths = ('"'"'${pkgs.sonic-pi}'"'"',\n'
+    substituteInPlace $out/bin/sonic-pi-tool --replace 'default_paths = (' 'default_paths = ('"'"'${pkgs.sonic-pi}/app'"'"','"$(echo -e '\n')"
   '';
 
   meta = with stdenv.lib; {
