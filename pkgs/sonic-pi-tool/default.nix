@@ -8,7 +8,7 @@ python3Packages.buildPythonApplication rec {
     owner = "emlyn";
     repo = pname;
     #rev = "v${version}";
-    rev = "8f03380495ab3449cd6abaf9d8659e63818dc58a";
+    rev = "05b77cc4b2201c8fed359c582dca138036042a08";
     sha256 = "01xsdhg6jqk5bavcb83mbf7fcpaq3g8pqmfvnqwn7ypv67zwihgd";
   };
 
@@ -17,13 +17,6 @@ python3Packages.buildPythonApplication rec {
   dontUseSetuptoolsBuild = true;
   dontUsePipInstall = true;
   dontUseSetuptoolsCheck = true;
-
-  patches = [
-    (fetchpatch {
-      url = "https://github.com/lilyinstarlight/sonic-pi-tool.py/commit/23f6214fb7afaab392ed428648a4daa77eea90c0.patch";
-      sha256 = "1npm6f1sk8nw48hlgbki5r086ppc470y9ywf2waja6pi3h6lk8q9";
-    })
-  ];
 
   installPhase = ''
     mkdir -p "$out/bin"
