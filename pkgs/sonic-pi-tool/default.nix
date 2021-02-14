@@ -9,7 +9,7 @@ python3Packages.buildPythonApplication rec {
     repo = pname;
     #rev = "v${version}";
     rev = "05b77cc4b2201c8fed359c582dca138036042a08";
-    sha256 = "01xsdhg6jqk5bavcb83mbf7fcpaq3g8pqmfvnqwn7ypv67zwihgd";
+    sha256 = "0la8p35ckqg53406577fnf5zmfw25i05lwx1v4ragigw38pniw4h";
   };
 
   propagatedBuildInputs = with pkgs; [ sonic-pi python3Packages.click python3Packages.oscpy python3Packages.psutil ];
