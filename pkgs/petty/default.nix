@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub }:
+{ stdenv, pkgs, fetchFromGitHub }:
 
 stdenv.mkDerivation rec {
   pname = "petty";
@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
     make PREFIX=$out install
   '';
 
-  meta = with stdenv.lib; {
+  meta = with pkgs.lib; {
     description = "TTY session starter";
     homepage = "https://github.com/lilyinstarlight/petty";
     license = licenses.mit;

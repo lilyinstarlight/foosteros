@@ -1,4 +1,4 @@
-{ stdenv, python3Packages, fetchFromGitHub }:
+{ stdenv, pkgs, python3Packages, fetchFromGitHub }:
 
 stdenv.mkDerivation rec {
   name = "furi";
@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
   installPhase = "install -D util/furi $out/bin/furi";
   postFixup = "wrapPythonPrograms";
 
-  meta = with stdenv.lib; {
+  meta = with pkgs.lib; {
     description = "Command line utility for FoosterNET Redirect";
     homepage = "https://github.com/lilyinstarlight/uri";
     license = licenses.mit;

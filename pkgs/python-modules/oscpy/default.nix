@@ -1,4 +1,4 @@
-{ stdenv, python3Packages }:
+{ pkgs, python3Packages }:
 
 python3Packages.buildPythonPackage rec {
   pname = "oscpy";
@@ -9,7 +9,7 @@ python3Packages.buildPythonPackage rec {
     sha256 = "22d4113accd9860e070a974ab8bbc024a9e4d2963a013e6b3a0699b6882ba421";
   };
 
-  meta = with stdenv.lib; {
+  meta = with pkgs.lib; {
     description = "A modern implementation of OSC for python2/3";
     homepage = "https://github.com/kivy/oscpy";
     license = licenses.mit;

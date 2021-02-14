@@ -1,4 +1,4 @@
-{ stdenv, python3Packages, fetchFromGitHub }:
+{ stdenv, pkgs, python3Packages, fetchFromGitHub }:
 
 stdenv.mkDerivation rec {
   name = "ftmp";
@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
   installPhase = "install -D util/ftmp $out/bin/ftmp";
   postFixup = "wrapPythonPrograms";
 
-  meta = with stdenv.lib; {
+  meta = with pkgs.lib; {
     description = "Command line utility for FoosterNET Temp";
     homepage = "https://github.com/lilyinstarlight/tmp";
     license = licenses.mit;

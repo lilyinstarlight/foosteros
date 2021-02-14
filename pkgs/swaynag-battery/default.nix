@@ -1,4 +1,4 @@
-{ stdenv, pkgs, buildGoModule, fetchFromGitHub }:
+{ pkgs, buildGoModule, fetchFromGitHub }:
 
 buildGoModule rec {
   pname = "swaynag-battery";
@@ -18,7 +18,7 @@ buildGoModule rec {
     sed -i -e 's#\(exec.Command("\)swaymsg\("\)#\1${pkgs.sway}/bin/swaymsg\2#g' swaymsg.go
   '';
 
-  meta = with stdenv.lib; {
+  meta = with pkgs.lib; {
     homepage = "https://github.com/m00qek/swaynag-battery";
     description = "Show a message when battery is low and discharging";
     license = licenses.mit;

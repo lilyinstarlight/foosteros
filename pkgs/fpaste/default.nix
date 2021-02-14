@@ -1,4 +1,4 @@
-{ stdenv, python3Packages, fetchFromGitHub }:
+{ stdenv, pkgs, python3Packages, fetchFromGitHub }:
 
 stdenv.mkDerivation rec {
   name = "fpaste";
@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
   installPhase = "install -D util/fpaste $out/bin/fpaste";
   postFixup = "wrapPythonPrograms";
 
-  meta = with stdenv.lib; {
+  meta = with pkgs.lib; {
     description = "Command line utility for FoosterNET Paste";
     homepage = "https://github.com/lilyinstarlight/paste";
     license = licenses.mit;

@@ -1,4 +1,4 @@
-{ stdenv, pkgs, python3Packages, fetchpatch, fetchFromGitHub }:
+{ pkgs, python3Packages, fetchpatch, fetchFromGitHub }:
 
 python3Packages.buildPythonApplication rec {
   pname = "sonic-pi-tool";
@@ -30,7 +30,7 @@ python3Packages.buildPythonApplication rec {
       --set AUBIO_LIB "${pkgs.aubio}/lib/libaubio.so"
   '';
 
-  meta = with stdenv.lib; {
+  meta = with pkgs.lib; {
     description = "Tool for interfacing with the Sonic Pi server from the command line";
     homepage = "https://github.com/emlyn/sonic-pi-tool";
     license = licenses.mpl20;
