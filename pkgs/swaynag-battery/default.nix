@@ -4,8 +4,6 @@ buildGoModule rec {
   pname = "swaynag-battery";
   version = "0.1.1.9999";
 
-  goPackagePath = "github.com/m00qek/swaynag-battery";
-
   src = fetchFromGitHub {
     owner = "m00qek";
     repo = pname;
