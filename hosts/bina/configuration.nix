@@ -76,7 +76,7 @@
 
     ### variables
     set $mod mod4
-    set $pass ${pkgs.wofi-pass}/bin/wofi-pass
+    set $pass ${pkgs.wofi-pass}/bin/wofi-pass -s
 
     ### buttons
     bindsym xf86audioplay exec ${pkgs.mpc_cli}/bin/mpc -q toggle
