@@ -30,6 +30,4 @@ stdenv.mkDerivation rec {
     homepage = "https://github.com/AluminumTank/wofi-pass";
     license = licenses.gpl2Only;
   };
-
-  passthru.shellPath = "/bin/wofi-pass";
 }

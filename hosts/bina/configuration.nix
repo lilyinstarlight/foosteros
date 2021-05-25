@@ -73,11 +73,17 @@
         tap enabled
     }
 
+    ### variables
+    set $pass ${pkgs.wofi-pass}/bin/wofi-pass
+
     ### buttons
     bindsym xf86audioplay exec ${pkgs.mpc_cli}/bin/mpc -q toggle
     bindsym xf86audiostop exec ${pkgs.mpc_cli}/bin/mpc -q stop
     bindsym xf86audioprev exec ${pkgs.mpc_cli}/bin/mpc -q prev
     bindsym xf86audionext exec ${pkgs.mpc_cli}/bin/mpc -q next
+
+    ### applications
+    bindsym $mod+backslash exec $pass
   '';
 
   environment.etc."xdg/i3status/config".text = ''

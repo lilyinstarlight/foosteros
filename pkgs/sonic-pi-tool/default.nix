@@ -35,6 +35,4 @@ python3Packages.buildPythonApplication rec {
     homepage = "https://github.com/emlyn/sonic-pi-tool";
     license = licenses.mpl20;
   };
-
-  passthru.shellPath = "/bin/sonic-pi-tool";
 }

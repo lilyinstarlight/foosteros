@@ -31,7 +31,6 @@
     set $term ${pkgs.alacritty}/bin/alacritty
     set $run ${pkgs.wofi}/bin/wofi --show run
     set $lock ${pkgs.swaylock}/bin/swaylock
-    set $pass ${pkgs.wofi-pass}/bin/wofi-pass
     set $browser ${pkgs.qutebrowser}/bin/qutebrowser
 
     ### global settings
@@ -185,7 +184,6 @@
     bindsym $mod+semicolon exec $term
     bindsym $mod+return exec $run
     bindsym $mod+space exec $lock
-    bindsym $mod+backslash exec $pass
     bindsym $mod+a exec $browser
 
     #### shortcuts
