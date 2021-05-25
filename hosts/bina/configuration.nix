@@ -49,7 +49,7 @@
   networking.interfaces.wlp4s0.useDHCP = true;
 
   environment.systemPackages = with pkgs; [
-    gnupg pass-wayland
+    gnupg pass-wayland passExtensions.pass-otp
     vimpc
     sonic-pi sonic-pi-tool
   ];
