@@ -218,7 +218,7 @@
       mopidy-spotify mopidy-iris mopidy-mpd
     ];
     extraConfigFiles = [
-      "$HOME/.config/mopidy/mopidy.conf"
+      "$XDG_CONFIG_DIR/mopidy/mopidy.conf"
     ];
   };
 
