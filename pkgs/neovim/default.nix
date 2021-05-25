@@ -8,7 +8,7 @@ pkgs.neovim.override {
 
   configure = {
     customRC = ''
-      "settings
+      " settings
       set autoindent
       set autoread
       set autowrite
@@ -41,17 +41,17 @@ pkgs.neovim.override {
       set undofile
       set wildmenu
 
-      "tabbing
+      " tabbing
       set tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
 
-      "color scheme
+      " color scheme
       colorscheme jellybeans
 
-      "features
+      " features
       filetype plugin indent on
       syntax enable
 
-      "autocommands
+      " autocommands
       autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
       autocmd BufNewFile,BufRead *.ly compiler lilypond
       autocmd BufNewFile,BufRead *.tex let b:tex_flavor = 'pdflatexmk' | compiler tex
@@ -75,27 +75,30 @@ pkgs.neovim.override {
       vmap <leader>q :!bc<cr>
       nmap <leader><cr> :make %<cr>
 
-      "matchit.vim
+      " matchit.vim
       runtime! macros/matchit.vim
 
-      "netrw
+      " netrw
       let g:netrw_list_hide='\(^\|\s\s\)\zs\.\S\+'
       nmap <leader>e :Explore<cr>
 
-      "lightline.vim
+      " lightline.vim
       let g:lightline={'colorscheme': 'jellybeans'}
 
-      "vim-easy-align
+      " vim-easy-align
       nmap ga <Plug>(EasyAlign)
       xmap ga <Plug>(EasyAlign)
 
-      "vim-better-whitespace
+      " vim-better-whitespace
       nmap <leader><space> :StripWhitespace<cr>
 
-      "vimwiki
+      " vimwiki
       let g:vimwiki_global_ext=0
       let g:vimwiki_dir_link='index'
       let g:vimwiki_list=[{'path': '$HOME/docs/wiki'}]
+
+      " vim-sonic-pi
+      let g:sonic_pi_run_args = ['--cue-server', 'external']
     '';
 
     packages.fooster = with pkgs; {
