@@ -158,27 +158,27 @@
     bindsym $mod+t mode "resize"
 
     #### buttons
-    bindsym xf86monbrightnessdown exec ${pkgs.brightnessctl}/bin/brightnessctl -c backlight -10%
-    bindsym xf86monbrightnessup exec ${pkgs.brightnessctl}/bin/brightnessctl -c backlight +10%
-    bindsym shift+xf86monbrightnessdown exec ${pkgs.brightnessctl}/bin/brightnessctl -c backlight -1%
-    bindsym shift+xf86monbrightnessup exec ${pkgs.brightnessctl}/bin/brightnessctl -c backlight +1%
-    bindsym $mod+xf86monbrightnessdown exec ${pkgs.brightnessctl}/bin/brightnessctl -c backlight 0%
-    bindsym $mod+xf86monbrightnessup exec ${pkgs.brightnessctl}/bin/brightnessctl -c backlight 100%
+    bindsym xf86monbrightnessdown exec ${pkgs.brightnessctl}/bin/brightnessctl -c backlight set 10%-
+    bindsym xf86monbrightnessup exec ${pkgs.brightnessctl}/bin/brightnessctl -c backlight set 10%+
+    bindsym shift+xf86monbrightnessdown exec ${pkgs.brightnessctl}/bin/brightnessctl -c backlight set 1%-
+    bindsym shift+xf86monbrightnessup exec ${pkgs.brightnessctl}/bin/brightnessctl -c backlight set 1%+
+    bindsym $mod+xf86monbrightnessdown exec ${pkgs.brightnessctl}/bin/brightnessctl -c backlight set 0%
+    bindsym $mod+xf86monbrightnessup exec ${pkgs.brightnessctl}/bin/brightnessctl -c backlight set 100%
 
-    bindsym xf86kbdbrightnessdown exec ${pkgs.brightnessctl}/bin/brightnessctl -c leds -10%
-    bindsym xf86kbdbrightnessup exec ${pkgs.brightnessctl}/bin/brightnessctl -c leds +10%
-    bindsym shift+xf86kbdbrightnessdown exec ${pkgs.brightnessctl}/bin/brightnessctl -c leds -1%
-    bindsym shift+xf86kbdbrightnessup exec ${pkgs.brightnessctl}/bin/brightnessctl -c leds +1%
-    bindsym $mod+xf86kbdbrightnessdown exec ${pkgs.brightnessctl}/bin/brightnessctl -c leds 0%
-    bindsym $mod+xf86kbdbrightnessup exec ${pkgs.brightnessctl}/bin/brightnessctl -c leds 100%
+    bindsym xf86kbdbrightnessdown exec ${pkgs.brightnessctl}/bin/brightnessctl -c leds set 10%-
+    bindsym xf86kbdbrightnessup exec ${pkgs.brightnessctl}/bin/brightnessctl -c leds set 10%+
+    bindsym shift+xf86kbdbrightnessdown exec ${pkgs.brightnessctl}/bin/brightnessctl -c leds set 1%-
+    bindsym shift+xf86kbdbrightnessup exec ${pkgs.brightnessctl}/bin/brightnessctl -c leds set 1%+
+    bindsym $mod+xf86kbdbrightnessdown exec ${pkgs.brightnessctl}/bin/brightnessctl -c leds set 0%
+    bindsym $mod+xf86kbdbrightnessup exec ${pkgs.brightnessctl}/bin/brightnessctl -c leds set 100%
 
-    bindsym xf86audiolowervolume exec ${pkgs.alsaUtils}/bin/amixer -q -D pulse sset Master 10%-
-    bindsym xf86audioraisevolume exec ${pkgs.alsaUtils}/bin/amixer -q -D pulse sset Master 10%+
-    bindsym shift+xf86audiolowervolume exec ${pkgs.alsaUtils}/bin/amixer -q -D pulse sset Master 1%-
-    bindsym shift+xf86audioraisevolume exec ${pkgs.alsaUtils}/bin/amixer -q -D pulse sset Master 1%+
-    bindsym $mod+xf86audiolowervolume exec ${pkgs.alsaUtils}/bin/amixer -q -D pulse sset Master 0%
-    bindsym $mod+xf86audioraisevolume exec ${pkgs.alsaUtils}/bin/amixer -q -D pulse sset Master 100%
-    bindsym xf86audiomute exec ${pkgs.alsaUtils}/bin/amixer -q -D pulse sset Master toggle
+    bindsym xf86audiolowervolume exec ${pkgs.alsaUtils}/bin/amixer -q -D default sset Master 10%-
+    bindsym xf86audioraisevolume exec ${pkgs.alsaUtils}/bin/amixer -q -D default sset Master 10%+
+    bindsym shift+xf86audiolowervolume exec ${pkgs.alsaUtils}/bin/amixer -q -D default sset Master 1%-
+    bindsym shift+xf86audioraisevolume exec ${pkgs.alsaUtils}/bin/amixer -q -D default sset Master 1%+
+    bindsym $mod+xf86audiolowervolume exec ${pkgs.alsaUtils}/bin/amixer -q -D default sset Master 0%
+    bindsym $mod+xf86audioraisevolume exec ${pkgs.alsaUtils}/bin/amixer -q -D default sset Master 100%
+    bindsym xf86audiomute exec ${pkgs.alsaUtils}/bin/amixer -q -D default sset Master toggle
 
     #### applications
     bindsym $mod+semicolon exec $term
