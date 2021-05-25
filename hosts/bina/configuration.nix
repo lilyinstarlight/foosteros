@@ -75,6 +75,7 @@
     }
 
     ### variables
+    set $mod mod4
     set $pass ${pkgs.wofi-pass}/bin/wofi-pass
 
     ### buttons
