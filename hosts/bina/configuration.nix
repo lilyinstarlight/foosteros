@@ -50,6 +50,7 @@
 
   environment.systemPackages = with pkgs; [
     gnupg pass-wayland passExtensions.pass-otp
+    wofi-pass
     mpc_cli vimpc
     sonic-pi sonic-pi-tool
   ];
