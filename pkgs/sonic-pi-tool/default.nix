@@ -1,4 +1,4 @@
-{ pkgs, python3Packages, fetchpatch, fetchFromGitHub }:
+{ pkgs, python3Packages, fetchFromGitHub }:
 
 python3Packages.buildPythonApplication rec {
   pname = "sonic-pi-tool";

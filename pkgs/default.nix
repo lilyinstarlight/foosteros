@@ -9,6 +9,7 @@
   pridecat = pkgs.callPackage ./pridecat/default.nix {};
   sonic-pi-tool = pkgs.callPackage ./sonic-pi-tool/default.nix {};
   swaynag-battery = pkgs.callPackage ./swaynag-battery/default.nix {};
+  wofi-pass = pkgs.callPackage ./wofi-pass/default.nix {};
 
   python3Packages = pkgs.python3Packages.override {
     overrides = (self: super: {
