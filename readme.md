@@ -8,12 +8,13 @@ Feel free to take any pieces in this repository that you would like! Please don'
 ## Installation
 
 1. Boot NixOS minimal install media.
-2. Add installation dependencies such as git, unstable nixos channel, and home-manager channel.
+2. Add installation dependencies such as git, unstable nixos channel, home-manager channel, and sops-nix channel.
     ```
     nix-channel --update
     nix-env -iA nixos.{bc,git}
     nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixos
     nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+    nix-channel --add https://github.com/Mic92/sops-nix/archive/master.tar.gz sops-nix
     nix-channel --update
     ```
 3. Partition the disks with at least an EFI System Partition and preferably root and swap in an encrypted LVM.
@@ -44,20 +45,22 @@ Feel free to take any pieces in this repository that you would like! Please don'
     mkdir -p /mnt/etc
     git clone https://github.com/lilyinstarlight/foosteros.git /mnt/etc/nixos
     ```
-6. Symlink configuration.nix and hardware-configuration.nix from the target system under hosts to /etc/nixos (hardware-configuration.nix can be generated if desired).
+6. Symlink configuration.nix, hardware-configuration.nix, and secrets.yaml from the target system under hosts to /etc/nixos (hardware-configuration.nix can be generated if desired).
     ```
     ln -s hosts/bina/configuration.nix /mnt/etc/nixos/configuration.nix
     ln -s hosts/bina/hardware-configuration.nix /mnt/etc/nixos/hardware-configuration.nix
+    ln -s hosts/bina/secrets.yaml /mnt/etc/nixos/secrets.yaml
     ```
 7. Run nixos-install.
     ```
     nixos-install
     ```
-8. Set the password for user account "lily" and add home-manager channel to install.
+8. Set the password for user account "lily" and add home-manager and sops-nix channels to install.
     ```
     nixos-enter --root /mnt
     passwd lily
     nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+    nix-channel --add https://github.com/Mic92/sops-nix/archive/master.tar.gz sops-nix
     exit
     ```
 9. Reboot into the new system.

@@ -21,6 +21,11 @@
   };
 
   home-manager.users.lily = { pkgs, ... }: {
+    services.udiskie = {
+      enable = true;
+      tray = "never";
+    };
+
     programs.fish = {
       enable = true;
       plugins = pkgs.callPackage ../misc/fish-plugins/default.nix {};

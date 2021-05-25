@@ -1,6 +1,4 @@
 /configuration.nix
 /hardware-configuration.nix
+/secrets.yaml
 /result
-
-/secrets/*
-!/secrets/.keep

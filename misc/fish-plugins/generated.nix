@@ -7,8 +7,8 @@
     src = fetchFromGitHub {
       owner = "franciscolourenco";
       repo = "done";
-      rev = "9351f5a9f4ae6c73dd6f18e41364e63a77be5d90";
-      sha256 = "0ffkhm0ap96kixrck3r3fnmc1iq1wl018iqb7wjwf6miqwxhlb7v";
+      rev = "37117c3d8ed6b820f6dc647418a274ebd1281832";
+      sha256 = "1k95w2plb4jchqn0n84ickfkp3gan8k1l5xdcv1hkfgcvka0f9vi";
     };
   }
 
@@ -17,7 +17,7 @@
     src = fetchFromGitHub {
       owner = "fishpkg";
       repo = "fish-humanize-duration";
-      rev = "245e38ff3c03654271039f119078b721b7a26d3b";
+      rev = "f7c7e9e0035ecdcbfdaae9dfc08505659db39cd3";
       sha256 = "078wzrppw62dz297860n2qdljnnpmhpaj60gw5cl4dbfcij24335";
     };
   }
