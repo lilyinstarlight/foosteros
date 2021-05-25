@@ -50,7 +50,7 @@
 
   environment.systemPackages = with pkgs; [
     gnupg pass-wayland passExtensions.pass-otp
-    vimpc
+    mpc_cli vimpc
     sonic-pi sonic-pi-tool
   ];
 
@@ -72,6 +72,12 @@
         scroll_method two_finger
         tap enabled
     }
+
+    ### buttons
+    bindsym xf86audioplay exec ${pkgs.mpc_cli}/bin/mpc -q toggle
+    bindsym xf86audiostop exec ${pkgs.mpc_cli}/bin/mpc -q stop
+    bindsym xf86audioprev exec ${pkgs.mpc_cli}/bin/mpc -q prev
+    bindsym xf86audionext exec ${pkgs.mpc_cli}/bin/mpc -q next
   '';
 
   environment.etc."xdg/i3status/config".text = ''

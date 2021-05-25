@@ -28,11 +28,11 @@
   environment.etc."sway/config.d/fooster".text = lib.mkDefault ''
     ### variables
     set $mod mod4
-    set $term alacritty
-    set $run wofi --show run
-    set $lock swaylock
-    set $pass wofi-pass
-    set $browser qutebrowser
+    set $term ${pkgs.alacritty}/bin/alacritty
+    set $run ${pkgs.wofi}/bin/wofi --show run
+    set $lock ${pkgs.swaylock}/bin/swaylock
+    set $pass ${pkgs.wofi-pass}/bin/wofi-pass
+    set $browser ${pkgs.qutebrowser}/bin/qutebrowser
 
     ### global settings
     font Monofur Nerd Font 12
@@ -159,32 +159,27 @@
     bindsym $mod+t mode "resize"
 
     #### buttons
-    bindsym xf86monbrightnessdown exec brightnessctl -c backlight -10%
-    bindsym xf86monbrightnessup exec brightnessctl -c backlight +10%
-    bindsym shift+xf86monbrightnessdown exec brightnessctl -c backlight -1%
-    bindsym shift+xf86monbrightnessup exec brightnessctl -c backlight +1%
-    bindsym $mod+xf86monbrightnessdown exec brightnessctl -c backlight 0%
-    bindsym $mod+xf86monbrightnessup exec brightnessctl -c backlight 100%
+    bindsym xf86monbrightnessdown exec ${pkgs.brightnessctl}/bin/brightnessctl -c backlight -10%
+    bindsym xf86monbrightnessup exec ${pkgs.brightnessctl}/bin/brightnessctl -c backlight +10%
+    bindsym shift+xf86monbrightnessdown exec ${pkgs.brightnessctl}/bin/brightnessctl -c backlight -1%
+    bindsym shift+xf86monbrightnessup exec ${pkgs.brightnessctl}/bin/brightnessctl -c backlight +1%
+    bindsym $mod+xf86monbrightnessdown exec ${pkgs.brightnessctl}/bin/brightnessctl -c backlight 0%
+    bindsym $mod+xf86monbrightnessup exec ${pkgs.brightnessctl}/bin/brightnessctl -c backlight 100%
 
-    bindsym xf86kbdbrightnessdown exec brightnessctl -c leds -10%
-    bindsym xf86kbdbrightnessup exec brightnessctl -c leds +10%
-    bindsym shift+xf86kbdbrightnessdown exec brightnessctl -c leds -1%
-    bindsym shift+xf86kbdbrightnessup exec brightnessctl -c leds +1%
-    bindsym $mod+xf86kbdbrightnessdown exec brightnessctl -c leds 0%
-    bindsym $mod+xf86kbdbrightnessup exec brightnessctl -c leds 100%
+    bindsym xf86kbdbrightnessdown exec ${pkgs.brightnessctl}/bin/brightnessctl -c leds -10%
+    bindsym xf86kbdbrightnessup exec ${pkgs.brightnessctl}/bin/brightnessctl -c leds +10%
+    bindsym shift+xf86kbdbrightnessdown exec ${pkgs.brightnessctl}/bin/brightnessctl -c leds -1%
+    bindsym shift+xf86kbdbrightnessup exec ${pkgs.brightnessctl}/bin/brightnessctl -c leds +1%
+    bindsym $mod+xf86kbdbrightnessdown exec ${pkgs.brightnessctl}/bin/brightnessctl -c leds 0%
+    bindsym $mod+xf86kbdbrightnessup exec ${pkgs.brightnessctl}/bin/brightnessctl -c leds 100%
 
-    bindsym xf86audiolowervolume exec amixer -q -D pulse sset Master 10%-
-    bindsym xf86audioraisevolume exec amixer -q -D pulse sset Master 10%+
-    bindsym shift+xf86audiolowervolume exec amixer -q -D pulse sset Master 1%-
-    bindsym shift+xf86audioraisevolume exec amixer -q -D pulse sset Master 1%+
-    bindsym $mod+xf86audiolowervolume exec amixer -q -D pulse sset Master 0%
-    bindsym $mod+xf86audioraisevolume exec amixer -q -D pulse sset Master 100%
-    bindsym xf86audiomute exec amixer -q -D pulse sset Master toggle
-
-    bindsym xf86audioplay exec mpc -q toggle
-    bindsym xf86audiostop exec mpc -q stop
-    bindsym xf86audioprev exec mpc -q prev
-    bindsym xf86audionext exec mpc -q next
+    bindsym xf86audiolowervolume exec ${pkgs.alsaUtils}/bin/amixer -q -D pulse sset Master 10%-
+    bindsym xf86audioraisevolume exec ${pkgs.alsaUtils}/bin/amixer -q -D pulse sset Master 10%+
+    bindsym shift+xf86audiolowervolume exec ${pkgs.alsaUtils}/bin/amixer -q -D pulse sset Master 1%-
+    bindsym shift+xf86audioraisevolume exec ${pkgs.alsaUtils}/bin/amixer -q -D pulse sset Master 1%+
+    bindsym $mod+xf86audiolowervolume exec ${pkgs.alsaUtils}/bin/amixer -q -D pulse sset Master 0%
+    bindsym $mod+xf86audioraisevolume exec ${pkgs.alsaUtils}/bin/amixer -q -D pulse sset Master 100%
+    bindsym xf86audiomute exec ${pkgs.alsaUtils}/bin/amixer -q -D pulse sset Master toggle
 
     #### applications
     bindsym $mod+semicolon exec $term
@@ -194,12 +189,8 @@
     bindsym $mod+a exec $browser
 
     #### shortcuts
-    bindsym $mod+minus exec tvup
-    bindsym $mod+equal exec tvdown
-    bindsym $mod+d exec mntup
-    bindsym $mod+f exec mntdown
-    bindsym $mod+print exec grim "$HOME"/tmp/screenshot.png
-    bindsym $mod+shift+print exec grim -g "$(slurp)" "$HOME"/tmp/screenshot.png
+    bindsym $mod+print exec ${pkgs.grim}/bin/grim "$HOME"/tmp/screenshot.png
+    bindsym $mod+shift+print exec ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" "$HOME"/tmp/screenshot.png
 
     ### desktop elements
     output * background #111111 solid_color
@@ -225,14 +216,12 @@
     }
 
     ### desktop services
-    #exec_always xrdb -merge "$HOME"/.Xresources
-    #exec_always pgrep polkit-gnome || run /usr/libexec/polkit-gnome-authentication-agent-1
-    #exec_always setbg
+    exec_always ${pkgs.fooster.backgrounds}/bin/setbg
 
     ### desktop environment
-    exec_always gsettings set org.gnome.desktop.interface gtk-theme "Materia-Fooster"
-    exec_always gsettings set org.gnome.desktop.interface icon-theme "Papirus"
-    exec_always gsettings set org.gnome.desktop.interface cursor-theme "Bibata_Oil"
+    exec_always ${pkgs.glib}/bin/gsettings set org.gnome.desktop.interface gtk-theme "Materia-Fooster"
+    exec_always ${pkgs.glib}/bin/gsettings set org.gnome.desktop.interface icon-theme "Papirus"
+    exec_always ${pkgs.glib}/bin/gsettings set org.gnome.desktop.interface cursor-theme "Bibata_Oil"
     seat seat0 xcursor_theme "Bibata_Oil"
   '';
 
@@ -331,16 +320,15 @@
     enable = true;
     wrapperFeatures.gtk = true;
     extraPackages = with pkgs; [
-      brightnessctl jq glib
+      alsaUtils brightnessctl jq glib
       swaybg swaylock swayidle
       i3status mako wofi alacritty
-      fooster.materia-theme bibata-cursors papirus-icon-theme
+      fooster.backgrounds fooster.materia-theme bibata-cursors papirus-icon-theme
       slurp grim wl-clipboard
       xwayland
     ];
     extraSessionCommands = ''
       export XDG_SESSION_TYPE=wayland
-      export WLR_NO_HARDWARE_CURSORS=1
     '';
   };
 }
