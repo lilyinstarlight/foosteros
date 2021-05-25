@@ -32,6 +32,7 @@ stdenv.mkDerivation rec {
       ${pkgs.nitrogen}/bin/nitrogen --set-zoom-fill --random "\$backgrounds"
     fi
     EOF
+    chmod +x "$out/bin/setbg"
   '';
 
   meta = with pkgs.lib; {
