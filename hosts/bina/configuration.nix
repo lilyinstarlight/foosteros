@@ -52,6 +52,7 @@
     gnupg pass-wayland passExtensions.pass-otp
     wofi-pass
     mpc_cli vimpc
+    element-desktop discord
     sonic-pi sonic-pi-tool
   ];
 
