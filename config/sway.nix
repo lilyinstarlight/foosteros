@@ -90,7 +90,7 @@
     bindsym $mod+2 workspace 2:www
     bindsym $mod+3 workspace 3:chat
     bindsym $mod+4 workspace 4:work
-    bindsym $mod+5 workspace 5:school
+    bindsym $mod+5 workspace 5:extra
     bindsym $mod+6 workspace 6:music
     bindsym $mod+7 workspace 7:games
 
@@ -98,7 +98,7 @@
     bindsym $mod+shift+2 move container to workspace 2:www
     bindsym $mod+shift+3 move container to workspace 3:chat
     bindsym $mod+shift+4 move container to workspace 4:work
-    bindsym $mod+shift+5 move container to workspace 5:school
+    bindsym $mod+shift+5 move container to workspace 5:extra
     bindsym $mod+shift+6 move container to workspace 6:music
     bindsym $mod+shift+7 move container to workspace 7:games
 
