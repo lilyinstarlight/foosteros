@@ -44,7 +44,7 @@
     gaps inner 12
 
     ### color settings
-    set $lock $lock -c 000000 --bshlcolor 333333 --insidecolor 222222 --insidevercolor 333333 --insidewrongcolor 222222 --keyhlcolor f29bd4 --linecolor 222222 --ringcolor 222222 --ringvercolor 333333 --ringwrongcolor aa4444 --separatorcolor 222222 --textcolor f29bd4
+    set $lock $lock -c 000000 --bs-hl-color 333333 --caps-lock-bs-hl-color 333333 --caps-lock-key-hl-color 333333 --font 'Monofur Nerd Font' --font-size 18 --inside-color 222222 --inside-clear-color 222222 --inside-caps-lock-color 222222 --inside-ver-color 333333 --inside-wrong-color 222222 --key-hl-color f29bd4 --line-color 222222 --ring-color 222222 --ring-clear-color 333333 --ring-caps-lock-color 222222 --ring-ver-color 333333 --ring-wrong-color aa4444 --separator-color 222222 --text-color f29bd4 --text-clear-color f29bd4 --text-caps-lock-color f29bd4 --text-ver-color f29bd4 --text-wrong-color f29bd4
 
     client.background #f29bd4
     client.focused #333333 #333333 #f29bd4 #f29bd4 #f29bd4
