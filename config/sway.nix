@@ -209,6 +209,8 @@
     bar {
         position top
 
+        icon_theme Papirus
+
         font Monofur Nerd Font 12
         colors {
             background #222222
