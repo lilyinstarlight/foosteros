@@ -9,6 +9,7 @@
   home-manager.useGlobalPkgs = true;
 
   environment.systemPackages = with pkgs; [
+    any-nix-shell
     pridecat
     ripgrep-all
   ];
@@ -41,7 +42,10 @@
         curl = "curl -L";
         cget = "command curl -fLJO --progress-bar --retry 10 -C -";
       };
-      promptInit = "fish_vi_key_bindings";
+      promptInit = ''
+        fish_vi_key_bindings
+        any-nix-shell fish --info-right | source
+      '';
     };
 
     programs.git = {
