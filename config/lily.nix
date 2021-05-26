@@ -10,6 +10,7 @@
 
   environment.systemPackages = with pkgs; [
     any-nix-shell
+    udiskie
     pridecat
     ripgrep-all
   ];
@@ -24,7 +25,6 @@
   home-manager.users.lily = { pkgs, ... }: {
     services.udiskie = {
       enable = true;
-      tray = "never";
     };
 
     programs.fish = {
