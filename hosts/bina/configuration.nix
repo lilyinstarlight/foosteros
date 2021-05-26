@@ -73,9 +73,12 @@
     output eDP-1 resolution 1920x1080 position 0 0 scale 1
 
     ### inputs
+    input type:keyboard {
+        xkb_options caps:escape
+    }
+
     input "1:1:AT_Translated_Set_2_keyboard" {
         xkb_layout us
-        xkb_options caps:escape
     }
 
     input "1739:0:Synaptics_TM3053-003" {
