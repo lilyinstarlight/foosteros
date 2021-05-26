@@ -25,6 +25,8 @@
   home-manager.users.lily = { pkgs, ... }: {
     services.udiskie = {
       enable = true;
+      automount = false;
+      tray = "never";
     };
 
     programs.fish = {
