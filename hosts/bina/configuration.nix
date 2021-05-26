@@ -49,7 +49,7 @@
   networking.interfaces.wlp4s0.useDHCP = true;
 
   environment.systemPackages = with pkgs; [
-    gnupg pass-wayland passExtensions.pass-otp
+    gnupg pass-wayland pass-otp
     wofi-pass
     mpc_cli vimpc
     element-desktop discord
