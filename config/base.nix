@@ -86,6 +86,7 @@
     file htop tmux fooster.neovim python3
     cachix fooster.fpaste fooster.ftmp fooster.furi
     git gitAndTools.delta ripgrep
+    shellcheck
   ];
 
   programs.fish.enable = true;

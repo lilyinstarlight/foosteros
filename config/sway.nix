@@ -315,8 +315,8 @@
   '';
 
   environment.etc."petty/pettyrc".text = ''
-    shell=${pkgs.bashInteractive}
-    session1=sway
+    shell=${pkgs.bashInteractive}/bin/bash
+    session1=${pkgs.sway}/bin/sway
   '';
 
   environment.etc."sessions/sway".source = pkgs.writeScript "sway" ''

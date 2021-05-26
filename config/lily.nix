@@ -54,7 +54,6 @@
       userEmail = "lily@lily.flowers";
       signing.key = "2E23AF668B14BA1F";
       extraConfig = {
-        core.pager = "${pkgs.pridecat}/bin/pridecat --trans -f | ${pkgs.gitAndTools.delta}/bin/delta --dark";
         init.defaultBranch = "main";
         pull.ff = "only";
       };
@@ -67,8 +66,8 @@
     };
 
     home.file.".config/petty/pettyrc".text = ''
-      shell=fish
-      session1=sway
+      shell=${pkgs.fish}/bin/fish
+      session1=${pkgs.sway}/bin/sway
     '';
   };
 }
