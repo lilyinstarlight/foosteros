@@ -20,13 +20,25 @@
   systemd.services.wireless-networks = {
     wantedBy = [ "multi-user.target" ];
     after = [ "wpa_supplicant.service" ];
-    wants = [ "wpa_supplicant.service" ];
+    requires = [ "wpa_supplicant.service" ];
 
     description = "Load Wireless Network Definitions";
 
-    serviceConfig.Type = "oneshot";
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
 
     script = ''
+      for i in $(seq 1 10); do
+        if ! [ -d /var/run/wpa_supplicant ]; then
+          sleep 1
+        fi
+      done
+      if ! [ -d /var/run/wpa_supplicant ]; then
+        exit 1
+      fi
+
       iface="$(ls /var/run/wpa_supplicant | head -n1)"
 
       for iface in $(ls /var/run/wpa_supplicant); do
