@@ -67,7 +67,7 @@
 
     home.file.".config/petty/pettyrc".text = ''
       shell=${pkgs.fish}/bin/fish
-      session1=${pkgs.sway}/bin/sway
+      session1=sway
     '';
   };
 }
