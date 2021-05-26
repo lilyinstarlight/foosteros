@@ -27,6 +27,7 @@
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
+      Restart = "on-failure";
     };
 
     script = ''
@@ -59,6 +60,13 @@
   };
   networking.interfaces.enp0s25.useDHCP = true;
   networking.interfaces.wlp4s0.useDHCP = true;
+
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = false;
+    package = pkgs.bluezFull;
+  };
+  hardware.pulseaudio.package = pkgs.pulseaudioFull;
 
   environment.systemPackages = with pkgs; [
     gnupg pass-wayland pass-otp

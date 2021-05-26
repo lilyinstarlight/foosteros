@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 
 {
+  hardware.pulseaudio.enable = true;
+
   environment.systemPackages = with pkgs; [
     petty
     neofetch

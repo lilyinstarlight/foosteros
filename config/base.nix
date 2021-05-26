@@ -92,7 +92,6 @@
   programs.fish.enable = true;
 
   sound.enable = true;
-  hardware.pulseaudio.enable = true;
 
   services.openssh.enable = true;
 
