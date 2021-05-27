@@ -83,7 +83,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    file htop tmux fooster.neovim python3
+    bc file htop tmux fooster.neovim python3
     cachix fooster.fpaste fooster.ftmp fooster.furi
     git gitAndTools.delta ripgrep
     shellcheck
