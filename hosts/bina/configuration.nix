@@ -298,5 +298,5 @@
     ''
   ];
 
-  system.stateVersion = "21.03";
+  system.stateVersion = "21.05";
 }
