@@ -7,7 +7,7 @@ let
 
   efi = config.boot.loader.efi;
 
-  gummibootBuilder = pkgs.substituteAll {
+  systemdBootBuilder = pkgs.substituteAll {
     src = <nixpkgs/nixos/modules/system/boot/loader/systemd-boot/systemd-boot-builder.py>;
 
     isExecutable = true;
@@ -146,7 +146,7 @@ in
         #! ${pkgs.python3}/bin/python3 -B
         import importlib.util
 
-        install_spec = importlib.util.spec_from_file_location("install", "${gummibootBuilder}")
+        install_spec = importlib.util.spec_from_file_location("install", "${systemdBootBuilder}")
         install = importlib.util.module_from_spec(install_spec)
         install_spec.loader.exec_module(install)
 
