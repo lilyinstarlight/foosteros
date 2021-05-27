@@ -29,12 +29,12 @@ let
 
   vim-interestingwords = buildVimPluginFrom2Nix {
     pname = "vim-interestingwords";
-    version = "2020-07-31";
+    version = "2020-10-29";
     src = fetchFromGitHub {
       owner = "lfv89";
       repo = "vim-interestingwords";
-      rev = "4c558ceda824126e124ddffbc3d8bdeb3e977cc9";
-      sha256 = "1332lv8d7m454a30w8r2pjnb31cjixp1v1kfgly0pa70br49df2g";
+      rev = "e59f97aca15c6180e6f3aceaf4f7b50ca04326ed";
+      sha256 = "1pf7vhdvi200lkkz694x0afxlpjl3dcn30jhjgyz0kgby4q9gywc";
     };
     meta.homepage = "https://github.com/lfv89/vim-interestingwords/";
   };
@@ -89,12 +89,12 @@ let
 
   vim-sonic-pi = buildVimPluginFrom2Nix {
     pname = "vim-sonic-pi";
-    version = "2020-10-18";
+    version = "2021-02-17";
     src = fetchFromGitHub {
       owner = "lilyinstarlight";
       repo = "vim-sonic-pi";
-      rev = "27f7874b4c04984e9d8c51a01fb74be30da1aedf";
-      sha256 = "13zwq4r9zvpf5pi8d4gd6ydsvv0rb4k9knyka8jy6lqysz7xy9v2";
+      rev = "003ceea1fb4bc8454444b1bf683f9dd54f6608f6";
+      sha256 = "0radamsml863vhmfm2ggq64dycsfzp2hh7fsrhvz2rsjwpzkbgn2";
     };
     meta.homepage = "https://github.com/lilyinstarlight/vim-sonic-pi/";
   };
@@ -113,12 +113,12 @@ let
 
   vim-zeek = buildVimPluginFrom2Nix {
     pname = "vim-zeek";
-    version = "2020-06-23";
+    version = "2021-02-23";
     src = fetchFromGitHub {
       owner = "zeek";
       repo = "vim-zeek";
-      rev = "b4ae5d8e93de610c165831249892cf07c65e8bcd";
-      sha256 = "17gbyqlsnvz7gk8jbmp5hadfmakjzz294227rqfkv8c6zz8yimab";
+      rev = "bc1024fd470e719c21753eee2034e1eba48642f9";
+      sha256 = "0120zr2bdbdk6hbfph9zf30fch3fk0crljv5mk1y0dd1l62synz7";
     };
     meta.homepage = "https://github.com/zeek/vim-zeek/";
   };
