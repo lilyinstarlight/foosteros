@@ -31,5 +31,7 @@
     }
   ];
 
+  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+
   nix.maxJobs = lib.mkDefault 4;
 }
