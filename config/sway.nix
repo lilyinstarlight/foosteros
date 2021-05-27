@@ -206,8 +206,9 @@
     bindsym $mod+print exec ${pkgs.grim}/bin/grim "$HOME"/tmp/screenshot.png
     bindsym $mod+shift+print exec ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" "$HOME"/tmp/screenshot.png
     bindsym $mod+bracketright exec ${pkgs.mako}/bin/makoctl dismiss -g
-    bindsym $mod+bracketleft exec ${pkgs.mako}/bin/makoctl dismiss -a
-    bindsym $mod+equal exec ${pkgs.mako}/bin/makoctl invoke
+    bindsym $mod+shift+bracketright exec ${pkgs.mako}/bin/makoctl dismiss -a
+    bindsym $mod+ctrl+bracketright exec ${pkgs.mako}/bin/makoctl restore
+    bindsym $mod+bracketleft exec ${pkgs.mako}/bin/makoctl invoke
 
     ### desktop elements
     output * background #111111 solid_color
