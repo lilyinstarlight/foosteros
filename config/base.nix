@@ -6,6 +6,7 @@
     ../modules/services/audio/mopidy-user.nix
     ../modules/services/misc/swaynag-battery.nix
     ../modules/programs/sway.nix
+    ../modules/programs/mako.nix
   ];
 
   boot.loader = {

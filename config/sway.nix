@@ -205,6 +205,9 @@
     #### shortcuts
     bindsym $mod+print exec ${pkgs.grim}/bin/grim "$HOME"/tmp/screenshot.png
     bindsym $mod+shift+print exec ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" "$HOME"/tmp/screenshot.png
+    bindsym $mod+bracketright exec ${pkgs.mako}/bin/makoctl dismiss -g
+    bindsym $mod+bracketleft exec ${pkgs.mako}/bin/makoctl dismiss -a
+    bindsym $mod+equal exec ${pkgs.mako}/bin/makoctl invoke
 
     ### desktop elements
     output * background #111111 solid_color
@@ -345,6 +348,19 @@
     ];
     extraSessionCommands = ''
       export XDG_SESSION_TYPE=wayland
+    '';
+  };
+
+  programs.mako = {
+    enable = true;
+    extraConfig = ''
+      background-color=#222222
+      border-size=0
+      font=Monofur Nerd Font 12
+      icon-path=${pkgs.papirus-icon-theme}/share/icons/Papirus
+      margin=12
+      progress-color=over #333333
+      text-color=#f29bd4
     '';
   };
 }
