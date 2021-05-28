@@ -75,7 +75,9 @@
   environment.systemPackages = with pkgs; [
     gnupg pass-wayland pass-otp
     wofi-pass
-    mpc_cli vimpc
+    mpc_cli vimpc beets
+    inkscape glimpse-with-plugins krita
+    mupdf
     element-desktop discord
     sonic-pi sonic-pi-tool
     homebank
