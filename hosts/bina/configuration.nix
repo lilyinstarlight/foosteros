@@ -65,7 +65,7 @@
   networking.interfaces.enp0s25.useDHCP = true;
   networking.interfaces.wlp4s0.useDHCP = true;
 
-  systemd.network.networks.enp0s25.linkConfig = {
+  systemd.network.networks."40-enp0s25".linkConfig = {
     RequiredForOnline = "no";
   };
 
