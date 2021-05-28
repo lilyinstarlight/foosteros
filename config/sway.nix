@@ -349,6 +349,7 @@
       fooster.backgrounds fooster.materia-theme bibata-cursors papirus-icon-theme
       slurp grim wl-clipboard libnotify sway-contrib.grimshot
       xwayland
+      xdg-utils
     ];
     extraSessionCommands = ''
       export XDG_SESSION_TYPE=wayland
