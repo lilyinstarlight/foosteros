@@ -204,8 +204,10 @@
     bindsym $mod+a exec $browser
 
     #### shortcuts
-    bindsym $mod+print exec ${pkgs.grim}/bin/grim "$HOME"/tmp/screenshot.png
-    bindsym $mod+shift+print exec ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" "$HOME"/tmp/screenshot.png
+    bindsym $mod+print exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify save output "$HOME"/tmp/screenshot.png
+    bindsym $mod+shift+print exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify save area "$HOME"/tmp/screenshot.png
+    bindsym $mod+ctrl+print exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify save window "$HOME"/tmp/screenshot.png
+    bindsym $mod+alt+print exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify save screen "$HOME"/tmp/screenshot.png
     bindsym $mod+bracketright exec ${pkgs.mako}/bin/makoctl dismiss -g
     bindsym $mod+shift+bracketright exec ${pkgs.mako}/bin/makoctl dismiss -a
     bindsym $mod+ctrl+bracketright exec ${pkgs.mako}/bin/makoctl restore
@@ -345,7 +347,7 @@
       swaybg swaylock swayidle
       i3status mako wofi alacritty
       fooster.backgrounds fooster.materia-theme bibata-cursors papirus-icon-theme
-      slurp grim wl-clipboard
+      slurp grim wl-clipboard libnotify sway-contrib.grimshot
       xwayland
     ];
     extraSessionCommands = ''
