@@ -15,6 +15,10 @@
   sops.defaultSopsFile = ./secrets.yaml;
   sops.secrets = {
     wpa-supplicant-networks = {};
+    nullmailer-remotes = {
+      mode = "0440";
+      group = config.services.nullmailer.group;
+    };
   };
 
   systemd.services.wireless-networks = {
@@ -233,10 +237,10 @@
     config = {
       me = config.networking.hostName;
       defaultdomain = "fooster.network";
-      allmailfrom = "lily@fooster.network";
+      allmailfrom = "logs@fooster.network";
       adminaddr = "logs@fooster.network";
     };
-    # remotesFile = "/etc/nixos/secrets/nullmailer-remotes";
+    remotesFile = config.sops.secrets.nullmailer-remotes.path;
   };
 
   services.tlp = {
