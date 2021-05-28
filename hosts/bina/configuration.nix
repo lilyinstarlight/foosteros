@@ -258,6 +258,9 @@
     };
     remotesFile = config.sops.secrets.nullmailer-remotes.path;
   };
+  systemd.services.nullmailer.serviceConfig = {
+    SupplementaryGroups = [ config.users.groups.keys.name ];
+  };
 
   services.tlp = {
     enable = true;
