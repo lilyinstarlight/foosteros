@@ -83,6 +83,8 @@
   };
   virtualisation.podman.enable = true;
 
+  users.users.lily.extraGroups = [ "libvirtd" ];
+
   environment.systemPackages = with pkgs; [
     gnupg pass-wayland pass-otp
     wofi-pass
