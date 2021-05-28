@@ -7,6 +7,7 @@
     petty
     neofetch
     qutebrowser firefox google-chrome
+    aileron
   ];
 
   fonts.fonts = with pkgs; [ monofur-nerdfont ];
