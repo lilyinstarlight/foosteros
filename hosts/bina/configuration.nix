@@ -72,6 +72,13 @@
   };
   hardware.pulseaudio.package = pkgs.pulseaudioFull;
 
+  virtualisation.kvmgt.enable = true;
+  virtualisation.libvirtd = {
+    enable = true;
+    qemuPackage = pkgs.qemu_kvm;
+  };
+  virtualisation.podman.enable = true;
+
   environment.systemPackages = with pkgs; [
     gnupg pass-wayland pass-otp
     wofi-pass
@@ -81,6 +88,7 @@
     element-desktop discord
     sonic-pi sonic-pi-tool
     homebank
+    virt-manager podman-compose
   ];
 
   environment.etc."sway/config.d/bina".text = ''
