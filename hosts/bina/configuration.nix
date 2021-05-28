@@ -228,11 +228,6 @@
 
   # services.printing.enable = true;
 
-  services.xserver = {
-    # xkbModel = "apple_laptop";
-    # xkbVariant = "mac";
-  };
-
   services.nullmailer = {
     enable = true;
     config = {
