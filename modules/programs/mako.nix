@@ -28,6 +28,15 @@ in
       '';
     };
 
+    package = mkOption {
+      type = types.package;
+      default = pkgs.mako;
+      defaultText = "pkgs.mako";
+      description = ''
+        mako derivation to use.
+      '';
+    };
+
     targets = mkOption {
       type = types.listOf types.str;
       default = [ "sway-session.target" ];
@@ -73,7 +82,7 @@ in
           fi
 
           if [ -n "$makoconfig" ]; then
-            exec ${pkgs.mako}/bin/mako --config "$makoconfig"
+            exec ${cfg.package}/bin/mako --config "$makoconfig"
           else
             exec ${pkgs.mako}/bin/mako
           fi
