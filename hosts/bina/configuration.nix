@@ -92,7 +92,9 @@
   environment.systemPackages = with pkgs; [
     gnupg pass-wayland pass-otp
     wofi-pass
+    pavucontrol
     mpc_cli vimpc beets
+    mpv
     inkscape gimp-with-plugins krita
     mupdf
     element-desktop discord
