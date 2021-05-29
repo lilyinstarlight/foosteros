@@ -34,6 +34,11 @@
     userControlled.enable = true;
   };
   networking.interfaces.wlp4s0.useDHCP = true;
+  systemd.network.networks."40-wlp4s0" = {
+    dhcpV4Config = {
+      ClientIdentifier = "mac";
+    };
+  };
 
   networking.supplicant.enp0s25 = {
     driver = "wired";
@@ -44,9 +49,13 @@
     userControlled.enable = true;
   };
   networking.interfaces.enp0s25.useDHCP = true;
-
-  systemd.network.networks."40-enp0s25".linkConfig = {
-    RequiredForOnline = "no";
+  systemd.network.networks."40-enp0s25" = {
+    dhcpV4Config = {
+      ClientIdentifier = "mac";
+    };
+    linkConfig = {
+      RequiredForOnline = "no";
+    };
   };
 
   hardware.bluetooth = {
