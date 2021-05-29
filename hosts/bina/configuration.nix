@@ -73,6 +73,13 @@
   };
   hardware.pulseaudio.package = pkgs.pulseaudioFull;
 
+  hardware.opengl.extraPackages = with pkgs; [
+    vaapiIntel
+    vaapiVdpau
+    libvdpau-va-gl
+    intel-media-driver
+  ];
+
   virtualisation.kvmgt.enable = true;
   virtualisation.libvirtd = {
     enable = true;
