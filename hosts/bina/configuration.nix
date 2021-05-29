@@ -37,6 +37,10 @@
   systemd.network.networks."40-wlp4s0" = {
     dhcpV4Config = {
       ClientIdentifier = "mac";
+      RouteMetric = 600;
+    };
+    dhcpV6Config = {
+      RouteMetric = 600;
     };
   };
 
@@ -52,6 +56,10 @@
   systemd.network.networks."40-enp0s25" = {
     dhcpV4Config = {
       ClientIdentifier = "mac";
+      RouteMetric = 100;
+    };
+    dhcpV6Config = {
+      RouteMetric = 100;
     };
     linkConfig = {
       RequiredForOnline = "no";
