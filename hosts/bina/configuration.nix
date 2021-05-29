@@ -235,6 +235,8 @@
 
   programs.gnupg.agent.enable = true;
 
+  services.resolved.dnssec = "false";
+
   # services.printing.enable = true;
 
   services.nullmailer = {
