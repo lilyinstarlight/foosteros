@@ -22,91 +22,25 @@
     };
   };
 
-  systemd.services.wireless-networks = {
-    wantedBy = [ "multi-user.target" ];
-    after = [ "wpa_supplicant.service" ];
-    requires = [ "wpa_supplicant.service" ];
-
-    description = "Load Wireless Network Definitions";
-
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      Restart = "on-failure";
-    };
-
-    script = ''
-      # wait for wpa_supplicant to open ctrl sockets
-      for _ in $(seq 1 10); do
-        if ! [ -d /var/run/wpa_supplicant ]; then
-          sleep 1
-        fi
-      done
-      if ! [ -d /var/run/wpa_supplicant ]; then
-        exit 1
-      fi
-
-      # apply config to all wireless supplicants via wpa_cli
-      for iface in /var/run/wpa_supplicant/wl*; do
-        grep -v '^[ \t]*$\|^[ \t]*#' ${config.sops.secrets.wireless-networks.path} | while IFS="" read -r line || [ -n "$line" ]; do
-          printf 'wpa_cli (%s): %s\n' "$iface" "$(echo "$line" | sed -e 's/^set_network \([0-9]\+\) \(psk\|password\) .*$/set_network \1 \2 */')"
-          echo "$line" | ${pkgs.wpa_supplicant}/bin/wpa_cli -i "$iface" | sed -n '/^> /,$p' | tail -n+2
-        done
-      done
-    '';
-  };
-
-  systemd.services.wired-networks = {
-    wantedBy = [ "multi-user.target" ];
-    after = [ "supplicant-lan@.service" ];
-    requires = [ "supplicant-lan@.service" ];
-
-    description = "Load Wired Network Definitions";
-
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      Restart = "on-failure";
-    };
-
-    script = ''
-      # wait for wpa_supplicant to open ctrl sockets
-      for _ in $(seq 1 10); do
-        if ! [ -d /var/run/wpa_supplicant ]; then
-          sleep 1
-        fi
-      done
-      if ! [ -d /var/run/wpa_supplicant ]; then
-        exit 1
-      fi
-
-      # apply config to all wireless supplicants via wpa_cli
-      for iface in /var/run/wpa_supplicant/en*; do
-        grep -v '^[ \t]*$\|^[ \t]*#' ${config.sops.secrets.wired-networks.path} | while IFS="" read -r line || [ -n "$line" ]; do
-          printf 'wpa_cli (%s): %s\n' "$iface" "$(echo "$line" | sed -e 's/^set_network \([0-9]\+\) \(psk\|password\) .*$/set_network \1 \2 */')"
-          echo "$line" | ${pkgs.wpa_supplicant}/bin/wpa_cli -i "$iface" | sed -n '/^> /,$p' | tail -n+2
-        done
-      done
-    '';
-  };
-
   networking.hostName = "bina";
   networking.domain = "fooster.network";
 
-  networking.wireless = {
-    enable = true;
-    extraConfig = ''
+  networking.supplicant.wlp4s0 = {
+    driver = "nl80211";
+    extraConf = ''
       p2p_disabled=1
     '';
+    configFile.path = config.sops.secrets.wireless-networks.path;
     userControlled.enable = true;
   };
   networking.interfaces.wlp4s0.useDHCP = true;
 
-  networking.supplicant.LAN = {
+  networking.supplicant.enp0s25 = {
     driver = "wired";
     extraConf = ''
       ap_scan=0
     '';
+    configFile.path = config.sops.secrets.wired-networks.path;
     userControlled.enable = true;
   };
   networking.interfaces.enp0s25.useDHCP = true;
