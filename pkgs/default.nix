@@ -7,6 +7,7 @@
 
   petty = pkgs.callPackage ./petty/default.nix {};
   pridecat = pkgs.callPackage ./pridecat/default.nix {};
+  sonic-pi = pkgs.libsForQt5.callPackage ./sonic-pi/default.nix {};
   sonic-pi-tool = pkgs.callPackage ./sonic-pi-tool/default.nix {};
   swaynag-battery = pkgs.callPackage ./swaynag-battery/default.nix {};
   wofi-pass = pkgs.callPackage ./wofi-pass/default.nix {};

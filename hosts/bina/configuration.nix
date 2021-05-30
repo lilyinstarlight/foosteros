@@ -92,7 +92,13 @@
   };
   virtualisation.podman.enable = true;
 
-  users.users.lily.extraGroups = [ config.users.groups.keys.name "libvirtd" ];
+  sound.extraConfig = ''
+    pcm_type.jack {
+      libs.native = ${pkgs.alsaPlugins}/lib/alsa-lib/libasound_module_pcm_jack.so ;
+    }
+  '';
+
+  users.users.lily.extraGroups = [ config.users.groups.keys.name "audio" "libvirtd" ];
 
   environment.systemPackages = with pkgs; [
     gnupg pass-wayland pass-otp
@@ -103,7 +109,7 @@
     inkscape gimp-with-plugins krita
     mupdf
     element-desktop discord
-    qjackctl qsynth vmpk calf
+    jack2 qjackctl qsynth vmpk calf
     ardour lmms
     sonic-pi sonic-pi-tool
     homebank
@@ -257,6 +263,9 @@
           format = "%H:%M"
       }
     '';
+
+
+    "alsa/conf.d/50-jack.conf".source = "${pkgs.alsaPlugins}/etc/alsa/conf.d/50-jack.conf";
   };
 
   programs.gnupg.agent.enable = true;
@@ -291,6 +300,11 @@
     enable = true;
     powerSupply = "BAT0";
   };
+
+  security.pam.loginLimits = [
+    { domain = "@audio"; type = "-"; item = "rtprio"; value = "99"; }
+    { domain = "@audio"; type = "-"; item = "memlock"; value = "unlimited"; }
+  ];
 
   security.pki.certificates = [
     ''

@@ -26,8 +26,7 @@ python3Packages.buildPythonApplication rec {
     substituteInPlace "$out/bin/sonic-pi-tool" --replace 'default_paths = (' 'default_paths = ('"'"'${pkgs.sonic-pi}/app'"'"', '
 
     wrapProgram "$out/bin/sonic-pi-tool" \
-      --prefix PATH : ${pkgs.ruby}/bin:${pkgs.bash}/bin:${pkgs.supercollider}/bin:${pkgs.jack2Full}/bin \
-      --set AUBIO_LIB "${pkgs.aubio}/lib/libaubio.so"
+      --prefix PATH : ${pkgs.ruby}/bin:${pkgs.erlang}/bin:${pkgs.bash}/bin:${pkgs.supercollider}/bin:${pkgs.jack2}/bin
   '';
 
   meta = with pkgs.lib; {
