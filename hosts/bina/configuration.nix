@@ -325,5 +325,33 @@
     ''
   ];
 
+  users.users.lily.shell = pkgs.petty;
+
+  home-manager.users.lily = { pkgs, ... }: {
+    services.mpdris2 = {
+      enable = true;
+      notifications = true;
+      mpd.musicDirectory = "$HOME/mus";
+    };
+
+    services.udiskie = {
+      enable = true;
+      automount = false;
+      tray = "never";
+    };
+
+    programs.beets = {
+      enable = true;
+      settings = {
+        directory = "$HOME/mus";
+      };
+    };
+
+    home.file.".config/petty/pettyrc".text = ''
+      shell=${pkgs.fish}/bin/fish
+      session1=sway
+    '';
+  };
+
   system.stateVersion = "21.05";
 }

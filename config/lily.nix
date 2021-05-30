@@ -19,16 +19,10 @@
     description = "Lily Foster";
     isNormalUser = true;
     extraGroups = [ "wheel" ];
-    shell = pkgs.petty;
+    shell = lib.mkDefault pkgs.fish;
   };
 
   home-manager.users.lily = { pkgs, ... }: {
-    services.udiskie = {
-      enable = true;
-      automount = false;
-      tray = "never";
-    };
-
     programs.fish = {
       enable = true;
       plugins = pkgs.callPackage ../misc/fish-plugins/default.nix {};
@@ -66,10 +60,5 @@
         uppull = "pull upstream HEAD";
       };
     };
-
-    home.file.".config/petty/pettyrc".text = ''
-      shell=${pkgs.fish}/bin/fish
-      session1=sway
-    '';
   };
 }
