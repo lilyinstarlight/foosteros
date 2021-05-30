@@ -62,11 +62,6 @@
       BUG_REPORT_URL="https://github.com/lilyinstarlight/foosteros/issues"
     '';
 
-    "fish/functions/fish_greeting.fish".text = lib.mkDefault ''
-      function fish_greeting
-      end
-    '';
-
     "xdg/user-dirs.defaults".text = ''
       XDG_DESKTOP_DIR=$HOME
       XDG_DOCUMENTS_DIR=$HOME/docs
@@ -105,6 +100,9 @@
       curl = "curl -L";
       cget = "command curl -fLJO --progress-bar --retry 10 -C -";
     };
+    shellInit = ''
+      set -g fish_greeting ""
+    '';
     promptInit = ''
       any-nix-shell fish --info-right | source
     '';
