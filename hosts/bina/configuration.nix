@@ -20,6 +20,11 @@
       mode = "0440";
       group = config.services.nullmailer.group;
     };
+    mopidy-lily-secrets = {
+      mode = "0400";
+      owner = config.users.users.lily.name;
+      group = config.users.users.lily.group;
+    };
   };
 
   networking.hostName = "bina";
@@ -87,7 +92,7 @@
   };
   virtualisation.podman.enable = true;
 
-  users.users.lily.extraGroups = [ "libvirtd" ];
+  users.users.lily.extraGroups = [ config.users.groups.keys.name "libvirtd" ];
 
   environment.systemPackages = with pkgs; [
     gnupg pass-wayland pass-otp
@@ -103,152 +108,154 @@
     virt-manager podman-compose
   ];
 
-  environment.etc."sway/config.d/bina".text = ''
-    ### ouputs
-    output eDP-1 resolution 1920x1080 position 0 0 scale 1
+  environment.etc = {
+    "sway/config.d/bina".text = ''
+      ### ouputs
+      output eDP-1 resolution 1920x1080 position 0 0 scale 1
 
-    ### inputs
-    input type:keyboard {
-        xkb_options caps:escape
-    }
+      ### inputs
+      input type:keyboard {
+          xkb_options caps:escape
+      }
 
-    input "1:1:AT_Translated_Set_2_keyboard" {
-        xkb_layout us
-    }
+      input "1:1:AT_Translated_Set_2_keyboard" {
+          xkb_layout us
+      }
 
-    input "1739:0:Synaptics_TM3053-003" {
-        click_method clickfinger
-        dwt enabled
-        middle_emulation enabled
-        natural_scroll enabled
-        scroll_method two_finger
-        tap enabled
-    }
+      input "1739:0:Synaptics_TM3053-003" {
+          click_method clickfinger
+          dwt enabled
+          middle_emulation enabled
+          natural_scroll enabled
+          scroll_method two_finger
+          tap enabled
+      }
 
-    ### variables
-    set $mod mod4
-    set $pass ${pkgs.wofi-pass}/bin/wofi-pass -s
+      ### variables
+      set $mod mod4
+      set $pass ${pkgs.wofi-pass}/bin/wofi-pass -s
 
-    ### buttons
-    bindsym xf86audioplay exec ${pkgs.mpc_cli}/bin/mpc -q toggle
-    bindsym xf86audiostop exec ${pkgs.mpc_cli}/bin/mpc -q stop
-    bindsym xf86audioprev exec ${pkgs.mpc_cli}/bin/mpc -q prev
-    bindsym xf86audionext exec ${pkgs.mpc_cli}/bin/mpc -q next
+      ### buttons
+      bindsym xf86audioplay exec ${pkgs.mpc_cli}/bin/mpc -q toggle
+      bindsym xf86audiostop exec ${pkgs.mpc_cli}/bin/mpc -q stop
+      bindsym xf86audioprev exec ${pkgs.mpc_cli}/bin/mpc -q prev
+      bindsym xf86audionext exec ${pkgs.mpc_cli}/bin/mpc -q next
 
-    ### applications
-    bindsym $mod+backslash exec $pass
-  '';
+      ### applications
+      bindsym $mod+backslash exec $pass
+    '';
 
-  environment.etc."xdg/i3status/config".text = ''
-    general {
-        colors = true
+    "xdg/i3status/config".text = ''
+      general {
+          colors = true
 
-        color_good = "#dadada"
-        color_degraded = "#aa4444"
-        color_bad = "#aa4444"
+          color_good = "#dadada"
+          color_degraded = "#aa4444"
+          color_bad = "#aa4444"
 
-        interval = 1
+          interval = 1
 
-        output_format = "i3bar"
-    }
+          output_format = "i3bar"
+      }
 
-    order += "load"
-    order += "cpu_temperature 0"
-    order += "volume master"
-    order += "wireless wlp4s0"
-    order += "battery 0"
-    order += "disk /"
-    order += "tztime local"
+      order += "load"
+      order += "cpu_temperature 0"
+      order += "volume master"
+      order += "wireless wlp4s0"
+      order += "battery 0"
+      order += "disk /"
+      order += "tztime local"
 
-    load {
-        format = "cpu: %1min"
-    }
+      load {
+          format = "cpu: %1min"
+      }
 
-    cpu_temperature 0 {
-        format = "temp: %degrees °C"
-    }
+      cpu_temperature 0 {
+          format = "temp: %degrees °C"
+      }
 
-    volume master {
-        format = "vol: %volume"
-        format_muted = "vol: mute"
-    }
+      volume master {
+          format = "vol: %volume"
+          format_muted = "vol: mute"
+      }
 
-    wireless wlp4s0 {
-        format_up = "wlan: %essid"
-        format_down = "wlan: off"
-    }
+      wireless wlp4s0 {
+          format_up = "wlan: %essid"
+          format_down = "wlan: off"
+      }
 
-    battery 0 {
-        integer_battery_capacity = true
-        low_threshold = 12
+      battery 0 {
+          integer_battery_capacity = true
+          low_threshold = 12
 
-        status_chr = "^"
-        status_bat = ""
-        status_unk = "?"
-        status_full = ""
+          status_chr = "^"
+          status_bat = ""
+          status_unk = "?"
+          status_full = ""
 
-        format = "batt: %status%percentage"
-        format_down = "batt: none"
-    }
+          format = "batt: %status%percentage"
+          format_down = "batt: none"
+      }
 
-    disk / {
-        format = "disk: %avail"
-    }
+      disk / {
+          format = "disk: %avail"
+      }
 
-    tztime local {
-        format = "%H:%M"
-    }
-  '';
+      tztime local {
+          format = "%H:%M"
+      }
+    '';
 
-  environment.etc."xdg/i3status/tmux".text = ''
-    general {
-        colors = true
+    "xdg/i3status/tmux".text = ''
+      general {
+          colors = true
 
-        color_good = "#dadada"
-        color_degraded = "#aa4444"
-        color_bad = "#aa4444"
+          color_good = "#dadada"
+          color_degraded = "#aa4444"
+          color_bad = "#aa4444"
 
-        interval = 1
+          interval = 1
 
-        output_format = "none"
-        separator = " • "
-    }
+          output_format = "none"
+          separator = " • "
+      }
 
-    order += "load"
-    order += "cpu_temperature 0"
-    order += "battery 0"
-    order += "disk /"
-    order += "tztime local"
+      order += "load"
+      order += "cpu_temperature 0"
+      order += "battery 0"
+      order += "disk /"
+      order += "tztime local"
 
-    load {
-        format = "cpu: %1min"
-    }
+      load {
+          format = "cpu: %1min"
+      }
 
-    cpu_temperature 0 {
-        format = "temp: %degrees °C"
-    }
+      cpu_temperature 0 {
+          format = "temp: %degrees °C"
+      }
 
-    battery 0 {
-        integer_battery_capacity = true
-        low_threshold = 12
+      battery 0 {
+          integer_battery_capacity = true
+          low_threshold = 12
 
-        status_chr = "^"
-        status_bat = ""
-        status_unk = "?"
-        status_full = ""
+          status_chr = "^"
+          status_bat = ""
+          status_unk = "?"
+          status_full = ""
 
-        format = "batt: %status%percentage"
-        format_down = "batt: none"
-    }
+          format = "batt: %status%percentage"
+          format_down = "batt: none"
+      }
 
-    disk / {
-        format = "disk: %avail"
-    }
+      disk / {
+          format = "disk: %avail"
+      }
 
-    tztime local {
-        format = "%H:%M"
-    }
-  '';
+      tztime local {
+          format = "%H:%M"
+      }
+    '';
+  };
 
   programs.gnupg.agent.enable = true;
 
@@ -281,16 +288,6 @@
   services.swaynag-battery = {
     enable = true;
     powerSupply = "BAT0";
-  };
-
-  services.mopidy-user = {
-    enable = true;
-    extensionPackages = with pkgs; [
-      mopidy-spotify mopidy-iris mopidy-mpd
-    ];
-    extraConfigFiles = [
-      "$XDG_CONFIG_DIR/mopidy/mopidy.conf"
-    ];
   };
 
   security.pki.certificates = [
@@ -327,11 +324,28 @@
 
   users.users.lily.shell = pkgs.petty;
 
-  home-manager.users.lily = { pkgs, ... }: {
+  home-manager.users.lily = let cfg = config.home-manager.users.lily; in {
+    services.mopidy = {
+      enable = true;
+      settings = {
+        file.enabled = false;
+        local.media_dir = "${cfg.home.homeDirectory}/music";
+      };
+      extensionPackages = with pkgs; [
+        mopidy-local mopidy-spotify mopidy-iris mopidy-mpd
+      ];
+      extraConfigFiles = [
+        config.sops.secrets.mopidy-lily-secrets.path
+      ];
+    };
+
     services.mpdris2 = {
       enable = true;
       notifications = true;
-      mpd.musicDirectory = "$HOME/mus";
+      mpd = {
+        musicDirectory = cfg.services.mopidy.settings.local.media_dir;
+        service = "mopidy.service";
+      };
     };
 
     services.udiskie = {
@@ -343,11 +357,11 @@
     programs.beets = {
       enable = true;
       settings = {
-        directory = "$HOME/mus";
+        directory = cfg.services.mopidy.settings.local.media_dir;
       };
     };
 
-    home.file.".config/petty/pettyrc".text = ''
+    xdg.configFile."petty/pettyrc".text = ''
       shell=${pkgs.fish}/bin/fish
       session1=sway
     '';

@@ -7,6 +7,10 @@
 
   home-manager.useUserPackages = true;
   home-manager.useGlobalPkgs = true;
+  home-manager.sharedModules = [
+    ../modules/home-manager/services/audio/mopidy.nix
+    ../modules/home-manager/services/audio/mpdris2.nix
+  ];
 
   environment.systemPackages = with pkgs; [
     any-nix-shell
@@ -26,21 +30,8 @@
     programs.fish = {
       enable = true;
       plugins = pkgs.callPackage ../misc/fish-plugins/default.nix {};
-      functions = {
-        fish_greeting = "";
-      };
-      shellAliases = {
-        ls = "ls --color=tty -h";
-        df = "df -h";
-        du = "du -h";
-        free = "free -h";
-        bc = "bc -l";
-        curl = "curl -L";
-        cget = "command curl -fLJO --progress-bar --retry 10 -C -";
-      };
       promptInit = ''
         fish_vi_key_bindings
-        any-nix-shell fish --info-right | source
       '';
     };
 

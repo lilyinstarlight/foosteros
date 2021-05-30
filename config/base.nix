@@ -2,11 +2,10 @@
 
 {
   imports = [
-    ../modules/boot/systemd-boot/systemd-boot.nix
-    ../modules/services/audio/mopidy-user.nix
-    ../modules/services/misc/swaynag-battery.nix
-    ../modules/programs/sway.nix
-    ../modules/programs/mako.nix
+    ../modules/nixos/boot/systemd-boot/systemd-boot.nix
+    ../modules/nixos/services/misc/swaynag-battery.nix
+    ../modules/nixos/programs/sway.nix
+    ../modules/nixos/programs/mako.nix
   ];
 
   boot.loader = {
@@ -63,6 +62,11 @@
       BUG_REPORT_URL="https://github.com/lilyinstarlight/foosteros/issues"
     '';
 
+    "fish/functions/fish_greeting.fish".text = lib.mkDefault ''
+      function fish_greeting
+      end
+    '';
+
     "xdg/user-dirs.defaults".text = ''
       XDG_DESKTOP_DIR=$HOME
       XDG_DOCUMENTS_DIR=$HOME/docs
@@ -90,7 +94,21 @@
     shellcheck
   ];
 
-  programs.fish.enable = true;
+  programs.fish = {
+    enable = true;
+    shellAliases = {
+      ls = "ls --color=tty -h";
+      df = "df -h";
+      du = "du -h";
+      free = "free -h";
+      bc = "bc -l";
+      curl = "curl -L";
+      cget = "command curl -fLJO --progress-bar --retry 10 -C -";
+    };
+    promptInit = ''
+      any-nix-shell fish --info-right | source
+    '';
+  };
 
   programs.neovim = {
     enable = true;
