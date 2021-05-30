@@ -103,6 +103,8 @@
     inkscape gimp-with-plugins krita
     mupdf
     element-desktop discord
+    qjackctl qsynth vmpk calf
+    ardour lmms
     sonic-pi sonic-pi-tool
     homebank
     virt-manager podman-compose
