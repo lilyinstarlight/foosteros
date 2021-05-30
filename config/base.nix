@@ -88,10 +88,10 @@
   };
 
   environment.systemPackages = with pkgs; [
-    bc file htop tmux python3
+    bc file htop tmux python3 tree
     cachix fooster.fpaste fooster.ftmp fooster.furi
     git gitAndTools.delta ripgrep
-    shellcheck
+    shellcheck progress
   ];
 
   programs.fish = {
