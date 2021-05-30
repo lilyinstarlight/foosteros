@@ -1,5 +1,20 @@
 { config, lib, pkgs, ... }:
 
+let
+  sway-gsettings-desktop-schemas = pkgs.runCommand "sway-gsettings-desktop-schemas" { preferLocalBuild = true; } ''
+    mkdir -p $out/share/gsettings-schemas/sway-gsettings-overrides/glib-2.0/schemas/
+
+    cat - > $out/share/gsettings-schemas/sway-gsettings-overrides/glib-2.0/schemas/sway-interface.gschema.override <<- EOF
+      [org.gnome.desktop.interface]
+      gtk-theme='Materia-Fooster'
+      icon-theme='Papirus'
+      cursor-theme='Bibata_Oil'
+    EOF
+
+    ${pkgs.glib.dev}/bin/glib-compile-schemas $out/share/gsettings-schemas/sway-gsettings-overrides/glib-2.0/schemas/
+  '';
+in
+
 {
   hardware.pulseaudio.enable = true;
 
@@ -243,9 +258,6 @@
       exec_always ${pkgs.fooster.backgrounds}/bin/setbg
 
       ### desktop environment
-      exec_always ${pkgs.glib}/bin/gsettings set org.gnome.desktop.interface gtk-theme "Materia-Fooster"
-      exec_always ${pkgs.glib}/bin/gsettings set org.gnome.desktop.interface icon-theme "Papirus"
-      exec_always ${pkgs.glib}/bin/gsettings set org.gnome.desktop.interface cursor-theme "Bibata_Oil"
       seat seat0 xcursor_theme "Bibata_Oil"
     '';
 
@@ -337,6 +349,12 @@
       exec sway -d >"$HOME"/.local/share/sway/sway.log 2>&1
     '';
   };
+
+  environment.extraInit = ''
+    if [ -d "${sway-gsettings-desktop-schemas}/share/gsettings-schemas/${sway-gsettings-desktop-schemas.name}" ]; then
+      export XDG_DATA_DIRS=$XDG_DATA_DIRS''${XDG_DATA_DIRS:+:}${sway-gsettings-desktop-schemas}/share/gsettings-schemas/${sway-gsettings-desktop-schemas.name}
+    fi
+  '';
 
   users.defaultUserShell = pkgs.petty;
   users.users.root.shell = pkgs.bashInteractive;
