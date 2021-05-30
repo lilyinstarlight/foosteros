@@ -12,14 +12,4 @@
     };
   }
 
-  {
-    name = "humanize-duration";
-    src = fetchFromGitHub {
-      owner = "fishpkg";
-      repo = "fish-humanize-duration";
-      rev = "f7c7e9e0035ecdcbfdaae9dfc08505659db39cd3";
-      sha256 = "078wzrppw62dz297860n2qdljnnpmhpaj60gw5cl4dbfcij24335";
-    };
-  }
-
 ]
