@@ -249,7 +249,7 @@
       seat seat0 xcursor_theme "Bibata_Oil"
     '';
 
-    "i3status.conf".text = lib.mkDefault ''
+    "xdg/i3status/config".text = lib.mkDefault ''
       general {
           colors = true
 
@@ -290,7 +290,7 @@
       }
     '';
 
-    "i3status/tmux.conf".text = lib.mkDefault ''
+    "xdg/i3status/tmux".text = lib.mkDefault ''
       general {
           colors = true
 

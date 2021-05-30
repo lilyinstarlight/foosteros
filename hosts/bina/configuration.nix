@@ -145,7 +145,7 @@
       bindsym $mod+backslash exec $pass
     '';
 
-    "i3status.conf".text = ''
+    "xdg/i3status/config".text = ''
       general {
           colors = true
 
@@ -206,7 +206,7 @@
       }
     '';
 
-    "i3status/tmux.conf".text = ''
+    "xdg/i3status/tmux".text = ''
       general {
           colors = true
 
