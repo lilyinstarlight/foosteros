@@ -255,7 +255,7 @@ in
       }
 
       ### desktop services
-      exec_always ${pkgs.fooster.backgrounds}/bin/setbg
+      exec_always ${pkgs.fooster-backgrounds}/bin/setbg
 
       ### desktop environment
       seat seat0 xcursor_theme "Bibata_Oil"
@@ -366,7 +366,7 @@ in
       alsaUtils brightnessctl jq glib
       swaybg swaylock swayidle
       i3status mako wofi alacritty
-      fooster.backgrounds fooster.materia-theme bibata-cursors papirus-icon-theme
+      fooster-backgrounds fooster-materia-theme bibata-cursors papirus-icon-theme
       slurp grim wl-clipboard libnotify sway-contrib.grimshot
       xwayland
       xdg-utils

@@ -1,17 +1,6 @@
 { config, lib, pkgs, ... }:
 
 {
-  imports = [
-    <home-manager/nixos>
-  ];
-
-  home-manager.useUserPackages = true;
-  home-manager.useGlobalPkgs = true;
-  home-manager.sharedModules = [
-    ../modules/home-manager/services/audio/mopidy.nix
-    ../modules/home-manager/services/audio/mpdris2.nix
-  ];
-
   environment.systemPackages = with pkgs; [
     any-nix-shell
     udiskie
@@ -29,7 +18,7 @@
   home-manager.users.lily = { pkgs, ... }: {
     programs.fish = {
       enable = true;
-      plugins = pkgs.callPackage ../misc/fish-plugins/default.nix {};
+      plugins = pkgs.callPackage ../misc/fish-plugins {};
       promptInit = ''
         fish_vi_key_bindings
       '';

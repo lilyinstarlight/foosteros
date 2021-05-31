@@ -476,7 +476,7 @@ def parse_args():
         dest="add_plugins",
         default=[],
         action="append",
-        help="Plugin to add to fooster.vimPlugins from Github in the form owner/repo",
+        help="Plugin to add to vimPlugins from Github in the form owner/repo",
     )
     parser.add_argument(
         "--input-names",
@@ -542,13 +542,13 @@ def main():
 
     redirects = update()
     rewrite_input(args.input_file, redirects)
-    commit(nixpkgs_repo, "fooster.vimPlugins: update", [args.outfile])
+    commit(nixpkgs_repo, "pkgs/vim-plugins: update", [args.outfile])
 
     if redirects:
         update()
         commit(
             nixpkgs_repo,
-            "fooster.vimPlugins: resolve github repository redirects",
+            "pkgs/vim-plugins: resolve github repository redirects",
             [args.outfile, args.input_file, DEPRECATED],
         )
 
@@ -558,7 +558,7 @@ def main():
         plugin = fetch_plugin_from_pluginline(plugin_line)
         commit(
             nixpkgs_repo,
-            "fooster.vimPlugins.{name}: init at {version}".format(
+            "pkgs/vim-plugins: init {name} at {version}".format(
                 name=plugin.normalized_name, version=plugin.version
             ),
             [args.outfile, args.input_file],

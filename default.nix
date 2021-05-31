@@ -1,9 +1,5 @@
-{ nixpkgs ? <nixpkgs>, ... }:
+{ pkgs ? import <nixpkgs> {}, ... }:
 
 {
-  pkgs = import nixpkgs {
-    overlays = [
-      (self: super: (import ./pkgs/default.nix { pkgs = super; }))
-    ];
-  };
+  pkgs = import ./pkgs/default.nix { inherit pkgs; };
 }

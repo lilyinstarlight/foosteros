@@ -2,10 +2,18 @@
 
 {
   imports = [
+    <home-manager/nixos>
     ../modules/nixos/boot/systemd-boot/systemd-boot.nix
     ../modules/nixos/services/misc/swaynag-battery.nix
     ../modules/nixos/programs/sway.nix
     ../modules/nixos/programs/mako.nix
+  ];
+
+  home-manager.useUserPackages = true;
+  home-manager.useGlobalPkgs = true;
+  home-manager.sharedModules = [
+    ../modules/home-manager/services/audio/mopidy.nix
+    ../modules/home-manager/services/audio/mpdris2.nix
   ];
 
   boot.loader = {
@@ -28,11 +36,10 @@
 
   time.timeZone = "America/New_York";
 
-  nixpkgs = {
-    config.allowUnfree = true;
-    overlays = [
-      (self: super: (import ../pkgs/default.nix { pkgs = super; }))
-    ];
+  nixpkgs.config = {
+    allowUnfree = true;
+    #packageOverrides = import ../pkgs { pkgs = import <nixpkgs> { config.allowUnfree = true; }; };
+    packageOverrides = (pkgs: import ../pkgs { inherit pkgs; });
   };
 
   environment.variables = {
@@ -43,6 +50,13 @@
   environment.homeBinInPath = true;
 
   environment.etc = {
+    "nix/nixpkgs-config.nix".text = lib.mkDefault ''
+      {
+        allowUnfree = true;
+        packageOverrides = (pkgs: import /etc/nixos/pkgs { inherit pkgs; });
+      }
+    '';
+
     issue.source = lib.mkForce (pkgs.writeText "issue" ''
 
       Welcome to [35;1mFoosterOS/2[0m [34;1mWarp[0m - \l
@@ -84,7 +98,7 @@
 
   environment.systemPackages = with pkgs; [
     bc file htop tmux python3 tree
-    cachix fooster.fpaste fooster.ftmp fooster.furi
+    cachix fpaste ftmp furi
     git gitAndTools.delta ripgrep
     shellcheck progress
   ];
@@ -234,15 +248,15 @@
           vimPlugins.vim-visual-increment
           vimPlugins.vimwiki
 
-          fooster.vimPlugins.hexmode
-          fooster.vimPlugins.vim-fish
-          fooster.vimPlugins.vim-interestingwords
-          fooster.vimPlugins.vim-lilypond-integrator
-          fooster.vimPlugins.vim-radical
-          fooster.vimPlugins.vim-resolve
-          fooster.vimPlugins.vim-sonic-pi
-          fooster.vimPlugins.vim-spl
-          fooster.vimPlugins.vim-zeek
+          vimPlugins.hexmode
+          vimPlugins.vim-fish
+          vimPlugins.vim-interestingwords
+          vimPlugins.vim-lilypond-integrator
+          vimPlugins.vim-radical
+          vimPlugins.vim-resolve
+          vimPlugins.vim-sonic-pi
+          vimPlugins.vim-spl
+          vimPlugins.vim-zeek
         ];
       };
     };
