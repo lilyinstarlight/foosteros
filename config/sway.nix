@@ -16,6 +16,27 @@ let
 in
 
 {
+  home-manager.sharedModules = [
+    {
+      programs.qutebrowser = {
+        enable = true;
+        settings = {
+          downloads.location.prompt = false;
+          editor.command = ["${pkgs.alacritty}/bin/alacritty" "-e" "vi" "{}"];
+          fonts = {
+            default_family = "Monofur Nerd Font";
+            default_size = "12pt";
+          };
+          tabs = {
+            last_close = "close";
+            title.format = "{audio}{current_title}";
+          };
+          window.title_format = "{perc}{private}{current_title}";
+        };
+      };
+    }
+  ];
+
   hardware.pulseaudio.enable = true;
 
   environment.systemPackages = with pkgs; [
