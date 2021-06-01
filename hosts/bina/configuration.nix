@@ -75,6 +75,11 @@
     enable = true;
     powerOnBoot = false;
     package = pkgs.bluezFull;
+    settings = {
+      General = {
+        Name = "Bina";
+      };
+    };
   };
   hardware.pulseaudio.package = pkgs.pulseaudioFull;
 
