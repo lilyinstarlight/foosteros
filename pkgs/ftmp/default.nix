@@ -1,6 +1,6 @@
-{ stdenv, pkgs, python3Packages, fetchFromGitHub }:
+{ stdenvNoCC, pkgs, python3Packages, fetchFromGitHub }:
 
-stdenv.mkDerivation rec {
+stdenvNoCC.mkDerivation rec {
   name = "ftmp";
   version = "0.1b4";
 

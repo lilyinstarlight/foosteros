@@ -1,6 +1,8 @@
 { pkgs, ... }:
 
 rec {
+  fooster-backgrounds = pkgs.callPackage ./backgrounds {};
+  fooster-materia-theme = pkgs.callPackage ./materia-theme {};
   fpaste = pkgs.callPackage ./fpaste {};
   ftmp = pkgs.callPackage ./ftmp {};
   furi = pkgs.callPackage ./furi {};
@@ -26,7 +28,4 @@ rec {
   python3Packages = python3.pkgs;
 
   vimPlugins = pkgs.vimPlugins.extend (self: super: pkgs.callPackage ./vim-plugins {});
-
-  fooster-backgrounds = pkgs.callPackage ./backgrounds {};
-  fooster-materia-theme = pkgs.callPackage ./materia-theme {};
 }

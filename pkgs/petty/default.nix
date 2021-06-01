@@ -1,6 +1,6 @@
-{ stdenv, pkgs, fetchFromGitHub }:
+{ stdenvNoCC, pkgs, fetchFromGitHub }:
 
-stdenv.mkDerivation rec {
+stdenvNoCC.mkDerivation rec {
   pname = "petty";
   version = "0.3";
 

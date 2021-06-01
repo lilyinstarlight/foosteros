@@ -1,6 +1,6 @@
-{ stdenv, pkgs, fetchzip }:
+{ stdenvNoCC, pkgs, fetchzip }:
 
-stdenv.mkDerivation rec {
+stdenvNoCC.mkDerivation rec {
   pname = "backgrounds";
   version = "20210525";
 

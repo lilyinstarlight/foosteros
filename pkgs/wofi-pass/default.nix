@@ -1,6 +1,6 @@
-{ stdenv, pkgs, fetchFromGitHub, makeWrapper }:
+{ stdenvNoCC, pkgs, fetchFromGitHub, makeWrapper }:
 
-stdenv.mkDerivation rec {
+stdenvNoCC.mkDerivation rec {
   pname = "wofi-pass";
   version = "0.0.0.9999";
 
