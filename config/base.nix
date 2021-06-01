@@ -14,6 +14,19 @@
   home-manager.sharedModules = [
     ../modules/home-manager/services/audio/mopidy.nix
     ../modules/home-manager/services/audio/mpdris2.nix
+    {
+      xdg.userDirs = {
+        enable = true;
+        desktop = "$HOME";
+        documents = "$HOME/docs";
+        download ="$HOME/tmp";
+        music = "$HOME/music";
+        pictures = "$HOME/pics";
+        publicShare = "$HOME/public";
+        templates = "$HOME/.templates";
+        videos = "$HOME/vids";
+      };
+    }
   ];
 
   boot.loader = {
@@ -77,14 +90,14 @@
     '';
 
     "xdg/user-dirs.defaults".text = ''
-      XDG_DESKTOP_DIR=$HOME
-      XDG_DOCUMENTS_DIR=$HOME/docs
-      XDG_DOWNLOAD_DIR=$HOME/tmp
-      XDG_MUSIC_DIR=$HOME/music
-      XDG_PICTURES_DIR=$HOME/pics
-      XDG_PUBLICSHARE_DIR=$HOME/public
-      XDG_TEMPLATES_DIR=$HOME/.templates
-      XDG_VIDEOS_DIR=$HOME/vids
+      XDG_DESKTOP_DIR="$HOME"
+      XDG_DOCUMENTS_DIR="$HOME/docs"
+      XDG_DOWNLOAD_DIR="$HOME/tmp"
+      XDG_MUSIC_DIR="$HOME/music"
+      XDG_PICTURES_DIR="$HOME/pics"
+      XDG_PUBLICSHARE_DIR="$HOME/public"
+      XDG_TEMPLATES_DIR="$HOME/.templates"
+      XDG_VIDEOS_DIR="$HOME/vids"
     '';
 
     gitconfig.text = lib.mkDefault ''
