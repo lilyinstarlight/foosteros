@@ -24,7 +24,7 @@ stdenvNoCC.mkDerivation rec {
     substituteInPlace $out/bin/wofi-pass --replace 'wl-copy "$(_pass_get $field)"' '_pass_get "$field" | wl-copy'
 
     wrapProgram $out/bin/wofi-pass \
-      --prefix PATH : ${pkgs.ydotool}/bin:${pkgs.wofi}/bin:${pkgs.wl-clipboard}/bin:${pkgs.pass}/bin
+      --prefix PATH : ${pkgs.ydotool}/bin:${pkgs.wofi}/bin:${pkgs.wl-clipboard}/bin:${pkgs.pass-wayland-otp}/bin
   '';
 
   meta = with pkgs.lib; {

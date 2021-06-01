@@ -106,7 +106,7 @@
   users.users.lily.extraGroups = [ config.users.groups.keys.name "audio" "libvirtd" ];
 
   environment.systemPackages = with pkgs; [
-    gnupg pass-wayland pass-otp
+    gnupg pass-wayland-otp
     wofi-pass
     pavucontrol
     mpc_cli ncmpcpp beets

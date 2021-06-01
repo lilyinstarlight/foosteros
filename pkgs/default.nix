@@ -17,6 +17,8 @@ rec {
     fonts = [ "Monofur" ];
   };
 
+  pass-wayland-otp = pkgs.pass-wayland.withExtensions (ext: [ ext.pass-otp ]);
+
   python3 = let
     self = pkgs.python3.override {
       packageOverrides = (self: super: {
