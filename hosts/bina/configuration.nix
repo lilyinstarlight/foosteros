@@ -104,7 +104,7 @@
     gnupg pass-wayland pass-otp
     wofi-pass
     pavucontrol
-    mpc_cli vimpc beets
+    mpc_cli ncmpcpp beets
     mpv
     inkscape gimp-with-plugins krita
     mupdf
