@@ -370,6 +370,8 @@
       tray = "never";
     };
 
+    systemd.user.services.mpdris2.Unit.After = [ "mako.service" ];
+
     programs.beets = {
       enable = true;
       settings = {
