@@ -5,7 +5,7 @@ with lib;
 let
   cfg = config.services.mopidy;
 
-  iniFormat = pkgs.formats.json {};
+  iniFormat = pkgs.formats.ini {};
 
   mopidyEnv = pkgs.buildEnv {
     name = "mopidy-with-extensions-${pkgs.mopidy.version}";
