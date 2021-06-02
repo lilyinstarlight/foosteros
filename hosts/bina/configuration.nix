@@ -125,7 +125,6 @@
     "sway/config.d/bina".text = ''
       ### ouputs
       output eDP-1 resolution 1920x1080 position 0 0 scale 1
-      output "VIZIO, Inc E390i-A1 0x00000101" resolution 1920x1080 position -1920 0 scale 1
 
       ### inputs
       input type:keyboard {
