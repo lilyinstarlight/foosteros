@@ -9,7 +9,7 @@ let
     cat - >$out/share/gsettings-schemas/sway-gsettings-overrides/glib-2.0/schemas/sway-interface.gschema.override <<- EOF
       [org.gnome.desktop.interface]
       gtk-theme='Materia-Fooster'
-      icon-theme='Papirus'
+      icon-theme='Papirus-Dark'
       cursor-theme='Bibata_Oil'
     EOF
 
@@ -112,7 +112,7 @@ in
     "gtk-3.0/settings.ini".text = lib.mkDefault ''
       [Settings]
       gtk-theme-name=Materia-Fooster
-      gtk-icon-theme-name=Papirus
+      gtk-icon-theme-name=Papirus-Dark
       gtk-font-name=Monofur Nerd Font 12
       gtk-cursor-theme-name=Bibata_Oil
       gtk-application-prefer-dark-theme=true
@@ -120,7 +120,7 @@ in
 
     "gtk-2.0/gtkrc".text = lib.mkDefault ''
       gtk-theme-name="Materia-Fooster"
-      gtk-icon-theme-name="Papirus"
+      gtk-icon-theme-name="Papirus-Dark"
       gtk-font-name="Monofur Nerd Font 12"
       gtk-cursor-theme-name="Bibata_Oil"
     '';
@@ -301,7 +301,7 @@ in
       bar {
           position top
 
-          icon_theme Papirus
+          icon_theme Papirus-Dark
 
           font Monofur Nerd Font 12
           colors {
@@ -445,7 +445,7 @@ in
       background-color=#222222
       border-size=0
       font=Monofur Nerd Font 12
-      icon-path=${pkgs.papirus-icon-theme}/share/icons/Papirus
+      icon-path=${pkgs.papirus-icon-theme}/share/icons/Papirus-Dark
       margin=12
       progress-color=over #333333
       text-color=#f29bd4
