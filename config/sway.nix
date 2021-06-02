@@ -4,7 +4,9 @@ let
   sway-gsettings-desktop-schemas = pkgs.runCommand "sway-gsettings-desktop-schemas" { preferLocalBuild = true; } ''
     mkdir -p $out/share/gsettings-schemas/sway-gsettings-overrides/glib-2.0/schemas/
 
-    cat - > $out/share/gsettings-schemas/sway-gsettings-overrides/glib-2.0/schemas/sway-interface.gschema.override <<- EOF
+    cp -rf ${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/*/glib-2.0/schemas/*.xml $out/share/gsettings-schemas/sway-gsettings-overrides/glib-2.0/schemas/
+
+    cat - >$out/share/gsettings-schemas/sway-gsettings-overrides/glib-2.0/schemas/sway-interface.gschema.override <<- EOF
       [org.gnome.desktop.interface]
       gtk-theme='Materia-Fooster'
       icon-theme='Papirus'
@@ -371,11 +373,7 @@ in
     '';
   };
 
-  environment.extraInit = ''
-    if [ -d "${sway-gsettings-desktop-schemas}/share/gsettings-schemas/${sway-gsettings-desktop-schemas.name}" ]; then
-      export XDG_DATA_DIRS=$XDG_DATA_DIRS''${XDG_DATA_DIRS:+:}${sway-gsettings-desktop-schemas}/share/gsettings-schemas/${sway-gsettings-desktop-schemas.name}
-    fi
-  '';
+  environment.sessionVariables.NIX_GSETTINGS_OVERRIDES_DIR = "${sway-gsettings-desktop-schemas}/share/gsettings-schemas/sway-gsettings-overrides/glib-2.0/schemas";
 
   users.defaultUserShell = pkgs.petty;
   users.users.root.shell = pkgs.bashInteractive;
