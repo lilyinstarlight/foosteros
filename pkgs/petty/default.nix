@@ -1,4 +1,4 @@
-{ stdenvNoCC, pkgs, fetchFromGitHub }:
+{ stdenvNoCC, lib, fetchFromGitHub }:
 
 stdenvNoCC.mkDerivation rec {
   pname = "petty";
@@ -18,7 +18,7 @@ stdenvNoCC.mkDerivation rec {
     make PREFIX=$out install
   '';
 
-  meta = with pkgs.lib; {
+  meta = with lib; {
     description = "TTY session starter";
     homepage = "https://github.com/lilyinstarlight/petty";
     license = licenses.mit;

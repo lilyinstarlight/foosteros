@@ -1,4 +1,4 @@
-{ stdenvNoCC, pkgs, fetchFromGitHub, makeWrapper }:
+{ stdenvNoCC, lib, fetchFromGitHub, makeWrapper, ydotool, wofi, wl-clipboard, pass-wayland-otp }:
 
 stdenvNoCC.mkDerivation rec {
   pname = "wofi-pass";
@@ -24,10 +24,10 @@ stdenvNoCC.mkDerivation rec {
     substituteInPlace $out/bin/wofi-pass --replace 'wl-copy "$(_pass_get $field)"' '_pass_get "$field" | wl-copy'
 
     wrapProgram $out/bin/wofi-pass \
-      --prefix PATH : ${pkgs.ydotool}/bin:${pkgs.wofi}/bin:${pkgs.wl-clipboard}/bin:${pkgs.pass-wayland-otp}/bin
+      --prefix PATH : ${ydotool}/bin:${wofi}/bin:${wl-clipboard}/bin:${pass-wayland-otp}/bin
   '';
 
-  meta = with pkgs.lib; {
+  meta = with lib; {
     description = "Wayland native interface for pass";
     homepage = "https://github.com/AluminumTank/wofi-pass";
     license = licenses.gpl2Only;

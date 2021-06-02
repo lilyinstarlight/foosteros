@@ -1,4 +1,4 @@
-{ pkgs, buildGoModule, fetchFromGitHub }:
+{ lib, buildGoModule, fetchFromGitHub, sway }:
 
 buildGoModule rec {
   pname = "swaynag-battery";
@@ -14,11 +14,11 @@ buildGoModule rec {
   vendorSha256 = "0kwzx3xf6j5z0zzmybxfpmnz8ll7jyh9fkrfjri7mlch77gn7ml7";
 
   patchPhase = ''
-    sed -i -e 's#\(exec.Command("\)swaynag\("\)#\1${pkgs.sway}/bin/swaynag\2#g' swaynag.go
-    sed -i -e 's#\(exec.Command("\)swaymsg\("\)#\1${pkgs.sway}/bin/swaymsg\2#g' swaymsg.go
+    sed -i -e 's#\(exec.Command("\)swaynag\("\)#\1${sway}/bin/swaynag\2#g' swaynag.go
+    sed -i -e 's#\(exec.Command("\)swaymsg\("\)#\1${sway}/bin/swaymsg\2#g' swaymsg.go
   '';
 
-  meta = with pkgs.lib; {
+  meta = with lib; {
     homepage = "https://github.com/m00qek/swaynag-battery";
     description = "Show a message when battery is low and discharging";
     license = licenses.mit;

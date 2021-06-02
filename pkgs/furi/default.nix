@@ -1,4 +1,4 @@
-{ stdenvNoCC, pkgs, python3Packages, fetchFromGitHub }:
+{ stdenvNoCC, lib, wrapPython, fetchFromGitHub, httpx }:
 
 stdenvNoCC.mkDerivation rec {
   name = "furi";
@@ -11,20 +11,16 @@ stdenvNoCC.mkDerivation rec {
     sha256 = "0np4l58yjsq64mlcmwd6zdm60vnfqwwlxhaq9z0k7hhl9cd5cjr7";
   };
 
-  pythonPath = with python3Packages; [
-    httpx
-  ];
+  pythonPath = [ httpx ];
 
-  nativeBuildInputs = with python3Packages; [
-    wrapPython
-  ];
+  nativeBuildInputs = [ wrapPython ];
 
   dontBuild = true;
 
   installPhase = "install -D util/furi $out/bin/furi";
   postFixup = "wrapPythonPrograms";
 
-  meta = with pkgs.lib; {
+  meta = with lib; {
     description = "Command line utility for FoosterNET Redirect";
     homepage = "https://github.com/lilyinstarlight/uri";
     license = licenses.mit;

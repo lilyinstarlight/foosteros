@@ -1,6 +1,6 @@
-{ pkgs, python3Packages, fetchFromGitHub }:
+{ lib, buildPythonApplication, fetchFromGitHub, sonic-pi, click, oscpy, psutil, ruby, erlang, bash, supercollider, jack2 }:
 
-python3Packages.buildPythonApplication rec {
+buildPythonApplication rec {
   pname = "sonic-pi-tool";
   version = "0.0.0.9999";
 
@@ -12,7 +12,7 @@ python3Packages.buildPythonApplication rec {
     sha256 = "0la8p35ckqg53406577fnf5zmfw25i05lwx1v4ragigw38pniw4h";
   };
 
-  propagatedBuildInputs = with pkgs; [ sonic-pi python3Packages.click python3Packages.oscpy python3Packages.psutil ];
+  propagatedBuildInputs = [ sonic-pi click oscpy psutil ];
 
   dontUseSetuptoolsBuild = true;
   dontUsePipInstall = true;
@@ -23,13 +23,13 @@ python3Packages.buildPythonApplication rec {
     cp sonic-pi-tool.py "$out/bin/sonic-pi-tool"
     chmod +x "$out/bin/sonic-pi-tool"
 
-    substituteInPlace "$out/bin/sonic-pi-tool" --replace 'default_paths = (' 'default_paths = ('"'"'${pkgs.sonic-pi}/app'"'"', '
+    substituteInPlace "$out/bin/sonic-pi-tool" --replace 'default_paths = (' 'default_paths = ('"'"'${sonic-pi}/app'"'"', '
 
     wrapProgram "$out/bin/sonic-pi-tool" \
-      --prefix PATH : ${pkgs.ruby}/bin:${pkgs.erlang}/bin:${pkgs.bash}/bin:${pkgs.supercollider}/bin:${pkgs.jack2}/bin
+      --prefix PATH : ${ruby}/bin:${erlang}/bin:${bash}/bin:${supercollider}/bin:${jack2}/bin
   '';
 
-  meta = with pkgs.lib; {
+  meta = with lib; {
     description = "Tool for interfacing with the Sonic Pi server from the command line";
     homepage = "https://github.com/emlyn/sonic-pi-tool";
     license = licenses.mpl20;

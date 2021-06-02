@@ -1,14 +1,14 @@
-{ config, lib, pkgs }:
+{ config, lib, callPackage, vimUtils, vim }:
 
 let
 
-  inherit (pkgs.vimUtils.override {inherit (pkgs.vim);}) buildVimPluginFrom2Nix;
+  inherit (vimUtils.override { inherit (vim); }) buildVimPluginFrom2Nix;
 
-  plugins = pkgs.callPackage ./generated.nix {
+  plugins = callPackage ./generated.nix {
     inherit buildVimPluginFrom2Nix overrides;
   };
 
-  overrides = pkgs.callPackage ./overrides.nix {};
+  overrides = callPackage ./overrides.nix {};
 
 in
 

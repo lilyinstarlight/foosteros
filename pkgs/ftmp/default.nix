@@ -1,4 +1,4 @@
-{ stdenvNoCC, pkgs, python3Packages, fetchFromGitHub }:
+{ stdenvNoCC, lib, wrapPython, fetchFromGitHub, httpx }:
 
 stdenvNoCC.mkDerivation rec {
   name = "ftmp";
@@ -11,20 +11,16 @@ stdenvNoCC.mkDerivation rec {
     sha256 = "10q5lr5zhd81298sv8h32fvwxx3cigaf1kj1md4i6ppx19n61mzl";
   };
 
-  pythonPath = with python3Packages; [
-    httpx
-  ];
+  pythonPath = [ httpx ];
 
-  nativeBuildInputs = with python3Packages; [
-    wrapPython
-  ];
+  nativeBuildInputs = [ wrapPython ];
 
   dontBuild = true;
 
   installPhase = "install -D util/ftmp $out/bin/ftmp";
   postFixup = "wrapPythonPrograms";
 
-  meta = with pkgs.lib; {
+  meta = with lib; {
     description = "Command line utility for FoosterNET Temp";
     homepage = "https://github.com/lilyinstarlight/tmp";
     license = licenses.mit;

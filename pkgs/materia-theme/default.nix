@@ -1,7 +1,7 @@
-{ pkgs }:
+{ lib, materia-theme, bc, resvg, optipng, gnome }:
 
-pkgs.materia-theme.overrideAttrs (attrs: rec {
-  nativeBuildInputs = attrs.nativeBuildInputs ++ (with pkgs; [ bc resvg optipng ]);
+materia-theme.overrideAttrs (attrs: rec {
+  nativeBuildInputs = attrs.nativeBuildInputs ++ [ bc resvg optipng ];
 
   dontConfigure = true;
 
@@ -9,7 +9,7 @@ pkgs.materia-theme.overrideAttrs (attrs: rec {
     patchShebangs change_color.sh install.sh parse-sass.sh render-assets.sh scripts/*.sh src/*/render-assets.sh src/*/render-asset.sh
     sed -i install.sh \
       -e "s|if .*which gnome-shell.*;|if true;|" \
-      -e "s|CURRENT_GS_VERSION=.*$|CURRENT_GS_VERSION=${pkgs.lib.versions.majorMinor pkgs.gnome3.gnome-shell.version}|"
+      -e "s|CURRENT_GS_VERSION=.*$|CURRENT_GS_VERSION=${lib.versions.majorMinor gnome.gnome-shell.version}|"
     for script in render-assets.sh src/*/render-asset.sh; do
       sed -i "$script" \
         -e "s|\brendersvg\b|resvg|g"

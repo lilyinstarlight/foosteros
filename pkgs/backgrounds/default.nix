@@ -1,4 +1,4 @@
-{ stdenvNoCC, pkgs, fetchzip }:
+{ stdenvNoCC, lib, fetchzip, sway, jq, nitrogen }:
 
 stdenvNoCC.mkDerivation rec {
   pname = "backgrounds";
@@ -27,15 +27,15 @@ stdenvNoCC.mkDerivation rec {
     fi
 
     if [ -n "\$SWAYSOCK" ]; then
-      ${pkgs.sway}/bin/swaymsg output '*' background "\$(find "\$backgrounds"/"\$(${pkgs.sway}/bin/swaymsg -t get_outputs | ${pkgs.jq}/bin/jq '.[0].current_mode.height')" -type f | shuf -n1)" fill
+      ${sway}/bin/swaymsg output '*' background "\$(find "\$backgrounds"/"\$(${sway}/bin/swaymsg -t get_outputs | ${jq}/bin/jq '.[0].current_mode.height')" -type f | shuf -n1)" fill
     else
-      ${pkgs.nitrogen}/bin/nitrogen --set-zoom-fill --random "\$backgrounds"
+      ${nitrogen}/bin/nitrogen --set-zoom-fill --random "\$backgrounds"
     fi
     EOF
     chmod +x "$out/bin/setbg"
   '';
 
-  meta = with pkgs.lib; {
+  meta = with lib; {
     description = "FoosterOS/2 backgrounds";
     homepage = "https://github.com/lilyinstarlight/foosteros";
   };

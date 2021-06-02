@@ -1,4 +1,4 @@
-{ stdenvNoCC, pkgs, python3Packages, fetchFromGitHub }:
+{ stdenvNoCC, lib, wrapPython, fetchFromGitHub, httpx }:
 
 stdenvNoCC.mkDerivation rec {
   name = "fpaste";
@@ -11,20 +11,16 @@ stdenvNoCC.mkDerivation rec {
     sha256 = "0jfjgawkym0vi4s5v32sxib8anv32xp2bkn1rrx6yx33365xxyzm";
   };
 
-  pythonPath = with python3Packages; [
-    httpx
-  ];
+  pythonPath = [ httpx ];
 
-  nativeBuildInputs = with python3Packages; [
-    wrapPython
-  ];
+  nativeBuildInputs = [ wrapPython ];
 
   dontBuild = true;
 
   installPhase = "install -D util/fpaste $out/bin/fpaste";
   postFixup = "wrapPythonPrograms";
 
-  meta = with pkgs.lib; {
+  meta = with lib; {
     description = "Command line utility for FoosterNET Paste";
     homepage = "https://github.com/lilyinstarlight/paste";
     license = licenses.mit;
