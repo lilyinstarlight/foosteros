@@ -10,6 +10,7 @@ rec {
   furi = python3Packages.callPackage ./furi {};
   petty = callPackage ./petty {};
   pridecat = callPackage ./pridecat {};
+  rofi-wayland = callPackage ./rofi-wayland {};
   sonic-pi = libsForQt5.callPackage ./sonic-pi {};
   sonic-pi-tool = python3Packages.callPackage ./sonic-pi-tool {};
   swaynag-battery = callPackage ./swaynag-battery {};
