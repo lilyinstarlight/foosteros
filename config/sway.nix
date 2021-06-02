@@ -36,6 +36,50 @@ in
           window.title_format = "{perc}{private}{current_title}";
         };
       };
+
+      programs.rofi = {
+        enable = true;
+        package = pkgs.rofi-wayland;
+        terminal = "${pkgs.alacritty}/bin/alacritty";
+        colors = {
+          window = {
+            background = "#111111";
+            border = "#f29bd4";
+            separator = "#333333";
+          };
+          rows = {
+            normal = {
+              background = "#333333";
+              foreground = "#f29bd4";
+              backgroundAlt = "#222222";
+              highlight = {
+                background = "#f29bd4";
+                foreground = "#333333";
+              };
+            };
+            active = {
+              background = "#333333";
+              foreground = "#f29bd4";
+              backgroundAlt = "#222222";
+              highlight = {
+                background = "#f29bd4";
+                foreground = "#333333";
+              };
+            };
+            urgent = {
+              background = "#333333";
+              foreground = "#f29bd4";
+              backgroundAlt = "#222222";
+              highlight = {
+                background = "#f29bd4";
+                foreground = "#333333";
+              };
+            };
+          };
+        };
+        font = "Monofur Nerd Font 12";
+        separator = "none";
+      };
     }
   ];
 
@@ -85,7 +129,7 @@ in
       ### variables
       set $mod mod4
       set $term ${pkgs.alacritty}/bin/alacritty
-      set $run ${pkgs.wofi}/bin/wofi --show run
+      set $run ${pkgs.rofi-wayland}/bin/rofi -show run
       set $lock ${pkgs.swaylock}/bin/swaylock
       set $browser ${pkgs.qutebrowser}/bin/qutebrowser
 
@@ -384,7 +428,7 @@ in
     extraPackages = with pkgs; [
       alsaUtils brightnessctl jq glib
       swaybg swaylock swayidle
-      i3status mako wofi alacritty
+      i3status mako rofi-wayland alacritty
       fooster-backgrounds fooster-materia-theme bibata-cursors papirus-icon-theme
       slurp grim wl-clipboard libnotify sway-contrib.grimshot
       xwayland

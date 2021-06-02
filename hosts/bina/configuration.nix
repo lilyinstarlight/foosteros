@@ -107,7 +107,7 @@
 
   environment.systemPackages = with pkgs; [
     gnupg pass-wayland-otp
-    wofi-pass
+    rofi-pass-wayland rofi-mpd
     pavucontrol
     mpc_cli ncmpcpp beets
     mpv
@@ -146,7 +146,7 @@
 
       ### variables
       set $mod mod4
-      set $pass ${pkgs.wofi-pass}/bin/wofi-pass -s
+      set $pass ${pkgs.rofi-pass-wayland}/bin/rofi-pass
 
       ### buttons
       bindsym xf86audioplay exec ${pkgs.mpc_cli}/bin/mpc -q toggle
@@ -269,7 +269,6 @@
       }
     '';
 
-
     "alsa/conf.d/50-jack.conf".source = "${pkgs.alsaPlugins}/etc/alsa/conf.d/50-jack.conf";
   };
 
@@ -378,10 +377,18 @@
       };
     };
 
-    xdg.configFile."petty/pettyrc".text = ''
-      shell=${pkgs.fish}/bin/fish
-      session1=sway
-    '';
+    xdg.configFile = {
+      "rofi-pass/config".text = ''
+        default_do=copyPass
+        clip=clipboard
+        notify=true
+      '';
+
+      "petty/pettyrc".text = ''
+        shell=${pkgs.fish}/bin/fish
+        session1=sway
+      '';
+    };
   };
 
   system.stateVersion = "21.05";
