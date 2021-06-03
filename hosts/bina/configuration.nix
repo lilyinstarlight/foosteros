@@ -81,7 +81,6 @@
       };
     };
   };
-  hardware.pulseaudio.package = pkgs.pulseaudioFull;
 
   hardware.opengl.extraPackages = with pkgs; [
     vaapiIntel
@@ -98,13 +97,7 @@
   virtualisation.spiceUSBRedirection.enable = true;
   virtualisation.podman.enable = true;
 
-  sound.extraConfig = ''
-    pcm_type.jack {
-      libs.native = ${pkgs.alsaPlugins}/lib/alsa-lib/libasound_module_pcm_jack.so ;
-    }
-  '';
-
-  users.users.lily.extraGroups = [ config.users.groups.keys.name "audio" "libvirtd" ];
+  users.users.lily.extraGroups = [ config.users.groups.keys.name "libvirtd" ];
 
   environment.systemPackages = with pkgs; [
     gnupg pass-wayland-otp
@@ -115,7 +108,7 @@
     inkscape gimp-with-plugins krita
     mupdf
     element-desktop discord
-    jack2 qjackctl qsynth vmpk calf
+    helvum qjackctl qsynth vmpk calf
     ardour lmms
     sonic-pi sonic-pi-tool
     homebank
@@ -277,6 +270,8 @@
 
   services.resolved.dnssec = "false";
 
+  services.pipewire.jack.enable = true;
+
   # services.printing.enable = true;
 
   services.nullmailer = {
@@ -299,11 +294,6 @@
     enable = true;
     powerSupply = "BAT0";
   };
-
-  security.pam.loginLimits = [
-    { domain = "@audio"; type = "-"; item = "rtprio"; value = "99"; }
-    { domain = "@audio"; type = "-"; item = "memlock"; value = "unlimited"; }
-  ];
 
   security.pki.certificates = [
     ''
