@@ -1,7 +1,7 @@
 { stdenvNoCC, lib, wrapPython, fetchFromGitHub, httpx }:
 
 stdenvNoCC.mkDerivation rec {
-  name = "ftmp";
+  pname = "ftmp";
   version = "0.1b4";
 
   src = fetchFromGitHub {

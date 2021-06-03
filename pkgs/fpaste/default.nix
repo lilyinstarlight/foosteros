@@ -1,7 +1,7 @@
 { stdenvNoCC, lib, wrapPython, fetchFromGitHub, httpx }:
 
 stdenvNoCC.mkDerivation rec {
-  name = "fpaste";
+  pname = "fpaste";
   version = "0.1b6";
 
   src = fetchFromGitHub {
