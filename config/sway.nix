@@ -95,10 +95,17 @@ in
     petty
     neofetch
     qutebrowser firefox google-chrome
-    aileron
   ];
 
-  fonts.fonts = with pkgs; [ monofur-nerdfont ];
+  fonts.fonts = with pkgs; [
+    aileron
+    noto-fonts noto-fonts-extra noto-fonts-cjk noto-fonts-emoji
+    monofur-nerdfont
+    dejavu_fonts
+    freefont_ttf
+    gyre-fonts
+    liberation_ttf
+  ];
 
   environment.etc = {
     "xdg/mimeapps.list".text = lib.mkDefault ''
