@@ -51,7 +51,6 @@
 
   nixpkgs.config = {
     allowUnfree = true;
-    #packageOverrides = import ../pkgs { pkgs = import <nixpkgs> { config.allowUnfree = true; }; };
     packageOverrides = (pkgs: import ../pkgs { inherit pkgs; });
   };
 
