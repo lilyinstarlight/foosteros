@@ -95,6 +95,7 @@
     enable = true;
     qemuPackage = pkgs.qemu_kvm;
   };
+  virtualisation.spiceUSBRedirection.enable = true;
   virtualisation.podman.enable = true;
 
   sound.extraConfig = ''
