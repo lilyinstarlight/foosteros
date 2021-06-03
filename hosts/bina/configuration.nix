@@ -262,8 +262,6 @@
           format = "%H:%M"
       }
     '';
-
-    "alsa/conf.d/50-jack.conf".source = "${pkgs.alsaPlugins}/etc/alsa/conf.d/50-jack.conf";
   };
 
   programs.gnupg.agent.enable = true;
