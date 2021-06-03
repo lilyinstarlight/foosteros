@@ -432,6 +432,8 @@ in
 
   environment.sessionVariables.NIX_GSETTINGS_OVERRIDES_DIR = "${sway-gsettings-desktop-schemas}/share/gsettings-schemas/sway-gsettings-overrides/glib-2.0/schemas";
 
+  xdg.portal.enable = true;
+
   users.defaultUserShell = pkgs.petty;
   users.users.root.shell = pkgs.bashInteractive;
 
