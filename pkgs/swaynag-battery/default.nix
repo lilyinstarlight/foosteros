@@ -1,4 +1,4 @@
-{ lib, buildGoModule, fetchFromGitHub, sway }:
+{ lib, buildGoModule, fetchFromGitHub, makeWrapper, sway }:
 
 buildGoModule rec {
   pname = "swaynag-battery";
@@ -13,9 +13,13 @@ buildGoModule rec {
   };
   vendorSha256 = "0kwzx3xf6j5z0zzmybxfpmnz8ll7jyh9fkrfjri7mlch77gn7ml7";
 
-  patchPhase = ''
-    sed -i -e 's#\(exec.Command("\)swaynag\("\)#\1${sway}/bin/swaynag\2#g' swaynag.go
-    sed -i -e 's#\(exec.Command("\)swaymsg\("\)#\1${sway}/bin/swaymsg\2#g' swaymsg.go
+  nativeBuildInputs = [
+    makeWrapper
+  ];
+
+  fixupPhase = ''
+    wrapProgram $out/bin/swaynag-battery \
+      --prefix PATH : "${sway}/bin"
   '';
 
   meta = with lib; {
