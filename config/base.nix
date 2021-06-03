@@ -113,6 +113,7 @@
 
   environment.systemPackages = with pkgs; [
     bc file htop tmux python3 tree
+    fishPlugins.done
     cachix fpaste ftmp furi
     git gitAndTools.delta ripgrep
     shellcheck progress

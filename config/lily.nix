@@ -18,7 +18,6 @@
   home-manager.users.lily = { pkgs, ... }: {
     programs.fish = {
       enable = true;
-      plugins = pkgs.callPackage ../misc/fish-plugins {};
       promptInit = ''
         fish_vi_key_bindings
       '';
