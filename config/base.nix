@@ -238,40 +238,40 @@
         let g:sonic_pi_run_args = ['--cue-server', 'external']
       '';
 
-      packages.fooster = with pkgs; {
+      packages.fooster = with pkgs.vimPlugins; {
         start = [
-          vimPlugins.jellybeans-vim
-          vimPlugins.lightline-vim
-          vimPlugins.vim-abolish
-          vimPlugins.vim-better-whitespace
-          vimPlugins.vim-commentary
-          vimPlugins.vim-easy-align
-          vimPlugins.vim-elixir
-          vimPlugins.vim-eunuch
-          vimPlugins.vim-expand-region
-          vimPlugins.vim-fugitive
-          vimPlugins.vim-multiple-cursors
-          vimPlugins.vim-nix
-          vimPlugins.vim-peekaboo
-          vimPlugins.vim-ps1
-          vimPlugins.vim-qml
-          vimPlugins.vim-repeat
-          vimPlugins.vim-slash
-          vimPlugins.vim-sleuth
-          vimPlugins.vim-speeddating
-          vimPlugins.vim-surround
-          vimPlugins.vim-visual-increment
-          vimPlugins.vimwiki
+          jellybeans-vim
+          lightline-vim
+          vim-abolish
+          vim-better-whitespace
+          vim-commentary
+          vim-easy-align
+          vim-elixir
+          vim-eunuch
+          vim-expand-region
+          vim-fugitive
+          vim-multiple-cursors
+          vim-nix
+          vim-peekaboo
+          vim-ps1
+          vim-qml
+          vim-repeat
+          vim-slash
+          vim-sleuth
+          vim-speeddating
+          vim-surround
+          vim-visual-increment
+          vimwiki
 
-          vimPlugins.hexmode
-          vimPlugins.vim-fish
-          vimPlugins.vim-interestingwords
-          vimPlugins.vim-lilypond-integrator
-          vimPlugins.vim-radical
-          vimPlugins.vim-resolve
-          vimPlugins.vim-sonic-pi
-          vimPlugins.vim-spl
-          vimPlugins.vim-zeek
+          hexmode
+          vim-fish
+          vim-interestingwords
+          vim-lilypond-integrator
+          vim-radical
+          vim-resolve
+          vim-sonic-pi
+          vim-spl
+          vim-zeek
         ];
       };
     };
