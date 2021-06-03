@@ -278,13 +278,13 @@ in
       bindsym $mod+xf86kbdbrightnessdown exec ${pkgs.brightnessctl}/bin/brightnessctl -c leds set 0%
       bindsym $mod+xf86kbdbrightnessup exec ${pkgs.brightnessctl}/bin/brightnessctl -c leds set 100%
 
-      bindsym xf86audiolowervolume exec ${pkgs.alsaUtils}/bin/amixer -q -D default sset Master 10%-
-      bindsym xf86audioraisevolume exec ${pkgs.alsaUtils}/bin/amixer -q -D default sset Master 10%+
-      bindsym shift+xf86audiolowervolume exec ${pkgs.alsaUtils}/bin/amixer -q -D default sset Master 1%-
-      bindsym shift+xf86audioraisevolume exec ${pkgs.alsaUtils}/bin/amixer -q -D default sset Master 1%+
-      bindsym $mod+xf86audiolowervolume exec ${pkgs.alsaUtils}/bin/amixer -q -D default sset Master 0%
-      bindsym $mod+xf86audioraisevolume exec ${pkgs.alsaUtils}/bin/amixer -q -D default sset Master 100%
-      bindsym xf86audiomute exec ${pkgs.alsaUtils}/bin/amixer -q -D default sset Master toggle
+      bindsym xf86audiolowervolume exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume 0 -10%
+      bindsym xf86audioraisevolume exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume 0 +10%
+      bindsym shift+xf86audiolowervolume exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume 0 -1%
+      bindsym shift+xf86audioraisevolume exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume 0 +1%
+      bindsym $mod+xf86audiolowervolume exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume 0 0%
+      bindsym $mod+xf86audioraisevolume exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume 0 100%
+      bindsym xf86audiomute exec ${pkgs.pulseaudio}/bin/pactl set-sink-mute 0 toggle
 
       #### applications
       bindsym $mod+semicolon exec $term
@@ -432,7 +432,7 @@ in
     enable = true;
     wrapperFeatures.gtk = true;
     extraPackages = with pkgs; [
-      alsaUtils brightnessctl jq glib
+      pulseaudio brightnessctl jq glib
       swaybg swaylock swayidle
       i3status mako rofi-wayland alacritty
       fooster-backgrounds fooster-materia-theme bibata-cursors papirus-icon-theme
