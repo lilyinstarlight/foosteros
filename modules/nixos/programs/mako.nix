@@ -87,6 +87,7 @@ in
             exec ${pkgs.mako}/bin/mako
           fi
         '';
+        BusName = "org.freedesktop.Notifications";
       };
     } // optionalAttrs cfg.enable {
       wantedBy = cfg.targets;
