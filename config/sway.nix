@@ -122,7 +122,7 @@ in
       x-scheme-handler/https=org.qutebrowser.qutebrowser.desktop
     '';
 
-    "gtk-3.0/settings.ini".text = lib.mkDefault ''
+    "xdg/gtk-3.0/settings.ini".text = lib.mkDefault ''
       [Settings]
       gtk-theme-name=Materia-Fooster
       gtk-icon-theme-name=Papirus-Dark
@@ -130,13 +130,15 @@ in
       gtk-cursor-theme-name=Bibata_Oil
       gtk-application-prefer-dark-theme=true
     '';
+    "gtk-3.0/settings.ini".source = config.environment.etc."xdg/gtk-3.0/settings.ini".source;
 
-    "gtk-2.0/gtkrc".text = lib.mkDefault ''
+    "xdg/gtk-2.0/gtkrc".text = lib.mkDefault ''
       gtk-theme-name="Materia-Fooster"
       gtk-icon-theme-name="Papirus-Dark"
       gtk-font-name="Monofur Nerd Font 12"
       gtk-cursor-theme-name="Bibata_Oil"
     '';
+    "gtk-2.0/gtkrc".source = config.environment.etc."xdg/gtk-2.0/gtkrc".source;
 
     "sway/config.d/fooster".text = lib.mkDefault ''
       ### variables
@@ -431,6 +433,12 @@ in
   };
 
   environment.sessionVariables.NIX_GSETTINGS_OVERRIDES_DIR = "${sway-gsettings-desktop-schemas}/share/gsettings-schemas/sway-gsettings-overrides/glib-2.0/schemas";
+
+  qt5 = {
+    enable = true;
+    style = "gtk2";
+    platformTheme = "gtk2";
+  };
 
   xdg.portal.enable = true;
 
