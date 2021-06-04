@@ -420,6 +420,27 @@ in
       }
     '';
 
+    "xdg/alacritty/alacritty.yml".text = ''
+      font:
+        normal:
+          family: Monofur Nerd Font
+          style: Regular
+
+        bold:
+          family: Monofurbold Nerd Font
+          style: Bold
+
+        italic:
+          family: Monofuritalic Nerd Font
+          style: Italic
+
+        bold_italic:
+          family: Monofurbold Nerd Font
+          style: Bold Italic
+
+        size: 13
+    '';
+
     "petty/pettyrc".text = ''
       shell=${pkgs.bashInteractive}/bin/bash
       session1=sway
