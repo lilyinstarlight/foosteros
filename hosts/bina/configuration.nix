@@ -412,8 +412,8 @@
       "bin/monitor-both" = {
         text = ''
           #!/bin/sh
-          swaymsg output eDP-1 resolution 1920x1080 position 1920 0 scale 1
-          swaymsg output DP-1 resolution 1920x1080 position 0 0 scale 1
+          swaymsg output eDP-1 enable resolution 1920x1080 position 1920 0 scale 1
+          swaymsg output DP-1 enable resolution 1920x1080 position 0 0 scale 1
         '';
         executable = true;
       };
@@ -422,7 +422,7 @@
         text = ''
           #!/bin/sh
           swaymsg output eDP-1 disable
-          swaymsg output DP-1 resolution 1920x1080 position 0 0 scale 1
+          swaymsg output DP-1 enable resolution 1920x1080 position 0 0 scale 1
         '';
         executable = true;
       };
@@ -430,7 +430,7 @@
       "bin/monitor-internal" = {
         text = ''
           #!/bin/sh
-          swaymsg output eDP-1 resolution 1920x1080 position 0 0 scale 1
+          swaymsg output eDP-1 enable resolution 1920x1080 position 0 0 scale 1
           swaymsg output DP-1 disable
         '';
         executable = true;
