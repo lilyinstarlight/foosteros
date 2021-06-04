@@ -150,6 +150,11 @@
 
       ### applications
       bindsym $mod+backslash exec $pass
+
+      ### rules
+      for_window [title="Qsynth"] floating enable
+      for_window [title=".* — QjackCtl"] floating enable
+      for_window [title="Virtual MIDI Piano Keyboard"] floating enable
     '';
 
     "xdg/i3status/config".text = ''
