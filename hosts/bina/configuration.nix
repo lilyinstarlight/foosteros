@@ -110,7 +110,8 @@
     element-desktop discord
     helvum qjackctl qsynth vmpk calf
     ardour lmms
-    sonic-pi sonic-pi-tool
+    sonic-pi sonic-pi-tool open-stage-control
+    lilypond
     homebank
     virt-manager podman-compose
   ];
