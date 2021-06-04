@@ -383,6 +383,105 @@
         session1=sway
       '';
     };
+
+    home.file = {
+      "bin/addr" = {
+        text = ''
+          #!/bin/sh
+          exec curl "$@" icanhazip.com
+        '';
+        executable = true;
+      };
+
+      "bin/alert" = {
+        text = ''
+          #!/bin/sh
+          exec curl -s -X POST -d body="$*" https://alert.lily.flowers/ >/dev/null
+        '';
+        executable = true;
+      };
+
+      "bin/genpass" = {
+        text = ''
+          #!/bin/sh
+          grep -E '^\w{4,}$' ${pkgs.google-10000-english}/share/dict/google-10000-english-usa-no-swears.txt | sort -R | head -n4 | paste -sd ""
+        '';
+        executable = true;
+      };
+
+      "bin/monitor-both" = {
+        text = ''
+          #!/bin/sh
+          swaymsg output eDP-1 resolution 1920x1080 position 1920 0 scale 1
+          swaymsg output DP-1 resolution 1920x1080 position 0 0 scale 1
+        '';
+        executable = true;
+      };
+
+      "bin/monitor-external" = {
+        text = ''
+          #!/bin/sh
+          swaymsg output eDP-1 disable
+          swaymsg output DP-1 resolution 1920x1080 position 0 0 scale 1
+        '';
+        executable = true;
+      };
+
+      "bin/monitor-internal" = {
+        text = ''
+          #!/bin/sh
+          swaymsg output eDP-1 resolution 1920x1080 position 0 0 scale 1
+          swaymsg output DP-1 disable
+        '';
+        executable = true;
+      };
+
+      "bin/neofetch" = {
+        text = ''
+          #!/bin/sh
+          case "$SHELL" in */petty)
+              . "$HOME"/.config/petty/pettyrc
+              export SHELL="$shell"
+              ;;
+          esac
+
+          exec /run/current-system/sw/bin/neofetch --colors 5 4 4 5 4 7 --ascii_distro nixos --ascii_colors 5 4 --separator ' ->' "$@"
+        '';
+        executable = true;
+      };
+
+      "bin/pdflatexmk" = {
+        text = ''
+          #!/bin/sh
+          latexmk -pdf "$@" && latexmk -c "$@"
+        '';
+        executable = true;
+      };
+
+      "bin/scp-nofp" = {
+        text = ''
+          #!/bin/sh
+          scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$@"
+        '';
+        executable = true;
+      };
+
+      "bin/sftp-nofp" = {
+        text = ''
+          #!/bin/sh
+          sftp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$@"
+        '';
+        executable = true;
+      };
+
+      "bin/ssh-nofp" = {
+        text = ''
+          #!/bin/sh
+          ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$@"
+        '';
+        executable = true;
+      };
+    };
   };
 
   system.stateVersion = "21.05";

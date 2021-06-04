@@ -8,6 +8,7 @@ rec {
   fpaste = python3Packages.callPackage ./fpaste {};
   ftmp = python3Packages.callPackage ./ftmp {};
   furi = python3Packages.callPackage ./furi {};
+  google-10000-english = callPackage ./google-10000-english {};
   helvum = callPackage ./helvum {};
   petty = callPackage ./petty {};
   pridecat = callPackage ./pridecat {};
