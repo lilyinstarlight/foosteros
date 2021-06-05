@@ -117,6 +117,26 @@
   ];
 
   environment.etc = {
+    "xdg/mimeapps.list".text = ''
+      [Default Applications]
+      text/html=org.qutebrowser.qutebrowser.desktop
+      text/xml=org.qutebrowser.qutebrowser.desktop
+      application/xhtml+xml=org.qutebrowser.qutebrowser.desktop
+      application/xml=org.qutebrowser.qutebrowser.desktop
+      application/rdf+xml=org.qutebrowser.qutebrowser.desktop
+      image/gif=org.qutebrowser.qutebrowser.desktop
+      image/jpeg=org.qutebrowser.qutebrowser.desktop
+      image/png=org.qutebrowser.qutebrowser.desktop
+      x-scheme-handler/http=org.qutebrowser.qutebrowser.desktop
+      x-scheme-handler/https=org.qutebrowser.qutebrowser.desktop
+      application/pdf=mupdf.desktop
+      application/x-pdf=mupdf.desktop
+      application/x-cbz=mupdf.desktop
+      application/oxps=mupdf.desktop
+      application/vnd.ms-xpsdocument=mupdf.desktop
+      application/epub+zip=mupdf.desktop
+    '';
+
     "sway/config.d/bina".text = ''
       ### ouputs
       output eDP-1 resolution 1920x1080 position 0 0 scale 1
