@@ -27,7 +27,7 @@ Feel free to take any pieces in this repository that you would like! Please don'
     cryptsetup open /dev/sda2 nixos
     pvcreate /dev/mapper/nixos
     vgcreate nixos /dev/mapper/nixos
-    lvcreate -L $(echo $(vgs -o vg_size --noheadings --units g --nosuffix nixos) - 2 | bc -l)g -n root nixos
+    lvcreate -L "$(echo 'scale = 2;' "$(vgs -o vg_size --noheadings --units g --nosuffix nixos)" - "$(echo 'scale = 0;' '(' "$(grep -F MemTotal: /proc/meminfo | awk '{print $2}')" + 1024 '*' 1024 ')' / '(' 1024 '*' 1024 ')' | bc)" | bc)"g -n root nixos
     mkfs.btrfs -L root /dev/mapper/nixos-root
     lvcreate -l 100%FREE -n swap nixos
     mkswap -L swap /dev/mapper/nixos-swap
