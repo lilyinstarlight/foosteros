@@ -22,6 +22,7 @@ in
     {
       programs.qutebrowser = {
         enable = true;
+        loadAutoconfig = true;
         settings = {
           downloads.location.prompt = false;
           editor.command = ["${pkgs.alacritty}/bin/alacritty" "-e" "vi" "{}"];
