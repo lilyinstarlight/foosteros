@@ -1,7 +1,7 @@
-{ pkgs }:
+{ buildVimPluginFrom2Nix }:
 
 self: super: {
-  vim-radical = super.vim-radical.overrideAttrs(old: {
-    dependencies = with super; [ vim-magnum ];
+  vim-radical = super.vim-radical.overrideAttrs (old: {
+    dependencies = with self; [ vim-magnum ];
   });
 }

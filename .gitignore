@@ -1,4 +1,6 @@
+/scripts/__pycache__
+/result*
+
 /configuration.nix
 /hardware-configuration.nix
 /secrets.yaml
-/result*
