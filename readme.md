@@ -2,7 +2,7 @@
 
 _The totally cool way to run your computer_
 
-Feel free to take any pieces in this repository that you would like! Please don't try to use this in its entirety, though, unless you are me. It is very custom and very specific to myself.
+Feel free to take any pieces in this repository that you like! Please don't try to use this whole thing though as it is horrifically custom and specific to myself.
 
 
 ## Installation
