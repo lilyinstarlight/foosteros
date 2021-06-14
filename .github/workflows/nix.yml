@@ -3,20 +3,21 @@ name: Nix
 on:
   - pull_request
   - push
+  - workflow_dispatch
 
 jobs:
   build:
     name: Build and Test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: cachix/install-nix-action@v13
-      with:
-        nix_path: nixpkgs=channel:nixos-unstable:home-manager=https://github.com/nix-community/home-manager/archive/master.tar.gz:sops-nix=https://github.com/Mic92/sops-nix/archive/master.tar.gz
-    - uses: cachix/cachix-action@v10
-      with:
-        name: foosteros
-        authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-    - run: nix-build
-    - run: nix-build --no-out-link test.nix
-    - run: nix-store --gc
+      - uses: actions/checkout@v2
+      - uses: cachix/install-nix-action@v13
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable:home-manager=https://github.com/nix-community/home-manager/archive/master.tar.gz:sops-nix=https://github.com/Mic92/sops-nix/archive/master.tar.gz
+      - uses: cachix/cachix-action@v10
+        with:
+          name: foosteros
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+      - run: nix-build
+      - run: nix-build --no-out-link test.nix
+      - run: nix-store --gc
