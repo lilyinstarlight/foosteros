@@ -227,6 +227,7 @@
 
       battery 0 {
           integer_battery_capacity = true
+          last_full_capacity = true
           low_threshold = 12
 
           status_chr = "^"
@@ -234,7 +235,7 @@
           status_unk = "?"
           status_full = ""
 
-          format = "batt: %status%percentage"
+          format = "batt: %status%percentage (%remaining)"
           format_down = "batt: none"
       }
 
@@ -277,6 +278,7 @@
 
       battery 0 {
           integer_battery_capacity = true
+          last_full_capacity = true
           low_threshold = 12
 
           status_chr = "^"
