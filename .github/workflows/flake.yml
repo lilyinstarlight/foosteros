@@ -1,0 +1,36 @@
+name: Flake
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  update:
+    name: Update
+    runs-on: ubuntu-latest
+    env:
+      FOOSTEROS_EXCLUDE_NONFREE: 1
+    steps:
+      - uses: cachix/install-nix-action@v13
+        with:
+          install_url: https://github.com/numtide/nix-flakes-installer/releases/latest/download/install
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+      - uses: cachix/cachix-action@v10
+        with:
+          name: foosteros
+      - uses: actions/checkout@v2
+        with:
+          ssh-key: ${{ secrets.REPO_KEY }}
+      - name: Configure git
+        run: |
+          git config user.name GitHub Actions
+          git config user.email actions@github.com
+      - run: nix -vL flake update
+      - run: nix -vL flake check
+      - name: Push changes
+        run: |
+          git commit -m "flake: update inputs" flake.lock
+          git push

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputPaths ? { nixpkgs = <nixpkgs>; }, ... }:
 
 with lib;
 
@@ -8,7 +8,9 @@ let
   efi = config.boot.loader.efi;
 
   systemdBootBuilder = pkgs.substituteAll {
-    src = <nixpkgs/nixos/modules/system/boot/loader/systemd-boot/systemd-boot-builder.py>;
+    name = "systemd-boot-builder.py";
+
+    src = "${inputPaths.nixpkgs}/nixos/modules/system/boot/loader/systemd-boot/systemd-boot-builder.py";
 
     isExecutable = true;
 
@@ -30,6 +32,24 @@ let
 
     memtest86 = if cfg.memtest86.enable then pkgs.memtest86-efi else "";
   };
+
+  systemdBootFixer = pkgs.writeScript "systemd-boot-fixer.py" ''
+    #! ${pkgs.python3}/bin/python3 -B
+    import importlib.util
+
+    install_spec = importlib.util.spec_from_file_location("install", "${systemdBootBuilder}")
+    install = importlib.util.module_from_spec(install_spec)
+    install_spec.loader.exec_module(install)
+
+    install.BOOT_ENTRY = """title ${cfg.bootName}{profile}
+    version Generation {generation} {description}
+    linux {kernel}
+    initrd {initrd}
+    options {kernel_params}
+    """
+
+    install.main()
+  '';
 in
 
 {
@@ -142,24 +162,7 @@ in
     boot.loader.supportsInitrdSecrets = true;
 
     system = {
-      build.installBootLoader = pkgs.writeScript "systemd-boot-fixer.py" ''
-        #! ${pkgs.python3}/bin/python3 -B
-        import importlib.util
-
-        install_spec = importlib.util.spec_from_file_location("install", "${systemdBootBuilder}")
-        install = importlib.util.module_from_spec(install_spec)
-        install_spec.loader.exec_module(install)
-
-        install.BOOT_ENTRY = """title ${cfg.bootName}{profile}
-        version Generation {generation} {description}
-        linux {kernel}
-        initrd {initrd}
-        options {kernel_params}
-        """
-
-        install.main()
-      '';
-
+      build.installBootLoader = systemdBootFixer;
 
       boot.loader.id = "systemd-boot";
 

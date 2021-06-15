@@ -12,14 +12,32 @@ jobs:
     env:
       FOOSTEROS_EXCLUDE_NONFREE: 1
     steps:
-      - uses: actions/checkout@v2
       - uses: cachix/install-nix-action@v13
-        with:
-          nix_path: nixpkgs=channel:nixos-unstable:home-manager=https://github.com/nix-community/home-manager/archive/master.tar.gz:sops-nix=https://github.com/Mic92/sops-nix/archive/master.tar.gz
       - uses: cachix/cachix-action@v10
         with:
           name: foosteros
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+      - uses: actions/checkout@v2
       - run: nix-build
       - run: nix-build --no-out-link test.nix
       - run: nix-store --gc
+
+  nix-unstable-build:
+    name: Nix Unstable Build and Test
+    runs-on: ubuntu-latest
+    env:
+      FOOSTEROS_EXCLUDE_NONFREE: 1
+    steps:
+      - uses: cachix/install-nix-action@v13
+        with:
+          install_url: https://github.com/numtide/nix-flakes-installer/releases/latest/download/install
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+      - uses: cachix/cachix-action@v10
+        with:
+          name: foosteros
+      - uses: actions/checkout@v2
+      - run: nix -vL build -f .
+      - run: nix -vL flake check
+      - run: nix -vL store gc

@@ -1,3 +1,3 @@
 { pkgs, ... }:
 
-pkgs.recurseIntoAttrs {}
+{}

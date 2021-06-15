@@ -30,7 +30,7 @@ let
   };
 
 in {
-  disabledModules = [ <home-manager/modules/services/mpdris2.nix> ];
+  disabledModules = [ "services/mpdris2.nix" ];
 
   options.services.mpdris2 = {
     enable = mkEnableOption "mpDris2 the MPD to MPRIS2 bridge";

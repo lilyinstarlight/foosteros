@@ -2,7 +2,6 @@
 
 {
   imports = [
-    <home-manager/nixos>
     ../modules/nixos/boot/systemd-boot/systemd-boot.nix
     ../modules/nixos/services/misc/swaynag-battery.nix
     ../modules/nixos/programs/sway.nix

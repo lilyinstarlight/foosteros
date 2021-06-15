@@ -8,14 +8,10 @@ Feel free to take any pieces in this repository that you like! Please don't try 
 ## Installation
 
 1. Boot NixOS minimal install media.
-2. Add installation dependencies such as git, unstable nixos channel, home-manager channel, and sops-nix channel.
+2. Add installation dependencies such as unstable Nix (for flakes), bc, and git.
     ```
     nix-channel --update
-    nix-env -iA nixos.{bc,git}
-    nix-channel --add https://nixos.org/channels/nixos-unstable nixos
-    nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-    nix-channel --add https://github.com/Mic92/sops-nix/archive/master.tar.gz sops-nix
-    nix-channel --update
+    nix-env -iA nixos.{nixUnstable,bc,git}
     ```
 3. Partition the disks with at least an EFI System Partition and preferably root and swap in an encrypted LVM.
     ```
@@ -45,25 +41,17 @@ Feel free to take any pieces in this repository that you like! Please don't try 
     mkdir -p /mnt/etc
     git clone https://github.com/lilyinstarlight/foosteros.git /mnt/etc/nixos
     ```
-6. Symlink configuration.nix, hardware-configuration.nix, and secrets.yaml from the target system under hosts to /etc/nixos (hardware-configuration.nix can be generated if desired).
+6. Run nixos-install for the target host.
     ```
-    ln -s hosts/bina/configuration.nix /mnt/etc/nixos/configuration.nix
-    ln -s hosts/bina/hardware-configuration.nix /mnt/etc/nixos/hardware-configuration.nix
-    ln -s hosts/bina/secrets.yaml /mnt/etc/nixos/secrets.yaml
+    nixos-install --flake '/mnt/etc/nixos#bina'
     ```
-7. Run nixos-install.
-    ```
-    nixos-install
-    ```
-8. Set the password for user account "lily" and add home-manager and sops-nix channels to install.
+7. Set the password for user account "lily".
     ```
     nixos-enter --root /mnt
     passwd lily
-    nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-    nix-channel --add https://github.com/Mic92/sops-nix/archive/master.tar.gz sops-nix
     exit
     ```
-9. Reboot into the new system.
+8. Reboot into the new system.
     ```
     systemctl reboot
     ```

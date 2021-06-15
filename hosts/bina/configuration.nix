@@ -1,9 +1,7 @@
-{ config, lib, pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   imports = [
-    <sops-nix/modules/sops>
-
     ./hardware-configuration.nix
 
     ../../config/base.nix
