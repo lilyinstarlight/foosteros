@@ -394,9 +394,40 @@
 
     xdg.configFile = {
       "rofi-pass/config".text = ''
-        default_do=copyPass
+        typePassOrOtp () {
+          checkIfPass
+
+          case "$password" in
+            'otpauth://'*)
+              typed="OTP token"
+              printf '%s' "$(generateOTP)" | wtype -
+              ;;
+
+            *)
+              typed="password"
+              printf '%s' "$password" | wtype -
+              ;;
+          esac
+
+          if [[ $notify == "true" ]]; then
+              if [[ "''${stuff[notify]}" == "false" ]]; then
+                  :
+              else
+                  notify-send "rofi-pass" "finished typing $typed";
+              fi
+          elif [[ $notify == "false" ]]; then
+              if [[ "''${stuff[notify]}" == "true" ]]; then
+                  notify-send "rofi-pass" "finished typing $typed";
+              else
+                  :
+              fi
+          fi
+
+          clearUp
+        }
+
+        default_do=typePassOrOtp
         clip=clipboard
-        notify=true
       '';
 
       "petty/pettyrc".text = ''

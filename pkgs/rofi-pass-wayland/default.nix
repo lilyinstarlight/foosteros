@@ -1,20 +1,6 @@
-{ lib, rofi-pass, rofi-wayland, pass-wayland, coreutils, util-linux, gnugrep, libnotify, pwgen, findutils, gawk, gnused, wl-clipboard, ydotool }:
+{ lib, rofi-pass, rofi-wayland, pass-wayland, coreutils, util-linux, gnugrep, libnotify, pwgen, findutils, gawk, gnused, wl-clipboard, wtype }:
 
 rofi-pass.overrideAttrs (attrs: rec {
-  fixupPhase = ''
-    substituteInPlace $out/bin/rofi-pass \
-      --replace 'xclip --selection clipboard -o' 'wl-paste' \
-      --replace 'xclip -selection clipboard -o' 'wl-paste' \
-      --replace 'xclip --selection clipboard' 'wl-copy' \
-      --replace 'xclip -selection clipboard' 'wl-copy' \
-      --replace 'xclip -o' 'wl-paste -p' \
-      --replace 'xclip' 'wl-copy -p' \
-      --replace 'xdotool key' 'ydotool key' \
-      --replace 'xdotool type' 'ydotool type' \
-      --replace '--delay ''${xdotool_delay}' '--next-delay ''${xdotool_delay}' \
-      --replace '--clearmodifiers --file -' '--file -'
-  '' + attrs.fixupPhase;
-
   wrapperPath = with lib; makeBinPath [
     coreutils
     findutils
@@ -27,6 +13,28 @@ rofi-pass.overrideAttrs (attrs: rec {
     rofi-wayland
     util-linux
     wl-clipboard
-    ydotool
+    wtype
   ];
+
+  fixupPhase = ''
+    substituteInPlace $out/bin/rofi-pass \
+      --replace 'xclip --selection clipboard -o' 'wl-paste' \
+      --replace 'xclip -selection clipboard -o' 'wl-paste' \
+      --replace 'xclip --selection clipboard' 'wl-copy' \
+      --replace 'xclip -selection clipboard' 'wl-copy' \
+      --replace 'xclip -o' 'wl-paste -p' \
+      --replace 'xclip' 'wl-copy -p' \
+      --replace 'xdotool key' 'wtype -k' \
+      --replace 'xdotool type' 'wtype' \
+      --replace '--delay ''${xdotool_delay}' "" \
+      --replace '--clearmodifiers --file -' '-' \
+      --replace 'x_repeat_enabled=' '#x_repeat_enabled=' \
+      --replace 'xset r' '#xset r' \
+      --replace 'unset x_repeat_enabled' '#unset x_repeat_enabled'
+
+    patchShebangs $out/bin
+
+    wrapProgram $out/bin/rofi-pass \
+      --prefix PATH : "${wrapperPath}"
+  '';
 })
