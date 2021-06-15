@@ -2,14 +2,14 @@
 
 buildPythonApplication rec {
   pname = "sonic-pi-tool";
-  version = "0.0.0.9999";
+  version = "unstable-2021-03-07";
 
   src = fetchFromGitHub {
     owner = "emlyn";
     repo = pname;
     #rev = "v${version}";
-    rev = "05b77cc4b2201c8fed359c582dca138036042a08";
-    sha256 = "0la8p35ckqg53406577fnf5zmfw25i05lwx1v4ragigw38pniw4h";
+    rev = "b955369294b7669b2706b26d388ec2c2a9d0d3a2";
+    sha256 = "06y8a6fjhc5yi1db687wsi8qn4jd9kqvzq1lv4p4rlg6d1j540hy";
   };
 
   propagatedBuildInputs = [ sonic-pi click oscpy psutil ];

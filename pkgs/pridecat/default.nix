@@ -2,7 +2,7 @@
 
 stdenv.mkDerivation rec {
   pname = "pridecat";
-  version = "0.0.0.9999";
+  version = "unstable-2020-06-19";
 
   src = fetchFromGitHub {
     owner = "lunasorcery";

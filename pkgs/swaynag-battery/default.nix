@@ -2,7 +2,7 @@
 
 buildGoModule rec {
   pname = "swaynag-battery";
-  version = "0.1.1.9999";
+  version = "unstable-2020-05-25";
 
   src = fetchFromGitHub {
     owner = "m00qek";
@@ -16,6 +16,11 @@ buildGoModule rec {
   nativeBuildInputs = [
     makeWrapper
   ];
+
+  patchPhase = ''
+    substituteInPlace parameters.go \
+      --replace 'message:   "You battery is running low. Please plug in a power adapter"' 'message:   "Your battery is running low. Please plug in a power adapter"'
+  '';
 
   fixupPhase = ''
     wrapProgram $out/bin/swaynag-battery \
