@@ -174,9 +174,6 @@
       set -g status-style fg=colour246,bg=colour236
       set -g window-status-activity-style fg=colour235,bg=colour241
       set -g window-status-current-style fg=colour236,bg=colour245
-      set -g status-interval 60
-      set -g status-right-length 68
-      set -g status-right '#(hostname -s) • #(i3status -c "$HOME"/.config/i3status/tmux)'
 
       # key bindings
       bind -n M-h select-pane -L

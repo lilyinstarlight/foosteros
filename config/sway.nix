@@ -477,6 +477,13 @@ in
   users.defaultUserShell = pkgs.petty;
   users.users.root.shell = pkgs.bashInteractive;
 
+  programs.tmux.extraConfig = ''
+    # status
+    set -g status-interval 60
+    set -g status-right-length 70
+    set -g status-right '#(hostname -s) • #(i3status -c /etc/xdg/i3status/tmux)'
+  '';
+
   programs.sway = {
     enable = true;
     wrapperFeatures.gtk = true;
