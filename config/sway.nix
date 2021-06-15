@@ -82,6 +82,15 @@ in
         font = "Monofur Nerd Font 12";
         separator = "none";
       };
+
+      xdg.configFile = {
+        "swappy/config".text = ''
+          [Default]
+          save_dir=$HOME/tmp
+          save_filename_format=screenshot-%Y%m%d-%H%M%S.png
+          show_panel=true
+        '';
+      };
     }
   ];
 
@@ -304,10 +313,10 @@ in
       bindsym $mod+a exec $browser
 
       #### shortcuts
-      bindsym $mod+print exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify save output "$HOME"/tmp/screenshot.png
-      bindsym $mod+shift+print exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify save area "$HOME"/tmp/screenshot.png
-      bindsym $mod+ctrl+print exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify save window "$HOME"/tmp/screenshot.png
-      bindsym $mod+alt+print exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify save screen "$HOME"/tmp/screenshot.png
+      bindsym $mod+print exec ${pkgs.sway-contrib.grimshot}/bin/grimshot save output - | ${pkgs.swappy}/bin/swappy -f -
+      bindsym $mod+shift+print exec ${pkgs.sway-contrib.grimshot}/bin/grimshot save area - | ${pkgs.swappy}/bin/swappy -f -
+      bindsym $mod+ctrl+print exec ${pkgs.sway-contrib.grimshot}/bin/grimshot save window - | ${pkgs.swappy}/bin/swappy -f -
+      bindsym $mod+alt+print exec ${pkgs.sway-contrib.grimshot}/bin/grimshot save screen - | ${pkgs.swappy}/bin/swappy -f -
       bindsym $mod+bracketright exec ${pkgs.mako}/bin/makoctl dismiss -g
       bindsym $mod+shift+bracketright exec ${pkgs.mako}/bin/makoctl dismiss -a
       bindsym $mod+ctrl+bracketright exec ${pkgs.mako}/bin/makoctl restore
@@ -476,7 +485,7 @@ in
       swaybg swaylock swayidle
       i3status mako rofi-wayland alacritty
       fooster-backgrounds fooster-materia-theme bibata-cursors papirus-icon-theme
-      slurp grim wl-clipboard libnotify sway-contrib.grimshot
+      slurp grim wl-clipboard libnotify sway-contrib.grimshot swappy
       xwayland
       xdg-utils
     ];
