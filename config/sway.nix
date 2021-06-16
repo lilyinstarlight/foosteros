@@ -24,7 +24,7 @@ in
         enable = true;
         loadAutoconfig = true;
         settings = {
-          colors.webpage.darkmode.enabled = true;
+          colors.webpage.preferred_color_scheme = "dark";
           downloads.location.prompt = false;
           editor.command = ["${pkgs.alacritty}/bin/alacritty" "-e" "vi" "{}"];
           fonts = {
