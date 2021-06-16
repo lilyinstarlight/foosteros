@@ -235,7 +235,7 @@
           status_unk = "?"
           status_full = ""
 
-          format = "batt: %status%percentage (%remaining)"
+          format = "batt: %status%percentage"
           format_down = "batt: none"
       }
 
