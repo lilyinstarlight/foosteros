@@ -306,6 +306,7 @@
         start = [
           jellybeans-vim
           lightline-vim
+          rust-vim
           vim-abolish
           vim-better-whitespace
           vim-commentary
