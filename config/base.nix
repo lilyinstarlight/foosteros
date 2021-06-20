@@ -112,7 +112,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    bc file htop python3 tree
+    bc file htop python3 tree unzip
     fishPlugins.done
     tmux tmuxPlugins.sensible tmuxPlugins.yank tmuxPlugins.logging
     cachix fpaste ftmp furi
