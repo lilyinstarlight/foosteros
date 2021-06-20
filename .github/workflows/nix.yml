@@ -9,6 +9,8 @@ jobs:
   build:
     name: Build and Test
     runs-on: ubuntu-latest
+    env:
+      FOOSTEROS_EXCLUDE_NONFREE: 1
     steps:
       - uses: actions/checkout@v2
       - uses: cachix/install-nix-action@v13
