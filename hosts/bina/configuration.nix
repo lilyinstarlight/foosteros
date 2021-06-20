@@ -117,6 +117,9 @@
     ardour lmms
     sonic-pi sonic-pi-tool open-stage-control
     lilypond
+    (wrapOBS {
+      plugins = with obs-studio-plugins; [ wlrobs obs-gstreamer obs-ndi obs-move-transition ];
+    })
     homebank
     virt-manager podman-compose
   ];
