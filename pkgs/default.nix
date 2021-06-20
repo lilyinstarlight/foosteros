@@ -36,5 +36,7 @@ rec {
 
   vimPlugins = pkgs.vimPlugins.extend (self: super: callPackage ./vim-plugins {});
 } // (if !(builtins.getEnv "FOOSTEROS_EXCLUDE_NONFREE" == "1") then {
-  ndi = callPackage ./ndi {};
+  ndi = callPackage ./ndi {
+    inherit (pkgs) ndi;
+  };
 } else {})
