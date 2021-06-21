@@ -112,7 +112,7 @@
     mpv
     inkscape gimp-with-plugins krita
     mupdf
-    element-desktop discord
+    element-desktop discord teams
     helvum qjackctl qsynth vmpk calf
     ardour lmms
     sonic-pi sonic-pi-tool open-stage-control
