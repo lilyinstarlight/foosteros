@@ -1,25 +1,26 @@
-name: Nix
+name: Vim Plugins
 
 on:
-  pull_request:
-  push:
+  schedule:
+    - cron: '0 0 * * *'
   workflow_dispatch:
 
 jobs:
   build:
-    name: Build and Test
+    name: Update
     runs-on: ubuntu-latest
     env:
       FOOSTEROS_EXCLUDE_NONFREE: 1
     steps:
       - uses: actions/checkout@v2
+        with:
+          ssh-key: ${{ secrets.REPO_KEY }}
+      - name: Configure git
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
       - uses: cachix/install-nix-action@v13
         with:
           nix_path: nixpkgs=channel:nixos-unstable:home-manager=https://github.com/nix-community/home-manager/archive/master.tar.gz:sops-nix=https://github.com/Mic92/sops-nix/archive/master.tar.gz
-      - uses: cachix/cachix-action@v10
-        with:
-          name: foosteros
-          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-      - run: nix-build
-      - run: nix-build --no-out-link test.nix
-      - run: nix-store --gc
+      - run: pkgs/vim-plugins/update.py
+      - run: git push
