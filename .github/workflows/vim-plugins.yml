@@ -17,8 +17,8 @@ jobs:
           ssh-key: ${{ secrets.REPO_KEY }}
       - name: Configure git
         run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
+          git config user.name GitHub Actions
+          git config user.email actions@github.com
       - uses: cachix/install-nix-action@v13
         with:
           nix_path: nixpkgs=channel:nixos-unstable:home-manager=https://github.com/nix-community/home-manager/archive/master.tar.gz:sops-nix=https://github.com/Mic92/sops-nix/archive/master.tar.gz
