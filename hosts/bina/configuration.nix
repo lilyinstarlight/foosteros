@@ -109,7 +109,6 @@
     rofi-pass-wayland rofi-mpd
     pavucontrol
     mpc_cli ncmpcpp beets
-    mpv
     inkscape gimp-with-plugins krita
     mupdf
     element-desktop discord teams
@@ -117,6 +116,7 @@
     ardour lmms
     sonic-pi sonic-pi-tool open-stage-control
     lilypond
+    mpv ffmpeg-full
     (wrapOBS {
       plugins = with obs-studio-plugins; [ wlrobs obs-gstreamer obs-ndi obs-move-transition ];
     })
