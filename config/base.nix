@@ -49,8 +49,16 @@
 
   time.timeZone = "America/New_York";
 
-  nix.binaryCachePublicKeys = [ "foosteros.cachix.org-1:rrDalTfOT1YohJXiMv8upgN+mFLKZp7eWW1+OGbPRww=" ];
-  nix.binaryCaches = [ "https://foosteros.cachix.org/" ];
+  nix = {
+    package = pkgs.nixUnstable;
+
+    binaryCachePublicKeys = [ "foosteros.cachix.org-1:rrDalTfOT1YohJXiMv8upgN+mFLKZp7eWW1+OGbPRww=" ];
+    binaryCaches = [ "https://foosteros.cachix.org/" ];
+
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+  };
 
   nixpkgs.config = {
     allowUnfree = true;
