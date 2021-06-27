@@ -55,7 +55,7 @@
     binaryCaches = [ "https://foosteros.cachix.org/" ];
 
     extraOptions = ''
-      experimental-features = nix-command flakes
+      experimental-features = nix-command flakes ca-references
     '';
   };
 
