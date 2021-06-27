@@ -642,6 +642,17 @@
         executable = true;
       };
 
+      "bin/ssh" = {
+        text = ''
+          #!/bin/sh
+          if [ "$TERM" = alacritty ]; then
+            export TERM=xterm-256color
+          fi
+          exec "$(which --skip-tilde ssh)" "$@"
+        '';
+        executable = true;
+      };
+
       "bin/scp-nofp" = {
         text = ''
           #!/bin/sh
