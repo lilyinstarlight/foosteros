@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../modules/nixos/boot/systemd-boot/systemd-boot.nix
+    ../modules/nixos/boot/systemd-boot.nix
     ../modules/nixos/services/misc/swaynag-battery.nix
     ../modules/nixos/programs/sway.nix
     ../modules/nixos/programs/mako.nix
