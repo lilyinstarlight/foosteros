@@ -32,5 +32,4 @@ jobs:
       - run: nix -vL flake check
       - name: Push changes
         run: |
-          git commit -m "flake: update inputs" flake.lock
-          git push
+          git commit -m "flake: update inputs" flake.lock && git push
