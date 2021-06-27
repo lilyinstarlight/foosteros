@@ -128,17 +128,18 @@
     shellcheck progress
   ];
 
+  environment.shellAliases = {
+    ls = "ls --color=tty -h";
+    df = "df -h";
+    du = "du -h";
+    free = "free -h";
+    bc = "bc -l";
+    curl = "curl -L";
+    cget = "command curl -fLJO --progress-bar --retry 10 -C -";
+  };
+
   programs.fish = {
     enable = true;
-    shellAliases = {
-      ls = "ls --color=tty -h";
-      df = "df -h";
-      du = "du -h";
-      free = "free -h";
-      bc = "bc -l";
-      curl = "curl -L";
-      cget = "command curl -fLJO --progress-bar --retry 10 -C -";
-    };
     shellInit = ''
       set -g fish_greeting ""
 
