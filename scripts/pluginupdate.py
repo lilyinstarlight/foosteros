@@ -237,7 +237,7 @@ class Editor:
 class CleanEnvironment(object):
     def __enter__(self) -> None:
         self.old_environ = os.environ.copy()
-        nixpkgs = next(path for path in  re.split(r':(?=[^:]*=)', self.old_environ["NIX_PATH"]) if path.startswith('nixpkgs='))[8:]
+        nixpkgs = next(path for path in re.split(r':(?=[^:]*=)', self.old_environ["NIX_PATH"]) if path.startswith('nixpkgs='))[8:]
         local_pkgs = str(Path(__file__).parent.parent)
         os.environ["NIX_PATH"] = f"nixpkgs={nixpkgs}:localpkgs={local_pkgs}"
         self.empty_config = NamedTemporaryFile()
@@ -510,7 +510,7 @@ def commit(repo: git.Repo, message: str, files: List[Path]) -> None:
     repo.index.add([str(f.resolve()) for f in files])
 
     if repo.index.diff("HEAD"):
-        print(f'committing to nixpkgs "{message}"')
+        print(f'committing to repo "{message}"')
         repo.index.commit(message)
     else:
         print("no changes in working tree to commit")
@@ -545,7 +545,7 @@ def update_plugins(editor: Editor):
     log.setLevel(LOG_LEVELS[args.debug])
 
     log.info("Start updating plugins")
-    nixpkgs_repo = git.Repo(editor.root, search_parent_directories=True)
+    repo = git.Repo(editor.root, search_parent_directories=True)
     update = get_update(args.input_file, args.outfile, args.proc, editor)
 
     redirects = update()
@@ -554,13 +554,13 @@ def update_plugins(editor: Editor):
     autocommit = not args.no_commit
 
     if autocommit:
-        commit(nixpkgs_repo, f"{editor.name}Plugins: update", [args.outfile])
+        commit(repo, f"{editor.name}Plugins: update", [args.outfile])
 
     if redirects:
         update()
         if autocommit:
             commit(
-                nixpkgs_repo,
+                repo,
                 f"{editor.name}Plugins: resolve github repository redirects",
                 [args.outfile, args.input_file, editor.deprecated],
             )
@@ -571,7 +571,7 @@ def update_plugins(editor: Editor):
         plugin = fetch_plugin_from_pluginline(plugin_line)
         if autocommit:
             commit(
-                nixpkgs_repo,
+                repo,
                 "{editor}Plugins.{name}: init at {version}".format(
                     editor=editor.name, name=plugin.normalized_name, version=plugin.version
                 ),
