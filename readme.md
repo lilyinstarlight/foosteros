@@ -45,9 +45,10 @@ Feel free to take any pieces in this repository that you like! Please don't try 
     ```
     nixos-install --flake '/mnt/etc/nixos#bina'
     ```
-7. Set the password for user account "lily".
+7. Remove the "nixos" channel and set the password for user account "lily".
     ```
     nixos-enter --root /mnt
+    nix-channel --remove nixos
     passwd lily
     exit
     ```
