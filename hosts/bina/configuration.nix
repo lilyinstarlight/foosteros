@@ -303,8 +303,6 @@
 
   services.pipewire.jack.enable = true;
 
-  # services.printing.enable = true;
-
   services.nullmailer = {
     enable = true;
     config = {
