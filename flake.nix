@@ -33,14 +33,14 @@
 
     nixosModules.foosteros = { config, system, ... }: import ./modules/nixos {
       pkgs = systempkgs { inherit system; };
-      inputPaths = { nixpkgs = self.inputs.nixpkgs; };
+      inherit (self) inputs;
       inherit config;
     };
     nixosModule = self.nixosModules.foosteros;
 
     checks = forAllSystems (system: import ./tests {
       pkgs = systempkgs { inherit system; };
-      inputPaths = { nixpkgs = self.inputs.nixpkgs; };
+      inherit (self) inputs;
     });
 
     nixosConfigurations = {
@@ -53,7 +53,7 @@
           ./hosts/bina/configuration.nix
         ];
         extraArgs = {
-          inputPaths = { nixpkgs = self.inputs.nixpkgs; };
+          inherit (self) inputs;
         };
       };
     };
