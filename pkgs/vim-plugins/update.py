@@ -1,5 +1,5 @@
 #!/usr/bin/env nix-shell
-#!nix-shell -p nix-prefetch-git -p python3 -p python3Packages.GitPython nix -i python3
+#!nix-shell -i python3 -p nix nix-prefetch-git python3 python3Packages.GitPython
 
 # Derived from https://github.com/NixOS/nixpkgs under the following license:
 #   Copyright (c) 2003-2021 Eelco Dolstra and the Nixpkgs/NixOS contributors
