@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
   imports = [
@@ -53,6 +53,8 @@
 
     binaryCachePublicKeys = [ "foosteros.cachix.org-1:rrDalTfOT1YohJXiMv8upgN+mFLKZp7eWW1+OGbPRww=" ];
     binaryCaches = [ "https://foosteros.cachix.org/" ];
+
+    nixPath = lib.mapAttrsToList (name: value: name + "=" + value) inputs;
 
     extraOptions = ''
       experimental-features = nix-command flakes ca-references
