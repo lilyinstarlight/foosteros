@@ -54,11 +54,12 @@
     binaryCachePublicKeys = [ "foosteros.cachix.org-1:rrDalTfOT1YohJXiMv8upgN+mFLKZp7eWW1+OGbPRww=" ];
     binaryCaches = [ "https://foosteros.cachix.org/" ];
 
-    nixPath = lib.mapAttrsToList (name: value: name + "=" + value) inputs;
-
     extraOptions = ''
-      experimental-features = nix-command flakes ca-references
+      experimental-features = nix-command ca-references flakes
     '';
+
+    registry = lib.mapAttrs (name: value: { flake = value; }) (lib.filterAttrs (name: value: value ? outputs) inputs);
+    nixPath = lib.mapAttrsToList (name: value: name + "=" + value) inputs;
   };
 
   nixpkgs.config = {
