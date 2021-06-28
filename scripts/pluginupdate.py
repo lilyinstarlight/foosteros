@@ -237,9 +237,8 @@ class Editor:
 class CleanEnvironment(object):
     def __enter__(self) -> None:
         self.old_environ = os.environ.copy()
-        nixpkgs = next(path for path in re.split(r':(?=[^:]*=)', self.old_environ["NIX_PATH"]) if path.startswith('nixpkgs='))[8:]
         local_pkgs = str(Path(__file__).parent.parent)
-        os.environ["NIX_PATH"] = f"nixpkgs={nixpkgs}:localpkgs={local_pkgs}"
+        os.environ["NIX_PATH"] = f"localpkgs={local_pkgs}"
         self.empty_config = NamedTemporaryFile()
         self.empty_config.write(b"{}")
         self.empty_config.flush()

@@ -41,7 +41,18 @@ ROOT = Path(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe
 sys.path.insert(0, os.path.join(ROOT.parent.parent, "scripts"))
 import pluginupdate
 
-GET_PLUGINS = f"""(with import <nixpkgs> {{}}; with import <localpkgs> {{}};
+GET_PLUGINS = f"""(with import <localpkgs> {{}};
+
+with import (
+    let
+      lock = builtins.fromJSON (builtins.readFile {ROOT.parent.parent}/flake.lock);
+    in fetchTarball {{
+      url = "https://github.com/NixOS/nixpkgs/archive/${{lock.nodes.nixpkgs.locked.rev}}.tar.gz";
+      sha256 = lock.nodes.nixpkgs.locked.narHash;
+    }}
+  )
+  {{}};
+
 let
   inherit (vimUtils.override {{inherit vim;}}) buildVimPluginFrom2Nix;
   generated = callPackage {ROOT}/generated.nix {{
