@@ -139,6 +139,8 @@
     cget = "command curl -fLJO --progress-bar --retry 10 -C -";
   };
 
+  programs.command-not-found.enable = false;
+
   programs.fish = {
     enable = true;
     shellInit = ''
