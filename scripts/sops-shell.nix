@@ -14,8 +14,8 @@ with pkgs;
 
 mkShell {
   sopsPGPKeyDirs = [
-    "./keys/hosts"
-    "./keys/users"
+    ../keys/hosts
+    ../keys/users
   ];
   nativeBuildInputs = [
     (pkgs.callPackage sops-nix {}).sops-pgp-hook
