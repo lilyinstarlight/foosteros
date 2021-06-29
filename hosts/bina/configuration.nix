@@ -116,6 +116,7 @@
     })
     homebank
     virt-manager podman-compose
+    mkusb mkwin
   ];
 
   environment.etc = {
