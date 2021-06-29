@@ -9,6 +9,8 @@ rec {
   ftmp = python3Packages.callPackage ./ftmp {};
   furi = python3Packages.callPackage ./furi {};
   google-10000-english = callPackage ./google-10000-english {};
+  mkusb = callPackage ./mkusb {};
+  mkwin = callPackage ./mkwin {};
   open-stage-control = callPackage ./open-stage-control {};
   petty = callPackage ./petty {};
   pridecat = callPackage ./pridecat {};
