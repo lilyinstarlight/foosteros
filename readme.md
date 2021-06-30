@@ -10,7 +10,6 @@ Feel free to take any pieces in this repository that you like! Please don't try 
 1. Boot NixOS minimal install media.
 2. Add installation dependencies such as unstable Nix (for flakes), bc, and git.
     ```
-    nix-channel --update
     nix-env -iA nixos.{nixUnstable,bc,git}
     ```
 3. Partition the disks with at least an EFI System Partition and preferably root and swap in an encrypted LVM.
@@ -30,11 +29,11 @@ Feel free to take any pieces in this repository that you like! Please don't try 
     ```
 4. Mount partitions under /mnt.
     ```
-    swapon /dev/mapper/nixos-swap
+    swapon /dev/disk/by-label/swap
     mkdir -p /mnt
-    mount /dev/mapper/nixos-root /mnt
+    mount /dev/disk/by-label/root /mnt
     mkdir -p /mnt/boot
-    mount /dev/sda1 /mnt/boot
+    mount /dev/disk/by-label/esp /mnt/boot
     ```
 5. Make parent directories and clone this repository into /mnt/etc/nixos.
     ```
@@ -43,12 +42,14 @@ Feel free to take any pieces in this repository that you like! Please don't try 
     ```
 6. Run nixos-install for the target host.
     ```
-    nixos-install --flake '/mnt/etc/nixos#bina'
+    # NOTE: Not working (ref: https://github.com/NixOS/nix/issues/4081)
+    # nixos-install --flake '/mnt/etc/nixos#bina' --no-channel-copy
+    # NOTE: Temporary replacement
+    nix --experimental-features 'nix-command flakes' build --no-link /mnt/etc/nixos#nixosConfigurations.bina.config.system.build.toplevel | xargs -I'{}' nixos-install --system '{}'
     ```
-7. Remove the "nixos" channel and set the password for user account "lily".
+7. Set the password for user account "lily".
     ```
     nixos-enter --root /mnt
-    nix-channel --remove nixos
     passwd lily
     exit
     ```
