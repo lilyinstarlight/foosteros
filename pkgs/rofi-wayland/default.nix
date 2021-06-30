@@ -16,6 +16,7 @@
 , wayland-protocols
 , xcbutilwm
 , xcbutilxrm
+, theme ? null, plugins ? [], symlink-dmenu ? false
 }:
 
 rofi.override {
@@ -68,4 +69,6 @@ rofi.override {
       platforms = platforms.linux;
     };
   };
+
+  inherit theme plugins symlink-dmenu;
 }
