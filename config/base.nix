@@ -1,4 +1,4 @@
-{ config, lib, pkgs, inputs, ... }:
+{ config, lib, pkgs, inputs, outputs, ... }:
 
 {
   imports = [
@@ -59,12 +59,12 @@
     '';
 
     registry = lib.mapAttrs (name: value: { flake = value; }) (lib.filterAttrs (name: value: value ? outputs) inputs);
-    nixPath = lib.mapAttrsToList (name: value: name + "=" + value) inputs;
+    nixPath = (lib.mapAttrsToList (name: value: name + "=" + value) inputs) ++ [ ("foosteros=" + ../.) ("nixpkgs-overlays=" + ../. + "/overlays.nix") ];
   };
 
-  nixpkgs.config = {
-    allowUnfree = true;
-    packageOverrides = (pkgs: import ../pkgs { inherit pkgs; });
+  nixpkgs = {
+    config.allowUnfree = true;
+    overlays = lib.attrValues outputs.overlays;
   };
 
   environment.variables = {
@@ -78,7 +78,6 @@
     "nix/nixpkgs-config.nix".text = lib.mkDefault ''
       {
         allowUnfree = true;
-        packageOverrides = (pkgs: import /etc/nixos/pkgs { inherit pkgs; });
       }
     '';
 

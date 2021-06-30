@@ -23,7 +23,7 @@
 
       systempkgs = ({ system }: import nixpkgs {
         inherit system;
-        config.packageOverrides = (pkgs: import ./pkgs { inherit pkgs; });
+        overlays = [ self.overlay ];
       });
     in
   {
@@ -31,16 +31,22 @@
       pkgs = systempkgs { inherit system; };
     });
 
+    overlays.foosteros = (final: prev: import ./pkgs {
+      pkgs = prev;
+      outpkgs = final;
+    });
+    overlay = self.overlays.foosteros;
+
     nixosModules.foosteros = { config, system, ... }: import ./modules/nixos {
       pkgs = systempkgs { inherit system; };
-      inherit (self) inputs;
+      inherit (self) inputs outputs;
       inherit config;
     };
     nixosModule = self.nixosModules.foosteros;
 
     checks = forAllSystems (system: import ./tests {
       pkgs = systempkgs { inherit system; };
-      inherit (self) inputs;
+      inherit (self) inputs outputs;
     });
 
     nixosConfigurations = {
@@ -53,7 +59,7 @@
           ./hosts/bina/configuration.nix
         ];
         extraArgs = {
-          inherit (self) inputs;
+          inherit (self) inputs outputs;
         };
       };
     };

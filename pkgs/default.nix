@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, outpkgs ? pkgs, ... }:
 
 with pkgs;
 
@@ -14,7 +14,7 @@ rec {
   open-stage-control = callPackage ./open-stage-control {};
   petty = callPackage ./petty {};
   pridecat = callPackage ./pridecat {};
-  rofi-pass-wayland = callPackage ./rofi-pass-wayland { inherit rofi-wayland; };
+  rofi-pass-wayland = callPackage ./rofi-pass-wayland { inherit (outpkgs) rofi-wayland; };
   rofi-wayland = callPackage ./rofi-wayland {};
   sonic-pi = libsForQt5.callPackage ./sonic-pi {};
   sonic-pi-tool = python3Packages.callPackage ./sonic-pi-tool {};
