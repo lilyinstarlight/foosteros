@@ -5,6 +5,9 @@ _The totally cool way to run your computer_
 Feel free to take any pieces in this repository that you like! Please don't try to use this whole thing, though, as it is horrifically custom and specific to myself.
 
 
+![FoosterOS/2 Warp Box Art](artwork/boxart.png)
+
+
 ## Installation
 
 1. Boot NixOS minimal install media.
