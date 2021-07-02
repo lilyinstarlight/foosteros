@@ -26,6 +26,7 @@ jobs:
       - run: nix -vL build -f .
       - run: nix -vL flake check
       - run: nix -vL store gc
+        if: ${{ always() }}
 
   stable-build:
     name: Stable Build and Test
@@ -42,3 +43,4 @@ jobs:
       - run: nix-build
       - run: nix-build --no-out-link test.nix
       - run: nix-store --gc
+        if: ${{ always() }}
