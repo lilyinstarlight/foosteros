@@ -17,7 +17,7 @@
 
   outputs = { self, nixpkgs, home-manager, sops-nix, ... }:
     let
-      supportedSystems = with nixpkgs.lib; (intersectLists (platforms.x86_64 ++ platforms.aarch64 ++ platforms.i686 ++ platforms.arm) platforms.linux) ++ (intersectLists (platforms.x86_64 ++ platforms.aarch64) platforms.darwin);
+      supportedSystems = with nixpkgs.lib; (intersectLists (platforms.x86_64 ++ platforms.aarch64 ++ platforms.i686 ++ [ "armv6l-linux" "armv7l-linux" ]) platforms.linux) ++ (intersectLists (platforms.x86_64 ++ platforms.aarch64) platforms.darwin);
 
       forAllSystems = f: nixpkgs.lib.genAttrs supportedSystems (system: f system);
 
