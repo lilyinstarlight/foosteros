@@ -10,7 +10,7 @@ jobs:
     name: Update
     runs-on: ubuntu-latest
     env:
-      FOOSTEROS_EXCLUDE_NONFREE: 1
+      FOOSTEROS_EXCLUDE_UNFREE: 1
     steps:
       - uses: cachix/install-nix-action@v13
         with:
