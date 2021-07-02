@@ -105,19 +105,21 @@
     mpc_cli ncmpcpp beets
     inkscape gimp-with-plugins krita
     mupdf
-    element-desktop discord teams
+    element-desktop
     helvum qjackctl qsynth vmpk calf
     ardour lmms
     sonic-pi sonic-pi-tool open-stage-control
     lilypond
     mpv ffmpeg-full
     (wrapOBS {
-      plugins = with obs-studio-plugins; [ wlrobs obs-gstreamer obs-ndi obs-move-transition ];
+      plugins = with obs-studio-plugins; [ wlrobs obs-gstreamer obs-move-transition ] ++ (if !(builtins.getEnv "FOOSTEROS_EXCLUDE_NONFREE" == "1") then [ obs-ndi ] else []);
     })
     homebank
     virt-manager podman-compose
     mkusb mkwin
-  ];
+  ] ++ (if !(builtins.getEnv "FOOSTEROS_EXCLUDE_NONFREE" == "1") then [
+    discord teams
+  ] else []);
 
   environment.etc = {
     "xdg/mimeapps.list".text = ''
