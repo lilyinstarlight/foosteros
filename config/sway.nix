@@ -105,7 +105,7 @@ in
   environment.systemPackages = with pkgs; [
     petty
     neofetch
-    qutebrowser firefox google-chrome
+    qutebrowser firefox chromium
   ];
 
   fonts.fonts = with pkgs; [
