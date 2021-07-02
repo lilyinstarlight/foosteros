@@ -75,11 +75,11 @@
   environment.homeBinInPath = true;
 
   environment.etc = {
-    "nix/nixpkgs-config.nix".text = lib.mkIf (!(builtins.getEnv "FOOSTEROS_EXCLUDE_NONFREE" == "1")) (lib.mkDefault ''
+    "nix/nixpkgs-config.nix".text = lib.mkDefault ''
       {
-        allowUnfree = true;
+        allowUnfree = ${builtins.toString (!(builtins.getEnv "FOOSTEROS_EXCLUDE_NONFREE" == "1"))};
       }
-    '');
+    '';
 
     issue.source = lib.mkForce (pkgs.writeText "issue" ''
 
