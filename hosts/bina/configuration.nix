@@ -369,8 +369,8 @@
         local.media_dir = "${cfg.home.homeDirectory}/music";
       };
       extensionPackages = with pkgs; [
-        mopidy-local mopidy-spotify mopidy-iris mopidy-mpd
-      ];
+        mopidy-local mopidy-iris mopidy-mpd
+      ] ++ (if !(builtins.getEnv "FOOSTEROS_EXCLUDE_NONFREE" == "1") then [ mopidy-spotify ] else []);
       extraConfigFiles = [
         config.sops.secrets.mopidy-lily-secrets.path
       ];
