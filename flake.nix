@@ -27,6 +27,20 @@
       });
     in
   {
+    lib = {
+      baseSystem = { system ? "x86_64-linux", modules ? [], extraArgs ? {} }: nixpkgs.lib.nixosSystem {
+        system = system;
+        modules = [
+          home-manager.nixosModules.home-manager
+          { home-manager.extraSpecialArgs.modulesPath = "${self.inputs.home-manager}/modules"; }
+          sops-nix.nixosModules.sops
+        ] ++ modules;
+        extraArgs = {
+          inherit (self) inputs outputs;
+        } // extraArgs;
+      };
+    };
+
     legacyPackages = forAllSystems (system: import ./pkgs {
       pkgs = systempkgs { inherit system; };
     });
@@ -50,17 +64,10 @@
     });
 
     nixosConfigurations = {
-      bina = nixpkgs.lib.nixosSystem rec {
-        system = "x86_64-linux";
+      bina = self.lib.baseSystem {
         modules = [
-          home-manager.nixosModules.home-manager
-          { home-manager.extraSpecialArgs.modulesPath = "${self.inputs.home-manager}/modules"; }
-          sops-nix.nixosModules.sops
           ./hosts/bina/configuration.nix
         ];
-        extraArgs = {
-          inherit (self) inputs outputs;
-        };
       };
     };
   };

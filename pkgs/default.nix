@@ -1,4 +1,4 @@
-{ pkgs, outpkgs ? pkgs, ... }:
+{ pkgs, outpkgs ? pkgs, allowUnfree ? (!(builtins.getEnv "FOOSTEROS_EXCLUDE_UNFREE" == "1")), ... }:
 
 with pkgs;
 
@@ -37,8 +37,8 @@ rec {
   python3Packages = python3.pkgs;
 
   vimPlugins = pkgs.vimPlugins.extend (self: super: callPackage ./vim-plugins {});
-} // (if !(builtins.getEnv "FOOSTEROS_EXCLUDE_NONFREE" == "1") then {
+} // (lib.optionalAttrs allowUnfree {
   ndi = callPackage ./ndi {
     inherit (pkgs) ndi;
   };
-} else {})
+})

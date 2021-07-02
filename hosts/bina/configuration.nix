@@ -112,14 +112,14 @@
     lilypond
     mpv ffmpeg-full
     (wrapOBS {
-      plugins = with obs-studio-plugins; [ wlrobs obs-gstreamer obs-move-transition ] ++ (if !(builtins.getEnv "FOOSTEROS_EXCLUDE_NONFREE" == "1") then [ obs-ndi ] else []);
+      plugins = with obs-studio-plugins; [ wlrobs obs-gstreamer obs-move-transition ] ++ (lib.optionals config.nixpkgs.config.allowUnfree [ obs-ndi ]);
     })
     homebank
     virt-manager podman-compose
     mkusb mkwin
-  ] ++ (if !(builtins.getEnv "FOOSTEROS_EXCLUDE_NONFREE" == "1") then [
+  ] ++ (lib.optionals config.nixpkgs.config.allowUnfree [
     discord teams
-  ] else []);
+  ]);
 
   environment.etc = {
     "xdg/mimeapps.list".text = ''
@@ -370,7 +370,7 @@
       };
       extensionPackages = with pkgs; [
         mopidy-local mopidy-iris mopidy-mpd
-      ] ++ (if !(builtins.getEnv "FOOSTEROS_EXCLUDE_NONFREE" == "1") then [ mopidy-spotify ] else []);
+      ] ++ (lib.optionals config.nixpkgs.config.allowUnfree [ mopidy-spotify ]);
       extraConfigFiles = [
         config.sops.secrets.mopidy-lily-secrets.path
       ];

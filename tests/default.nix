@@ -1,4 +1,4 @@
-{ pkgs, outputs, ... }:
+{ pkgs, inputs, outputs, ... }:
 
 let
   config-tests = import ./config.nix { inherit pkgs outputs; };

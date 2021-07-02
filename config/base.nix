@@ -63,7 +63,7 @@
   };
 
   nixpkgs = {
-    config.allowUnfree = !(builtins.getEnv "FOOSTEROS_EXCLUDE_NONFREE" == "1");
+    config.allowUnfree = true;
     overlays = lib.attrValues outputs.overlays;
   };
 
@@ -77,7 +77,7 @@
   environment.etc = {
     "nix/nixpkgs-config.nix".text = lib.mkDefault ''
       {
-        allowUnfree = ${builtins.toString (!(builtins.getEnv "FOOSTEROS_EXCLUDE_NONFREE" == "1"))};
+        allowUnfree = ${lib.boolToString config.nixpkgs.config.allowUnfree};
       }
     '';
 
