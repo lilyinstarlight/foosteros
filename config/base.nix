@@ -126,6 +126,7 @@
     tmux tmuxPlugins.sensible tmuxPlugins.yank tmuxPlugins.logging
     cachix fpaste ftmp furi
     git gitAndTools.delta ripgrep
+    python-language-server rnix-lsp nodePackages.bash-language-server
     shellcheck progress
   ];
 
@@ -312,12 +313,20 @@
 
         " vim-sonic-pi
         let g:sonic_pi_run_args = ['--cue-server', 'external']
+
+        " nvim-lspconfig
+        lua << EOF
+        require'lspconfig'.pyls_ms.setup{}
+        require'lspconfig'.rnix.setup{}
+        require'lspconfig'.bashls.setup{}
+        EOF
       '';
 
       packages.fooster = with pkgs.vimPlugins; {
         start = [
           jellybeans-vim
           lightline-vim
+          nvim-lspconfig
           rust-vim
           vim-abolish
           vim-better-whitespace
