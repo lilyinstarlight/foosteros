@@ -105,7 +105,7 @@
     mpc_cli ncmpcpp beets
     inkscape gimp-with-plugins krita
     mupdf
-    element-desktop
+    element-desktop jitsi-meet-electron
     helvum qjackctl qsynth vmpk calf
     ardour lmms
     sonic-pi sonic-pi-tool open-stage-control
