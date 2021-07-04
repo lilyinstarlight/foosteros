@@ -26,8 +26,8 @@ jobs:
           ssh-key: ${{ secrets.REPO_KEY }}
       - name: Configure git
         run: |
-          git config user.name GitHub Actions
-          git config user.email actions@github.com
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
       - run: nix -vL flake update
       - run: nix -vL flake check
       - name: Push changes
