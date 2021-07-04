@@ -18,7 +18,7 @@
         enable = true;
         desktop = "$HOME";
         documents = "$HOME/docs";
-        download ="$HOME/tmp";
+        download = "$HOME/tmp";
         music = "$HOME/music";
         pictures = "$HOME/pics";
         publicShare = "$HOME/public";
