@@ -2,13 +2,13 @@
 
 stdenvNoCC.mkDerivation rec {
   pname = "mkusb";
-  version = "0.2.6";
+  version = "0.2.7";
 
   src = fetchFromGitHub {
     owner = "lilyinstarlight";
     repo = pname;
     rev = "v${version}";
-    sha256 = "1frxbmqvpkaggs2g11dy5v9z2f3wfngb53njw5a5ns6ny1z1j4cc";
+    sha256 = "0zgk2znyb42x5csb9wgvngr84sx7a7l4v4mkhv3hpk200yfv1l6j";
   };
 
   nativeBuildInputs = [ makeWrapper ];
