@@ -2,13 +2,13 @@
 
 stdenvNoCC.mkDerivation rec {
   pname = "mkwin";
-  version = "0.1.7";
+  version = "0.1.8";
 
   src = fetchFromGitHub {
     owner = "lilyinstarlight";
     repo = pname;
     rev = "v${version}";
-    sha256 = "1bfffhvr5iy8zinik8mp05rk2mqknwg80wl051q075c9a48rcxwd";
+    sha256 = "015h8y0h8f04dvynv7sr5s9swizbbqf6amx5bi9clk6n29qrvamk";
   };
 
   nativeBuildInputs = [ makeWrapper ];
