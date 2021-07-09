@@ -43,6 +43,7 @@
 
     legacyPackages = forAllSystems (system: import ./pkgs {
       pkgs = systempkgs { inherit system; };
+      isOverlay = false;
     });
 
     overlays.foosteros = (final: prev: import ./pkgs {

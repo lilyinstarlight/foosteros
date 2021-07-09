@@ -1,8 +1,20 @@
-{ pkgs, outpkgs ? pkgs, allowUnfree ? (!(builtins.getEnv "FOOSTEROS_EXCLUDE_UNFREE" == "1")), ... }:
+{ pkgs, outpkgs ? pkgs, allowUnfree ? (!(builtins.getEnv "FOOSTEROS_EXCLUDE_UNFREE" == "1")), isOverlay ? true, ... }:
 
 with pkgs;
 
-rec {
+let
+  python3 = let
+    self = pkgs.python3.override {
+      packageOverrides = (self: super: super.pkgs.callPackage ./python-modules {});
+      inherit self;
+    };
+  in self;
+  python3Packages = recurseIntoAttrs python3.pkgs;
+
+  vimPlugins = pkgs.vimPlugins.extend (self: super: callPackage ./vim-plugins {});
+in
+
+{
   fooster-backgrounds = callPackage ./backgrounds {};
   fooster-materia-theme = callPackage ./materia-theme {};
   fpaste = python3Packages.callPackage ./fpaste {};
@@ -25,19 +37,12 @@ rec {
   };
 
   pass-wayland-otp = pass-wayland.withExtensions (ext: [ ext.pass-otp ]);
-
-  python3 = let
-    self = pkgs.python3.override {
-      packageOverrides = (self: super: {
-        oscpy = super.pkgs.callPackage ./python-modules/oscpy {};
-      });
-      inherit self;
-    };
-  in self;
-  python3Packages = python3.pkgs;
-
-  vimPlugins = pkgs.vimPlugins.extend (self: super: callPackage ./vim-plugins {});
-} // (lib.optionalAttrs allowUnfree {
+} // (if isOverlay then {
+  inherit python3Packages vimPlugins;
+} else {
+  python3Packages = recurseIntoAttrs (callPackage ./python-modules {});
+  vimPlugins = recurseIntoAttrs (callPackage ./vim-plugins {});
+}) // (lib.optionalAttrs allowUnfree {
   ndi = callPackage ./ndi {
     inherit (pkgs) ndi;
   };
