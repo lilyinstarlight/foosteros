@@ -28,8 +28,8 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-      - run: nix -vL flake update
-      - run: nix -vL flake check
+      - run: nix -vL --show-trace flake update
+      - run: nix -vL --show-trace flake check
       - name: Push changes
         run: |
           if ! git diff --exit-code --quiet flake.lock; then

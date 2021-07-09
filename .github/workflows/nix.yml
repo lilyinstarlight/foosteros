@@ -23,9 +23,9 @@ jobs:
           name: foosteros
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
       - uses: actions/checkout@v2
-      - run: nix -vL build -f .
-      - run: nix -vL flake check
-      - run: nix -vL store gc
+      - run: nix -vL --show-trace build -f .
+      - run: nix -vL --show-trace flake check
+      - run: nix -vL --show-trace store gc
         if: ${{ always() }}
 
   stable-build:
@@ -40,7 +40,7 @@ jobs:
           name: foosteros
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
       - uses: actions/checkout@v2
-      - run: nix-build
-      - run: nix-build --no-out-link test.nix
-      - run: nix-store --gc
+      - run: nix-build --show-trace
+      - run: nix-build --show-trace --no-out-link test.nix
+      - run: nix-store --show-trace --gc
         if: ${{ always() }}
