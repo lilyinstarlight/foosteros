@@ -23,6 +23,7 @@ jobs:
           name: foosteros
       - uses: actions/checkout@v2
         with:
+          fetch-depth: 0
           ssh-key: ${{ secrets.REPO_KEY }}
       - name: Configure git
         run: |
