@@ -2,14 +2,14 @@
 
 stdenvNoCC.mkDerivation rec {
   pname = "google-10000-english";
-  version = "20190823";
+  version = "20210622";
 
   src = fetchFromGitHub {
     owner = "first20hours";
     repo = pname;
     #rev = "v${version}";
-    rev = "5edad1bf213471d567a76414459afb97bfa85c68";
-    sha256 = "1djsfgvmivqinw0f9vz4h428qqwg2flg5bhmh1jb83pa8f71smp0";
+    rev = "d0736d492489198e4f9d650c7ab4143bc14c1e9e";
+    sha256 = "12mlyqqlv37397j0a9g7qg31f58p6n85rmydmd6k9zcb4f4qkr3f";
   };
 
   dontConfigure = true;
