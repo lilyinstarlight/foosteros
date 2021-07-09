@@ -36,6 +36,7 @@
           sops-nix.nixosModules.sops
         ] ++ modules;
         extraArgs = {
+          inherit self;
           inherit (self) inputs outputs;
         } // extraArgs;
       };
@@ -54,6 +55,7 @@
 
     nixosModules.foosteros = { config, system, ... }: import ./modules/nixos {
       pkgs = systempkgs { inherit system; };
+      inherit self;
       inherit (self) inputs outputs;
       inherit config;
     };
@@ -61,6 +63,7 @@
 
     checks = forAllSystems (system: import ./tests {
       pkgs = systempkgs { inherit system; };
+      inherit self;
       inherit (self) inputs outputs;
     });
 
