@@ -18,6 +18,6 @@ mkShell {
     ../keys/users
   ];
   nativeBuildInputs = [
-    (pkgs.callPackage sops-nix {}).sops-pgp-hook
+    (pkgs.callPackage sops-nix {}).sops-import-keys-hook
   ];
 }
