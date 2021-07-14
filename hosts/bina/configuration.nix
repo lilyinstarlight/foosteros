@@ -117,6 +117,9 @@
     homebank
     virt-manager podman-compose
     mkusb mkwin
+    openssl tcpdump dogdns picocom
+    ansible azure-cli
+    texlive.combined.scheme-full
   ] ++ (lib.optionals config.nixpkgs.config.allowUnfree [
     discord teams
   ]);
