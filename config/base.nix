@@ -126,7 +126,7 @@
     tmux tmuxPlugins.sensible tmuxPlugins.yank tmuxPlugins.logging
     cachix fpaste ftmp furi
     git gitAndTools.delta ripgrep
-    python-language-server rust-analyzer rnix-lsp nodePackages.bash-language-server
+    python3Packages.python-lsp-server rust-analyzer rnix-lsp nodePackages.bash-language-server
     shellcheck progress
   ];
 
@@ -345,7 +345,7 @@
           buf_set_keymap('n', '<leader>f', '<cmd>lua vim.lsp.buf.formatting()<cr>', opts)
         end
 
-        local servers = { 'pyls_ms', 'rust_analyzer', 'rnix', 'bashls' }
+        local servers = { 'pylsp', 'rust_analyzer', 'rnix', 'bashls' }
         for _, lsp in ipairs(servers) do
           nvim_lsp[lsp].setup {
             on_attach = on_attach,
