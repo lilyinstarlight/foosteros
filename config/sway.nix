@@ -25,6 +25,7 @@ in
         loadAutoconfig = true;
         settings = {
           colors.webpage.preferred_color_scheme = "dark";
+          content.pdfjs = true;
           downloads.location.prompt = false;
           editor.command = ["${pkgs.alacritty}/bin/alacritty" "-e" "vi" "{}"];
           fonts = {
