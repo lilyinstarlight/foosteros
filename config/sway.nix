@@ -469,8 +469,8 @@ in
 
   qt5 = {
     enable = true;
-    style = "gtk2";
-    platformTheme = "gtk2";
+    style = "adwaita-dark";
+    platformTheme = "gnome";
   };
 
   xdg.portal.enable = true;
