@@ -490,10 +490,10 @@ in
     wrapperFeatures.gtk = true;
     extraPackages = with pkgs; [
       pulseaudio brightnessctl jq glib
-      swaybg swaylock swayidle
+      swaybg swaylock swayidle kanshi
       i3status mako rofi-wayland alacritty
       fooster-backgrounds fooster-materia-theme bibata-cursors papirus-icon-theme
-      slurp grim wl-clipboard libnotify sway-contrib.grimshot swappy
+      slurp grim wl-clipboard libnotify sway-contrib.grimshot swappy wf-recorder
       xwayland
       xdg-utils
     ];
