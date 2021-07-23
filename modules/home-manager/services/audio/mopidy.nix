@@ -8,18 +8,25 @@ let
   iniFormat = pkgs.formats.ini {};
 
   mopidyEnv = pkgs.buildEnv {
-    name = "mopidy-with-extensions-${pkgs.mopidy.version}";
+    name = "mopidy-with-extensions-${cfg.package.version}";
     paths = closePropagation cfg.extensionPackages;
     pathsToLink = [ "/${pkgs.mopidyPackages.python.sitePackages}" ];
     buildInputs = [ pkgs.makeWrapper ];
     postBuild = ''
-      makeWrapper ${pkgs.mopidy}/bin/mopidy $out/bin/mopidy \
+      makeWrapper ${cfg.package}/bin/mopidy $out/bin/mopidy \
         --prefix PYTHONPATH : $out/${pkgs.mopidyPackages.python.sitePackages}
     '';
   };
 in {
   options.services.mopidy = {
     enable = mkEnableOption "Mopidy, a music player daemon";
+
+    package = mkOption {
+      type = types.package;
+      default = pkgs.mopidy;
+      defaultText = literalExample "pkgs.mopidy";
+      description = "The Mopidy package to use.";
+    };
 
     extensionPackages = mkOption {
       default = [];

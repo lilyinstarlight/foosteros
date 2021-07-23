@@ -31,7 +31,7 @@ in
     package = mkOption {
       type = types.package;
       default = pkgs.mako;
-      defaultText = "pkgs.mako";
+      defaultText = literalExample "pkgs.mako";
       description = ''
         mako derivation to use.
       '';

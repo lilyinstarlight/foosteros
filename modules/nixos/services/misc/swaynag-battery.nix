@@ -69,7 +69,7 @@ in
 
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${pkgs.swaynag-battery}/bin/swaynag-battery --threshold ${toString cfg.threshold} --interval ${cfg.interval} --uevent /sys/class/power_supply/${cfg.powerSupply}/uevent";
+        ExecStart = "${cfg.package}/bin/swaynag-battery --threshold ${toString cfg.threshold} --interval ${cfg.interval} --uevent /sys/class/power_supply/${cfg.powerSupply}/uevent";
       };
     } // optionalAttrs cfg.enable {
       wantedBy = [ "sway-session.target" ];
