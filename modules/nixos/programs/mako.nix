@@ -84,7 +84,7 @@ in
           if [ -n "$makoconfig" ]; then
             exec ${cfg.package}/bin/mako --config "$makoconfig"
           else
-            exec ${pkgs.mako}/bin/mako
+            exec ${cfg.package}/bin/mako
           fi
         '';
         BusName = "org.freedesktop.Notifications";
