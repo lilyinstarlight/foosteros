@@ -26,6 +26,8 @@
     };
   };
 
+  boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
+
   networking.hostName = "bina";
   networking.domain = "fooster.network";
 
