@@ -490,8 +490,8 @@ in
     wrapperFeatures.gtk = true;
     extraPackages = with pkgs; [
       pulseaudio brightnessctl jq glib
-      swaybg swaylock swayidle kanshi
-      i3status mako rofi-wayland alacritty
+      swaybg swaylock swayidle
+      kanshi i3status mako rofi-wayland alacritty
       fooster-backgrounds fooster-materia-theme bibata-cursors papirus-icon-theme
       slurp grim wl-clipboard libnotify sway-contrib.grimshot swappy wf-recorder
       xwayland
@@ -501,6 +501,8 @@ in
       export XDG_SESSION_TYPE=wayland
     '';
   };
+
+  programs.kanshi.enable = true;
 
   programs.mako = {
     enable = true;

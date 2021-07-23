@@ -305,6 +305,24 @@
 
   programs.gnupg.agent.enable = true;
 
+  programs.kanshi.extraConfig = ''
+    profile internal {
+      output eDP-1 enable resolution 1920x1080 position 0 0 scale 1
+    }
+
+    profile desk {
+      output eDP-1 enable resolution 1920x1080 position 1920 0 scale 1
+      output "VIZIO, Inc E390i-A1 0x00000101" enable resolution 1920x1080 position 0 0 scale 1
+      exec swaymsg workspace 1:term, move workspace to '"VIZIO, Inc E390i-A1 0x00000101"'
+      exec swaymsg workspace 3:chat, move workspace to eDP-1
+    }
+
+    profile deskonly {
+      output eDP-1 disable
+      output "VIZIO, Inc E390i-A1 0x00000101" enable resolution 1920x1080 position 0 0 scale 1
+    }
+  '';
+
   services.resolved.dnssec = "false";
 
   services.pipewire.jack.enable = true;
