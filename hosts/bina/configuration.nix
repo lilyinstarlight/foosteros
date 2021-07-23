@@ -27,6 +27,10 @@
   };
 
   boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
+  boot.extraModprobeConfig = ''
+    options v4l2loopback video_nr=63
+  '';
+  boot.kernelModules = [ "v4l2loopback" ];
 
   networking.hostName = "bina";
   networking.domain = "fooster.network";
@@ -544,6 +548,14 @@
         text = ''
           #!/bin/sh
           ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$@"
+        '';
+        executable = true;
+      };
+
+      "bin/wf-loopback" = {
+        text = ''
+          #!/bin/sh
+          exec wf-recorder --muxer=v4l2 --codec=rawvideo --pixel-format=yuv420p --file=/dev/video63 "$@"
         '';
         executable = true;
       };
