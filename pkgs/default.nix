@@ -32,6 +32,7 @@ rec {
   pridecat = callPackage ./pridecat {};
   rofi-pass-wayland = callPackage ./rofi-pass-wayland {
     rofi-wayland = if isOverlay then outpkgs.rofi-wayland else rofi-wayland;
+    wtype = if isOverlay then outpkgs.wtype else wtype;
   };
   rofi-wayland = callPackage ./rofi-wayland {};
   sonic-pi-tool = python3Packages.callPackage ./sonic-pi-tool {};
@@ -41,6 +42,9 @@ rec {
   vmpk = libsForQt5.callPackage ./vmpk {
     drumstick = if isOverlay then outpkgs.libsForQt5.drumstick else libsForQt5.drumstick;
     inherit (pkgs) vmpk;
+  };
+  wtype = callPackage ./wtype {
+    inherit (pkgs) wtype;
   };
 
   monofur-nerdfont = nerdfonts.override {
