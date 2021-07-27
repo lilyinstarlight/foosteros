@@ -317,6 +317,23 @@
 
         " nvim-lspconfig
         lua << EOF
+        local servers = {
+          pylsp = {
+            settings = {
+              pylsp = {
+                plugins = {
+                  pycodestyle = {
+                    ignore = { 'E501' }
+                  }
+                }
+              }
+            }
+          },
+          rust_analyzer = {},
+          rnix = {},
+          bashls = {},
+        }
+
         local nvim_lsp = require('lspconfig')
 
         local on_attach = function(client, bufnr)
@@ -346,14 +363,19 @@
           buf_set_keymap('n', '<leader>f', '<cmd>lua vim.lsp.buf.formatting()<cr>', opts)
         end
 
-        local servers = { 'pylsp', 'rust_analyzer', 'rnix', 'bashls' }
-        for _, lsp in ipairs(servers) do
-          nvim_lsp[lsp].setup {
+        for server, extra_args in pairs(servers) do
+          local args = {
             on_attach = on_attach,
             flags = {
               debounce_text_changes = 150,
             }
           }
+
+          for key, val in pairs(extra_args) do
+            args[key] = val
+          end
+
+          nvim_lsp[server].setup(args)
         end
         EOF
       '';
