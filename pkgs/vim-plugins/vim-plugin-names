@@ -7,4 +7,5 @@ lfv89/vim-interestingwords
 lilyinstarlight/vim-resolve
 lilyinstarlight/vim-sonic-pi@main
 lilyinstarlight/vim-spl
+vimwiki/vimwiki@dev as vimwiki-dev
 zeek/vim-zeek

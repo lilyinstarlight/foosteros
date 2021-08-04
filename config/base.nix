@@ -405,7 +405,6 @@
           vim-speeddating
           vim-surround
           vim-visual-increment
-          vimwiki
 
           hexmode
           vim-fish
@@ -416,6 +415,7 @@
           vim-sonic-pi
           vim-spl
           vim-zeek
+          vimwiki-dev
         ];
       };
     };
