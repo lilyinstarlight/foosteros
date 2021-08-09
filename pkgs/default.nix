@@ -61,7 +61,4 @@ rec {
   };
   vimPlugins = recurseIntoAttrs (callPackage ./vim-plugins {});
 }) // (lib.optionalAttrs allowUnfree {
-  ndi = callPackage ./ndi {
-    inherit (pkgs) ndi;
-  };
 })
