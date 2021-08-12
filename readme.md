@@ -61,7 +61,7 @@ Feel free to take any pieces in this repository that you like! Please don't try 
     nixos-install --system ./result --no-channel-copy
     rm -f ./result
     nixos-enter --root /mnt
-    nixos-rebuild boot --flake /etc/nixos#bina
+    nixos-rebuild boot --flake '/etc/nixos#bina'
     exit
     ```
 8. Set the password for user account "lily".
