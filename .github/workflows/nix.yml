@@ -25,7 +25,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - run: nix -vL --show-trace build -f .
+      - run: nix -vL --show-trace build
       - run: nix -vL --show-trace flake check
       - run: nix -vL --show-trace store gc
         if: ${{ always() }}

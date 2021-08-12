@@ -47,6 +47,18 @@
       isOverlay = false;
     });
 
+    defaultPackage = forAllSystems (system:
+      let
+        pkgs = systempkgs { inherit system; };
+      in
+        pkgs.linkFarmFromDrvs "foosteros-pkgs" (nixpkgs.lib.collect (attrs: nixpkgs.lib.isDerivation attrs) (import ./pkgs {
+            inherit pkgs;
+            allowUnfree = false;
+            isOverlay = false;
+          })
+        )
+    );
+
     overlays.foosteros = (final: prev: import ./pkgs {
       pkgs = prev;
       outpkgs = final;
