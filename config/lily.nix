@@ -3,16 +3,14 @@
 {
   environment.systemPackages = with pkgs; [
     any-nix-shell
-    udiskie
     pridecat
-    ripgrep-all
   ];
 
   users.users.lily = {
     description = "Lily Foster";
     isNormalUser = true;
     extraGroups = [ "wheel" ];
-    shell = lib.mkDefault pkgs.fish;
+    shell = lib.mkOverride 500 pkgs.fish;  # 100 is default prio and 1000 is module default prio
   };
 
   home-manager.users.lily = { pkgs, ... }: {
