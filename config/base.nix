@@ -127,7 +127,6 @@
     tmux tmuxPlugins.sensible tmuxPlugins.yank tmuxPlugins.logging
     cachix fpaste ftmp furi
     git gitAndTools.delta ripgrep
-    python3Packages.python-lsp-server rust-analyzer rnix-lsp nodePackages.bash-language-server
     shellcheck progress
   ];
 
