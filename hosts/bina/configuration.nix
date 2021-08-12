@@ -5,6 +5,7 @@
     ./hardware-configuration.nix
 
     ../../config/base.nix
+    ../../config/nvim-lsp.nix
     ../../config/sway.nix
     ../../config/fcitx5.nix
 
@@ -105,6 +106,7 @@
   users.users.lily.extraGroups = [ config.users.groups.keys.name "libvirtd" ];
 
   environment.systemPackages = with pkgs; [
+    udiskie
     gnupg pass-wayland-otp
     rofi-pass-wayland rofi-mpd
     pavucontrol
@@ -122,6 +124,7 @@
     })
     homebank
     virt-manager podman-compose
+    ripgrep-all
     mkusb mkwin
     openssl tcpdump dogdns picocom
     ansible azure-cli
