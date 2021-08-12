@@ -123,6 +123,7 @@
 
   environment.systemPackages = with pkgs; [
     bc file htop python3 tree unzip
+    any-nix-shell
     fishPlugins.done
     tmux tmuxPlugins.sensible tmuxPlugins.yank tmuxPlugins.logging
     cachix fpaste ftmp furi
