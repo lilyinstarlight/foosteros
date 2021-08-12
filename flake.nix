@@ -51,12 +51,13 @@
       let
         pkgs = systempkgs { inherit system; };
       in
-        pkgs.linkFarmFromDrvs "foosteros-pkgs" (nixpkgs.lib.collect (attrs: nixpkgs.lib.isDerivation attrs) (import ./pkgs {
+        pkgs.linkFarmFromDrvs "foosteros-pkgs" (nixpkgs.lib.filter (drv: !drv.meta.unsupported) (nixpkgs.lib.collect (drv: nixpkgs.lib.isDerivation drv) (
+          import ./pkgs {
             inherit pkgs;
             allowUnfree = false;
             isOverlay = false;
           })
-        )
+        ))
     );
 
     overlays.foosteros = (final: prev: import ./pkgs {
