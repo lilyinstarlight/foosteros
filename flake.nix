@@ -68,6 +68,11 @@
     });
 
     nixosConfigurations = {
+      minimal = self.lib.baseSystem {
+        modules = [
+          ./hosts/minimal/configuration.nix
+        ];
+      };
       bina = self.lib.baseSystem {
         modules = [
           ./hosts/bina/configuration.nix
