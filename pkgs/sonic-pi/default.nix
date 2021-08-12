@@ -118,6 +118,6 @@ stdenv.mkDerivation rec {
     homepage = "https://sonic-pi.net/";
     description = "Free live coding synth for everyone originally designed to support computing and music lessons within schools";
     license = lib.licenses.mit;
-    platforms = lib.platforms.linux;
+    platforms = [ "x86_64-linux" ];
   };
 }

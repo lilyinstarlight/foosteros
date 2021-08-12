@@ -51,7 +51,11 @@ rec {
     fonts = [ "Monofur" ];
   };
 
-  pass-wayland-otp = pass-wayland.withExtensions (ext: [ ext.pass-otp ]);
+  pass-wayland-otp = (pass-wayland.withExtensions (ext: [ ext.pass-otp ])).overrideAttrs (attrs: {
+    meta = with lib; attrs.meta // {
+      platforms = platforms.linux;
+    };
+  });
 } // (if isOverlay then {
   inherit python3Packages libsForQt5 vimPlugins;
 } else {

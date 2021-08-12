@@ -37,4 +37,8 @@ rofi-pass.overrideAttrs (attrs: rec {
     wrapProgram $out/bin/rofi-pass \
       --prefix PATH : "${wrapperPath}"
   '';
+
+  meta = with lib; attrs.meta // {
+    platforms = platforms.linux;
+  };
 })

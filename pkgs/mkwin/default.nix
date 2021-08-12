@@ -32,5 +32,6 @@ stdenvNoCC.mkDerivation rec {
     description = "A shell script to create a Windows installation USB from ISO";
     homepage = "https://github.com/lilyinstarlight/mkwin";
     license = licenses.mit;
+    platforms = [ "x86_64-linux" "i686-linux" "aarch64-linux" "armv7l-linux" ];
   };
 }

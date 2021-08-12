@@ -38,5 +38,6 @@ stdenvNoCC.mkDerivation rec {
   meta = with lib; {
     description = "FoosterOS/2 backgrounds";
     homepage = "https://github.com/lilyinstarlight/foosteros";
+    platforms = platforms.linux;
   };
 }

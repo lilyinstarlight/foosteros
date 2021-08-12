@@ -20,4 +20,8 @@ materia-theme.overrideAttrs (attrs: rec {
     done
     ./change_color.sh -t $out/share/themes -o Materia-Fooster <(echo -e "MATERIA_COLOR_VARIANT=dark\nSEL_BG=F29BD4\nFG=EEEEEE\nBG=181818\nHDR_BG=2d2d2d\nHDR_FG=EEEEEE\nMATERIA_SURFACE=343434\nMATERIA_VIEW=242424\n")
   '';
+
+  meta = with lib; attrs.meta // {
+    platforms = platforms.linux;
+  };
 })
