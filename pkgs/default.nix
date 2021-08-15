@@ -11,10 +11,6 @@ let
   in self;
   python3Packages = recurseIntoAttrs python3.pkgs;
 
-  libsForQt5 = pkgs.libsForQt5 // {
-    drumstick = pkgs.libsForQt5.callPackage ./drumstick { inherit (pkgs.libsForQt5) drumstick; };
-  };
-
   vimPlugins = pkgs.vimPlugins.extend (self: super: callPackage ./vim-plugins {});
 in
 
@@ -39,10 +35,6 @@ rec {
   swaynag-battery = callPackage ./swaynag-battery {};
 
   sonic-pi = libsForQt5.callPackage ./sonic-pi {};
-  vmpk = libsForQt5.callPackage ./vmpk {
-    drumstick = if isOverlay then outpkgs.libsForQt5.drumstick else libsForQt5.drumstick;
-    inherit (pkgs) vmpk;
-  };
   wtype = callPackage ./wtype {
     inherit (pkgs) wtype;
   };
@@ -57,12 +49,9 @@ rec {
     };
   });
 } // (if isOverlay then {
-  inherit python3Packages libsForQt5 vimPlugins;
+  inherit python3Packages vimPlugins;
 } else {
   python3Packages = recurseIntoAttrs (callPackage ./python-modules {});
-  libsForQt5 = recurseIntoAttrs {
-    drumstick = pkgs.libsForQt5.callPackage ./drumstick { inherit (pkgs.libsForQt5) drumstick; };
-  };
   vimPlugins = recurseIntoAttrs (callPackage ./vim-plugins {});
 }) // (lib.optionalAttrs allowUnfree {
 })
