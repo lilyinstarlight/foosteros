@@ -268,7 +268,7 @@
 
         " autocommands
         autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-        autocmd BufNewFile,BufRead *.ly compiler lilypond
+        autocmd BufNewFile,BufRead *.ly let b:commentary_format = '%%s' | compiler lilypond
         autocmd BufNewFile,BufRead *.tex let b:tex_flavor = 'pdflatexmk' | compiler tex
 
         " vim
