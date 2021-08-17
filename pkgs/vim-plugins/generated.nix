@@ -5,12 +5,12 @@ final: prev:
 {
   hexmode = buildVimPluginFrom2Nix {
     pname = "hexmode";
-    version = "2018-11-01";
+    version = "2021-08-16";
     src = fetchFromGitHub {
       owner = "fidian";
       repo = "hexmode";
-      rev = "06b7b17578df26d853afe17f38e0e711a8fb094c";
-      sha256 = "0gq6pj0c25p4p2k24ic4za3qdw2ai0j1wsgynlz94yc53s97jmhf";
+      rev = "72190318f03a999de357984df72714114e52f6af";
+      sha256 = "0wf0l47amkkmp6fnyzxyyg6ll873nmrkj19kd9kf1ib62chcrwzn";
     };
     meta.homepage = "https://github.com/fidian/hexmode/";
   };
