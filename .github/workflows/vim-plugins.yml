@@ -26,4 +26,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
       - run: pkgs/vim-plugins/update.py
-      - run: git push
+      - name: Push changes
+        run: |
+          git pull --rebase
+          git push

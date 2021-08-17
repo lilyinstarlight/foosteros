@@ -35,5 +35,6 @@ jobs:
         run: |
           if ! git diff --exit-code --quiet flake.lock; then
             git commit -m "flake: update inputs" flake.lock
+            git pull --rebase
             git push
           fi
