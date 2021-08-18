@@ -137,6 +137,14 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
+  wtype-bin = platformCond lib.platforms.linux (runCommandNoCC "test-wtype-bin" {
+    buildInputs = [ wtype ];
+  } ''
+    wtype || [ $? -eq 1 ]
+
+    touch $out
+  '');
+
   monofur-nerdfont-font = runCommandNoCC "test-monofur-nerdfont-font" {
     buildInputs = [ monofur-nerdfont ];
   } ''
@@ -194,6 +202,14 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '';
 
+  vim-interestingwords-plugin = runCommandNoCC "test-interestingwords-plugin" {
+    buildInputs = [ vimPlugins.vim-interestingwords ];
+  } ''
+    test -f ${vimPlugins.vim-interestingwords}/share/vim-plugins/vim-interestingwords/plugin/interestingwords.vim
+
+    touch $out
+  '';
+
   vim-resolve-plugin = runCommandNoCC "test-vim-resolve-plugin" {
     buildInputs = [ vimPlugins.vim-resolve ];
   } ''
@@ -214,6 +230,14 @@ lib.filterAttrs (name: value: value != "skip") {
     buildInputs = [ vimPlugins.vim-spl ];
   } ''
     test -f ${vimPlugins.vim-spl}/share/vim-plugins/vim-spl/ftplugin/spl.vim
+
+    touch $out
+  '';
+
+  vimwiki-dev-plugin = runCommandNoCC "test-vimwiki-dev-plugin" {
+    buildInputs = [ vimPlugins.vimwiki-dev ];
+  } ''
+    test -f ${vimPlugins.vimwiki-dev}/share/vim-plugins/vimwiki-dev/plugin/vimwiki.vim
 
     touch $out
   '';
