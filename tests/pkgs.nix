@@ -8,6 +8,14 @@ let
 in
 
 lib.filterAttrs (name: value: value != "skip") {
+  crossguid-lib = platformCond (lib.platforms.linux ++ lib.platforms.darwin) (runCommandNoCC "test-crossguid-lib" {
+    buildInputs = [ crossguid ];
+  } ''
+    test -f ${crossguid}/lib/libcrossguid.a
+
+    touch $out
+  '');
+
   fooster-backgrounds-bin = platformCond lib.platforms.linux (runCommandNoCC "test-fooster-backgrounds-bin" {
     buildInputs = [ fooster-backgrounds which ];
   } ''
@@ -47,6 +55,14 @@ lib.filterAttrs (name: value: value != "skip") {
 
     touch $out
   '';
+
+  gl3w-src = platformCond (lib.platforms.linux ++ lib.platforms.darwin) (runCommandNoCC "test-gl3w-src" {
+    buildInputs = [ gl3w ];
+  } ''
+    test -f ${gl3w}/share/gl3w/gl3w.c
+
+    touch $out
+  '');
 
   google-10000-english-dict = runCommandNoCC "test-google-10000-english-dict" {
     buildInputs = [ google-10000-english ];
@@ -88,6 +104,14 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '';
 
+  platform-folders-lib = runCommandNoCC "test-platform-folders-lib" {
+    buildInputs = [ platform-folders ];
+  } ''
+    test -f ${platform-folders}/lib/libplatform_folders.so
+
+    touch $out
+  '';
+
   pridecat-bin = runCommandNoCC "test-pridecat-bin" {
     buildInputs = [ pridecat ];
   } ''
@@ -114,6 +138,15 @@ lib.filterAttrs (name: value: value != "skip") {
 
   sonic-pi-bin = platformCond [ "x86_64-linux" ] (runCommandNoCC "test-sonic-pi-bin" {
     buildInputs = [ sonic-pi which ];
+  } ''
+    which sonic-pi
+    test -x ${sonic-pi}/app/server/native/aubio_onset
+
+    touch $out
+  '');
+
+  sonic-pi-beta-bin = platformCond [ "x86_64-linux" ] (runCommandNoCC "test-sonic-pi-beta-bin" {
+    buildInputs = [ sonic-pi-beta which ];
   } ''
     which sonic-pi
     test -x ${sonic-pi}/app/server/native/aubio_onset
