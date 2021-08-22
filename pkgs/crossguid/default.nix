@@ -12,12 +12,12 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [ cmake ];
-  buildInputs = [ libuuid ];
+  buildInputs = lib.optional stdenv.isLinux libuuid;
 
   meta = with lib; {
     description = "Lightweight cross platform C++ GUID/UUID library";
     license = licenses.mit;
     homepage = "https://github.com/graeme-hill/crossguid";
-    platforms = platforms.linux;
+    platforms = platforms.linux ++ platforms.darwin;
   };
 }
