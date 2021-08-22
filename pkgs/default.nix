@@ -15,16 +15,19 @@ let
 in
 
 rec {
+  crossguid = callPackage ./crossguid {};
   fooster-backgrounds = callPackage ./backgrounds {};
   fooster-materia-theme = callPackage ./materia-theme {};
   fpaste = python3Packages.callPackage ./fpaste {};
   ftmp = python3Packages.callPackage ./ftmp {};
   furi = python3Packages.callPackage ./furi {};
+  gl3w = callPackage ./gl3w {};
   google-10000-english = callPackage ./google-10000-english {};
   mkusb = callPackage ./mkusb {};
   mkwin = callPackage ./mkwin {};
   open-stage-control = callPackage ./open-stage-control {};
   petty = callPackage ./petty {};
+  platform-folders = callPackage ./platform-folders {};
   pridecat = callPackage ./pridecat {};
   rofi-pass-wayland = callPackage ./rofi-pass-wayland {
     rofi-wayland = if isOverlay then outpkgs.rofi-wayland else rofi-wayland;
@@ -35,6 +38,9 @@ rec {
   swaynag-battery = callPackage ./swaynag-battery {};
 
   sonic-pi = libsForQt5.callPackage ./sonic-pi {};
+  sonic-pi-beta = libsForQt5.callPackage ./sonic-pi-beta {
+    platform-folders = if isOverlay then outpkgs.platform-folders else platform-folders;
+  };
   wtype = callPackage ./wtype {
     inherit (pkgs) wtype;
   };

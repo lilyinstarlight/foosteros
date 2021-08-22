@@ -1,0 +1,12 @@
+diff --git a/app/api/CMakeLists.txt b/app/api/CMakeLists.txt
+index 14ce2fe0d..879e128fd 100644
+--- a/app/api/CMakeLists.txt
++++ b/app/api/CMakeLists.txt
+@@ -85,6 +85,7 @@ find_package(crossguid CONFIG REQUIRED)
+ target_link_libraries(${PROJECT_NAME}
+     PUBLIC
+         stdc++fs
++        rt
+     PRIVATE
+         crossguid
+     )

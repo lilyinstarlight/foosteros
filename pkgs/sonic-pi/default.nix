@@ -30,8 +30,8 @@ stdenv.mkDerivation rec {
   pname = "sonic-pi";
 
   src = fetchFromGitHub {
-    owner = "samaaron";
-    repo = "sonic-pi";
+    owner = "sonic-pi-net";
+    repo = pname;
     rev = "v${version}";
     sha256 = "1ykhwmlh2223szi6s6q67sl9qwndhqbraa8knj058nv74fwy4kh0";
   };

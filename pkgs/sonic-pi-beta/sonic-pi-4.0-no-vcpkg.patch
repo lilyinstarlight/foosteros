@@ -1,0 +1,88 @@
+diff --git a/app/CMakeLists.txt b/app/CMakeLists.txt
+index b6995622e..39bab0b47 100644
+--- a/app/CMakeLists.txt
++++ b/app/CMakeLists.txt
+@@ -25,7 +25,7 @@ if (WIN32)
+ endif()
+ 
+ # vcpkg toolchain - Must be declared before project
+-set(CMAKE_TOOLCHAIN_FILE ${APP_ROOT}/vcpkg/scripts/buildsystems/vcpkg.cmake CACHE STRING "Vcpkg toolchain file")
++#set(CMAKE_TOOLCHAIN_FILE ${APP_ROOT}/vcpkg/scripts/buildsystems/vcpkg.cmake CACHE STRING "Vcpkg toolchain file")
+ 
+ project(SonicPi)
+ 
+diff --git a/app/api/CMakeLists.txt b/app/api/CMakeLists.txt
+index e35464943..14ce2fe0d 100644
+--- a/app/api/CMakeLists.txt
++++ b/app/api/CMakeLists.txt
+@@ -47,7 +47,8 @@ find_package(platform_folders CONFIG REQUIRED)
+ find_package(reproc CONFIG REQUIRED)
+ find_package(reproc++ CONFIG REQUIRED)
+ 
+-find_package(unofficial-kissfft CONFIG REQUIRED)
++find_package(PkgConfig REQUIRED)
++pkg_check_modules(kissfft REQUIRED IMPORTED_TARGET kissfft)
+ 
+ target_include_directories(${PROJECT_NAME}
+     PUBLIC
+@@ -66,7 +67,7 @@ target_link_libraries(${PROJECT_NAME}
+         sago::platform_folders
+         reproc
+         reproc++
+-        unofficial::kissfft::kissfft
++        PkgConfig::kissfft
+ )
+ 
+ # Windows
+diff --git a/app/gui/imgui/CMakeLists.txt b/app/gui/imgui/CMakeLists.txt
+index f5580e7b3..ebfcc3c6c 100644
+--- a/app/gui/imgui/CMakeLists.txt
++++ b/app/gui/imgui/CMakeLists.txt
+@@ -86,7 +86,7 @@ endif()
+ target_link_libraries (${APP_NAME} 
+     PRIVATE
+     SonicPi::API
+-    unofficial::gl3w::gl3w
++    gl3w
+     SDL2::SDL2main
+     SDL2::SDL2-static
+     fmt::fmt
+diff --git a/app/linux-prebuild.sh b/app/linux-prebuild.sh
+index a18e9ae69..b0b63cc0e 100755
+--- a/app/linux-prebuild.sh
++++ b/app/linux-prebuild.sh
+@@ -3,20 +3,20 @@
+ set -e # Quit script on error
+ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+ 
+-if [ ! -d "vcpkg" ]; then
+-    echo "Cloning vcpkg"
+-    git clone --single-branch --branch master https://github.com/microsoft/vcpkg.git vcpkg
+-fi
+-
+-if [ ! -f "vcpkg/vcpkg" ]; then
+-    echo "Building vcpkg"
+-    cd vcpkg
+-    ./bootstrap-vcpkg.sh -disableMetrics
+-    cd ${SCRIPT_DIR}
+-fi
+-
+-cd vcpkg
+-./vcpkg install kissfft fmt crossguid sdl2 gl3w reproc gsl-lite concurrentqueue platform-folders catch2 --recurse
++#if [ ! -d "vcpkg" ]; then
++#    echo "Cloning vcpkg"
++#    git clone --single-branch --branch master https://github.com/microsoft/vcpkg.git vcpkg
++#fi
++#
++#if [ ! -f "vcpkg/vcpkg" ]; then
++#    echo "Building vcpkg"
++#    cd vcpkg
++#    ./bootstrap-vcpkg.sh -disableMetrics
++#    cd ${SCRIPT_DIR}
++#fi
++#
++#cd vcpkg
++#./vcpkg install kissfft fmt crossguid sdl2 gl3w reproc gsl-lite concurrentqueue platform-folders catch2 --recurse
+ 
+ cd ${SCRIPT_DIR}
+ 
