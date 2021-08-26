@@ -111,7 +111,7 @@ stdenv.mkDerivation rec {
   dontWrapQtApps = true;
   preFixup = ''
     wrapQtApp "$out/bin/sonic-pi" \
-      --prefix PATH : ${ruby}/bin:${erlang}/bin:${bash}/bin:${supercollider}/bin:${jack2}/bin
+      --prefix PATH : ${lib.makeBinPath [ ruby erlang supercollider jack2 ]}
   '';
 
   meta = {

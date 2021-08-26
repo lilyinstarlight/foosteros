@@ -26,7 +26,7 @@ buildPythonApplication rec {
     substituteInPlace "$out/bin/sonic-pi-tool" --replace 'default_paths = (' 'default_paths = ('"'"'${sonic-pi}/app'"'"', '
 
     wrapProgram "$out/bin/sonic-pi-tool" \
-      --prefix PATH : ${ruby}/bin:${erlang}/bin:${bash}/bin:${supercollider}/bin:${jack2}/bin
+      --prefix PATH : ${lib.makeBinPath [ ruby erlang supercollider jack2 ]}
   '';
 
   meta = with lib; {
