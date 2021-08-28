@@ -21,7 +21,7 @@
 , supercollider
 , qwt
 
-# does not quite work due to absolute path of source being compiled in for resource loading
+# TODO: does not quite work due to absolute path of source being compiled in for resource loading
 , withImGui ? false
 , gl3w
 , SDL2
