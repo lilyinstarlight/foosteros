@@ -84,7 +84,7 @@ in {
   config = mkIf cfg.enable {
     assertions = [{
       assertion = hasAttr (removeSuffix ".service" cfg.mpd.service) config.systemd.user.services;
-      message = "The mpdris2 module requires 'services.mpd.enable = true' or setting 'services.mpdris2.mpd.service' set to a systemd service name.";
+      message = "The mpdris2 module requires 'services.mpd.enable = true' or setting 'services.mpdris2.mpd.service' to a systemd service name.";
     }];
 
     xdg.configFile."mpDris2/mpDris2.conf".text = toIni mpdris2Conf;
