@@ -33,6 +33,6 @@ buildPythonApplication rec {
     description = "Tool for interfacing with the Sonic Pi server from the command line";
     homepage = "https://github.com/emlyn/sonic-pi-tool";
     license = licenses.mpl20;
-    platforms = [ "x86_64-linux" ];
+    platforms = [ "i686-linux" "x86_64-linux" ];
   };
 }

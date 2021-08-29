@@ -34,12 +34,29 @@ rec {
     wtype = if isOverlay then outpkgs.wtype else wtype;
   };
   rofi-wayland = callPackage ./rofi-wayland {};
-  sonic-pi-tool = python3Packages.callPackage ./sonic-pi-tool {};
+  sonic-pi-tool = python3Packages.callPackage ./sonic-pi-tool {
+    supercollider = if isOverlay then outpkgs.supercollider-with-sc3-plugins else supercollider-with-sc3-plugins;
+  };
   swaynag-battery = callPackage ./swaynag-battery {};
 
-  sonic-pi = libsForQt5.callPackage ./sonic-pi {};
+  sonic-pi = libsForQt5.callPackage ./sonic-pi {
+    supercollider = if isOverlay then outpkgs.supercollider-with-sc3-plugins else supercollider-with-sc3-plugins;
+  };
   sonic-pi-beta = libsForQt5.callPackage ./sonic-pi-beta {
     platform-folders = if isOverlay then outpkgs.platform-folders else platform-folders;
+    supercollider = if isOverlay then outpkgs.supercollider-with-sc3-plugins else supercollider-with-sc3-plugins;
+  };
+  supercolliderPlugins = recurseIntoAttrs {
+    sc3-plugins = callPackage ./supercollider/sc3-plugins {
+      fftw = outpkgs.fftwSinglePrec;
+      supercollider = if isOverlay then outpkgs.supercollider else supercollider;
+    };
+  };
+  supercollider = libsForQt5.callPackage ./supercollider {
+    fftw = outpkgs.fftwSinglePrec;
+  };
+  supercollider-with-sc3-plugins = (if isOverlay then outpkgs.supercollider else supercollider).override {
+    plugins = with supercolliderPlugins; [ sc3-plugins ];
   };
   wtype = callPackage ./wtype {
     inherit (pkgs) wtype;
