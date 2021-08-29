@@ -7,7 +7,7 @@
 , catch2
 , qtbase
 , qtsvg
-, fftwSinglePrec
+, qwt
 , kissfft
 , crossguid
 , reproc
@@ -19,7 +19,6 @@
 , boost
 , jack2
 , supercollider
-, qwt
 
 # TODO: does not quite work due to absolute path of source being compiled in for resource loading
 , withImGui ? false
@@ -31,7 +30,6 @@
 
 let
 
-  supercollider_single_prec = supercollider.override { fftw = fftwSinglePrec; };
   kissfft_float = kissfft.override { datatype = "float"; };
   SDL2_static = SDL2.override { withStatic = true; };
   SDL2_staticdeps = with xorg; [
@@ -85,7 +83,6 @@ stdenv.mkDerivation rec {
     erlang
     alsaLib
     rtmidi
-    supercollider_single_prec
     boost
   ] ++ lib.optional withImGui ([
     gl3w

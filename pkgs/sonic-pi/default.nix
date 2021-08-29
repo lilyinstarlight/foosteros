@@ -4,7 +4,7 @@
 , wrapQtAppsHook
 , qtbase
 , qtsvg
-, fftwSinglePrec
+, qwt
 , ruby
 , erlang
 , alsaLib
@@ -16,14 +16,7 @@
 , bash
 , jack2
 , supercollider
-, qwt
 }:
-
-let
-
-  supercollider_single_prec = supercollider.override {  fftw = fftwSinglePrec; };
-
-in
 
 stdenv.mkDerivation rec {
   version = "3.3.1";
@@ -48,7 +41,6 @@ stdenv.mkDerivation rec {
     alsaLib
     rtmidi
     aubio
-    supercollider_single_prec
     boost
   ];
 
