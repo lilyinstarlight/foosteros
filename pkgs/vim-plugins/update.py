@@ -99,7 +99,7 @@ class VimEditor(pluginupdate.Editor):
                 f.write(textwrap.indent(textwrap.dedent(
                     f"""
   {plugin.normalized_name} = buildVimPluginFrom2Nix {{
-    pname = "{plugin.normalized_name}";
+    pname = "{plugin.name}";
     version = "{plugin.version}";
     src = fetchFromGitHub {{
       owner = "{owner}";
