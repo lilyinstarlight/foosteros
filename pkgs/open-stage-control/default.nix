@@ -36,8 +36,8 @@ nodeComposition.package.override rec {
     npm run build
 
     # copy icon
-    install -Dm644 resource/images/logo.png $out/share/icons/hicolor/256x256/apps/open-stage-control.png
-    install -Dm644 resource/images/logo.svg $out/share/icons/hicolor/scalable/apps/open-stage-control.svg
+    install -Dm644 resources/images/logo.png $out/share/icons/hicolor/256x256/apps/open-stage-control.png
+    install -Dm644 resources/images/logo.svg $out/share/icons/hicolor/scalable/apps/open-stage-control.svg
 
     # make desktop item
     mkdir -p "$out/share"
