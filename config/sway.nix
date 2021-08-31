@@ -80,6 +80,9 @@ in
             };
           };
         };
+        extraConfig = {
+          modi = "drun,run";
+        };
         font = "Monofur Nerd Font 12";
         separator = "none";
       };
@@ -156,7 +159,7 @@ in
       ### variables
       set $mod mod4
       set $term ${pkgs.alacritty}/bin/alacritty
-      set $run ${pkgs.rofi-wayland}/bin/rofi -show run
+      set $run ${pkgs.rofi-wayland}/bin/rofi -show drun
       set $lock ${pkgs.swaylock}/bin/swaylock
       set $browser ${pkgs.qutebrowser}/bin/qutebrowser
 
