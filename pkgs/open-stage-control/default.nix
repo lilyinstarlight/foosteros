@@ -35,6 +35,10 @@ nodeComposition.package.override rec {
     # build assets
     npm run build
 
+    # copy icon
+    install -Dm644 resource/images/logo.png $out/share/icons/hicolor/256x256/apps/open-stage-control.png
+    install -Dm644 resource/images/logo.svg $out/share/icons/hicolor/scalable/apps/open-stage-control.svg
+
     # make desktop item
     mkdir -p "$out/share"
     ln -s "${desktopItem}/share/applications" "$out/share/applications"
@@ -52,9 +56,8 @@ nodeComposition.package.override rec {
     exec = "open-stage-control";
     icon = "open-stage-control";
     desktopName = "Open Stage Control";
-    genericName = "Open Stage Control";
     comment = meta.description;
-    categories = "Network;";
+    categories = "Network;Audio;AudioVideo;Midi;";
     extraEntries = ''
       StartupWMClass=open-stage-control
     '';
