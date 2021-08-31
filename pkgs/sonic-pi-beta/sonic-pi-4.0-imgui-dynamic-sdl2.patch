@@ -1,0 +1,31 @@
+diff --git a/app/gui/imgui/CMakeLists.txt b/app/gui/imgui/CMakeLists.txt
+index ebfcc3c6c..c687b5d08 100644
+--- a/app/gui/imgui/CMakeLists.txt
++++ b/app/gui/imgui/CMakeLists.txt
+@@ -16,6 +16,16 @@ find_package(gl3w CONFIG REQUIRED)
+ find_package(SDL2 CONFIG REQUIRED)
+ find_package(fmt CONFIG REQUIRED)
+ 
++set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
++set(THREADS_PREFER_PTHREAD_FLAG TRUE)
++
++if (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
++find_package(Threads REQUIRED)
++set(PLATFORM_LINKLIBS
++    Threads::Threads
++	)
++endif()
++
+ set(SPIMGUI_APP_SOURCE
+     ${APP_ROOT}/main.cpp
+     ${APP_ROOT}/app.cpp
+@@ -87,8 +97,7 @@ target_link_libraries (${APP_NAME}
+     PRIVATE
+     SonicPi::API
+     gl3w
+-    SDL2::SDL2main
+-    SDL2::SDL2-static
++    SDL2::SDL2
+     fmt::fmt
+     ${PLATFORM_LINKLIBS}
+     )

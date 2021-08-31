@@ -2,6 +2,7 @@
 , lib
 , fetchFromGitHub
 , wrapQtAppsHook
+, makeDesktopItem
 , cmake
 , pkg-config
 , catch2
@@ -20,28 +21,15 @@
 , jack2
 , supercollider
 
-# TODO: does not quite work due to absolute path of source being compiled in for resource loading
 , withImGui ? false
 , gl3w
 , SDL2
-, xorg
 , fmt
 }:
 
 let
 
   kissfft_float = kissfft.override { datatype = "float"; };
-  SDL2_static = SDL2.override { withStatic = true; };
-  SDL2_staticdeps = with xorg; [
-    libX11
-    libXext
-    libXcursor
-    libXinerama
-    libXi
-    libXrandr
-    libXScrnSaver
-    libXxf86vm
-  ];
 
 in
 
@@ -53,8 +41,8 @@ stdenv.mkDerivation rec {
     owner = "sonic-pi-net";
     repo = pname;
     #rev = "v${version}";
-    rev = "cb4a105cd961298ee80af5b84768acd394f657da";
-    sha256 = "07yv5f42nqabxy9jbibhl82s6ibz24c4yasmmcw0a2i6fjaax3h8";
+    rev = "8c718d4de60566873689757ebb9597650e8da885";
+    sha256 = "0g6bsii68b3r2f6z56kwh0pi95b2284x3r2azd3mn7y75n6hs299";
   };
 
   patches = [
@@ -62,6 +50,9 @@ stdenv.mkDerivation rec {
     ./sonic-pi-4.0-fix-lib-dir.patch
     ./sonic-pi-4.0-link-librt.patch
     ./sonic-pi-4.0-fix-jackd-detection.patch
+  ] ++ lib.optional withImGui [
+    ./sonic-pi-4.0-imgui-app-root.patch
+    ./sonic-pi-4.0-imgui-dynamic-sdl2.patch
   ];
 
   nativeBuildInputs = [
@@ -84,15 +75,16 @@ stdenv.mkDerivation rec {
     alsaLib
     rtmidi
     boost
-  ] ++ lib.optional withImGui ([
+  ] ++ lib.optional withImGui [
     gl3w
-    SDL2_static.dev
+    SDL2.dev
     fmt.dev
-  ] ++ SDL2_staticdeps);
+  ];
 
   dontUseCmakeConfigure = true;
 
   preConfigure = ''
+    chmod +x app/linux-build-all.sh app/server/ruby/bin/daemon.rb  # TODO: tell upstream to fix this
     patchShebangs .
   '' + lib.optionalString (!withImGui) ''
     substituteInPlace app/gui/CMakeLists.txt \
@@ -102,13 +94,12 @@ stdenv.mkDerivation rec {
   buildPhase = ''
     export SONIC_PI_HOME=$TMPDIR
 
-    pushd app
-      ./linux-prebuild.sh
-      ./linux-config.sh
-    popd
+  '' + (lib.optionalString withImGui ''
+    export APP_INSTALL_ROOT="$out/app"
 
-    pushd app/build
-      cmake --build . --config Release
+  '') + ''
+    pushd app
+      ./linux-build-all.sh
     popd
   '';
 
@@ -140,6 +131,13 @@ stdenv.mkDerivation rec {
     cp app/build/gui/imgui/sonic-pi-imgui $out/app/build/gui/imgui/sonic-pi-imgui
 
   '') + ''
+    # Copy icon
+    install -Dm644 app/gui/qt/images/icon-smaller.png $out/share/icons/hicolor/256x256/apps/sonic-pi.png
+
+    # Make desktop item
+    mkdir -p "$out/share"
+    ln -s "${desktopItem}/share/applications" "$out/share/applications"
+
     runHook postInstall
   '';
 
@@ -148,7 +146,21 @@ stdenv.mkDerivation rec {
   preFixup = ''
     wrapQtApp "$out/bin/sonic-pi" \
       --prefix PATH : ${lib.makeBinPath [ ruby erlang supercollider jack2 ]}
+  '' + lib.optionalString withImGui ''
+
+    makeWrapper "$out/app/build/gui/imgui/sonic-pi-imgui" "$out/bin/sonic-pi-imgui" \
+      --argv0 "$out/bin/sonic-pi-imgui" \
+      --prefix PATH : ${lib.makeBinPath [ ruby erlang supercollider jack2 ]}
   '';
+
+  desktopItem = makeDesktopItem {
+    name = "sonic-pi";
+    exec = "sonic-pi";
+    icon = "sonic-pi";
+    desktopName = "Sonic Pi";
+    comment = meta.description;
+    categories = "Audio;AudioVideo;Education;";
+  };
 
   meta = {
     homepage = "https://sonic-pi.net/";

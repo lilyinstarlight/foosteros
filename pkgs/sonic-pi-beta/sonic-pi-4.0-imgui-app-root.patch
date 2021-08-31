@@ -1,0 +1,47 @@
+diff --git a/app/gui/imgui/CMakeLists.txt b/app/gui/imgui/CMakeLists.txt
+index f5580e7b3..55d48c522 100644
+--- a/app/gui/imgui/CMakeLists.txt
++++ b/app/gui/imgui/CMakeLists.txt
+@@ -83,6 +83,10 @@ target_link_directories(${APP_NAME}
+ 	 )
+ endif()
+ 
++if (DEFINED ENV{APP_INSTALL_ROOT})
++target_compile_definitions(${APP_NAME} PRIVATE APP_INSTALL_ROOT="$ENV{APP_INSTALL_ROOT}")
++endif()
++
+ target_link_libraries (${APP_NAME} 
+     PRIVATE
+     SonicPi::API
+diff --git a/app/gui/imgui/app.cpp b/app/gui/imgui/app.cpp
+index 59de8500b..b1f4477c3 100644
+--- a/app/gui/imgui/app.cpp
++++ b/app/gui/imgui/app.cpp
+@@ -91,7 +91,11 @@ void start_sonic_pi()
+ {
+     sonic.spClient = std::make_shared<SPClient>();
+     sonic.spApi = std::make_shared<SonicPiAPI>(sonic.spClient.get(), APIProtocol::UDP, LogOption::File);
++#ifdef APP_INSTALL_ROOT
++    sonic.spApi->Init(fs::path(APP_INSTALL_ROOT) / "..");
++#else
+     sonic.spApi->Init(fs::path(APP_ROOT) / "..");
++#endif
+ }
+ 
+ bool sync_sonic_pi()
+diff --git a/app/gui/imgui/main.cpp b/app/gui/imgui/main.cpp
+index c4614531e..5454da382 100644
+--- a/app/gui/imgui/main.cpp
++++ b/app/gui/imgui/main.cpp
+@@ -190,7 +190,11 @@ int main(int, char**)
+     // - Remember that in C/C++ if you want to include a backslash \ in a string literal you need to write a double backslash \\ !
+     //io.Fonts->AddFontDefault();
+     ///io.Fonts->AddFontFromFileTTF("../../misc/fonts/Roboto-Medium.ttf", 16.0f);
++#ifdef APP_INSTALL_ROOT
++    io.Fonts->AddFontFromFileTTF(APP_INSTALL_ROOT "/gui/imgui/res/Cousine-Regular.ttf", 16.0f * vdpi);
++#else
+     io.Fonts->AddFontFromFileTTF(APP_ROOT "/gui/imgui/res/Cousine-Regular.ttf", 16.0f * vdpi);
++#endif
+     //io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 16.0f);
+     //io.Fonts->AddFontFromFileTTF("../../misc/fonts/ProggyTiny.ttf", 10.0f);
+     //ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());

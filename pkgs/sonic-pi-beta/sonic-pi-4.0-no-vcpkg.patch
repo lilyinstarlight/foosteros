@@ -48,13 +48,14 @@ index f5580e7b3..ebfcc3c6c 100644
      SDL2::SDL2-static
      fmt::fmt
 diff --git a/app/linux-prebuild.sh b/app/linux-prebuild.sh
-index a18e9ae69..b0b63cc0e 100755
+index 165ef76eb..141dc9f93 100755
 --- a/app/linux-prebuild.sh
 +++ b/app/linux-prebuild.sh
-@@ -3,20 +3,20 @@
- set -e # Quit script on error
+@@ -3,21 +3,21 @@ set -e # Quit script on error
  SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
  
+ 
+-# Build vcpkg
 -if [ ! -d "vcpkg" ]; then
 -    echo "Cloning vcpkg"
 -    git clone --single-branch --branch master https://github.com/microsoft/vcpkg.git vcpkg
@@ -69,6 +70,7 @@ index a18e9ae69..b0b63cc0e 100755
 -
 -cd vcpkg
 -./vcpkg install kissfft fmt crossguid sdl2 gl3w reproc gsl-lite concurrentqueue platform-folders catch2 --recurse
++## Build vcpkg
 +#if [ ! -d "vcpkg" ]; then
 +#    echo "Cloning vcpkg"
 +#    git clone --single-branch --branch master https://github.com/microsoft/vcpkg.git vcpkg
