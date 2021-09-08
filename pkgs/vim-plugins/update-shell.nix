@@ -20,47 +20,28 @@
 #   OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 #   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-{ callPackage, config, lib, vimUtils, vim }:
+{ nixpkgs ? import (
+    let
+      lock = builtins.fromJSON (builtins.readFile ../../flake.lock);
+    in fetchTarball {
+      url = "https://github.com/NixOS/nixpkgs/archive/${lock.nodes.nixpkgs.locked.rev}.tar.gz";
+      sha256 = lock.nodes.nixpkgs.locked.narHash;
+    }
+  )
+  {}
+}:
+
+with nixpkgs;
 
 let
-
-  inherit (vimUtils.override {inherit vim;}) buildVimPluginFrom2Nix vimGenDocHook;
-
-  inherit (lib) extends;
-
-  initialPackages = self: {
-    # Convert derivation to a vim plugin.
-    toVimPlugin = drv:
-      drv.overrideAttrs(oldAttrs: {
-
-        nativeBuildInputs = oldAttrs.nativeBuildInputs or [] ++ [ vimGenDocHook ];
-        passthru = (oldAttrs.passthru or {}) // {
-          vimPlugin = true;
-        };
-      });
-  };
-
-  plugins = callPackage ./generated.nix {
-    inherit buildVimPluginFrom2Nix;
-  };
-
-  # TL;DR
-  # * Add your plugin to ./vim-plugin-names
-  # * run ./update.py
-  #
-  # If additional modifications to the build process are required,
-  # add to ./overrides.nix.
-  overrides = callPackage ./overrides.nix {
-    inherit buildVimPluginFrom2Nix;
-  };
-
-  aliases = if (config.allowAliases or true) then (import ./aliases.nix lib) else final: prev: {};
-
-  extensible-self = lib.makeExtensible
-    (extends aliases
-      (extends overrides
-        (extends plugins initialPackages)
-      )
-    );
+  pyEnv = python3.withPackages(ps: [ ps.GitPython ]);
 in
-  extensible-self
+
+mkShell {
+  packages = [
+    bash
+    pyEnv
+    nix
+    nix-prefetch-scripts
+  ];
+}

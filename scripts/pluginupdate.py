@@ -339,12 +339,10 @@ def get_current_plugins(editor: Editor) -> List[Plugin]:
 
 
 def prefetch_plugin(
-    user: str,
-    repo_name: str,
-    branch: str,
-    alias: Optional[str],
+    p: PluginDesc,
     cache: "Optional[Cache]" = None,
 ) -> Tuple[Plugin, Dict[str, str]]:
+    user, repo_name, branch, alias = p.owner, p.repo, p.branch, p.alias
     log.info(f"Fetching last commit for plugin {user}/{repo_name}@{branch}")
     repo = Repo(user, repo_name, branch, alias)
     commit, date = repo.latest_commit()
@@ -369,7 +367,7 @@ def prefetch_plugin(
 
 
 def fetch_plugin_from_pluginline(plugin_line: str) -> Plugin:
-    plugin, _ = prefetch_plugin(*parse_plugin_line(plugin_line))
+    plugin, _ = prefetch_plugin(parse_plugin_line(plugin_line))
     return plugin
 
 
@@ -488,11 +486,11 @@ class Cache:
 
 
 def prefetch(
-    args: PluginDesc, cache: Cache
+    pluginDesc: PluginDesc, cache: Cache
 ) -> Tuple[str, str, Union[Exception, Plugin], dict]:
-    owner, repo = args.owner, args.repo
+    owner, repo = pluginDesc.owner, pluginDesc.repo
     try:
-        plugin, redirect = prefetch_plugin(owner, repo, args.branch, args.alias, cache)
+        plugin, redirect = prefetch_plugin(pluginDesc, cache)
         cache[plugin.commit] = plugin
         return (owner, repo, plugin, redirect)
     except Exception as e:
@@ -598,8 +596,8 @@ def update_plugins(editor: Editor, args):
         if autocommit:
             commit(
                 repo,
-                "{editor.get_drv_name name}: init at {version}".format(
-                    editor=editor.name, name=plugin.normalized_name, version=plugin.version
+                "{drv_name}: init at {version}".format(
+                    drv_name=editor.get_drv_name(plugin.normalized_name), version=plugin.version
                 ),
                 [args.outfile, args.input_file],
             )
