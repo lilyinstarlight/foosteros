@@ -1,0 +1,12 @@
+diff --git a/app/server/erlang/tau/boot.lin.sh b/app/server/erlang/tau/boot.lin.sh
+old mode 100644
+new mode 100755
+index 75618a9fe..b8ff12286
+--- a/app/server/erlang/tau/boot.lin.sh
++++ b/app/server/erlang/tau/boot.lin.sh
+@@ -6,4 +6,4 @@ cd ${SCRIPT_DIR}
+ 
+ echo "Booting Sonic Pi on Linux..."
+ 
+-TAU_ENABLED=$0 TAU_INTERNAL=$1 TAU_MIDI_ENABLED=$2 TAU_LINK_ENABLED=$3 TAU_IN_PORT=$4 TAU_API_PORT=$5 TAU_SPIDER_PORT=$6 _build\dev\rel\tau\bin\tau start
++TAU_ENABLED=$1 TAU_INTERNAL=$2 TAU_MIDI_ENABLED=$3 TAU_LINK_ENABLED=$4 TAU_IN_PORT=$5 TAU_API_PORT=$6 TAU_SPIDER_PORT=$7 exec _build/"${MIX_ENV:-dev}"/rel/tau/bin/tau start

@@ -15,6 +15,8 @@
 , platform-folders
 , ruby
 , erlang
+, elixir
+, beamPackages
 , alsaLib
 , rtmidi
 , boost
@@ -41,15 +43,14 @@ stdenv.mkDerivation rec {
     owner = "sonic-pi-net";
     repo = pname;
     #rev = "v${version}";
-    rev = "8c718d4de60566873689757ebb9597650e8da885";
-    sha256 = "0g6bsii68b3r2f6z56kwh0pi95b2284x3r2azd3mn7y75n6hs299";
+    rev = "81fc2063c99268b0b4218d7b044920195d1d777c";
+    sha256 = "02l3bsilc6jl1q1xv5pzffyj5mfzqx71pnyj5rpangnmbw539ji6";
   };
 
   patches = [
     ./sonic-pi-4.0-no-vcpkg.patch
-    ./sonic-pi-4.0-fix-lib-dir.patch
-    ./sonic-pi-4.0-link-librt.patch
-    ./sonic-pi-4.0-fix-jackd-detection.patch
+    ./sonic-pi-4.0-no-hex-deps.patch
+    ./sonic-pi-4.0-fix-elixir-boot.patch
   ] ++ lib.optional withImGui [
     ./sonic-pi-4.0-imgui-app-root.patch
     ./sonic-pi-4.0-imgui-dynamic-sdl2.patch
@@ -72,10 +73,16 @@ stdenv.mkDerivation rec {
     platform-folders
     ruby
     erlang
+    elixir
+    beamPackages.hex
     alsaLib
     rtmidi
     boost
-  ] ++ lib.optional withImGui [
+  ]
+  ++ lib.attrValues (import ./mix-deps.nix {
+    inherit beamPackages lib;
+  })
+  ++ lib.optional withImGui [
     gl3w
     SDL2.dev
     fmt.dev
@@ -84,15 +91,32 @@ stdenv.mkDerivation rec {
   dontUseCmakeConfigure = true;
 
   preConfigure = ''
-    chmod +x app/linux-build-all.sh app/server/ruby/bin/daemon.rb  # TODO: tell upstream to fix this
+    # TODO: tell upstream to fix this
+    mv app/server/erlang/tau/boot.lin.sh app/server/erlang/tau/boot-lin.sh
+    chmod +x app/linux-build-all.sh app/server/ruby/bin/daemon.rb app/server/erlang/tau/boot-lin.sh
+
+    # fix shebangs
     patchShebangs .
+
+    # link mix2nix dependencies from ERL_LIBS
+    mkdir -p app/server/erlang/tau/_build/prod/lib
+    while read -r -d ':' lib; do
+        for dir in "$lib"/*; do
+          ln -s "$dir" app/server/erlang/tau/_build/prod/lib/"$(basename "$dir" | cut -d '-' -f1)"
+        done
+    done <<< "$ERL_LIBS:"
   '' + lib.optionalString (!withImGui) ''
     substituteInPlace app/gui/CMakeLists.txt \
       --replace 'add_subdirectory(imgui)' '#add_subdirectory(imgui)'
   '';
 
   buildPhase = ''
-    export SONIC_PI_HOME=$TMPDIR
+    export SONIC_PI_HOME="$TMPDIR/spi"
+
+    export HEX_HOME="$TEMPDIR/hex"
+    export HEX_OFFLINE=1
+    export MIX_HOME="$TEMPDIR/mix"
+    export MIX_ENV=prod
 
   '' + (lib.optionalString withImGui ''
     export APP_INSTALL_ROOT="$out/app"
@@ -144,13 +168,16 @@ stdenv.mkDerivation rec {
   # $out/bin/sonic-pi is a shell script, and wrapQtAppsHook doesn't wrap them.
   dontWrapQtApps = true;
   preFixup = ''
+    wrapProgram "$out/app/server/erlang/tau/boot-lin.sh" \
+      --set MIX_ENV "$MIX_ENV"
+
     wrapQtApp "$out/bin/sonic-pi" \
-      --prefix PATH : ${lib.makeBinPath [ ruby erlang supercollider jack2 ]}
+      --prefix PATH : ${lib.makeBinPath [ ruby elixir supercollider jack2 ]}
   '' + lib.optionalString withImGui ''
 
     makeWrapper "$out/app/build/gui/imgui/sonic-pi-imgui" "$out/bin/sonic-pi-imgui" \
       --argv0 "$out/bin/sonic-pi-imgui" \
-      --prefix PATH : ${lib.makeBinPath [ ruby erlang supercollider jack2 ]}
+      --prefix PATH : ${lib.makeBinPath [ ruby elixir supercollider jack2 ]}
   '';
 
   desktopItem = makeDesktopItem {
