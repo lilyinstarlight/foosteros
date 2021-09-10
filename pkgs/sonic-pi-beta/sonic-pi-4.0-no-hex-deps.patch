@@ -1,5 +1,5 @@
 diff --git a/app/linux-prebuild.sh b/app/linux-prebuild.sh
-index e6b1ac05b..bfec623fa 100755
+index 112736cdc..e02d987a0 100755
 --- a/app/linux-prebuild.sh
 +++ b/app/linux-prebuild.sh
 @@ -47,9 +47,9 @@ PATH=`pkg-config --variable bindir Qt5`:$PATH lrelease "${SCRIPT_DIR}"/gui/qt/la
@@ -8,10 +8,10 @@ index e6b1ac05b..bfec623fa 100755
  cd "${SCRIPT_DIR}/server/erlang/tau"
 -mix local.hex --force
 -mix deps.get
--mix release
+-mix release --overwrite
 +#mix local.hex --force
 +#mix deps.get
-+mix release --no-deps-check
++mix release --overwrite --no-deps-check
  
  cp src/tau.app.src ebin/tau.app
  cd "${SCRIPT_DIR}"

@@ -1,13 +1,13 @@
 diff --git a/app/gui/imgui/CMakeLists.txt b/app/gui/imgui/CMakeLists.txt
-index f5580e7b3..55d48c522 100644
+index f5580e7b3..a3566b009 100644
 --- a/app/gui/imgui/CMakeLists.txt
 +++ b/app/gui/imgui/CMakeLists.txt
 @@ -83,6 +83,10 @@ target_link_directories(${APP_NAME}
  	 )
  endif()
  
-+if (DEFINED ENV{APP_INSTALL_ROOT})
-+target_compile_definitions(${APP_NAME} PRIVATE APP_INSTALL_ROOT="$ENV{APP_INSTALL_ROOT}")
++if (APP_INSTALL_ROOT)
++target_compile_definitions(${APP_NAME} PRIVATE APP_INSTALL_ROOT="${APP_INSTALL_ROOT}")
 +endif()
 +
  target_link_libraries (${APP_NAME} 

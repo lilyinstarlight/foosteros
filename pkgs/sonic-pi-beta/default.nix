@@ -43,14 +43,13 @@ stdenv.mkDerivation rec {
     owner = "sonic-pi-net";
     repo = pname;
     #rev = "v${version}";
-    rev = "81fc2063c99268b0b4218d7b044920195d1d777c";
-    sha256 = "02l3bsilc6jl1q1xv5pzffyj5mfzqx71pnyj5rpangnmbw539ji6";
+    rev = "9e5bdb80c27482fdc50575cb3201b92fe427653e";
+    sha256 = "0fa3j2ci9r30shs12dg9rv3xsy6zvzmkh7jqki7yd29x2bchjcyr";
   };
 
   patches = [
     ./sonic-pi-4.0-no-vcpkg.patch
     ./sonic-pi-4.0-no-hex-deps.patch
-    ./sonic-pi-4.0-fix-elixir-boot.patch
   ] ++ lib.optional withImGui [
     ./sonic-pi-4.0-imgui-app-root.patch
     ./sonic-pi-4.0-imgui-dynamic-sdl2.patch
@@ -91,26 +90,7 @@ stdenv.mkDerivation rec {
   dontUseCmakeConfigure = true;
 
   preConfigure = ''
-    # TODO: tell upstream to fix this
-    mv app/server/erlang/tau/boot.lin.sh app/server/erlang/tau/boot-lin.sh
-    chmod +x app/linux-build-all.sh app/server/ruby/bin/daemon.rb app/server/erlang/tau/boot-lin.sh
-
-    # fix shebangs
-    patchShebangs .
-
-    # link mix2nix dependencies from ERL_LIBS
-    mkdir -p app/server/erlang/tau/_build/prod/lib
-    while read -r -d ':' lib; do
-        for dir in "$lib"/*; do
-          ln -s "$dir" app/server/erlang/tau/_build/prod/lib/"$(basename "$dir" | cut -d '-' -f1)"
-        done
-    done <<< "$ERL_LIBS:"
-  '' + lib.optionalString (!withImGui) ''
-    substituteInPlace app/gui/CMakeLists.txt \
-      --replace 'add_subdirectory(imgui)' '#add_subdirectory(imgui)'
-  '';
-
-  buildPhase = ''
+    # Set build environment
     export SONIC_PI_HOME="$TMPDIR/spi"
 
     export HEX_HOME="$TEMPDIR/hex"
@@ -118,47 +98,70 @@ stdenv.mkDerivation rec {
     export MIX_HOME="$TEMPDIR/mix"
     export MIX_ENV=prod
 
-  '' + (lib.optionalString withImGui ''
-    export APP_INSTALL_ROOT="$out/app"
+    # Fix shebangs
+    patchShebangs .
 
-  '') + ''
+    # Link mix2nix dependencies from ERL_LIBS
+    mkdir -p app/server/erlang/tau/_build/"$MIX_ENV"/lib
+    while read -r -d ':' lib; do
+        for dir in "$lib"/*; do
+          ln -s "$dir" app/server/erlang/tau/_build/"$MIX_ENV"/lib/"$(basename "$dir" | cut -d '-' -f1)"
+        done
+    done <<< "$ERL_LIBS:"
+  '';
+
+  buildPhase = ''
+    # Prebuild vendored dependencies and erlang server
     pushd app
-      ./linux-build-all.sh
+      ./linux-prebuild.sh
+    popd
+
+    # Configure CMake
+    mkdir -p app/build
+    pushd app/build
+      cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DAPP_INSTALL_ROOT="$out/app" -DBUILD_IMGUI_INTERFACE=${if withImGui then "ON" else "OFF"} ..
+    popd
+
+    # Build
+    pushd app/build
+      cmake --build . --config Release
     popd
   '';
 
   installPhase = ''
     runHook preInstall
 
+    # Copy distributable files
     mkdir $out
     cp -r {bin,etc} $out/
 
-    # Copy server whole.
+    # Copy server whole
     mkdir -p $out/app
     cp -r app/server $out/app/
 
-    # Copy only necessary files for the gui app.
+    # Copy only necessary files for the Qt GUI
     mkdir -p $out/app/gui/qt
     cp -r app/gui/qt/{book,fonts,help,html,images,image_source,info,lang,theme} $out/app/gui/qt/
 
-    # Copy gui app binary.
+    # Copy Qt GUI binary
     mkdir -p $out/app/build/gui/qt
     cp app/build/gui/qt/sonic-pi $out/app/build/gui/qt/sonic-pi
 
-  '' + (lib.optionalString withImGui ''
-    # Copy ImGui files
-    mkdir -p $out/app/gui/imgui/res
-    cp -r app/gui/imgui/res/Cousine-Regular.ttf $out/app/gui/imgui/res/
+    # If ImGui was built
+    if [ -x app/build/gui/imgui/sonic-pi-imgui ]; then
+      # Copy ImGui files
+      mkdir -p $out/app/gui/imgui/res
+      cp -r app/gui/imgui/res/Cousine-Regular.ttf $out/app/gui/imgui/res/
 
-    # Copy ImGui binary
-    mkdir -p $out/app/build/gui/imgui
-    cp app/build/gui/imgui/sonic-pi-imgui $out/app/build/gui/imgui/sonic-pi-imgui
+      # Copy ImGui binary
+      mkdir -p $out/app/build/gui/imgui
+      cp app/build/gui/imgui/sonic-pi-imgui $out/app/build/gui/imgui/sonic-pi-imgui
+    fi
 
-  '') + ''
     # Copy icon
     install -Dm644 app/gui/qt/images/icon-smaller.png $out/share/icons/hicolor/256x256/apps/sonic-pi.png
 
-    # Make desktop item
+    # Link desktop item
     mkdir -p "$out/share"
     ln -s "${desktopItem}/share/applications" "$out/share/applications"
 
@@ -168,16 +171,21 @@ stdenv.mkDerivation rec {
   # $out/bin/sonic-pi is a shell script, and wrapQtAppsHook doesn't wrap them.
   dontWrapQtApps = true;
   preFixup = ''
+    # Wrap Tau server boot script
     wrapProgram "$out/app/server/erlang/tau/boot-lin.sh" \
       --set MIX_ENV "$MIX_ENV"
 
+    # Wrap Qt GUI (distributed binary)
     wrapQtApp "$out/bin/sonic-pi" \
       --prefix PATH : ${lib.makeBinPath [ ruby elixir supercollider jack2 ]}
-  '' + lib.optionalString withImGui ''
 
-    makeWrapper "$out/app/build/gui/imgui/sonic-pi-imgui" "$out/bin/sonic-pi-imgui" \
-      --argv0 "$out/bin/sonic-pi-imgui" \
-      --prefix PATH : ${lib.makeBinPath [ ruby elixir supercollider jack2 ]}
+    # If ImGui was built
+    if [ -x "$out/app/build/gui/imgui/sonic-pi-imgui" ]; then
+      # Wrap ImGui into bin
+      makeWrapper "$out/app/build/gui/imgui/sonic-pi-imgui" "$out/bin/sonic-pi-imgui" \
+        --argv0 "$out/bin/sonic-pi-imgui" \
+        --prefix PATH : ${lib.makeBinPath [ ruby elixir supercollider jack2 ]}
+    fi
   '';
 
   desktopItem = makeDesktopItem {
