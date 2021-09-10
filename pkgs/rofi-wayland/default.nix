@@ -16,20 +16,22 @@
 , wayland-protocols
 , xcbutilwm
 , xcbutilxrm
+, xcb-util-cursor
 , theme ? null, plugins ? [], symlink-dmenu ? false
 }:
 
 rofi.override {
   rofi-unwrapped = stdenv.mkDerivation rec {
     pname = "rofi-wayland";
-    version = "1.6.1";
+    version = "1.7.0";
 
     src = fetchFromGitHub {
       owner = "lbonn";
       repo = "rofi";
-      rev = "${version}-wayland";
+      #rev = "${version}-wayland";
+      rev = "a97ba40bc7aca7e375c500d574cac930a0b3473d";
       fetchSubmodules = true;
-      sha256 = "sha256-Kg8O4jKtzjwrz+wDm/TtqT0Vu+QaE1gCc5g5TMKeMNg=";
+      sha256 = "sha256-tiGFkqne8akl576T3PVHSxPUngUWes04muHhjJesiOA=";
     };
 
     nativeBuildInputs = [
@@ -50,15 +52,12 @@ rofi.override {
       wayland-protocols
       xcbutilwm
       xcbutilxrm
+      xcb-util-cursor
     ];
 
     mesonFlags = [
       "-Dwayland=enabled"
     ];
-
-    # Fixes:
-    # ../source/rofi-icon-fetcher.c:190:17: error: format not a string literal and no format arguments [-Werror=format-security]
-    hardeningDisable = [ "format" ];
 
     doCheck = true;
 
