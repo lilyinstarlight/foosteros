@@ -18,6 +18,12 @@ let
 in
 
 {
+  imports = [
+    ./fonts.nix
+    ./petty.nix
+    ./pipewire.nix
+  ];
+
   home-manager.sharedModules = [
     {
       programs.qutebrowser = {
@@ -98,28 +104,12 @@ in
     }
   ];
 
-  security.rtkit.enable = true;
-
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    pulse.enable = true;
-  };
-
   environment.systemPackages = with pkgs; [
-    petty
-    neofetch
-    qutebrowser firefox chromium
+    qutebrowser
   ];
 
   fonts.fonts = with pkgs; [
-    aileron
-    noto-fonts noto-fonts-extra noto-fonts-cjk noto-fonts-emoji
     monofur-nerdfont
-    dejavu_fonts
-    freefont_ttf
-    gyre-fonts
-    liberation_ttf
   ];
 
   environment.etc = {
@@ -477,9 +467,6 @@ in
   };
 
   xdg.portal.enable = true;
-
-  users.defaultUserShell = pkgs.petty;
-  users.users.root.shell = pkgs.bashInteractive;
 
   programs.tmux.extraConfig = ''
     # status
