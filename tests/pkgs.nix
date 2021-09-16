@@ -225,7 +225,7 @@ lib.filterAttrs (name: value: value != "skip") {
   hexmode-plugin = ifSupported vimPlugins.hexmode (runCommandNoCC "test-hexmode-plugin" {
     buildInputs = [ vimPlugins.hexmode ];
   } ''
-    test -f ${vimPlugins.hexmode}/share/vim-plugins/hexmode/plugin/hexmode.vim
+    test -f ${vimPlugins.hexmode}/plugin/hexmode.vim
 
     touch $out
   '');
@@ -233,7 +233,7 @@ lib.filterAttrs (name: value: value != "skip") {
   vim-lilypond-integrator-plugin = ifSupported vimPlugins.vim-lilypond-integrator (runCommandNoCC "test-vim-lilypond-integrator-plugin" {
     buildInputs = [ vimPlugins.vim-lilypond-integrator ];
   } ''
-    test -f ${vimPlugins.vim-lilypond-integrator}/share/vim-plugins/vim-lilypond-integrator/ftplugin/lilypond.vim
+    test -f ${vimPlugins.vim-lilypond-integrator}/ftplugin/lilypond.vim
 
     touch $out
   '');
@@ -241,7 +241,7 @@ lib.filterAttrs (name: value: value != "skip") {
   vim-magnum-plugin = ifSupported vimPlugins.vim-magnum (runCommandNoCC "test-vim-magnum-plugin" {
     buildInputs = [ vimPlugins.vim-magnum ];
   } ''
-    test -f ${vimPlugins.vim-magnum}/share/vim-plugins/vim-magnum/autoload/magnum.vim
+    test -f ${vimPlugins.vim-magnum}/autoload/magnum.vim
 
     touch $out
   '');
@@ -249,7 +249,7 @@ lib.filterAttrs (name: value: value != "skip") {
   vim-radical-plugin = ifSupported vimPlugins.vim-radical (runCommandNoCC "test-vim-radical-plugin" {
     buildInputs = [ vimPlugins.vim-radical ];
   } ''
-    test -f ${vimPlugins.vim-radical}/share/vim-plugins/vim-radical/plugin/radical.vim
+    test -f ${vimPlugins.vim-radical}/plugin/radical.vim
 
     touch $out
   '');
@@ -257,7 +257,7 @@ lib.filterAttrs (name: value: value != "skip") {
   vim-fish-plugin = ifSupported vimPlugins.vim-fish (runCommandNoCC "test-vim-fish-plugin" {
     buildInputs = [ vimPlugins.vim-fish ];
   } ''
-    test -f ${vimPlugins.vim-fish}/share/vim-plugins/vim-fish/ftplugin/fish.vim
+    test -f ${vimPlugins.vim-fish}/ftplugin/fish.vim
 
     touch $out
   '');
@@ -265,7 +265,7 @@ lib.filterAttrs (name: value: value != "skip") {
   vim-interestingwords-plugin = ifSupported vimPlugins.vim-interestingwords (runCommandNoCC "test-interestingwords-plugin" {
     buildInputs = [ vimPlugins.vim-interestingwords ];
   } ''
-    test -f ${vimPlugins.vim-interestingwords}/share/vim-plugins/vim-interestingwords/plugin/interestingwords.vim
+    test -f ${vimPlugins.vim-interestingwords}/plugin/interestingwords.vim
 
     touch $out
   '');
@@ -273,7 +273,7 @@ lib.filterAttrs (name: value: value != "skip") {
   vim-resolve-plugin = ifSupported vimPlugins.vim-resolve (runCommandNoCC "test-vim-resolve-plugin" {
     buildInputs = [ vimPlugins.vim-resolve ];
   } ''
-    test -f ${vimPlugins.vim-resolve}/share/vim-plugins/vim-resolve/ftplugin/resolve.vim
+    test -f ${vimPlugins.vim-resolve}/ftplugin/resolve.vim
 
     touch $out
   '');
@@ -281,7 +281,7 @@ lib.filterAttrs (name: value: value != "skip") {
   vim-sonic-pi-plugin = ifSupported vimPlugins.vim-sonic-pi (runCommandNoCC "test-vim-sonic-pi-plugin" {
     buildInputs = [ vimPlugins.vim-sonic-pi ];
   } ''
-    test -f ${vimPlugins.vim-sonic-pi}/share/vim-plugins/vim-sonic-pi/plugin/sonicpi.vim
+    test -f ${vimPlugins.vim-sonic-pi}/plugin/sonicpi.vim
 
     touch $out
   '');
@@ -289,7 +289,7 @@ lib.filterAttrs (name: value: value != "skip") {
   vim-spl-plugin = ifSupported vimPlugins.vim-spl (runCommandNoCC "test-vim-spl-plugin" {
     buildInputs = [ vimPlugins.vim-spl ];
   } ''
-    test -f ${vimPlugins.vim-spl}/share/vim-plugins/vim-spl/ftplugin/spl.vim
+    test -f ${vimPlugins.vim-spl}/ftplugin/spl.vim
 
     touch $out
   '');
@@ -297,7 +297,7 @@ lib.filterAttrs (name: value: value != "skip") {
   vimwiki-dev-plugin = ifSupported vimPlugins.vimwiki-dev (runCommandNoCC "test-vimwiki-dev-plugin" {
     buildInputs = [ vimPlugins.vimwiki-dev ];
   } ''
-    test -f ${vimPlugins.vimwiki-dev}/share/vim-plugins/vimwiki-dev/plugin/vimwiki.vim
+    test -f ${vimPlugins.vimwiki-dev}/plugin/vimwiki.vim
 
     touch $out
   '');
@@ -305,7 +305,7 @@ lib.filterAttrs (name: value: value != "skip") {
   vim-zeek-plugin = ifSupported vimPlugins.vim-zeek (runCommandNoCC "test-vim-zeek-plugin" {
     buildInputs = [ vimPlugins.vim-zeek ];
   } ''
-    test -f ${vimPlugins.vim-zeek}/share/vim-plugins/vim-zeek/ftplugin/zeek.vim
+    test -f ${vimPlugins.vim-zeek}/ftplugin/zeek.vim
 
     touch $out
   '');
