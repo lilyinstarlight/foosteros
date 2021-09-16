@@ -1,13 +1,13 @@
 { fetchFromGitHub, wtype }:
 
 wtype.overrideAttrs (attrs: rec {
-  version = "unstable-2021-07-12";
+  version = "unstable-2021-08-17";
 
   src = fetchFromGitHub {
     owner = "atx";
     repo = "wtype";
     #rev = "v${version}";
-    rev = "6280f6eb59a7586d6d01b8fa4e4100880c6ae8c6";
-    sha256 = "14r24x9qpicqjhfzswyy48y76bxkpl86h7j3fbqsn5lydnws7i90";
+    rev = "6536edfb917ed008c99b6cdd8d78c911782cb8e1";
+    sha256 = "10pshf98x0ljs20h911vyjwrr06sgqcrcshhx59crf68sxdr0fry";
   };
 })
