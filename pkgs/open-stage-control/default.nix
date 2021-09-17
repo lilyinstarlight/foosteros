@@ -30,7 +30,7 @@ nodeComposition.package.override rec {
 
   postInstall = ''
     # fix shebangs in node_modules
-    patchShebangs --build "$out/lib/node_modules/open-stage-control/node_modules/"
+    patchShebangs --build $out/lib/node_modules/open-stage-control/node_modules/
 
     # build assets
     npm run build
@@ -40,15 +40,15 @@ nodeComposition.package.override rec {
     install -Dm644 resources/images/logo.svg $out/share/icons/hicolor/scalable/apps/open-stage-control.svg
 
     # make desktop item
-    mkdir -p "$out/share"
-    ln -s "${desktopItem}/share/applications" "$out/share/applications"
+    mkdir -p $out/share
+    ln -s "${desktopItem}/share/applications" $out/share/applications
 
     # wrap electron and include python-rtmidi
-    makeWrapper '${electron}/bin/electron' "$out/bin/open-stage-control" \
-      --argv0 "$out/bin/open-stage-control" \
-      --add-flags "$out/lib/node_modules/open-stage-control/app" \
+    makeWrapper '${electron}/bin/electron' $out/bin/open-stage-control \
+      --argv0 $out/bin/open-stage-control \
+      --add-flags $out/lib/node_modules/open-stage-control/app \
       --prefix PYTHONPATH : $PYTHONPATH \
-      --prefix PATH : "${lib.makeBinPath [ python3 ]}"
+      --prefix PATH : ${lib.makeBinPath [ python3 ]}
   '';
 
   desktopItem = makeDesktopItem {

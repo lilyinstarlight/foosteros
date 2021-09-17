@@ -17,7 +17,7 @@
 , erlang
 , elixir
 , beamPackages
-, alsaLib
+, alsa-lib
 , rtmidi
 , boost
 , jack2
@@ -74,7 +74,7 @@ stdenv.mkDerivation rec {
     erlang
     elixir
     beamPackages.hex
-    alsaLib
+    alsa-lib
     rtmidi
     boost
   ]
@@ -162,8 +162,8 @@ stdenv.mkDerivation rec {
     install -Dm644 app/gui/qt/images/icon-smaller.png $out/share/icons/hicolor/256x256/apps/sonic-pi.png
 
     # Link desktop item
-    mkdir -p "$out/share"
-    ln -s "${desktopItem}/share/applications" "$out/share/applications"
+    mkdir -p $out/share
+    ln -s "${desktopItem}/share/applications" $out/share/applications
 
     runHook postInstall
   '';

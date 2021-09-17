@@ -7,7 +7,7 @@
 , qwt
 , ruby
 , erlang
-, alsaLib
+, alsa-lib
 , rtmidi
 , aubio
 , cmake
@@ -38,7 +38,7 @@ stdenv.mkDerivation rec {
     qwt
     ruby
     erlang
-    alsaLib
+    alsa-lib
     rtmidi
     aubio
     boost
