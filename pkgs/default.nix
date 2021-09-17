@@ -77,4 +77,5 @@ rec {
   python3Packages = recurseIntoAttrs (callPackage ./python-modules {});
   vimPlugins = recurseIntoAttrs (callPackage ./vim-plugins {});
 }) // (lib.optionalAttrs allowUnfree {
+  touchosc = callPackage ./touchosc {};
 })
