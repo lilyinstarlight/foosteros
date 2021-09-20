@@ -1,0 +1,17 @@
+diff --git a/app/server/erlang/tau/rel/env.bat.eex b/app/server/erlang/tau/rel/env.bat.eex
+index cfc69159f..e724d9700 100644
+--- a/app/server/erlang/tau/rel/env.bat.eex
++++ b/app/server/erlang/tau/rel/env.bat.eex
+@@ -1,3 +1,2 @@
+ @echo off
+ set RELEASE_DISTRIBUTION=none
+-set ELIXIR_ERL_OPTIONS="-sname undefined"
+diff --git a/app/server/erlang/tau/rel/env.sh.eex b/app/server/erlang/tau/rel/env.sh.eex
+index c8db5c9dc..d20ded97f 100644
+--- a/app/server/erlang/tau/rel/env.sh.eex
++++ b/app/server/erlang/tau/rel/env.sh.eex
+@@ -1,4 +1,3 @@
+ #!/bin/sh
+ 
+ export RELEASE_DISTRIBUTION=none
+-export ELIXIR_ERL_OPTIONS="-sname undefined"

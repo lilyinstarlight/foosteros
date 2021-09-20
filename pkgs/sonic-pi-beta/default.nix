@@ -43,13 +43,14 @@ stdenv.mkDerivation rec {
     owner = "sonic-pi-net";
     repo = pname;
     #rev = "v${version}";
-    rev = "9e5bdb80c27482fdc50575cb3201b92fe427653e";
-    sha256 = "0fa3j2ci9r30shs12dg9rv3xsy6zvzmkh7jqki7yd29x2bchjcyr";
+    rev = "a0c1a27733eb586ea2bb3c224bf30c7d66a5598d";
+    sha256 = "0m51qwdn4r16y3pc0rj2qzkbf17pq1fz8rzaq1zvax2hrhgvl981";
   };
 
   patches = [
     ./sonic-pi-4.0-no-vcpkg.patch
     ./sonic-pi-4.0-no-hex-deps.patch
+    ./sonic-pi-4.0-no-epmd.patch
   ] ++ lib.optional withImGui [
     ./sonic-pi-4.0-imgui-app-root.patch
     ./sonic-pi-4.0-imgui-dynamic-sdl2.patch
