@@ -44,7 +44,7 @@ stdenv.mkDerivation rec {
     repo = pname;
     #rev = "v${version}";
     rev = "2db6e2d7515213689bd62c254767fc170c7bad9c";
-    sha256 = "sha256-kjCwNJGaGEEKU3pgc0ImmvO5zMa+HBMhM7KIb7CYbYI=";
+    sha256 = "sha256-4cyc0EKHd5Nlgy8eMsGv44Y8NgadpQYGuQ+cYMfQ0aI=";
   };
 
   patches = [
