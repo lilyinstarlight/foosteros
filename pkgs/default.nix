@@ -60,7 +60,7 @@ in
     fftw = resolveDep "pkgs.fftwSinglePrec";
   };
   supercollider-with-sc3-plugins = (resolveDep "supercollider").override {
-    plugins = with supercolliderPlugins; [ sc3-plugins ];
+    plugins = [ (resolveDep "supercolliderPlugins.sc3-plugins") ];
   };
   wtype = callPackage ./wtype {
     inherit (pkgs) wtype;
