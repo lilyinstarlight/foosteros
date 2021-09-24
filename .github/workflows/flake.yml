@@ -30,7 +30,6 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
       - run: nix -vL --show-trace flake update
-      - run: nix -vL --show-trace build  # TODO: temporary until memory issues with evaluating flake are resolved (this helps for some reason)
       - run: nix -vL --show-trace flake check
       - name: Push changes
         run: |
