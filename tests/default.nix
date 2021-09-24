@@ -1,8 +1,8 @@
-{ pkgs, inputs, outputs, ... }:
+{ ... } @ args:
 
 let
-  config-tests = import ./config.nix { inherit pkgs outputs; };
-  pkgs-tests = import ./pkgs.nix { inherit pkgs; };
+  config-tests = import ./config.nix args;
+  pkgs-tests = import ./pkgs.nix args;
 in
 
 config-tests // pkgs-tests

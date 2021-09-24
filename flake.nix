@@ -79,6 +79,7 @@
       pkgs = systempkgs { inherit system; };
       inherit self;
       inherit (self) inputs outputs;
+      inherit system;
     });
 
     nixosConfigurations = {
