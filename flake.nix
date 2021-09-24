@@ -23,7 +23,7 @@
 
       systempkgs = ({ system }: import nixpkgs {
         inherit system;
-        overlays = [ self.overlay ];
+        overlays = nixpkgs.lib.attrValues self.overlays;
       });
     in
   {
@@ -63,6 +63,7 @@
     overlays.foosteros = (final: prev: import ./pkgs {
       pkgs = prev;
       outpkgs = final;
+      isOverlay = true;
     });
     overlay = self.overlays.foosteros;
 

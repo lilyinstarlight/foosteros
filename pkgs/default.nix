@@ -1,8 +1,12 @@
-{ pkgs, outpkgs ? pkgs, allowUnfree ? (!(builtins.getEnv "FOOSTEROS_EXCLUDE_UNFREE" == "1")), isOverlay ? true, ... }:
+{ pkgs, outpkgs ? pkgs, allowUnfree ? (!(builtins.getEnv "FOOSTEROS_EXCLUDE_UNFREE" == "1")), isOverlay ? false, ... }:
 
 with pkgs;
 
-let
+let mypkgs = let
+  hasPath = attrset: path: lib.hasAttrByPath (lib.splitString "." path) attrset;
+  resolvePath = attrset: path: lib.getAttrFromPath (lib.splitString "." path) attrset;
+  resolveDep = path: if isOverlay then (resolvePath outpkgs path) else if (hasPath mypkgs path) then (resolvePath mypkgs path) else (resolvePath pkgs path);
+
   python3 = let
     self = pkgs.python3.override {
       packageOverrides = (self: super: super.pkgs.callPackage ./python-modules {});
@@ -14,7 +18,7 @@ let
   vimPlugins = pkgs.vimPlugins.extend (self: super: callPackage ./vim-plugins {});
 in
 
-rec {
+{
   crossguid = callPackage ./crossguid {};
   fooster-backgrounds = callPackage ./backgrounds {};
   fooster-materia-theme = callPackage ./materia-theme {};
@@ -30,32 +34,32 @@ rec {
   platform-folders = callPackage ./platform-folders {};
   pridecat = callPackage ./pridecat {};
   rofi-pass-wayland = callPackage ./rofi-pass-wayland {
-    rofi-wayland = if isOverlay then outpkgs.rofi-wayland else rofi-wayland;
-    wtype = if isOverlay then outpkgs.wtype else wtype;
+    rofi-wayland = resolveDep "rofi-wayland";
+    wtype = resolveDep "wtype";
   };
   rofi-wayland = callPackage ./rofi-wayland {};
   sonic-pi-tool = python3Packages.callPackage ./sonic-pi-tool {
-    supercollider = if isOverlay then outpkgs.supercollider-with-sc3-plugins else supercollider-with-sc3-plugins;
+    supercollider = resolveDep "supercollider-with-sc3-plugins";
   };
   swaynag-battery = callPackage ./swaynag-battery {};
 
   sonic-pi = libsForQt5.callPackage ./sonic-pi {
-    supercollider = if isOverlay then outpkgs.supercollider-with-sc3-plugins else supercollider-with-sc3-plugins;
+    supercollider = resolveDep "supercollider-with-sc3-plugins";
   };
   sonic-pi-beta = libsForQt5.callPackage ./sonic-pi-beta {
-    platform-folders = if isOverlay then outpkgs.platform-folders else platform-folders;
-    supercollider = if isOverlay then outpkgs.supercollider-with-sc3-plugins else supercollider-with-sc3-plugins;
+    platform-folders = resolveDep "platform-folders";
+    supercollider = resolveDep "supercollider-with-sc3-plugins";
   };
   supercolliderPlugins = recurseIntoAttrs {
     sc3-plugins = callPackage ./supercollider/sc3-plugins {
-      fftw = outpkgs.fftwSinglePrec;
-      supercollider = if isOverlay then outpkgs.supercollider else supercollider;
+      fftw = resolveDep "pkgs.fftwSinglePrec";
+      supercollider = resolveDep "supercollider";
     };
   };
   supercollider = libsForQt5.callPackage ./supercollider {
-    fftw = outpkgs.fftwSinglePrec;
+    fftw = resolveDep "pkgs.fftwSinglePrec";
   };
-  supercollider-with-sc3-plugins = (if isOverlay then outpkgs.supercollider else supercollider).override {
+  supercollider-with-sc3-plugins = (resolveDep "supercollider").override {
     plugins = with supercolliderPlugins; [ sc3-plugins ];
   };
   wtype = callPackage ./wtype {
@@ -78,4 +82,6 @@ rec {
   vimPlugins = recurseIntoAttrs (callPackage ./vim-plugins {});
 }) // (lib.optionalAttrs allowUnfree {
   touchosc = callPackage ./touchosc {};
-})
+});
+
+in mypkgs
