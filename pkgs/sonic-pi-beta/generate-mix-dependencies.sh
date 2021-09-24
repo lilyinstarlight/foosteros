@@ -3,7 +3,7 @@
 
 # Download mix.lock for the tau server from the release
 #curl https://raw.githubusercontent.com/sonic-pi-net/sonic-pi/v4.0.0/app/server/erlang/tau/mix.lock >mix.lock
-curl https://raw.githubusercontent.com/sonic-pi-net/sonic-pi/81fc2063c99268b0b4218d7b044920195d1d777c/app/server/erlang/tau/mix.lock >mix.lock
+curl https://raw.githubusercontent.com/sonic-pi-net/sonic-pi/40d1d679834499d4aaf786dfae4cb67b44eb1a3a/app/server/erlang/tau/mix.lock >mix.lock
 
 mix2nix mix.lock >mix-deps.nix
 
