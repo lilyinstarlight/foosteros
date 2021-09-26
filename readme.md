@@ -46,7 +46,7 @@ Feel free to take any pieces in this repository that you like! Please don't try 
     mkdir -p /mnt/etc
     git clone https://github.com/lilyinstarlight/foosteros.git /mnt/etc/nixos
     ```
-6. Install SSH key for host (for sops secret decryption on bootup).
+6. Install SSH key for host (for sops secret decryption on activation).
     ```
     mkdir -p /mnt/etc/ssh
     cp ssh_host_rsa_key{,.pub} /mnt/etc/ssh/
