@@ -93,12 +93,35 @@ in
         separator = "none";
       };
 
+      services.playerctld.enable = true;
+
       xdg.configFile = {
         "swappy/config".text = ''
           [Default]
           save_dir=$HOME/tmp
           save_filename_format=screenshot-%Y%m%d-%H%M%S.png
           show_panel=true
+        '';
+        "swaywsr/config.toml".text = ''
+          [icons]
+          "org.qutebrowser.qutebrowser" = "爵"
+          Firefox = ""
+          "Chromium-browser" = ""
+          Alacritty = ""
+
+          [aliases]
+          "org.qutebrowser.qutebrowser" = "web"
+          Firefox = "web"
+          "Chromium-browser" = "web"
+          Alacritty = "term"
+
+          [general]
+          default_icon = "ﬓ"
+          separator = " | "
+
+          [options]
+          #no_names = true
+          remove_duplicates = true
         '';
       };
     }
@@ -206,21 +229,21 @@ in
       bindsym $mod+shift+right move right
 
       #### workspaces
-      bindsym $mod+1 workspace 1:term
-      bindsym $mod+2 workspace 2:www
-      bindsym $mod+3 workspace 3:chat
-      bindsym $mod+4 workspace 4:work
-      bindsym $mod+5 workspace 5:extra
-      bindsym $mod+6 workspace 6:music
-      bindsym $mod+7 workspace 7:games
+      bindsym $mod+1 workspace number 1
+      bindsym $mod+2 workspace number 2
+      bindsym $mod+3 workspace number 3
+      bindsym $mod+4 workspace number 4
+      bindsym $mod+5 workspace number 5
+      bindsym $mod+6 workspace number 6
+      bindsym $mod+7 workspace number 7
 
-      bindsym $mod+shift+1 move container to workspace 1:term
-      bindsym $mod+shift+2 move container to workspace 2:www
-      bindsym $mod+shift+3 move container to workspace 3:chat
-      bindsym $mod+shift+4 move container to workspace 4:work
-      bindsym $mod+shift+5 move container to workspace 5:extra
-      bindsym $mod+shift+6 move container to workspace 6:music
-      bindsym $mod+shift+7 move container to workspace 7:games
+      bindsym $mod+shift+1 move container to workspace number 1
+      bindsym $mod+shift+2 move container to workspace number 2
+      bindsym $mod+shift+3 move container to workspace number 3
+      bindsym $mod+shift+4 move container to workspace number 4
+      bindsym $mod+shift+5 move container to workspace number 5
+      bindsym $mod+shift+6 move container to workspace number 6
+      bindsym $mod+shift+7 move container to workspace number 7
 
       #### outputs
       bindsym $mod+alt+h focus output left
@@ -300,6 +323,11 @@ in
       bindsym $mod+xf86audioraisevolume exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume 0 100%
       bindsym xf86audiomute exec ${pkgs.pulseaudio}/bin/pactl set-sink-mute 0 toggle
 
+      bindsym xf86audioplay exec ${pkgs.playerctl}/bin/playerctl play-pause
+      bindsym xf86audiostop exec ${pkgs.playerctl}/bin/playerctl stop
+      bindsym xf86audioprev exec ${pkgs.playerctl}/bin/playerctl previous
+      bindsym xf86audionext exec ${pkgs.playerctl}/bin/playerctl next
+
       #### applications
       bindsym $mod+semicolon exec $term
       bindsym $mod+return exec $run
@@ -335,7 +363,6 @@ in
               urgent_workspace #333333 #aa4444 #333333
           }
 
-          strip_workspace_numbers yes
           separator_symbol " • "
 
           status_command i3status
@@ -343,6 +370,7 @@ in
 
       ### desktop services
       exec_always ${pkgs.fooster-backgrounds}/bin/setbg
+      exec_always ${pkgs.swaywsr}/bin/swaywsr -c "$HOME"/.config/swaywsr/config.toml
 
       ### desktop environment
       seat seat0 xcursor_theme "Bibata_Oil"
@@ -479,9 +507,9 @@ in
     enable = true;
     wrapperFeatures.gtk = true;
     extraPackages = with pkgs; [
-      pulseaudio brightnessctl jq glib
+      pulseaudio brightnessctl playerctl jq glib
       swaybg swaylock swayidle
-      kanshi i3status mako rofi-wayland alacritty
+      kanshi i3status swaywsr mako rofi-wayland alacritty
       fooster-backgrounds fooster-materia-theme bibata-cursors papirus-icon-theme
       slurp grim wl-clipboard libnotify sway-contrib.grimshot swappy wf-recorder
       xwayland
