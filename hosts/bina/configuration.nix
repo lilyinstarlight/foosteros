@@ -102,7 +102,7 @@
     gnupg pass-wayland-otp
     rofi-pass-wayland rofi-mpd
     pavucontrol
-    mpc_cli ncmpcpp beets
+    ncmpcpp beets
     inkscape gimp-with-plugins krita
     mupdf
     element-desktop jitsi-meet-electron
@@ -172,12 +172,6 @@
       ### variables
       set $mod mod4
       set $pass ${pkgs.rofi-pass-wayland}/bin/rofi-pass
-
-      ### buttons
-      bindsym xf86audioplay exec ${pkgs.mpc_cli}/bin/mpc -q toggle
-      bindsym xf86audiostop exec ${pkgs.mpc_cli}/bin/mpc -q stop
-      bindsym xf86audioprev exec ${pkgs.mpc_cli}/bin/mpc -q prev
-      bindsym xf86audionext exec ${pkgs.mpc_cli}/bin/mpc -q next
 
       ### applications
       bindsym $mod+backslash exec $pass
