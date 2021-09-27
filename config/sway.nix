@@ -104,23 +104,26 @@ in
         '';
         "swaywsr/config.toml".text = ''
           [icons]
-          "org.qutebrowser.qutebrowser" = "爵"
-          Firefox = ""
-          "Chromium-browser" = ""
-          Alacritty = ""
+          "org.qutebrowser.qutebrowser" = "#"
+          "Firefox" = "#"
+          "Chromium-browser" = "#"
+          "Alacritty" = ">"
+          "Element" = "@"
+          "discord" = "@"
 
           [aliases]
           "org.qutebrowser.qutebrowser" = "web"
-          Firefox = "web"
-          "Chromium-browser" = "web"
-          Alacritty = "term"
+          "Firefox" = "firefox"
+          "Chromium-browser" = "chromium"
+          "Alacritty" = "term"
+          "Element" = "chat"
+          "discord" = "discord"
 
           [general]
-          default_icon = "ﬓ"
+          default_icon = "*"
           separator = " | "
 
           [options]
-          #no_names = true
           remove_duplicates = true
         '';
       };
