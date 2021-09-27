@@ -43,8 +43,8 @@ stdenv.mkDerivation rec {
     owner = "sonic-pi-net";
     repo = pname;
     #rev = "v${version}";
-    rev = "40d1d679834499d4aaf786dfae4cb67b44eb1a3a";
-    sha256 = "sha256-+MqG6fQsDfzpqqXXMIaYIQt0MTQFSHak87cfRR2mASw=";
+    rev = "5fc7b11851b539778fa2d22b9f2d6e8c622bd79b";
+    sha256 = "sha256-95hOSjoDSR+rzFi3oKcz0d1tBokpFMHAM3+Wp40sSsM=";
   };
 
   patches = [
@@ -102,16 +102,19 @@ stdenv.mkDerivation rec {
     patchShebangs .
 
     # Link mix2nix dependencies from ERL_LIBS
-    mkdir -p app/server/erlang/tau/_build/"$MIX_ENV"/lib
+    mkdir -p app/server/beam/tau/_build/"$MIX_ENV"/lib
     while read -r -d ':' lib; do
         for dir in "$lib"/*; do
-          ln -s "$dir" app/server/erlang/tau/_build/"$MIX_ENV"/lib/"$(basename "$dir" | cut -d '-' -f1)"
+          ln -s "$dir" app/server/beam/tau/_build/"$MIX_ENV"/lib/"$(basename "$dir" | cut -d '-' -f1)"
         done
     done <<< "$ERL_LIBS:"
   '';
 
   buildPhase = ''
-    # Prebuild vendored dependencies and erlang server
+    # TODO: tell upstream to fix this
+    chmod +x app/server/beam/print_erlang_version app/server/beam/tau/boot-lin.sh app/server/beam/tau/boot-mac.sh
+
+    # Prebuild vendored dependencies and beam server
     pushd app
       ./linux-prebuild.sh
     popd
@@ -172,7 +175,7 @@ stdenv.mkDerivation rec {
   dontWrapQtApps = true;
   preFixup = ''
     # Wrap Tau server boot script
-    wrapProgram "$out/app/server/erlang/tau/boot-lin.sh" \
+    wrapProgram "$out/app/server/beam/tau/boot-lin.sh" \
       --set MIX_ENV "$MIX_ENV"
 
     # Wrap Qt GUI (distributed binary)
