@@ -25,7 +25,7 @@ in
   ];
 
   home-manager.sharedModules = [
-    {
+    ({ config, lib, pkgs, ... }: {
       programs.qutebrowser = {
         enable = true;
         loadAutoconfig = true;
@@ -50,47 +50,162 @@ in
         enable = true;
         package = pkgs.rofi-wayland;
         terminal = "${pkgs.alacritty}/bin/alacritty";
-        colors = {
-          window = {
-            background = "#111111";
-            border = "#f29bd4";
-            separator = "#333333";
+        theme = let
+          inherit (config.lib.formats.rasi) mkLiteral;
+        in {
+          "*" = {
+            darkbackground = mkLiteral "#111111";
+            background = mkLiteral "#333333";
+            altbackground = mkLiteral "#222222";
+            foreground = mkLiteral "#f29bd4";
+            grayforeground = mkLiteral "#888888";
+            spacing = 2;
+            background-color = mkLiteral "var(darkbackground)";
+            border-color = mkLiteral "var(foreground)";
           };
-          rows = {
-            normal = {
-              background = "#333333";
-              foreground = "#f29bd4";
-              backgroundAlt = "#222222";
-              highlight = {
-                background = "#f29bd4";
-                foreground = "#333333";
-              };
-            };
-            active = {
-              background = "#333333";
-              foreground = "#f29bd4";
-              backgroundAlt = "#222222";
-              highlight = {
-                background = "#f29bd4";
-                foreground = "#333333";
-              };
-            };
-            urgent = {
-              background = "#333333";
-              foreground = "#f29bd4";
-              backgroundAlt = "#222222";
-              highlight = {
-                background = "#f29bd4";
-                foreground = "#333333";
-              };
-            };
+          "element" = {
+            padding = mkLiteral "1px";
+            spacing = mkLiteral "5px";
+            border = 0;
+            cursor = mkLiteral "pointer";
+          };
+          "element normal.normal" = {
+              background-color = mkLiteral "var(background)";
+              text-color = mkLiteral "var(foreground)";
+          };
+          "element normal.urgent" = {
+              background-color = mkLiteral "var(background)";
+              text-color = mkLiteral "var(foreground)";
+          };
+          "element normal.active" = {
+              background-color = mkLiteral "var(background)";
+              text-color = mkLiteral "var(foreground)";
+          };
+          "element alternate.normal" = {
+              background-color = mkLiteral "var(altbackground)";
+              text-color = mkLiteral "var(foreground)";
+          };
+          "element alternate.urgent" = {
+              background-color = mkLiteral "var(altbackground)";
+              text-color = mkLiteral "var(foreground)";
+          };
+          "element alternate.active" = {
+              background-color = mkLiteral "var(altbackground)";
+              text-color = mkLiteral "var(foreground)";
+          };
+          "element selected.normal" = {
+              background-color = mkLiteral "var(foreground)";
+              text-color = mkLiteral "var(background)";
+          };
+          "element selected.urgent" = {
+              background-color = mkLiteral "var(foreground)";
+              text-color = mkLiteral "var(background)";
+          };
+          "element selected.active" = {
+              background-color = mkLiteral "var(foreground)";
+              text-color = mkLiteral "var(background)";
+          };
+          "element-text" = {
+            background-color = mkLiteral "rgba(0, 0, 0, 0%)";
+            text-color = mkLiteral "inherit";
+            highlight = mkLiteral "inherit";
+            cursor = mkLiteral "inherit";
+          };
+          "element-icon" = {
+            background-color = mkLiteral "rgba(0, 0, 0, 0%)";
+            size = mkLiteral "1em";
+            text-color = mkLiteral "inherit";
+            cursor = mkLiteral "inherit";
+          };
+          "window" = {
+            padding = 5;
+            border = 1;
+          };
+          "mainbox" = {
+            padding = 0;
+            border = 0;
+          };
+          "message" = {
+            padding = mkLiteral "1px";
+            border-color = mkLiteral "var(background)";
+            border = 0;
+          };
+          "textbox" = {
+            text-color = mkLiteral "var(foreground)";
+          };
+          "listview" = {
+            padding = mkLiteral "2px 0px 0px";
+            scrollbar = true;
+            spacing = mkLiteral "2px";
+            fixed-height = 0;
+            border-color = mkLiteral "var(background)";
+            border = 0;
+          };
+          "scrollbar" = {
+            width = "4px";
+            padding = 0;
+            handle-width = "8px";
+            border = 0;
+            handle-color = mkLiteral "var(foreground)";
+          };
+          "sidebar" = {
+            border-color = mkLiteral "var(background)";
+            border = 0;
+          };
+          "button" = {
+            spacing = 0;
+            text-color = mkLiteral "var(foreground)";
+            cursor = mkLiteral "pointer";
+          };
+          "button selected" = {
+            background-color = mkLiteral "var(foreground)";
+            text-color = mkLiteral "var(background)";
+          };
+          "num-filtered-rows, num-rows" = {
+            text-color = mkLiteral "var(grayforeground)";
+            expand = false;
+          };
+          "textbox-num-sep" = {
+            text-color = mkLiteral "var(grayforeground)";
+            expand = false;
+            str = "/";
+          };
+          "inputbar" = {
+            padding = mkLiteral "1px";
+            spacing = 0;
+            text-color = mkLiteral "var(foreground)";
+            children = mkLiteral "[prompt, textbox-prompt-colon, entry, num-filtered-rows, textbox-num-sep, num-rows, case-indicator]";
+          };
+          "case-indicator" = {
+            spacing = 0;
+            text-color = mkLiteral "var(foreground)";
+          };
+          "entry" = {
+            spacing = 0;
+            text-color = mkLiteral "var(foreground)";
+            placeholder-color = mkLiteral "var(grayforeground)";
+            placeholder = "Type to filter";
+            cursor = mkLiteral "text";
+          };
+          "prompt" = {
+            spacing = 0;
+            text-color = mkLiteral "var(foreground)";
+          };
+          "textbox-prompt-colon" = {
+            margin = mkLiteral "0px 0.3em 0em 0em";
+            expand = false;
+            str = ":";
+            text-color = mkLiteral "inherit";
+          };
+          "mode-switch" = {
+            border-color = mkLiteral "var(background)";
+            border = 0;
           };
         };
         extraConfig = {
           modi = "drun,run";
         };
         font = "Monofur Nerd Font 12";
-        separator = "none";
       };
 
       services.playerctld.enable = true;
@@ -102,6 +217,7 @@ in
           save_filename_format=screenshot-%Y%m%d-%H%M%S.png
           show_panel=true
         '';
+
         "swaywsr/config.toml".text = ''
           [icons]
           "org.qutebrowser.qutebrowser" = "#"
@@ -127,7 +243,7 @@ in
           remove_duplicates = true
         '';
       };
-    }
+    })
   ];
 
   environment.systemPackages = with pkgs; [
