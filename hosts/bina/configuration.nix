@@ -6,7 +6,7 @@
 
     ../../config/base.nix
     ../../config/pki.nix
-    ../../config/neovim-lsp.nix
+    ../../config/lsp.nix
     ../../config/intelgfx.nix
     ../../config/sway.nix
     ../../config/fcitx5.nix
@@ -114,7 +114,7 @@
     (wrapOBS {
       plugins = with obs-studio-plugins; [ wlrobs obs-gstreamer obs-move-transition ] ++ (lib.optionals config.nixpkgs.config.allowUnfree [ obs-ndi ]);
     })
-    homebank
+    homebank hledger
     virt-manager podman-compose
     ripgrep-all
     mkusb mkwin
