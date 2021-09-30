@@ -43,13 +43,14 @@ stdenv.mkDerivation rec {
     owner = "sonic-pi-net";
     repo = pname;
     #rev = "v${version}";
-    rev = "5fc7b11851b539778fa2d22b9f2d6e8c622bd79b";
-    sha256 = "sha256-95hOSjoDSR+rzFi3oKcz0d1tBokpFMHAM3+Wp40sSsM=";
+    rev = "2831982d43298716a27fffc027dbf28147b535e0";
+    sha256 = "sha256-DZ91WynkwhEG8Gw4Mui9A8oe6LzU0WO1oBu0ubuemtA=";
   };
 
   patches = [
     ./sonic-pi-4.0-no-vcpkg.patch
     ./sonic-pi-4.0-no-hex-deps.patch
+    ./sonic-pi-4.0-fix-tau-log-path.patch  # TODO: tell upstream to fix
   ] ++ lib.optional withImGui [
     ./sonic-pi-4.0-imgui-app-root.patch
     ./sonic-pi-4.0-imgui-dynamic-sdl2.patch

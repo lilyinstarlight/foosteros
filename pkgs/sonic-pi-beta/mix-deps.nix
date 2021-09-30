@@ -8,6 +8,19 @@ let
   self = packages // (overrides self packages);
 
   packages = with beamPackages; with self; {
+    logger_file_backend = buildMix rec {
+      name = "logger_file_backend";
+      version = "0.0.12";
+
+      src = fetchHex {
+        pkg = "${name}";
+        version = "${version}";
+        sha256 = "0ygd7zakwqhpvldl5173y541g8a34as2y7v5sgwh8f3a317cqdbk";
+      };
+
+      beamDeps = [];
+    };
+
     rustler = buildMix rec {
       name = "rustler";
       version = "0.22.0";
