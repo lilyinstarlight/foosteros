@@ -1,20 +1,18 @@
-{ pkgs, stdenv, lib, fetchFromGitHub, makeWrapper, makeDesktopItem, nodejs, electron_7, python3, ... }:
+{ pkgs, stdenv, lib, fetchFromGitHub, makeWrapper, makeDesktopItem, nodejs, electron, python3, ... }:
 
 let
   nodeComposition = import ./node-composition.nix {
     inherit pkgs nodejs;
     inherit (stdenv.hostPlatform) system;
   };
-
-  electron = electron_7;
 in
 
 nodeComposition.package.override rec {
   src = fetchFromGitHub {
     owner = "jean-emmanuel";
     repo = "open-stage-control";
-    rev = "v1.10.0";
-    sha256 = "sha256-9qBlbGFrwlRlHZLqNKxdHNC3DqXsrI67zTPuzVHhNm8=";
+    rev = "v1.10.2";
+    sha256 = "sha256-WHkgtP9iyfZKFiwwTA52p+waObSiEBqW7O33ErSEe24=";
   };
 
   nativeBuildInputs = [ makeWrapper ];
