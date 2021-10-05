@@ -36,21 +36,20 @@ let
 in
 
 stdenv.mkDerivation rec {
-  version = "4.0.0-beta1";
+  version = "4.0.0-beta2";
   pname = "sonic-pi";
 
   src = fetchFromGitHub {
     owner = "sonic-pi-net";
     repo = pname;
     #rev = "v${version}";
-    rev = "2831982d43298716a27fffc027dbf28147b535e0";
-    sha256 = "sha256-DZ91WynkwhEG8Gw4Mui9A8oe6LzU0WO1oBu0ubuemtA=";
+    rev = "66df070db7827e56373a6654db27cb9e69eac1d4";
+    sha256 = "sha256-LILvixfNRQw00UNE1MK3Xav31tlytvgzBsnzciWzWis=";
   };
 
   patches = [
     ./sonic-pi-4.0-no-vcpkg.patch
     ./sonic-pi-4.0-no-hex-deps.patch
-    ./sonic-pi-4.0-fix-tau-log-path.patch  # TODO: tell upstream to fix
   ] ++ lib.optional withImGui [
     ./sonic-pi-4.0-imgui-app-root.patch
     ./sonic-pi-4.0-imgui-dynamic-sdl2.patch

@@ -1,11 +1,11 @@
 diff --git a/app/linux-prebuild.sh b/app/linux-prebuild.sh
-index b430e1f1f..e104091b3 100755
+index d6a7f46e3..ee316cb55 100755
 --- a/app/linux-prebuild.sh
 +++ b/app/linux-prebuild.sh
 @@ -47,9 +47,9 @@ PATH=`pkg-config --variable bindir Qt5`:$PATH lrelease "${SCRIPT_DIR}"/gui/qt/la
  
  echo "Compiling Erlang/Elixir files..."
- cd "${SCRIPT_DIR}/server/beam/tau"
+ cd "${SCRIPT_DIR}"/server/beam/tau
 -MIX_ENV="${MIX_ENV:-prod}" mix local.hex --force
 -MIX_ENV="${MIX_ENV:-prod}" mix deps.get
 -MIX_ENV="${MIX_ENV:-prod}" mix release --overwrite
