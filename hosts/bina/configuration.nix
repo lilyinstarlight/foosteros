@@ -309,8 +309,8 @@
     profile desk {
       output eDP-1 enable mode 1920x1080 position 1920,0 scale 1
       output "VIZIO, Inc E390i-A1 0x00000101" enable mode 1920x1080 position 0,0 scale 1
-      exec ${pkgs.sway}/bin/swaymsg workspace 3:chat, move workspace to eDP-1
-      exec ${pkgs.sway}/bin/swaymsg workspace 1:term, move workspace to '"VIZIO, Inc E390i-A1 0x00000101"'
+      exec ${pkgs.sway}/bin/swaymsg workspace number 3, move workspace to eDP-1
+      exec ${pkgs.sway}/bin/swaymsg workspace number 1, move workspace to '"VIZIO, Inc E390i-A1 0x00000101"'
     }
 
     profile deskonly {
