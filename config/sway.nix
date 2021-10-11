@@ -25,7 +25,9 @@ in
   ];
 
   home-manager.sharedModules = [
-    ({ config, lib, pkgs, ... }: {
+    # TODO: need https://github.com/NixOS/nixpkgs/issues/140879 to be fixed
+    #({ config, lib, pkgs, ... }: {
+    ({ config, lib, ... }: {
       programs.qutebrowser = {
         enable = true;
         loadAutoconfig = true;
