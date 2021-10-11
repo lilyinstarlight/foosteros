@@ -29,7 +29,9 @@ in
   google-10000-english = callPackage ./google-10000-english {};
   mkusb = callPackage ./mkusb {};
   mkwin = callPackage ./mkwin {};
-  open-stage-control = callPackage ./open-stage-control {};
+  open-stage-control = callPackage ./open-stage-control {
+    electron = resolveDep "electron_15";
+  };
   petty = callPackage ./petty {};
   platform-folders = callPackage ./platform-folders {};
   pridecat = callPackage ./pridecat {};
@@ -47,17 +49,19 @@ in
     supercollider = resolveDep "supercollider-with-sc3-plugins";
   };
   sonic-pi-beta = libsForQt5.callPackage ./sonic-pi-beta {
+    crossguid = resolveDep "crossguid";
+    gl3w = resolveDep "gl3w";
     platform-folders = resolveDep "platform-folders";
     supercollider = resolveDep "supercollider-with-sc3-plugins";
   };
   supercolliderPlugins = recurseIntoAttrs {
     sc3-plugins = callPackage ./supercollider/sc3-plugins {
-      fftw = resolveDep "pkgs.fftwSinglePrec";
+      fftw = resolveDep "fftwSinglePrec";
       supercollider = resolveDep "supercollider";
     };
   };
   supercollider = libsForQt5.callPackage ./supercollider {
-    fftw = resolveDep "pkgs.fftwSinglePrec";
+    fftw = resolveDep "fftwSinglePrec";
   };
   supercollider-with-sc3-plugins = (resolveDep "supercollider").override {
     plugins = [ (resolveDep "supercolliderPlugins.sc3-plugins") ];
