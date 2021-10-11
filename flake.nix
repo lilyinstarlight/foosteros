@@ -32,7 +32,6 @@
         system = system;
         modules = [
           home-manager.nixosModules.home-manager
-          { home-manager.extraSpecialArgs.modulesPath = "${self.inputs.home-manager}/modules"; }
           sops-nix.nixosModules.sops
         ] ++ modules;
         extraArgs = {
