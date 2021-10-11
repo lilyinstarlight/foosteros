@@ -31,7 +31,7 @@ in
     package = mkOption {
       type = types.package;
       default = pkgs.kanshi;
-      defaultText = literalExample "pkgs.kanshi";
+      defaultText = literalExpression "pkgs.kanshi";
       description = ''
         kanshi derivation to use.
       '';
