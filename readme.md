@@ -11,9 +11,10 @@ Feel free to take any pieces in this repository that you like! Please don't try 
 ## Installation
 
 1. Boot [NixOS minimal install media](https://channels.nixos.org/nixos-unstable/latest-nixos-minimal-x86_64-linux.iso).
-2. Add installation dependencies such as unstable Nix (for flakes), bc, and git.
+2. Add installation dependencies and binary cache.
     ```
-    nix-env -iA nixos.{nixUnstable,bc,git}
+    nix-env -iA nixos.{nixUnstable,bc,git,cachix}
+    cachix use foosteros
     ```
 3. Partition the disks with at least an EFI System Partition and preferably root and swap in an encrypted LVM.
     ```
@@ -54,23 +55,10 @@ Feel free to take any pieces in this repository that you like! Please don't try 
     ```
 7. Run nixos-install for the target host.
     ```
-    # NOTE: Not working (ref: https://github.com/NixOS/nix/issues/4081)
-    # nixos-install --flake '/mnt/etc/nixos#bina' --no-channel-copy
-    # NOTE: Temporary replacement:
-    nix --experimental-features 'nix-command flakes' build /mnt/etc/nixos#nixosConfigurations.minimal.config.system.build.toplevel
-    nixos-install --system ./result --no-channel-copy
-    rm -f ./result
-    nixos-enter --root /mnt
-    nixos-rebuild boot --flake '/etc/nixos#bina'
-    exit
+    # NOTE: Needs impure due to fetched nmd not being added to allowed paths (ref: https://github.com/nix-community/home-manager/issues/2074)
+    nixos-install --impure --flake '/mnt/etc/nixos#minimal' --no-channel-copy
     ```
-8. Set the password for user account "lily".
-    ```
-    nixos-enter --root /mnt
-    passwd lily
-    exit
-    ```
-9. Reboot into the new system.
+8. Reboot into the new system.
     ```
     systemctl reboot
     ```
