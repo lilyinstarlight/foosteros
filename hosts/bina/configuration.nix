@@ -123,7 +123,7 @@
     neofetch
     texlive.combined.scheme-full
   ] ++ (lib.optionals config.nixpkgs.config.allowUnfree [
-    discord teams
+    discord slack teams
   ]);
 
   environment.etc = {
