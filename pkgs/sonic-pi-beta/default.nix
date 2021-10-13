@@ -43,8 +43,8 @@ stdenv.mkDerivation rec {
     owner = "sonic-pi-net";
     repo = pname;
     #rev = "v${version}";
-    rev = "971d3a5b754d65e694369fafb9c425c65fddd2b9";
-    sha256 = "sha256-RBwfJyqJZ8JODEcFUyW1YfA+SJV6i3igBARh2lzpWNs=";
+    rev = "a3be7aa88db14933abfb6bd3bbe3238564652729";
+    sha256 = "sha256-yYyaySAWZzP060vrhfW6O7y/TGG3JWxDnO9L6HfLUGo=";
   };
 
   patches = [
