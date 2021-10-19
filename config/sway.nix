@@ -25,7 +25,7 @@ in
   ];
 
   home-manager.sharedModules = [
-    # TODO: need https://github.com/NixOS/nixpkgs/issues/140879 to be fixed
+    # TODO: revert once nix-community/home-manager#2396 is merged
     #({ config, lib, pkgs, ... }: {
     ({ config, lib, ... }: {
       programs.qutebrowser = {
