@@ -24,11 +24,11 @@ in
 
 stdenv.mkDerivation rec {
   pname = "touchosc";
-  version = "1.0.6.112";
+  version = "1.0.7.117";
 
   src = fetchurl {
     url = "https://hexler.net/pub/touchosc/${pname}-${version}-linux-x86_64.deb";
-    sha256 = "0np7wx9dv4fcrlmddxcg0bf0lffvdy6cwf5yiyqpi39ds5s09shn";
+    sha256 = "sha256-ozFm+v1EsesIYf2ReyUgYNL0kk/i0+fQ2hIcZAwke7o=";
   };
 
   unpackCmd = "mkdir root; ${dpkg}/bin/dpkg-deb -x $curSrc root";
