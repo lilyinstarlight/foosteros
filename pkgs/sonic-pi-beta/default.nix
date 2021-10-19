@@ -59,7 +59,6 @@ stdenv.mkDerivation rec {
     wrapQtAppsHook
     cmake
     pkg-config
-    catch2
   ];
 
   buildInputs = [
@@ -67,6 +66,7 @@ stdenv.mkDerivation rec {
     qtsvg
     qwt
     kissfft_float
+    catch2
     crossguid
     reproc
     platform-folders
