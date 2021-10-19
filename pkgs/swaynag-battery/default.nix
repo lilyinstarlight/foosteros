@@ -2,16 +2,16 @@
 
 buildGoModule rec {
   pname = "swaynag-battery";
-  version = "unstable-2020-05-25";
+  version = "unstable-2021-10-17";
 
   src = fetchFromGitHub {
     owner = "m00qek";
     repo = pname;
     #rev = "v${version}";
-    rev = "396900b4282be190bb30f2527916ea29d44651bf";
-    sha256 = "0bmw8yy8b5hw9c6kydznd8hig8l10d3gk6c5myah3zsf0d91ksxa";
+    rev = "43b31b776a7eed612749a461b50373ac4f23887b";
+    sha256 = "sha256-JIEXap17xSa461xt+HzhVpKmf4/h6WQ2JXdoTZ9slVw=";
   };
-  vendorSha256 = "0kwzx3xf6j5z0zzmybxfpmnz8ll7jyh9fkrfjri7mlch77gn7ml7";
+  vendorSha256 = "sha256-h9Zj3zmQ0Xpili5Pl6CXh1L0bb2uL1//B79I4/ron08=";
 
   nativeBuildInputs = [
     makeWrapper
