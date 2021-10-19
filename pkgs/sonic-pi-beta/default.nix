@@ -43,8 +43,8 @@ stdenv.mkDerivation rec {
     owner = "sonic-pi-net";
     repo = pname;
     #rev = "v${version}";
-    rev = "a3be7aa88db14933abfb6bd3bbe3238564652729";
-    sha256 = "sha256-yYyaySAWZzP060vrhfW6O7y/TGG3JWxDnO9L6HfLUGo=";
+    rev = "710107fe22c5977b9fa5e83b71e30f847610e240";
+    sha256 = "sha256-UOqkGv99HYZqRME94L/hfDn/uPWJFZ0zVaQTBJKoZJw=";
   };
 
   patches = [
@@ -112,7 +112,7 @@ stdenv.mkDerivation rec {
 
   buildPhase = ''
     # TODO: tell upstream to fix this
-    chmod +x app/server/beam/print_erlang_version app/server/beam/tau/boot-lin.sh app/server/beam/tau/boot-mac.sh
+    chmod +x app/server/beam/print_erlang_version app/server/beam/tau/boot-lin.sh
 
     # Prebuild vendored dependencies and beam server
     pushd app
