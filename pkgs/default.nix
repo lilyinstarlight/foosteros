@@ -49,6 +49,7 @@ in
     supercollider = resolveDep "supercollider-with-sc3-plugins";
   };
   sonic-pi-beta = libsForQt5.callPackage ./sonic-pi-beta {
+    kissfft = resolveDep "kissfftFloat";
     crossguid = resolveDep "crossguid";
     gl3w = resolveDep "gl3w";
     platform-folders = resolveDep "platform-folders";
@@ -73,6 +74,7 @@ in
   monofur-nerdfont = nerdfonts.override {
     fonts = [ "Monofur" ];
   };
+  kissfftFloat = kissfft.override { datatype = "float"; };
 
   pass-wayland-otp = (pass-wayland.withExtensions (ext: [ ext.pass-otp ])).overrideAttrs (attrs: {
     meta = with lib; attrs.meta // {

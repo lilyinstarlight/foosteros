@@ -29,12 +29,6 @@
 , fmt
 }:
 
-let
-
-  kissfft_float = kissfft.override { datatype = "float"; };
-
-in
-
 stdenv.mkDerivation rec {
   version = "4.0.0-beta2";
   pname = "sonic-pi";
@@ -65,7 +59,7 @@ stdenv.mkDerivation rec {
     qtbase
     qtsvg
     qwt
-    kissfft_float
+    kissfft
     catch2
     crossguid
     reproc
