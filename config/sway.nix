@@ -25,9 +25,7 @@ in
   ];
 
   home-manager.sharedModules = [
-    # TODO: revert once nix-community/home-manager#2396 is merged
-    #({ config, lib, pkgs, ... }: {
-    ({ config, lib, ... }: {
+    ({ config, lib, pkgs, ... }: {
       programs.qutebrowser = {
         enable = true;
         loadAutoconfig = true;
