@@ -56,7 +56,7 @@ in
     supercollider = resolveDep "supercollider-with-sc3-plugins";
   };
   supercolliderPlugins = recurseIntoAttrs {
-    sc3-plugins = callPackage ./supercollider/sc3-plugins {
+    sc3-plugins = callPackage ./supercollider/plugins/sc3-plugins.nix {
       fftw = resolveDep "fftwSinglePrec";
       supercollider = resolveDep "supercollider";
     };
