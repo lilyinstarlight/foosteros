@@ -15,7 +15,7 @@
   home-manager.users.lily = { pkgs, ... }: {
     programs.fish = {
       enable = true;
-      promptInit = ''
+      interactiveShellInit = ''
         fish_vi_key_bindings
       '';
     };

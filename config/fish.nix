@@ -24,7 +24,7 @@
       set fish_color_redirection brblue
       set fish_color_user magenta
     '';
-    promptInit = ''
+    interactiveShellInit = ''
       any-nix-shell fish --info-right | source
     '';
   };
