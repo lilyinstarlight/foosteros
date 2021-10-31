@@ -122,6 +122,7 @@
     ansible azure-cli
     neofetch
     texlive.combined.scheme-full
+    gnumake clang
   ] ++ (lib.optionals config.nixpkgs.config.allowUnfree [
     discord slack teams
   ]);
