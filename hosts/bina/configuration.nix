@@ -18,6 +18,12 @@
 
   sops.defaultSopsFile = ./secrets.yaml;
   sops.secrets = {
+    root-password = {
+      neededForUsers = true;
+    };
+    lily-password = {
+      neededForUsers = true;
+    };
     wireless-networks = {};
     wired-networks = {};
     nullmailer-remotes = {
@@ -343,6 +349,10 @@
     enable = true;
     powerSupply = "BAT0";
   };
+
+  users.mutableUsers = false;
+  users.users.root.passwordFile = config.sops.secrets.root-password.path;
+  users.users.lily.passwordFile = config.sops.secrets.lily-password.path;
 
   home-manager.users.lily = let cfg = config.home-manager.users.lily; in {
     services.mopidy = {
