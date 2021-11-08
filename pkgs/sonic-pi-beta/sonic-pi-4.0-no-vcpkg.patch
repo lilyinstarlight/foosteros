@@ -48,12 +48,12 @@ index f5580e7b3..ebfcc3c6c 100644
      SDL2::SDL2-static
      fmt::fmt
 diff --git a/app/linux-prebuild.sh b/app/linux-prebuild.sh
-index d6a7f46e3..bee5513d1 100755
+index 4aeb9ccd0..1940947b1 100755
 --- a/app/linux-prebuild.sh
 +++ b/app/linux-prebuild.sh
-@@ -3,21 +3,21 @@ set -e # Quit script on error
- SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
- 
+@@ -19,29 +19,29 @@ while getopts ":n" opt; do
+   esac
+ done
  
 -# Build vcpkg
 -if [ ! -d "vcpkg" ]; then
@@ -69,7 +69,15 @@ index d6a7f46e3..bee5513d1 100755
 -fi
 -
 -cd vcpkg
--./vcpkg install kissfft fmt crossguid sdl2 gl3w reproc gsl-lite concurrentqueue platform-folders catch2 --recurse
+-
+-if [ $no_imgui == true ]
+-then
+-    ./vcpkg install kissfft crossguid platform-folders reproc catch2 --recurse
+-else
+-    ./vcpkg install kissfft fmt crossguid sdl2 gl3w reproc gsl-lite concurrentqueue platform-folders catch2 --recurse
+-fi
+-
+-cd "${SCRIPT_DIR}"
 +## Build vcpkg
 +#if [ ! -d "vcpkg" ]; then
 +#    echo "Cloning vcpkg"
@@ -84,7 +92,15 @@ index d6a7f46e3..bee5513d1 100755
 +#fi
 +#
 +#cd vcpkg
-+#./vcpkg install kissfft fmt crossguid sdl2 gl3w reproc gsl-lite concurrentqueue platform-folders catch2 --recurse
++#
++#if [ $no_imgui == true ]
++#then
++#    ./vcpkg install kissfft crossguid platform-folders reproc catch2 --recurse
++#else
++#    ./vcpkg install kissfft fmt crossguid sdl2 gl3w reproc gsl-lite concurrentqueue platform-folders catch2 --recurse
++#fi
++#
++#cd "${SCRIPT_DIR}"
  
- cd "${SCRIPT_DIR}"
- 
+ # Build external dependencies and copy to build tree
+ echo "Building external binary dependencies..."
