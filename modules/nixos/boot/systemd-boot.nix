@@ -63,7 +63,7 @@ let
     install = importlib.util.module_from_spec(install_spec)
     install_spec.loader.exec_module(install)
 
-    install.BOOT_ENTRY = """title ${cfg.bootName}{profile}
+    install.BOOT_ENTRY = """title ${cfg.bootName}{profile}{specialisation}
     version Generation {generation} {description}
     linux {kernel}
     initrd {initrd}
