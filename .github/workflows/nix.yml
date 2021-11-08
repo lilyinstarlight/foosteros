@@ -16,7 +16,7 @@ jobs:
         with:
           install_url: https://github.com/numtide/nix-unstable-installer/releases/latest/download/install
           extra_nix_config: |
-            experimental-features = nix-command ca-references flakes
+            experimental-features = nix-command ca-derivations flakes
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
       - uses: cachix/cachix-action@v10
         with:

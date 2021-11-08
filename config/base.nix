@@ -64,7 +64,7 @@
     binaryCaches = [ "https://foosteros.cachix.org/" ];
 
     extraOptions = ''
-      experimental-features = nix-command ca-references flakes
+      experimental-features = nix-command ca-derivations flakes
     '';
 
     registry = (lib.mapAttrs (name: value: { flake = value; }) (lib.filterAttrs (name: value: value ? outputs) inputs)) // { foosteros = { flake = self; }; };
