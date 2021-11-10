@@ -24,16 +24,22 @@
     lily-password = {
       neededForUsers = true;
     };
-    wireless-networks = {};
-    wired-networks = {};
+    wireless-networks = {
+      restartUnits = [ "supplicant-wlp4s0.service" ];
+    };
+    wired-networks = {
+      restartUnits = [ "supplicant-enp0s25.service" ];
+    };
     nullmailer-remotes = {
       mode = "0440";
       group = config.services.nullmailer.group;
+      restartUnits = [ "nullmailer.service" ];
     };
     mopidy-lily-secrets = {
       mode = "0400";
       owner = config.users.users.lily.name;
       group = config.users.users.lily.group;
+      restartUnits = [ "mopidy.service" ];
     };
   };
 
