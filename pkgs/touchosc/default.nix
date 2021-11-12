@@ -26,9 +26,19 @@ stdenv.mkDerivation rec {
   pname = "touchosc";
   version = "1.0.7.117";
 
+  suffix = {
+    x86_64-linux  = "linux-x86_64";
+    aarch64-linux = "linux-arm64";
+    armv7l-linux  = "linux-armhf";
+  }.${stdenv.hostPlatform.system} or (throw "Unsupported system: ${stdenv.hostPlatform.system}");
+
   src = fetchurl {
-    url = "https://hexler.net/pub/touchosc/${pname}-${version}-linux-x86_64.deb";
-    sha256 = "sha256-ozFm+v1EsesIYf2ReyUgYNL0kk/i0+fQ2hIcZAwke7o=";
+    url = "https://hexler.net/pub/touchosc/${pname}-${version}-${suffix}.deb";
+    sha256 = {
+      x86_64-linux  = "sha256-ozFm+v1EsesIYf2ReyUgYNL0kk/i0+fQ2hIcZAwke7o=";
+      aarch64-linux = "sha256-ZFcQqihubkgLKxwOTgf/iXeq3fOgOquhvX7bcX+ezPY=";
+      armv7l-linux  = "sha256-a8bXRJtBkf26fZO85Kkyf17Q0lvGoKmC8YAYqWMZ7SU=";
+    }.${stdenv.hostPlatform.system} or (throw "Unsupported system: ${stdenv.hostPlatform.system}");
   };
 
   unpackCmd = "mkdir root; ${dpkg}/bin/dpkg-deb -x $curSrc root";
@@ -59,6 +69,6 @@ stdenv.mkDerivation rec {
     homepage = "https://hexler.net/touchosc";
     description = "Next generation modular control surface";
     license = licenses.unfree;
-    platforms = [ "x86_64-linux" ];
+    platforms = [ "x86_64-linux" "aarch64-linux" "armv7l-linux" ];
   };
 }
