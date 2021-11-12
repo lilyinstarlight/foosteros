@@ -87,6 +87,9 @@ in
   python3Packages = recurseIntoAttrs (callPackage ./python-modules {});
   vimPlugins = recurseIntoAttrs (callPackage ./vim-plugins {});
 }) // (lib.optionalAttrs allowUnfree {
+  kodelife = callPackage ./kodelife {
+    inherit (pkgs.gst_all_1) gstreamer gst-plugins-base;
+  };
   touchosc = callPackage ./touchosc {};
 });
 
