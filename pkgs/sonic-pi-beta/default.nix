@@ -8,6 +8,7 @@
 , catch2
 , qtbase
 , qtsvg
+, qtwebengine
 , qwt
 , kissfft
 , crossguid
@@ -37,13 +38,21 @@ stdenv.mkDerivation rec {
     owner = "sonic-pi-net";
     repo = pname;
     #rev = "v${version}";
-    rev = "99bb397530ed5b21fe97986de47e6a5db102738f";
-    sha256 = "sha256-B67klievxC53briQqVAOjcf4vk7p1sfPOByvT3bNu74=";
+    rev = "0bf8c3f32eb74fbc15015852fbf20ab6f9597d78";
+    sha256 = "sha256-KwtmZtxZw0n1Mv4dieUW5/nL68cwchkLqnUR5zMOnB0=";
+  };
+
+  mixFodDeps = beamPackages.fetchMixDeps {
+    inherit version;
+    pname = "mix-deps-${pname}";
+    src = "${src}/app/server/beam/tau";
+    sha256 = "sha256-0wZTPMp3VyX0VCbSaI+a561cFk8i43G/tS8ZiK9EwNQ=";
   };
 
   patches = [
     ./sonic-pi-4.0-no-vcpkg.patch
     ./sonic-pi-4.0-no-hex-deps.patch
+    ./sonic-pi-4.0-no-tau-stdout-log.patch
   ] ++ lib.optional withImGui [
     ./sonic-pi-4.0-imgui-app-root.patch
     ./sonic-pi-4.0-imgui-dynamic-sdl2.patch
@@ -58,6 +67,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     qtbase
     qtsvg
+    qtwebengine
     qwt
     kissfft
     catch2
@@ -68,13 +78,11 @@ stdenv.mkDerivation rec {
     erlang
     elixir
     beamPackages.hex
+    beamPackages.rebar3
     alsa-lib
     rtmidi
     boost
   ]
-  ++ lib.attrValues (import ./mix-deps.nix {
-    inherit beamPackages lib;
-  })
   ++ lib.optional withImGui [
     gl3w
     SDL2.dev
@@ -89,24 +97,26 @@ stdenv.mkDerivation rec {
 
     export HEX_HOME="$TEMPDIR/hex"
     export HEX_OFFLINE=1
+    export MIX_REBAR="${beamPackages.rebar}/bin/rebar"
+    export MIX_REBAR3="${beamPackages.rebar3}/bin/rebar3"
+    export REBAR_GLOBAL_CONFIG_DIR="$TEMPDIR/rebar3"
+    export REBAR_CACHE_DIR="$TEMPDIR/rebar3.cache"
     export MIX_HOME="$TEMPDIR/mix"
+    export MIX_DEPS_PATH="$TEMPDIR/deps"
     export MIX_ENV=prod
 
     # Fix shebangs
     patchShebangs .
 
-    # Link mix2nix dependencies from ERL_LIBS
-    mkdir -p app/server/beam/tau/_build/"$MIX_ENV"/lib
-    while read -r -d ':' lib; do
-        for dir in "$lib"/*; do
-          ln -s "$dir" app/server/beam/tau/_build/"$MIX_ENV"/lib/"$(basename "$dir" | cut -d '-' -f1)"
-        done
-    done <<< "$ERL_LIBS:"
+    # Copy Mix dependency sources
+    echo 'Copying ${mixFodDeps} to Mix deps'
+    cp --no-preserve=mode -R '${mixFodDeps}' "$MIX_DEPS_PATH"
   '';
 
   buildPhase = ''
-    # TODO: tell upstream to fix this
+    # TODO: tell upstream to fix these
     chmod +x app/server/beam/tau/boot-lin.sh
+    mkdir -p app/server/beam/tau/priv/static
 
     # Prebuild vendored dependencies and beam server
     pushd app
@@ -168,10 +178,6 @@ stdenv.mkDerivation rec {
   # $out/bin/sonic-pi is a shell script, and wrapQtAppsHook doesn't wrap them.
   dontWrapQtApps = true;
   preFixup = ''
-    # Wrap Tau server boot script
-    wrapProgram "$out/app/server/beam/tau/boot-lin.sh" \
-      --set MIX_ENV "$MIX_ENV"
-
     # Wrap Qt GUI (distributed binary)
     wrapQtApp "$out/bin/sonic-pi" \
       --prefix PATH : ${lib.makeBinPath [ ruby elixir supercollider jack2 ]}
@@ -183,6 +189,14 @@ stdenv.mkDerivation rec {
         --argv0 "$out/bin/sonic-pi-imgui" \
         --prefix PATH : ${lib.makeBinPath [ ruby elixir supercollider jack2 ]}
     fi
+
+    # Remove unnecessary/sensitive Erlang artifacts
+    rm "$out"/app/server/beam/tau/_build/prod/rel/tau/{releases/COOKIE,bin/tau.bat}
+
+    # Remove runtime Erlang references
+    for file in $(grep -FrIl '${erlang}/lib/erlang' "$out"/app/server/beam/tau); do
+      substituteInPlace "$file" --replace '${erlang}/lib/erlang' "$out"/app/server/beam/tau/_build/prod/rel/tau
+    done
   '';
 
   desktopItem = makeDesktopItem {

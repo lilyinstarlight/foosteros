@@ -1,17 +1,18 @@
 diff --git a/app/linux-prebuild.sh b/app/linux-prebuild.sh
-index d6a7f46e3..ee316cb55 100755
+index ce7efc465..8b85452b9 100755
 --- a/app/linux-prebuild.sh
 +++ b/app/linux-prebuild.sh
-@@ -47,9 +47,9 @@ PATH=`pkg-config --variable bindir Qt5`:$PATH lrelease "${SCRIPT_DIR}"/gui/qt/la
- 
+@@ -69,10 +69,10 @@ PATH=`pkg-config --variable bindir Qt5`:$PATH lrelease "${SCRIPT_DIR}"/gui/qt/la
  echo "Compiling Erlang/Elixir files..."
  cd "${SCRIPT_DIR}"/server/beam/tau
--MIX_ENV="${MIX_ENV:-prod}" mix local.hex --force
--MIX_ENV="${MIX_ENV:-prod}" mix deps.get
--MIX_ENV="${MIX_ENV:-prod}" mix release --overwrite
-+#MIX_ENV="${MIX_ENV:-prod}" mix local.hex --force
-+#MIX_ENV="${MIX_ENV:-prod}" mix deps.get
-+MIX_ENV="${MIX_ENV:-prod}" mix release --overwrite --no-deps-check
+ 
+-MIX_ENV=prod mix local.hex --force
+-MIX_ENV=prod mix deps.get
++#MIX_ENV=prod mix local.hex --force
++#MIX_ENV=prod mix deps.get
+ MIX_ENV=prod mix phx.digest
+-MIX_ENV=prod mix release --overwrite
++MIX_ENV=prod mix release --overwrite --no-deps-check
  
  cp src/tau.app.src ebin/tau.app
- cd "${SCRIPT_DIR}"
+ 
