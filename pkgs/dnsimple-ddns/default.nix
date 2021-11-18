@@ -30,5 +30,6 @@ stdenvNoCC.mkDerivation rec {
     description = "DNSimple zone updater for dynamic IPs";
     homepage = "https://github.com/lilyinstarlight/dnsimple-ddns";
     license = licenses.mit;
+    platforms = platforms.linux;
   };
 }

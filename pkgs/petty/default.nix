@@ -22,6 +22,7 @@ stdenvNoCC.mkDerivation rec {
     description = "TTY session starter";
     homepage = "https://github.com/lilyinstarlight/petty";
     license = licenses.mit;
+    platforms = platforms.linux;
   };
 
   passthru.shellPath = "/bin/petty";
