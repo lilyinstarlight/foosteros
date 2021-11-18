@@ -1,42 +1,33 @@
 diff --git a/app/server/beam/tau/boot-lin.sh b/app/server/beam/tau/boot-lin.sh
-index 7ac4952dd..4e623e063 100644
+index 7ac4952dd..af32335b3 100644
 --- a/app/server/beam/tau/boot-lin.sh
 +++ b/app/server/beam/tau/boot-lin.sh
-@@ -23,7 +23,7 @@ export MIX_ENV=$TAU_ENV
- 
- if [ $TAU_ENV == "dev" ]
+@@ -25,5 +25,5 @@ if [ $TAU_ENV == "dev" ]
  then
--  mix run --no-halt > log/tau_stdout.log 2>&1
-+  mix run --no-halt > /dev/null 2>&1
+   mix run --no-halt > log/tau_stdout.log 2>&1
  else
 -  _build/prod/rel/tau/bin/tau start > log/tau_stdout.log 2>&1
 +  _build/prod/rel/tau/bin/tau start > /dev/null 2>&1
  fi
 diff --git a/app/server/beam/tau/boot-mac.sh b/app/server/beam/tau/boot-mac.sh
-index 27bd3701c..ab7f5fce8 100755
+index 27bd3701c..f48bbf04c 100755
 --- a/app/server/beam/tau/boot-mac.sh
 +++ b/app/server/beam/tau/boot-mac.sh
-@@ -23,7 +23,7 @@ export MIX_ENV=$TAU_ENV
- 
- if [ $TAU_ENV == "dev" ]
+@@ -25,5 +25,5 @@ if [ $TAU_ENV == "dev" ]
  then
--  mix run --no-halt > log/tau_stdout.log 2>&1
-+  mix run --no-halt > /dev/null 2>&1
+   mix run --no-halt > log/tau_stdout.log 2>&1
  else
 -  _build/prod/rel/tau/bin/tau start > log/tau_stdout.log 2>&1
 +  _build/prod/rel/tau/bin/tau start > /dev/null 2>&1
  fi
 diff --git a/app/server/beam/tau/boot-win.bat b/app/server/beam/tau/boot-win.bat
-index 6f3e59ab6..f184863e3 100644
+index 6f3e59ab6..11d988162 100644
 --- a/app/server/beam/tau/boot-win.bat
 +++ b/app/server/beam/tau/boot-win.bat
-@@ -28,7 +28,7 @@ set TAU_ENV=%9%
- set MIX_ENV=%TAU_ENV%
- 
+@@ -30,5 +30,5 @@ set MIX_ENV=%TAU_ENV%
  IF "%TAU_ENV%" == "dev" (
--  mix run --no-halt > log\tau_stdout.log 2>&1
-+  mix run --no-halt > NUL 2>&1
+   mix run --no-halt > log\tau_stdout.log 2>&1
  ) ELSE (
 -  _build\prod\rel\tau\bin\tau start > log\tau_stdout.log 2>&1
-+  _build\prod\rel\tau\bin\tau start > NUL 2>&1
++  _build\prod\rel\tau\bin\tau start > /dev/null 2>&1
  )
