@@ -30,6 +30,7 @@
     wired-networks = {
       restartUnits = [ "supplicant-enp0s25.service" ];
     };
+    dnsimple-ddns = {};
     nullmailer-remotes = {
       mode = "0440";
       group = config.services.nullmailer.group;
@@ -335,6 +336,11 @@
 
   services.pipewire.jack.enable = true;
 
+  services.dnsimple-ddns = {
+    enable = true;
+    configFile = config.sops.secrets.dnsimple-ddns.path;
+  };
+
   services.nullmailer = {
     enable = true;
     config = {
@@ -347,6 +353,15 @@
   };
   systemd.services.nullmailer.serviceConfig = {
     SupplementaryGroups = [ config.users.groups.keys.name ];
+  };
+
+  services.logmail = {
+    enable = true;
+    config = ''
+      mailfrom="logs@fooster.network"
+      mailto="logs@fooster.network"
+      subject="Logs for $(hostname) at $(date +"%F %R")"
+    '';
   };
 
   services.tlp.enable = true;
