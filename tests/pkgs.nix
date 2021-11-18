@@ -15,6 +15,14 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
+  dnsimple-ddns-bin = ifSupported dnsimple-ddns (runCommandNoCC "test-dnsimple-ddns-bin" {
+    buildInputs = [ dnsimple-ddns which ];
+  } ''
+    which ddns
+
+    touch $out
+  '');
+
   fooster-backgrounds-bin = ifSupported fooster-backgrounds (runCommandNoCC "test-fooster-backgrounds-bin" {
     buildInputs = [ fooster-backgrounds which ];
   } ''
@@ -67,6 +75,14 @@ lib.filterAttrs (name: value: value != "skip") {
     buildInputs = [ google-10000-english ];
   } ''
     test -f ${google-10000-english}/share/dict/google-10000-english.txt
+
+    touch $out
+  '');
+
+  logmail-bin = ifSupported logmail (runCommandNoCC "test-logmail-bin" {
+    buildInputs = [ logmail which ];
+  } ''
+    which logmail
 
     touch $out
   '');

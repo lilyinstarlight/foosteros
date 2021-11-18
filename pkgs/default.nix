@@ -28,6 +28,7 @@ in
   furi = python3Packages.callPackage ./furi {};
   gl3w = callPackage ./gl3w {};
   google-10000-english = callPackage ./google-10000-english {};
+  logmail = callPackage ./logmail {};
   mkusb = callPackage ./mkusb {};
   mkwin = callPackage ./mkwin {};
   open-stage-control = callPackage ./open-stage-control {
