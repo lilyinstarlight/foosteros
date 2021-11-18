@@ -5,6 +5,10 @@
   boot.initrd.kernelModules = [ "dm-snapshot" "i915" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
+  boot.extraModprobeConfig = ''
+    options kvm_intel nested=1 emulate_invalid_guest_state=0
+    options kvm ignore_msrs=1 report_ignored_msrs=0
+  '';
 
   boot.initrd.luks.devices."nixos".device = "/dev/disk/by-partlabel/nixos";
 
