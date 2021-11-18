@@ -20,6 +20,7 @@ in
 
 {
   crossguid = callPackage ./crossguid {};
+  dnsimple-ddns = callPackage ./dnsimple-ddns {};
   fooster-backgrounds = callPackage ./backgrounds {};
   fooster-materia-theme = callPackage ./materia-theme {};
   fpaste = python3Packages.callPackage ./fpaste {};
