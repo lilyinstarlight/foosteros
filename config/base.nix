@@ -1,13 +1,7 @@
 { config, lib, pkgs, self, inputs, outputs, ... }:
 
 {
-  imports = [
-    ../modules/nixos/boot/systemd-boot.nix
-    ../modules/nixos/programs/kanshi.nix
-    ../modules/nixos/programs/mako.nix
-    ../modules/nixos/programs/sway.nix
-    ../modules/nixos/services/misc/swaynag-battery.nix
-
+  imports = (import ../modules/nixos/module-list.nix) ++ [
     ./fish.nix
     ./neovim.nix
     ./tmux.nix
