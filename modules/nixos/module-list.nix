@@ -3,5 +3,7 @@
   ./programs/kanshi.nix
   ./programs/mako.nix
   ./programs/sway.nix
+  ./services/misc/dnsimple-ddns.nix
+  ./services/misc/logmail.nix
   ./services/misc/swaynag-battery.nix
 ]
