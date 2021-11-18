@@ -1,4 +1,4 @@
-{ stdenvNoCC, lib, fetchFromGitHub }:
+{ stdenvNoCC, lib, fetchFromGitHub, makeWrapper, iproute2, curl }:
 
 stdenvNoCC.mkDerivation rec {
   pname = "dnsimple-ddns";
@@ -11,12 +11,19 @@ stdenvNoCC.mkDerivation rec {
     sha256 = "sha256-oMGABa58MijGcVW4UF/kMetC5yVyQv1kmJSai4f8r00=";
   };
 
+  nativeBuildInputs = [
+    makeWrapper
+  ];
+
   dontConfigure = true;
   dontBuild = true;
 
   installPhase = ''
     mkdir -p $out/bin
     cp ddns $out/bin/ddns
+
+    wrapProgram $out/bin/ddns \
+      --prefix PATH : "${lib.makeBinPath [ iproute2 curl ]}"
   '';
 
   meta = with lib; {

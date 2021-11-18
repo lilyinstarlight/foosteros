@@ -1,4 +1,4 @@
-{ stdenvNoCC, lib, fetchFromGitHub }:
+{ stdenvNoCC, lib, fetchFromGitHub, makeWrapper, hostname, sendmailPath ? "/run/wrappers/bin/sendmail" }:
 
 stdenvNoCC.mkDerivation rec {
   pname = "logmail";
@@ -11,12 +11,24 @@ stdenvNoCC.mkDerivation rec {
     sha256 = "sha256-9nhlGN2oWX/pq/xDa4732U/IFOLTNNYv8embeBX9UXM=";
   };
 
+  nativeBuildInputs = [
+    makeWrapper
+  ];
+
   dontConfigure = true;
   dontBuild = true;
+
+  patchPhase = ''
+    substituteInPlace logmail \
+      --replace 'sendmail' '${sendmailPath}'
+  '';
 
   installPhase = ''
     mkdir -p $out/bin
     cp logmail $out/bin/logmail
+
+    wrapProgram $out/bin/logmail \
+      --prefix PATH : "${lib.makeBinPath [ hostname ]}"
   '';
 
   meta = with lib; {
