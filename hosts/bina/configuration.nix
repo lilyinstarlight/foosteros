@@ -362,6 +362,18 @@
       mailto="logs@fooster.network"
       subject="Logs for $(hostname) at $(date +"%F %R")"
     '';
+    filter = ''
+      kernel: DMAR: \[Firmware Bug\]: No firmware reserved region can cover this RMRR \[0x00000000cd800000-0x00000000cfffffff\], contact BIOS vendor for fixes
+      kernel: ACPI Error: Needed type \[Reference\], found \[Integer\] 000000005ac8ecce ([0-9]\{8\}/exresop-[0-9]*)
+      kernel: ACPI Error: AE_AML_OPERAND_TYPE, While resolving operands for \[OpcodeName unavailable\] ([0-9]\{8\}/dswexec-[0-9]*)
+      kernel: ACPI Error: Aborting method \\_PR\.CPU0\._PDC due to previous error (AE_AML_OPERAND_TYPE) ([0-9]\{8\}/psparse-[0-9]*)
+      systemd-udevd\[[0-9]*\]: /nix/store/[0-9a-z]\{32\}-systemd-[^/]*/lib/udev/rules\.d/50-udev-default\.rules:42 Unknown group 'sgx', ignoring
+      systemd-modules-load\[[0-9]*\]: Failed to find module 'cpufreq_schedutil'
+      kernel: Bluetooth: hci0: unexpected event for opcode 0xfc2f
+      bluetoothd\[[0-9]*\]: profiles/sap/server\.c:sap_server_register() Sap driver initialization failed\.
+      bluetoothd\[[0-9]*\]: sap-server: Operation not permitted (1)
+      pipewire\[[0-9]*\]: jack-device 0x[0-9a-f]\{12\}: can't open client: Input/output error
+    '';
   };
 
   services.tlp.enable = true;
