@@ -12,6 +12,7 @@
     ../../config/fcitx5.nix
     ../../config/bluetooth.nix
     ../../config/libvirt.nix
+    ../../config/adb.nix
 
     ../../config/lily.nix
   ];
@@ -107,7 +108,7 @@
   virtualisation.spiceUSBRedirection.enable = true;
   virtualisation.podman.enable = true;
 
-  users.users.lily.extraGroups = with config.users.groups; [ keys.name libvirtd.name ];
+  users.users.lily.extraGroups = with config.users.groups; [ keys.name libvirtd.name adbusers.name ];
 
   environment.systemPackages = with pkgs; [
     firefox chromium
