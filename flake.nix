@@ -2,7 +2,8 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
     home-manager = {
-      url = "github:nix-community/home-manager";
+      #url = "github:nix-community/home-manager";
+      url = "github:lilyinstarlight/home-manager/fix/rofi-theme-section";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     sops-nix = {
