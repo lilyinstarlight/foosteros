@@ -23,16 +23,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1638119739,
+        "lastModified": 1638130066,
         "narHash": "sha256-BdrVURx4wUUagLbXJXnJ816Xl2IicDp12Sw6OKZn4ug=",
-        "owner": "lilyinstarlight",
+        "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "602926a39c99f94ed0ad67100d8329ce5c0a4121",
+        "rev": "3ec7f6fb43ff77cff429aba1a2541d28cc44d37c",
         "type": "github"
       },
       "original": {
-        "owner": "lilyinstarlight",
-        "ref": "fix/rofi-theme-section",
+        "owner": "nix-community",
         "repo": "home-manager",
         "type": "github"
       }
