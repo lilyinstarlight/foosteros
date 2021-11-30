@@ -48,7 +48,7 @@ index f5580e7b3..ebfcc3c6c 100644
      SDL2::SDL2-static
      fmt::fmt
 diff --git a/app/linux-prebuild.sh b/app/linux-prebuild.sh
-index 4aeb9ccd0..1940947b1 100755
+index eb7c06f5c..e781e1214 100755
 --- a/app/linux-prebuild.sh
 +++ b/app/linux-prebuild.sh
 @@ -19,29 +19,29 @@ while getopts ":n" opt; do
@@ -70,7 +70,7 @@ index 4aeb9ccd0..1940947b1 100755
 -
 -cd vcpkg
 -
--if [ $no_imgui == true ]
+-if [ "$no_imgui" == true ]
 -then
 -    ./vcpkg install kissfft crossguid platform-folders reproc catch2 --recurse
 -else
@@ -93,7 +93,7 @@ index 4aeb9ccd0..1940947b1 100755
 +#
 +#cd vcpkg
 +#
-+#if [ $no_imgui == true ]
++#if [ "$no_imgui" == true ]
 +#then
 +#    ./vcpkg install kissfft crossguid platform-folders reproc catch2 --recurse
 +#else

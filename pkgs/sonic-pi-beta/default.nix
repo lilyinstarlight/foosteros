@@ -17,6 +17,7 @@
 , ruby
 , erlang
 , elixir
+, esbuild
 , beamPackages
 , alsa-lib
 , rtmidi
@@ -38,8 +39,8 @@ stdenv.mkDerivation rec {
     owner = "sonic-pi-net";
     repo = pname;
     #rev = "v${version}";
-    rev = "0bf8c3f32eb74fbc15015852fbf20ab6f9597d78";
-    sha256 = "sha256-KwtmZtxZw0n1Mv4dieUW5/nL68cwchkLqnUR5zMOnB0=";
+    rev = "0617fc7a76de5da4317ae4751d3ecf620581c2fa";
+    sha256 = "sha256-HHx+iVtLuk72vQxy3kzjUH57RfI1+UrM1vTEX4ZCcck=";
   };
 
   mixFodDeps = beamPackages.fetchMixDeps {
@@ -52,7 +53,6 @@ stdenv.mkDerivation rec {
   patches = [
     ./sonic-pi-4.0-no-vcpkg.patch
     ./sonic-pi-4.0-no-hex-deps.patch
-    ./sonic-pi-4.0-no-tau-stdout-log.patch
   ] ++ lib.optional withImGui [
     ./sonic-pi-4.0-imgui-app-root.patch
     ./sonic-pi-4.0-imgui-dynamic-sdl2.patch
@@ -77,6 +77,7 @@ stdenv.mkDerivation rec {
     ruby
     erlang
     elixir
+    esbuild
     beamPackages.hex
     beamPackages.rebar3
     alsa-lib
@@ -101,6 +102,7 @@ stdenv.mkDerivation rec {
     export MIX_REBAR3="${beamPackages.rebar3}/bin/rebar3"
     export REBAR_GLOBAL_CONFIG_DIR="$TEMPDIR/rebar3"
     export REBAR_CACHE_DIR="$TEMPDIR/rebar3.cache"
+    export MIX_ESBUILD_PATH="${esbuild}/bin/esbuild"
     export MIX_HOME="$TEMPDIR/mix"
     export MIX_DEPS_PATH="$TEMPDIR/deps"
     export MIX_ENV=prod
@@ -114,10 +116,6 @@ stdenv.mkDerivation rec {
   '';
 
   buildPhase = ''
-    # TODO: tell upstream to fix these
-    chmod +x app/server/beam/tau/boot-lin.sh
-    mkdir -p app/server/beam/tau/priv/static
-
     # Prebuild vendored dependencies and beam server
     pushd app
       ./linux-prebuild.sh

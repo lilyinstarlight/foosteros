@@ -1,5 +1,5 @@
 diff --git a/app/linux-prebuild.sh b/app/linux-prebuild.sh
-index 39d67dbd3..a0fad4acf 100755
+index eb7c06f5c..547c03933 100755
 --- a/app/linux-prebuild.sh
 +++ b/app/linux-prebuild.sh
 @@ -69,11 +69,11 @@ PATH=`pkg-config --variable bindir Qt5`:$PATH lrelease "${SCRIPT_DIR}"/gui/qt/la
@@ -12,9 +12,25 @@ index 39d67dbd3..a0fad4acf 100755
 +#MIX_ENV=prod mix local.hex --force
 +#MIX_ENV=prod mix local.rebar --force
 +#MIX_ENV=prod mix deps.get
- MIX_ENV=prod mix phx.digest
+ MIX_ENV=prod mix assets.deploy
 -MIX_ENV=prod mix release --overwrite
 +MIX_ENV=prod mix release --overwrite --no-deps-check
  
  cp src/tau.app.src ebin/tau.app
  
+diff --git a/app/server/beam/tau/config/config.exs b/app/server/beam/tau/config/config.exs
+index 2c9d73ab6..05351d1d3 100644
+--- a/app/server/beam/tau/config/config.exs
++++ b/app/server/beam/tau/config/config.exs
+@@ -32,8 +32,9 @@ config :esbuild,
+   default: [
+     args: ~w(js/app.js --bundle --target=es2016 --outdir=../priv/static/assets),
+     cd: Path.expand("../assets", __DIR__),
+-    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+-  ]
++    env: %{"NODE_PATH" => System.get_env("MIX_DEPS_PATH")}
++  ],
++  path: System.get_env("MIX_ESBUILD_PATH")
+ 
+ # Configures Elixir's Logger
+ config :logger, :console,
