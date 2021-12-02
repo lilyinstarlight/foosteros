@@ -2,13 +2,13 @@
 
 stdenvNoCC.mkDerivation rec {
   pname = "ftmp";
-  version = "0.1b4";
+  version = "0.1.1";
 
   src = fetchFromGitHub {
     owner = "lilyinstarlight";
     repo = "tmp";
     rev = "v${version}";
-    sha256 = "10q5lr5zhd81298sv8h32fvwxx3cigaf1kj1md4i6ppx19n61mzl";
+    sha256 = "sha256-9X9uhqEutS3HAgyQxV6Gh4scJhX70AROHHpBIpTrUS8=";
   };
 
   pythonPath = [ httpx ];
