@@ -133,7 +133,7 @@
     ripgrep-all
     mkusb mkwin
     openssl tcpdump dogdns picocom
-    ansible azure-cli
+    ansible azure-cli python3Packages.passlib
     neofetch
     texlive.combined.scheme-full
     gnumake clang binutils
