@@ -2,13 +2,13 @@
 
 stdenvNoCC.mkDerivation rec {
   pname = "fpaste";
-  version = "0.1b6";
+  version = "0.2.0";
 
   src = fetchFromGitHub {
     owner = "lilyinstarlight";
     repo = "paste";
     rev = "v${version}";
-    sha256 = "0jfjgawkym0vi4s5v32sxib8anv32xp2bkn1rrx6yx33365xxyzm";
+    sha256 = "sha256-y+qf85V+IpT1NaXMJKiBg8sWH/1DEVbMqmGo0iYQgxE=";
   };
 
   pythonPath = [ httpx ];
