@@ -28,16 +28,18 @@
     in
   {
     lib = {
-      baseSystem = { system ? "x86_64-linux", modules ? [], extraArgs ? {} }: nixpkgs.lib.nixosSystem {
+      baseSystem = { system ? "x86_64-linux", modules ? [] }: nixpkgs.lib.nixosSystem {
         system = system;
         modules = [
           home-manager.nixosModules.home-manager
           sops-nix.nixosModules.sops
+          {
+            config._module.args = {
+              inherit self;
+              inherit (self) inputs outputs;
+            };
+          }
         ] ++ modules;
-        extraArgs = {
-          inherit self;
-          inherit (self) inputs outputs;
-        } // extraArgs;
       };
     };
 
