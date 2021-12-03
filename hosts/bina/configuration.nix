@@ -133,7 +133,9 @@
     ripgrep-all
     mkusb mkwin
     openssl tcpdump dogdns picocom
-    ansible azure-cli python3Packages.passlib
+    (ansible.overrideAttrs (attrs: {
+      propagatedBuildInputs = attrs.propagatedBuildInputs ++ (with python3Packages; [ passlib ]);
+    })) azure-cli
     neofetch
     texlive.combined.scheme-full
     gnumake clang binutils
