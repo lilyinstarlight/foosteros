@@ -1,4 +1,4 @@
-{ stdenvNoCC, lib, fetchzip, sway, jq, gnugrep, nitrogen }:
+{ stdenvNoCC, lib, fetchzip, sway, findutils, jq, gnugrep, nitrogen, xrandr }:
 
 stdenvNoCC.mkDerivation rec {
   pname = "backgrounds";
@@ -27,9 +27,9 @@ stdenvNoCC.mkDerivation rec {
     fi
 
     if [ -n "\$SWAYSOCK" ]; then
-      ${sway}/bin/swaymsg output '*' background "\$(find "\$backgrounds"/"\$(${sway}/bin/swaymsg -t get_outputs | ${jq}/bin/jq '.[0].current_mode.height')" -type f | shuf -n1)" fill
+      ${sway}/bin/swaymsg output '*' background "\$(${findutils}/bin/find "\$backgrounds"/"\$(${sway}/bin/swaymsg -t get_outputs | ${jq}/bin/jq '.[0].current_mode.height')" -type f | shuf -n1)" fill
     else
-      ${nitrogen}/bin/nitrogen --set-zoom-fill --random "\$backgrounds"/"\$(xrandr --screen 0 | ${gnugrep}/bin/grep -o 'current [0-9]\+ x [0-9]\+' | cut -d' ' -f4)"
+      ${nitrogen}/bin/nitrogen --set-zoom-fill --random "\$backgrounds"/"\$(${xrandr}/bin/xrandr --screen 0 | ${gnugrep}/bin/grep -o 'current [0-9]\+ x [0-9]\+' | cut -d' ' -f4)"
     fi
     EOF
     chmod +x "$out/bin/setbg"
