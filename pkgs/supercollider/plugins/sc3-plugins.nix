@@ -21,6 +21,8 @@ stdenv.mkDerivation rec {
     "-DSUPERNOVA=ON"
   ];
 
+  stripDebugList = [ "lib" "share" ];
+
   meta = with lib; {
     description = "Community plugins for SuperCollider";
     homepage = "https://supercollider.github.io/sc3-plugins/";

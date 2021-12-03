@@ -116,7 +116,7 @@ stdenv.mkDerivation rec {
   '';
 
   buildPhase = ''
-    # Prebuild vendored dependencies and beam server
+    # Prebuild vendored dependencies and BEAM server
     pushd app
       ./linux-prebuild.sh
     popd
@@ -140,13 +140,25 @@ stdenv.mkDerivation rec {
     mkdir $out
     cp -r {bin,etc} $out/
 
-    # Copy server whole
+    # Copy example configs
     mkdir -p $out/app
-    cp -r app/server $out/app/
+    cp -r app/config $out/app/
+
+    # Copy server natives
+    mkdir -p $out/app/server
+    cp -r app/server/native $out/app/server/
+
+    # Copy Spider (Ruby) server
+    mkdir -p $out/app/server
+    cp -r app/server/ruby $out/app/server/
+
+    # Copy built Tau (BEAM) server
+    mkdir -p $out/app/server/beam/tau
+    cp -r app/server/beam/tau/{_build,boot-lin.sh} $out/app/server/beam/tau/
 
     # Copy only necessary files for the Qt GUI
     mkdir -p $out/app/gui/qt
-    cp -r app/gui/qt/{book,fonts,help,html,images,image_source,info,lang,theme} $out/app/gui/qt/
+    cp -r app/gui/qt/theme $out/app/gui/qt/
 
     # Copy Qt GUI binary
     mkdir -p $out/app/build/gui/qt
@@ -177,25 +189,39 @@ stdenv.mkDerivation rec {
   dontWrapQtApps = true;
   preFixup = ''
     # Wrap Qt GUI (distributed binary)
-    wrapQtApp "$out/bin/sonic-pi" \
-      --prefix PATH : ${lib.makeBinPath [ ruby elixir supercollider jack2 ]}
+    wrapQtApp $out/bin/sonic-pi \
+      --prefix PATH : ${lib.makeBinPath [ ruby supercollider jack2 ]}
 
     # If ImGui was built
-    if [ -x "$out/app/build/gui/imgui/sonic-pi-imgui" ]; then
+    if [ -x $out/app/build/gui/imgui/sonic-pi-imgui ]; then
       # Wrap ImGui into bin
-      makeWrapper "$out/app/build/gui/imgui/sonic-pi-imgui" "$out/bin/sonic-pi-imgui" \
-        --argv0 "$out/bin/sonic-pi-imgui" \
-        --prefix PATH : ${lib.makeBinPath [ ruby elixir supercollider jack2 ]}
+      makeWrapper $out/app/build/gui/imgui/sonic-pi-imgui $out/bin/sonic-pi-imgui \
+        --argv0 $out/bin/sonic-pi-imgui \
+        --prefix PATH : ${lib.makeBinPath [ ruby supercollider jack2 ]}
     fi
 
+    # Remove non-essential files from vendored Ruby gems
+    for file in $out/app/server/ruby/vendor/*/*; do
+      if [ "$(basename "$file")" != "lib" ]; then
+        rm -r "$file"
+      fi
+    done
+
     # Remove unnecessary/sensitive Erlang artifacts
-    rm "$out"/app/server/beam/tau/_build/prod/rel/tau/{releases/COOKIE,bin/tau.bat}
+    rm $out/app/server/beam/tau/_build/prod/rel/tau/{releases/COOKIE,bin/tau.bat}
 
     # Remove runtime Erlang references
-    for file in $(grep -FrIl '${erlang}/lib/erlang' "$out"/app/server/beam/tau); do
-      substituteInPlace "$file" --replace '${erlang}/lib/erlang' "$out"/app/server/beam/tau/_build/prod/rel/tau
+    for file in $(grep -FrIl '${erlang}/lib/erlang' $out/app/server/beam/tau); do
+      substituteInPlace "$file" --replace '${erlang}/lib/erlang' $out/app/server/beam/tau/_build/prod/rel/tau
     done
+
+    # Strip Erlang BEAMs
+    erl -noinput -eval \
+      "lists:foreach(fun(F) -> beam_lib:strip(F) end, filelib:wildcard(\"$out/app/server/beam/tau/**/*.beam\"))" \
+      -s init stop
   '';
+
+  stripDebugList = [ "app" "bin" ];
 
   desktopItem = makeDesktopItem {
     name = "sonic-pi";
