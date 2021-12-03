@@ -5,7 +5,7 @@ _The totally cool way to run your computer_
 Feel free to take any pieces in this repository that you like! Please don't try to use this whole thing, though, as it is horrifically custom and specific to myself.
 
 
-![FoosterOS/2 Warp Box Art](artwork/boxart.png)
+[![FoosterOS/2 Warp Box Art](artwork/boxart.png)](https://www.os2world.com/wiki/images/7/7f/52H3800-004.jpg)
 
 
 ## Installation
