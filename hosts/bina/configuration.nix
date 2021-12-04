@@ -110,6 +110,13 @@
 
   users.users.lily.extraGroups = with config.users.groups; [ keys.name libvirtd.name adbusers.name ];
 
+  nix.gc = {
+    automatic = true;
+    options = "--delete-older-than 7d";
+    dates = "weekly";
+    persistent = true;
+  };
+
   environment.systemPackages = with pkgs; [
     firefox chromium
     udiskie
