@@ -204,9 +204,6 @@
       for_window [title="Qsynth"] floating enable
       for_window [title=".* — QjackCtl"] floating enable
       for_window [title="Virtual MIDI Piano Keyboard"] floating enable
-
-      ### desktop services
-      exec_always ${config.i18n.inputMethod.package}/bin/fcitx5 -dr
     '';
 
     "xdg/i3status/config".text = ''
