@@ -39,8 +39,8 @@ stdenv.mkDerivation rec {
     owner = "sonic-pi-net";
     repo = pname;
     #rev = "v${version}";
-    rev = "3b8118632be7af10af1baf6ba9593cf979ec0c46";
-    sha256 = "sha256-kHT2KEK2LpQgNAWfwfrhaknLGQO+wcvKccyEyV6ZhPE=";
+    rev = "cab3020c0215f0f6ec7eba9d1f88abbaa44a2420";
+    sha256 = "sha256-mdGwwL0mMOKwnaIcvSBczA573VO5sXaTGB6pI6wrBt4=";
   };
 
   mixFodDeps = beamPackages.fetchMixDeps {
