@@ -10,7 +10,7 @@ let
       [org.gnome.desktop.interface]
       gtk-theme='Materia-Fooster'
       icon-theme='Papirus-Dark'
-      cursor-theme='Bibata_Oil'
+      cursor-theme='Bibata-Modern-Classic'
     EOF
 
     ${pkgs.glib.dev}/bin/glib-compile-schemas $out/share/gsettings-schemas/sway-gsettings-overrides/glib-2.0/schemas/
@@ -274,7 +274,7 @@ in
       gtk-theme-name=Materia-Fooster
       gtk-icon-theme-name=Papirus-Dark
       gtk-font-name=Monofur Nerd Font 12
-      gtk-cursor-theme-name=Bibata_Oil
+      gtk-cursor-theme-name=Bibata-Modern-Classic
       gtk-application-prefer-dark-theme=true
     '';
     "gtk-3.0/settings.ini".source = config.environment.etc."xdg/gtk-3.0/settings.ini".source;
@@ -283,7 +283,7 @@ in
       gtk-theme-name="Materia-Fooster"
       gtk-icon-theme-name="Papirus-Dark"
       gtk-font-name="Monofur Nerd Font 12"
-      gtk-cursor-theme-name="Bibata_Oil"
+      gtk-cursor-theme-name="Bibata-Modern-Classic"
     '';
     "gtk-2.0/gtkrc".source = config.environment.etc."xdg/gtk-2.0/gtkrc".source;
 
@@ -492,7 +492,7 @@ in
       exec_always ${pkgs.swaywsr}/bin/swaywsr -c "$HOME"/.config/swaywsr/config.toml
 
       ### desktop environment
-      seat seat0 xcursor_theme "Bibata_Oil"
+      seat seat0 xcursor_theme "Bibata-Modern-Classic"
     '';
 
     "xdg/i3status/config".text = lib.mkDefault ''
