@@ -2,7 +2,6 @@
 
 {
   environment.systemPackages = with pkgs; [
-    any-nix-shell
     fishPlugins.done
   ];
 
@@ -24,8 +23,18 @@
       set fish_color_redirection brblue
       set fish_color_user magenta
     '';
-    interactiveShellInit = ''
-      any-nix-shell fish --info-right | source
+    interactiveShellInit = let
+      nix-index-wrapper = pkgs.writeScript "command-not-found" ''
+        #!${pkgs.bash}/bin/bash
+        source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
+        command_not_found_handle "$@"
+      '';
+    in ''
+      ${pkgs.any-nix-shell}/bin/any-nix-shell fish --info-right | source
+
+      function __fish_command_not_found_handler --on-event fish_command_not_found
+          ${nix-index-wrapper} $argv
+      end
     '';
   };
 }

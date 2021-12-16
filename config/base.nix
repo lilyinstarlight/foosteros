@@ -26,6 +26,20 @@
           videos = "$HOME/vids";
         };
       }
+      {
+        systemd.user.services.nix-index = {
+          Install = { WantedBy = [ "default.target" ]; };
+
+          Unit = {
+            Description = "Update nix-index cache";
+          };
+
+          Service = {
+            Type = "oneshot";
+            ExecStart = "${pkgs.nix-index}/bin/nix-index";
+          };
+        };
+      }
     ];
   };
 
@@ -128,6 +142,7 @@
     cachix fpaste ftmp furi
     git gitAndTools.delta ripgrep
     shellcheck progress
+    nix-index
   ];
 
   environment.shellAliases = {
