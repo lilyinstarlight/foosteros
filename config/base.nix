@@ -13,7 +13,7 @@
     sharedModules = [
       ../modules/home-manager/services/audio/mopidy.nix
       ../modules/home-manager/services/audio/mpdris2.nix
-      {
+      ({ pkgs, ... }: {
         xdg.userDirs = {
           enable = true;
           desktop = "$HOME";
@@ -25,8 +25,8 @@
           templates = "$HOME/.templates";
           videos = "$HOME/vids";
         };
-      }
-      {
+      })
+      ({ pkgs, ... }: {
         systemd.user.services.nix-index = {
           Install = { WantedBy = [ "default.target" ]; };
 
@@ -39,7 +39,7 @@
             ExecStart = "${pkgs.nix-index}/bin/nix-index";
           };
         };
-      }
+      })
     ];
   };
 
