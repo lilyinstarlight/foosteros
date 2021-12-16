@@ -1,21 +1,53 @@
 {
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-ld = {
+      url = "github:Mic92/nix-ld";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.utils.follows = "flake-utils";
+    };
+
+    # TODO: temporary fix for NixOS/nix#5728
+    poetry2nix = {
+      url = "github:nix-community/poetry2nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
+
+    nix-alien = {
+      url = "github:thiagokokada/nix-alien";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+      # TODO: temporary fix for NixOS/nix#5728
+      inputs.poetry2nix.follows = "poetry2nix";
+    };
+
+    envfs = {
+      url = "github:Mic92/envfs";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.utils.follows = "flake-utils";
+    };
+
+    flake-utils.url = "github:numtide/flake-utils";
+
     flake-compat = {
       url = "github:edolstra/flake-compat";
       flake = false;
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, sops-nix, ... }:
+  outputs = { self, nixpkgs, home-manager, sops-nix, nix-ld, nix-alien, envfs, ... }:
     let
       supportedSystems = with nixpkgs.lib; (intersectLists (platforms.x86_64 ++ platforms.aarch64 ++ platforms.i686) platforms.linux) ++ (intersectLists (platforms.x86_64 ++ platforms.aarch64) platforms.darwin);
 
@@ -33,12 +65,15 @@
         modules = [
           home-manager.nixosModules.home-manager
           sops-nix.nixosModules.sops
+          nix-ld.nixosModules.nix-ld
+          envfs.nixosModules.envfs
           {
             config._module.args = {
               inherit self;
               inherit (self) inputs outputs;
             };
           }
+          ./config/base.nix
         ] ++ modules;
       };
     };
@@ -66,6 +101,7 @@
       outpkgs = final;
       isOverlay = true;
     });
+    overlays.nix-alien = nix-alien.overlay;
     overlay = self.overlays.foosteros;
 
     nixosModules.foosteros = { config, system, ... }: import ./modules/nixos {

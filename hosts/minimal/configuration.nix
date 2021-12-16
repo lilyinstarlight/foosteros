@@ -4,8 +4,6 @@
   imports = [
     ./hardware-configuration.nix
 
-    ../../config/base.nix
-
     ../../config/lily.nix
   ];
 

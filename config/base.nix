@@ -142,7 +142,7 @@
     cachix fpaste ftmp furi
     git gitAndTools.delta ripgrep
     shellcheck progress
-    nix-index
+    nix-index nix-alien
   ];
 
   environment.shellAliases = {

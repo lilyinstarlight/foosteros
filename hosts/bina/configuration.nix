@@ -4,7 +4,6 @@
   imports = [
     ./hardware-configuration.nix
 
-    ../../config/base.nix
     ../../config/pki.nix
     ../../config/lsp.nix
     ../../config/intelgfx.nix
