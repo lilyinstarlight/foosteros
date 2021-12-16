@@ -7,7 +7,7 @@ let
 in
 
 lib.filterAttrs (name: value: value != "skip") {
-  crossguid-lib = ifSupported crossguid (runCommandNoCC "test-crossguid-lib" {
+  crossguid-lib = ifSupported crossguid (runCommand "test-crossguid-lib" {
     buildInputs = [ crossguid ];
   } ''
     test -f ${crossguid}/lib/libcrossguid.a
@@ -15,7 +15,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  dnsimple-ddns-bin = ifSupported dnsimple-ddns (runCommandNoCC "test-dnsimple-ddns-bin" {
+  dnsimple-ddns-bin = ifSupported dnsimple-ddns (runCommand "test-dnsimple-ddns-bin" {
     buildInputs = [ dnsimple-ddns which ];
   } ''
     which ddns
@@ -23,7 +23,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  fooster-backgrounds-bin = ifSupported fooster-backgrounds (runCommandNoCC "test-fooster-backgrounds-bin" {
+  fooster-backgrounds-bin = ifSupported fooster-backgrounds (runCommand "test-fooster-backgrounds-bin" {
     buildInputs = [ fooster-backgrounds which ];
   } ''
     which setbg
@@ -31,7 +31,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  fooster-materia-theme-index = ifSupported fooster-materia-theme (runCommandNoCC "test-fooster-materia-theme-index" {
+  fooster-materia-theme-index = ifSupported fooster-materia-theme (runCommand "test-fooster-materia-theme-index" {
     buildInputs = [ fooster-materia-theme ];
   } ''
     test -f ${fooster-materia-theme}/share/themes/Materia-Fooster/index.theme
@@ -39,7 +39,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  fpaste-bin = ifSupported fpaste (runCommandNoCC "test-fpaste-bin" {
+  fpaste-bin = ifSupported fpaste (runCommand "test-fpaste-bin" {
     buildInputs = [ fpaste ];
   } ''
     fpaste --help
@@ -47,7 +47,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  ftmp-bin = ifSupported ftmp (runCommandNoCC "test-ftmp-bin" {
+  ftmp-bin = ifSupported ftmp (runCommand "test-ftmp-bin" {
     buildInputs = [ ftmp ];
   } ''
     ftmp --help
@@ -55,7 +55,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  furi-bin = ifSupported furi (runCommandNoCC "test-furi-bin" {
+  furi-bin = ifSupported furi (runCommand "test-furi-bin" {
     buildInputs = [ furi ];
   } ''
     furi --help
@@ -63,7 +63,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  gl3w-src = ifSupported gl3w (runCommandNoCC "test-gl3w-src" {
+  gl3w-src = ifSupported gl3w (runCommand "test-gl3w-src" {
     buildInputs = [ gl3w ];
   } ''
     test -f ${gl3w}/share/gl3w/gl3w.c
@@ -71,7 +71,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  google-10000-english-dict = ifSupported google-10000-english (runCommandNoCC "test-google-10000-english-dict" {
+  google-10000-english-dict = ifSupported google-10000-english (runCommand "test-google-10000-english-dict" {
     buildInputs = [ google-10000-english ];
   } ''
     test -f ${google-10000-english}/share/dict/google-10000-english.txt
@@ -79,7 +79,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  logmail-bin = ifSupported logmail (runCommandNoCC "test-logmail-bin" {
+  logmail-bin = ifSupported logmail (runCommand "test-logmail-bin" {
     buildInputs = [ logmail which ];
   } ''
     which logmail
@@ -87,7 +87,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  mkusb-bin = ifSupported mkusb (runCommandNoCC "test-mkusb-bin" {
+  mkusb-bin = ifSupported mkusb (runCommand "test-mkusb-bin" {
     buildInputs = [ mkusb which ];
   } ''
     which mkusb
@@ -95,7 +95,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  mkwin-bin = ifSupported mkwin (runCommandNoCC "test-mkwin-bin" {
+  mkwin-bin = ifSupported mkwin (runCommand "test-mkwin-bin" {
     buildInputs = [ mkwin which ];
   } ''
     which mkwin
@@ -103,7 +103,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  open-stage-control-bin = ifSupported open-stage-control (runCommandNoCC "test-open-stage-control-bin" {
+  open-stage-control-bin = ifSupported open-stage-control (runCommand "test-open-stage-control-bin" {
     buildInputs = [ open-stage-control ];
   } ''
     env XDG_CONFIG_HOME="$(mktemp -d)" open-stage-control --help
@@ -111,7 +111,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  petty-bin = ifSupported petty (runCommandNoCC "test-petty-bin" {
+  petty-bin = ifSupported petty (runCommand "test-petty-bin" {
     buildInputs = [ petty which ];
   } ''
     which petty
@@ -119,7 +119,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  platform-folders-lib = ifSupported platform-folders (runCommandNoCC "test-platform-folders-lib" {
+  platform-folders-lib = ifSupported platform-folders (runCommand "test-platform-folders-lib" {
     buildInputs = [ platform-folders ];
   } ''
     test -f ${platform-folders}/lib/libplatform_folders.so
@@ -127,7 +127,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  pridecat-bin = ifSupported pridecat (runCommandNoCC "test-pridecat-bin" {
+  pridecat-bin = ifSupported pridecat (runCommand "test-pridecat-bin" {
     buildInputs = [ pridecat ];
   } ''
     pridecat --help
@@ -135,7 +135,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  rofi-pass-wayland-bin = ifSupported rofi-pass-wayland (runCommandNoCC "test-rofi-pass-wayland-bin" {
+  rofi-pass-wayland-bin = ifSupported rofi-pass-wayland (runCommand "test-rofi-pass-wayland-bin" {
     buildInputs = [ rofi-pass-wayland ];
   } ''
     rofi-pass --help
@@ -143,7 +143,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  rofi-wayland-bin = ifSupported rofi-wayland (runCommandNoCC "test-rofi-wayland-bin" {
+  rofi-wayland-bin = ifSupported rofi-wayland (runCommand "test-rofi-wayland-bin" {
     buildInputs = [ rofi-wayland ];
   } ''
     rofi -version
@@ -151,7 +151,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  sonic-pi-bin = ifSupported sonic-pi (runCommandNoCC "test-sonic-pi-bin" {
+  sonic-pi-bin = ifSupported sonic-pi (runCommand "test-sonic-pi-bin" {
     buildInputs = [ sonic-pi which ];
   } ''
     which sonic-pi
@@ -160,7 +160,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  sonic-pi-beta-bin = ifSupported sonic-pi-beta (runCommandNoCC "test-sonic-pi-beta-bin" {
+  sonic-pi-beta-bin = ifSupported sonic-pi-beta (runCommand "test-sonic-pi-beta-bin" {
     buildInputs = [ sonic-pi-beta which ];
   } ''
     which sonic-pi
@@ -168,7 +168,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  sonic-pi-tool-bin = ifSupported sonic-pi-tool (runCommandNoCC "test-sonic-pi-tool-bin" {
+  sonic-pi-tool-bin = ifSupported sonic-pi-tool (runCommand "test-sonic-pi-tool-bin" {
     buildInputs = [ sonic-pi-tool ];
   } ''
     sonic-pi-tool --help
@@ -176,7 +176,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  supercollider-bin = ifSupported supercollider (runCommandNoCC "test-supercollider-bin" {
+  supercollider-bin = ifSupported supercollider (runCommand "test-supercollider-bin" {
     buildInputs = [ supercollider ];
   } ''
     scsynth -v
@@ -184,7 +184,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  supercollider-with-sc3-plugins-bin = ifSupported supercollider-with-sc3-plugins (runCommandNoCC "test-supercollider-with-sc3-plugins-bin" {
+  supercollider-with-sc3-plugins-bin = ifSupported supercollider-with-sc3-plugins (runCommand "test-supercollider-with-sc3-plugins-bin" {
     buildInputs = [ supercollider-with-sc3-plugins ];
   } ''
     scsynth -v
@@ -205,7 +205,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  swaynag-battery-bin = ifSupported swaynag-battery (runCommandNoCC "test-swaynag-battery-bin" {
+  swaynag-battery-bin = ifSupported swaynag-battery (runCommand "test-swaynag-battery-bin" {
     buildInputs = [ swaynag-battery ];
   } ''
     swaynag-battery --help
@@ -213,7 +213,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  wtype-bin = ifSupported wtype (runCommandNoCC "test-wtype-bin" {
+  wtype-bin = ifSupported wtype (runCommand "test-wtype-bin" {
     buildInputs = [ wtype ];
   } ''
     wtype || [ $? -eq 1 ]
@@ -221,7 +221,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  monofur-nerdfont-font = ifSupported monofur-nerdfont (runCommandNoCC "test-monofur-nerdfont-font" {
+  monofur-nerdfont-font = ifSupported monofur-nerdfont (runCommand "test-monofur-nerdfont-font" {
     buildInputs = [ monofur-nerdfont ];
   } ''
     test -f ${monofur-nerdfont}/share/fonts/truetype/NerdFonts/"monofur Nerd Font Complete.ttf"
@@ -229,7 +229,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  pass-wayland-otp-bin = ifSupported pass-wayland-otp (runCommandNoCC "test-pass-wayland-otp-bin" {
+  pass-wayland-otp-bin = ifSupported pass-wayland-otp (runCommand "test-pass-wayland-otp-bin" {
     buildInputs = [ pass-wayland-otp ];
   } ''
     pass --help
@@ -238,7 +238,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  hexmode-plugin = ifSupported vimPlugins.hexmode (runCommandNoCC "test-hexmode-plugin" {
+  hexmode-plugin = ifSupported vimPlugins.hexmode (runCommand "test-hexmode-plugin" {
     buildInputs = [ vimPlugins.hexmode ];
   } ''
     test -f ${vimPlugins.hexmode}/plugin/hexmode.vim
@@ -246,7 +246,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  vim-lilypond-integrator-plugin = ifSupported vimPlugins.vim-lilypond-integrator (runCommandNoCC "test-vim-lilypond-integrator-plugin" {
+  vim-lilypond-integrator-plugin = ifSupported vimPlugins.vim-lilypond-integrator (runCommand "test-vim-lilypond-integrator-plugin" {
     buildInputs = [ vimPlugins.vim-lilypond-integrator ];
   } ''
     test -f ${vimPlugins.vim-lilypond-integrator}/ftplugin/lilypond.vim
@@ -254,7 +254,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  vim-magnum-plugin = ifSupported vimPlugins.vim-magnum (runCommandNoCC "test-vim-magnum-plugin" {
+  vim-magnum-plugin = ifSupported vimPlugins.vim-magnum (runCommand "test-vim-magnum-plugin" {
     buildInputs = [ vimPlugins.vim-magnum ];
   } ''
     test -f ${vimPlugins.vim-magnum}/autoload/magnum.vim
@@ -262,7 +262,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  vim-radical-plugin = ifSupported vimPlugins.vim-radical (runCommandNoCC "test-vim-radical-plugin" {
+  vim-radical-plugin = ifSupported vimPlugins.vim-radical (runCommand "test-vim-radical-plugin" {
     buildInputs = [ vimPlugins.vim-radical ];
   } ''
     test -f ${vimPlugins.vim-radical}/plugin/radical.vim
@@ -270,7 +270,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  vim-fish-plugin = ifSupported vimPlugins.vim-fish (runCommandNoCC "test-vim-fish-plugin" {
+  vim-fish-plugin = ifSupported vimPlugins.vim-fish (runCommand "test-vim-fish-plugin" {
     buildInputs = [ vimPlugins.vim-fish ];
   } ''
     test -f ${vimPlugins.vim-fish}/ftplugin/fish.vim
@@ -278,7 +278,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  vim-interestingwords-plugin = ifSupported vimPlugins.vim-interestingwords (runCommandNoCC "test-interestingwords-plugin" {
+  vim-interestingwords-plugin = ifSupported vimPlugins.vim-interestingwords (runCommand "test-interestingwords-plugin" {
     buildInputs = [ vimPlugins.vim-interestingwords ];
   } ''
     test -f ${vimPlugins.vim-interestingwords}/plugin/interestingwords.vim
@@ -286,7 +286,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  vim-resolve-plugin = ifSupported vimPlugins.vim-resolve (runCommandNoCC "test-vim-resolve-plugin" {
+  vim-resolve-plugin = ifSupported vimPlugins.vim-resolve (runCommand "test-vim-resolve-plugin" {
     buildInputs = [ vimPlugins.vim-resolve ];
   } ''
     test -f ${vimPlugins.vim-resolve}/ftplugin/resolve.vim
@@ -294,7 +294,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  vim-sonic-pi-plugin = ifSupported vimPlugins.vim-sonic-pi (runCommandNoCC "test-vim-sonic-pi-plugin" {
+  vim-sonic-pi-plugin = ifSupported vimPlugins.vim-sonic-pi (runCommand "test-vim-sonic-pi-plugin" {
     buildInputs = [ vimPlugins.vim-sonic-pi ];
   } ''
     test -f ${vimPlugins.vim-sonic-pi}/plugin/sonicpi.vim
@@ -302,7 +302,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  vim-spl-plugin = ifSupported vimPlugins.vim-spl (runCommandNoCC "test-vim-spl-plugin" {
+  vim-spl-plugin = ifSupported vimPlugins.vim-spl (runCommand "test-vim-spl-plugin" {
     buildInputs = [ vimPlugins.vim-spl ];
   } ''
     test -f ${vimPlugins.vim-spl}/ftplugin/spl.vim
@@ -310,7 +310,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  vimwiki-dev-plugin = ifSupported vimPlugins.vimwiki-dev (runCommandNoCC "test-vimwiki-dev-plugin" {
+  vimwiki-dev-plugin = ifSupported vimPlugins.vimwiki-dev (runCommand "test-vimwiki-dev-plugin" {
     buildInputs = [ vimPlugins.vimwiki-dev ];
   } ''
     test -f ${vimPlugins.vimwiki-dev}/plugin/vimwiki.vim
@@ -318,7 +318,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  vim-zeek-plugin = ifSupported vimPlugins.vim-zeek (runCommandNoCC "test-vim-zeek-plugin" {
+  vim-zeek-plugin = ifSupported vimPlugins.vim-zeek (runCommand "test-vim-zeek-plugin" {
     buildInputs = [ vimPlugins.vim-zeek ];
   } ''
     test -f ${vimPlugins.vim-zeek}/ftplugin/zeek.vim
@@ -326,7 +326,7 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  oscpy-import = ifSupported python3Packages.oscpy (runCommandNoCC "test-oscpy-import" {
+  oscpy-import = ifSupported python3Packages.oscpy (runCommand "test-oscpy-import" {
     buildInputs = [ python3 python3Packages.oscpy ];
   } ''
     python3 -c 'import oscpy'
