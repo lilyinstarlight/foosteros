@@ -28,8 +28,6 @@
       })
       ({ pkgs, ... }: {
         systemd.user.services.nix-index = {
-          Install = { WantedBy = [ "default.target" ]; };
-
           Unit = {
             Description = "Update nix-index cache";
           };
@@ -37,6 +35,19 @@
           Service = {
             Type = "oneshot";
             ExecStart = "${pkgs.nix-index}/bin/nix-index";
+          };
+        };
+
+        systemd.user.timers.nix-index = {
+          Install = { WantedBy = [ "timers.target" ]; };
+
+          Unit = {
+            Description = "Update nix-index cache";
+          };
+
+          Timer = {
+            OnCalendar = "weekly";
+            Persistent = true;
           };
         };
       })
