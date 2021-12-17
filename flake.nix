@@ -60,9 +60,9 @@
     in
   {
     lib = {
-      baseSystem = { system ? "x86_64-linux", modules ? [] }: nixpkgs.lib.nixosSystem {
+      baseSystem = { system ? "x86_64-linux", modules ? [], baseModules ? [] }: nixpkgs.lib.nixosSystem {
         system = system;
-        modules = [
+        modules = baseModules ++ [
           home-manager.nixosModules.home-manager
           sops-nix.nixosModules.sops
           nix-ld.nixosModules.nix-ld

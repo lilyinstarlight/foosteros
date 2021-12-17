@@ -4,8 +4,10 @@ with pkgs;
 
 let
   testSystem = configuration: (outputs.lib.baseSystem {
-    modules = [
+    baseModules = [
       { nixpkgs.config.allowUnfree = false; }
+    ];
+    modules = [
       configuration
     ];
   }).config.system.build.toplevel;
