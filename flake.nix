@@ -34,7 +34,9 @@
     };
 
     envfs = {
-      url = "github:Mic92/envfs";
+      # TODO: temporary fix until Mic92/envfs#36 or similar is merged
+      #url = "github:Mic92/envfs";
+      url = "github:wentasah/envfs";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.utils.follows = "flake-utils";
     };
@@ -73,6 +75,8 @@
               inherit (self) inputs outputs;
             };
           }
+          # TODO: temporary fix until Mic92/envfs#36 or similar is merged
+          { environment.variables = { ENVFS_RESOLVE_ALWAYS = "1"; }; }
           ./config/base.nix
         ] ++ modules;
       };
