@@ -23,14 +23,14 @@
 rofi.override {
   rofi-unwrapped = stdenv.mkDerivation rec {
     pname = "rofi-wayland";
-    version = "1.7.1+wayland1";
+    version = "1.7.2+wayland1";
 
     src = fetchFromGitHub {
       owner = "lbonn";
       repo = "rofi";
       rev = "${version}";
       fetchSubmodules = true;
-      sha256 = "sha256-8CLBBRvtz9nYAHJLdBUX99sH3ZC+242wUtE7tXm5B7o=";
+      sha256 = "sha256-INFYHOVjBNj8ks4UjKnxLW8mL7h1c8ySFPS/rUxOWwo=";
     };
 
     nativeBuildInputs = [
