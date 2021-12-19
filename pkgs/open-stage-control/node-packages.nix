@@ -7113,7 +7113,7 @@ let
   args = {
     name = "open-stage-control";
     packageName = "open-stage-control";
-    version = "1.13.0";
+    version = "1.13.1";
     src = ./.;
     dependencies = [
       sources."@babel/code-frame-7.16.0"
