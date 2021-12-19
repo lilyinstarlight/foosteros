@@ -41,7 +41,10 @@ in
     rofi-wayland = resolveDep "rofi-wayland";
     wtype = resolveDep "wtype";
   };
-  rofi-wayland = callPackage ./rofi-wayland {};
+  rofi-wayland-unwrapped = callPackage ./rofi-wayland {};
+  rofi-wayland = rofi.override {
+    rofi-unwrapped = resolveDep "rofi-wayland-unwrapped";
+  };
   sonic-pi-tool = python3Packages.callPackage ./sonic-pi-tool {
     supercollider = resolveDep "supercollider-with-sc3-plugins";
   };
