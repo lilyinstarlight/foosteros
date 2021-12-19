@@ -31,5 +31,6 @@ stdenvNoCC.mkDerivation rec {
     homepage = "https://github.com/lilyinstarlight/dnsimple-ddns";
     license = licenses.mit;
     platforms = platforms.linux;
+    mainProgram = "ddns";
   };
 }

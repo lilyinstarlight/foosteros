@@ -36,5 +36,6 @@ stdenvNoCC.mkDerivation rec {
     homepage = "https://github.com/lilyinstarlight/logmail";
     license = licenses.mit;
     platforms = platforms.linux;
+    mainProgram = "logmail";
   };
 }

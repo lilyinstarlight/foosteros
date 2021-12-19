@@ -70,5 +70,6 @@ stdenv.mkDerivation rec {
     description = "Next generation modular control surface";
     license = licenses.unfree;
     platforms = [ "x86_64-linux" "aarch64-linux" "armv7l-linux" ];
+    mainProgram = "TouchOSC";
   };
 }

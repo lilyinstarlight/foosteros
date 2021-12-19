@@ -71,5 +71,6 @@ stdenv.mkDerivation rec {
     description = "Real-time GPU shader editor";
     license = licenses.unfree;
     platforms = [ "x86_64-linux" "aarch64-linux" "armv7l-linux" ];
+    mainProgram = "KodeLife";
   };
 }

@@ -32,5 +32,6 @@ buildGoModule rec {
     description = "Show a message when battery is low and discharging";
     license = licenses.mit;
     platforms = platforms.linux;
+    mainProgram = "swaynag-battery";
   };
 }
