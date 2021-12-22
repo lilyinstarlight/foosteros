@@ -1751,13 +1751,13 @@ let
         sha512 = "YrwaA0vEKazPBkn0ipTiMpSajYDSe+KjQfrjhcBMxJt/znbvlHd8Pw/Vamaz5EB4Wfhs3SUR3Z9mwRu/P3s3Yg==";
       };
     };
-    "caniuse-lite-1.0.30001291" = {
+    "caniuse-lite-1.0.30001292" = {
       name = "caniuse-lite";
       packageName = "caniuse-lite";
-      version = "1.0.30001291";
+      version = "1.0.30001292";
       src = fetchurl {
-        url = "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001291.tgz";
-        sha512 = "roMV5V0HNGgJ88s42eE70sstqGW/gwFndosYrikHthw98N5tLnOTxFqMLQjZVRxTWFlJ4rn+MsgXrR7MDPY4jA==";
+        url = "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001292.tgz";
+        sha512 = "jnT4Tq0Q4ma+6nncYQVe7d73kmDmE9C3OGTx3MvW7lBM/eY1S1DZTMBON7dqV481RhNiS5OxD7k9JQvmDOTirw==";
       };
     };
     "caseless-0.12.0" = {
@@ -2544,13 +2544,13 @@ let
         sha512 = "DWvhKv36GsdXKnaFFhEiK8kZZA+24/yFLgtTwJJHc7AFgDjNRIBJZ/jq62Y/dWv9E4ypYwrVWN2bVrCYw1uv7Q==";
       };
     };
-    "electron-to-chromium-1.4.24" = {
+    "electron-to-chromium-1.4.27" = {
       name = "electron-to-chromium";
       packageName = "electron-to-chromium";
-      version = "1.4.24";
+      version = "1.4.27";
       src = fetchurl {
-        url = "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.24.tgz";
-        sha512 = "erwx5r69B/WFfFuF2jcNN0817BfDBdC4765kQ6WltOMuwsimlQo3JTEq0Cle+wpHralwdeX3OfAtw/mHxPK0Wg==";
+        url = "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.27.tgz";
+        sha512 = "uZ95szi3zUbzRDx1zx/xnsCG+2xgZyy57pDOeaeO4r8zx5Dqe8Jv1ti8cunvBwJHVI5LzPuw8umKwZb3WKYxSQ==";
       };
     };
     "elliptic-6.5.4" = {
@@ -7113,7 +7113,7 @@ let
   args = {
     name = "open-stage-control";
     packageName = "open-stage-control";
-    version = "1.13.1";
+    version = "1.13.2";
     src = ./.;
     dependencies = [
       sources."@babel/code-frame-7.16.0"
@@ -7364,7 +7364,7 @@ let
       sources."camel-case-3.0.0"
       sources."camelcase-5.3.1"
       sources."camelcase-keys-6.2.2"
-      sources."caniuse-lite-1.0.30001291"
+      sources."caniuse-lite-1.0.30001292"
       sources."caseless-0.12.0"
       sources."chalk-2.4.2"
       sources."chokidar-3.5.1"
@@ -7474,7 +7474,7 @@ let
       sources."ee-first-1.1.1"
       sources."electron-is-accelerator-0.1.2"
       sources."electron-localshortcut-3.2.1"
-      sources."electron-to-chromium-1.4.24"
+      sources."electron-to-chromium-1.4.27"
       (sources."elliptic-6.5.4" // {
         dependencies = [
           sources."bn.js-4.12.0"
