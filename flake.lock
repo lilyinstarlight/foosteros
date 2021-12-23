@@ -10,15 +10,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1624546795,
-        "narHash": "sha256-qr4LkwY7hlp1sgFwmiQaj973Zqxwk4b3m7o3Mf4KqRI=",
-        "owner": "wentasah",
+        "lastModified": 1640277514,
+        "narHash": "sha256-54PJ9Xk9gD/yx4tFkdKRRRvewHezu5Oj/ycDZd/GO9Y=",
+        "owner": "lilyinstarlight",
         "repo": "envfs",
-        "rev": "7c4461767d775d131bc7a3c9a238c8e393edd2f8",
+        "rev": "b7facf56db942ca1d4082265dd285ca27644586a",
         "type": "github"
       },
       "original": {
-        "owner": "wentasah",
+        "owner": "lilyinstarlight",
         "repo": "envfs",
         "type": "github"
       }
