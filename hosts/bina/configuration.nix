@@ -105,6 +105,7 @@
   };
 
   virtualisation.spiceUSBRedirection.enable = true;
+  virtualisation.containers.registries.search = [ "docker.io" ];
   virtualisation.podman.enable = true;
 
   users.users.lily.extraGroups = with config.users.groups; [ keys.name libvirtd.name adbusers.name ];
