@@ -81,7 +81,6 @@
 
         " netrw
         let g:netrw_list_hide='\(^\|\s\s\)\zs\.\S\+'
-        nmap <leader>e :Explore<cr>
 
         " lightline.vim
         let g:lightline={'colorscheme': 'jellybeans'}
@@ -190,11 +189,14 @@
           vim-sleuth
           vim-speeddating
           vim-surround
+          vim-unimpaired
+          vim-vinegar
           vim-visual-increment
 
           hexmode
           vim-fish
           vim-interestingwords
+          vim-jdaddy
           vim-lilypond-integrator
           vim-radical
           vim-resolve

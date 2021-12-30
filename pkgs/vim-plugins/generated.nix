@@ -39,6 +39,18 @@ final: prev:
     meta.homepage = "https://github.com/lfv89/vim-interestingwords/";
   };
 
+  vim-jdaddy = buildVimPluginFrom2Nix {
+    pname = "vim-jdaddy";
+    version = "2019-11-13";
+    src = fetchFromGitHub {
+      owner = "tpope";
+      repo = "vim-jdaddy";
+      rev = "5cffddb8e644d3a3d0c0ee6a7abf5b713e3c4f97";
+      sha256 = "1vzay1f9x3m971ivnd9lfiwmyli8gblzgnw21cs6y20d99xgn670";
+    };
+    meta.homepage = "https://github.com/tpope/vim-jdaddy/";
+  };
+
   vim-lilypond-integrator = buildVimPluginFrom2Nix {
     pname = "vim-lilypond-integrator";
     version = "2016-03-26";
