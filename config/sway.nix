@@ -630,7 +630,7 @@ in
       swaybg swaylock swayidle
       kanshi i3status swaywsr mako rofi-wayland alacritty
       fooster-backgrounds fooster-materia-theme bibata-cursors papirus-icon-theme
-      slurp grim wl-clipboard libnotify sway-contrib.grimshot swappy wf-recorder
+      slurp grim wl-clipboard libnotify sway-contrib.grimshot swappy wf-recorder wl-mirror
       xwayland
       xdg-utils
     ];
