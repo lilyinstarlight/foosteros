@@ -33,6 +33,7 @@ in
   mkwin = callPackage ./mkwin {};
   open-stage-control = callPackage ./open-stage-control {
     electron = resolveDep "electron_15";
+    nodejs = resolveDep "nodejs-14_x";
   };
   petty = callPackage ./petty {};
   platform-folders = callPackage ./platform-folders {};
