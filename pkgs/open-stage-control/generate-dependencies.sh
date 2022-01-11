@@ -6,6 +6,7 @@ curl https://raw.githubusercontent.com/jean-emmanuel/open-stage-control/v1.13.2/
 
 node2nix \
   --node-env ../node-packages/node-env.nix \
+  --nodejs-14
   --input package.json \
   --output node-packages.nix \
   --composition node-composition.nix
