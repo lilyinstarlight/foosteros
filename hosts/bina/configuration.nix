@@ -157,11 +157,14 @@
       application/xhtml+xml=org.qutebrowser.qutebrowser.desktop
       application/xml=org.qutebrowser.qutebrowser.desktop
       application/rdf+xml=org.qutebrowser.qutebrowser.desktop
-      image/gif=org.qutebrowser.qutebrowser.desktop
-      image/jpeg=org.qutebrowser.qutebrowser.desktop
-      image/png=org.qutebrowser.qutebrowser.desktop
       x-scheme-handler/http=org.qutebrowser.qutebrowser.desktop
       x-scheme-handler/https=org.qutebrowser.qutebrowser.desktop
+      image/gif=imv.desktop
+      image/jpeg=imv.desktop
+      image/png=imv.desktop
+      image/bmp=imv.desktop
+      image/tiff=imv.desktop
+      image/heif=imv.desktop
       application/pdf=mupdf.desktop
       application/x-pdf=mupdf.desktop
       application/x-cbz=mupdf.desktop
