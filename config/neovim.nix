@@ -141,10 +141,12 @@
           buf_set_keymap('n', '<leader>R', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
           buf_set_keymap('n', '<leader>C', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
           buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
-          buf_set_keymap('n', '<leader>E', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>', opts)
-          buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>', opts)
-          buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<cr>', opts)
-          buf_set_keymap('n', '<leader>Q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>', opts)
+          buf_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.hide()<cr>', opts)
+          buf_set_keymap('n', '<leader>E', '<cmd>lua vim.diagnostic.show()<cr>', opts)
+          buf_set_keymap('n', '<leader>F', '<cmd>lua vim.diagnostic.open_float()<cr>', opts)
+          buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>', opts)
+          buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>', opts)
+          buf_set_keymap('n', '<leader>Q', '<cmd>lua vim.diagnostic.setloclist()<cr>', opts)
           buf_set_keymap('n', '<leader>f', '<cmd>lua vim.lsp.buf.formatting()<cr>', opts)
         end
 
