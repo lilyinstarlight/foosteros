@@ -1,4 +1,4 @@
-{ lib, buildPythonApplication, fetchFromGitHub, sonic-pi, click, oscpy, psutil, ruby, erlang, bash, supercollider, jack2 }:
+{ lib, buildPythonApplication, fetchFromGitHub, click, oscpy, psutil, sonic-pi, ruby, erlang, bash, supercollider, jack2 }:
 
 buildPythonApplication rec {
   pname = "sonic-pi-tool";
@@ -12,7 +12,18 @@ buildPythonApplication rec {
     sha256 = "06y8a6fjhc5yi1db687wsi8qn4jd9kqvzq1lv4p4rlg6d1j540hy";
   };
 
-  propagatedBuildInputs = [ sonic-pi click oscpy psutil ];
+  pythonPath = [
+    # sonic-pi-tool runtime deps
+    click
+    oscpy
+    psutil
+
+    # sonic-pi runtime deps
+    ruby
+    erlang
+    supercollider
+    jack2
+  ];
 
   dontUseSetuptoolsBuild = true;
   dontUsePipInstall = true;
@@ -24,9 +35,6 @@ buildPythonApplication rec {
     chmod +x "$out/bin/sonic-pi-tool"
 
     substituteInPlace "$out/bin/sonic-pi-tool" --replace 'default_paths = (' 'default_paths = ('"'"'${sonic-pi}/app'"'"', '
-
-    wrapProgram "$out/bin/sonic-pi-tool" \
-      --prefix PATH : ${lib.makeBinPath [ ruby erlang supercollider jack2 ]}
   '';
 
   meta = with lib; {
