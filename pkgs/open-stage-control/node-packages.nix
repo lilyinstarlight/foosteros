@@ -1084,13 +1084,13 @@ let
         sha512 = "j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==";
       };
     };
-    "ajv-8.8.2" = {
+    "ajv-8.9.0" = {
       name = "ajv";
       packageName = "ajv";
-      version = "8.8.2";
+      version = "8.9.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/ajv/-/ajv-8.8.2.tgz";
-        sha512 = "x9VuX+R/jcFj1DHo/fCp99esgGDWiHENrKxaCENuCxpoMCmAt/COCGVDwA7kleEpEzJjDnvh3yGoOuLu0Dtllw==";
+        url = "https://registry.npmjs.org/ajv/-/ajv-8.9.0.tgz";
+        sha512 = "qOKJyNj/h+OWx7s5DePL6Zu1KeM9jPZhwBqs+7DzP6bGOvqzVCSf0xueYmVuaC/oQ/VtS2zLMLHdQFbkka+XDQ==";
       };
     };
     "amdefine-1.0.1" = {
@@ -1480,7 +1480,7 @@ let
         sha512 = "D7iWRBvnZE8ecXiLj/9wbxH7Tk79fAh8IHaTNq1RWRixsS02W+5qS+iE9yq6RYl0asXx5tw0bLhmT5pIfbSquw==";
       };
     };
-    "bonjour-https://github.com/jean-emmanuel/bonjour" = {
+    "bonjour-git+https://github.com/jean-emmanuel/bonjour" = {
       name = "bonjour";
       packageName = "bonjour";
       version = "4.0.0";
@@ -1751,13 +1751,13 @@ let
         sha512 = "YrwaA0vEKazPBkn0ipTiMpSajYDSe+KjQfrjhcBMxJt/znbvlHd8Pw/Vamaz5EB4Wfhs3SUR3Z9mwRu/P3s3Yg==";
       };
     };
-    "caniuse-lite-1.0.30001298" = {
+    "caniuse-lite-1.0.30001300" = {
       name = "caniuse-lite";
       packageName = "caniuse-lite";
-      version = "1.0.30001298";
+      version = "1.0.30001300";
       src = fetchurl {
-        url = "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001298.tgz";
-        sha512 = "AcKqikjMLlvghZL/vfTHorlQsLDhGRalYf1+GmWCf5SCMziSGjRYQW/JEksj14NaYHIR6KIhrFAy0HV5C25UzQ==";
+        url = "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001300.tgz";
+        sha512 = "cVjiJHWGcNlJi8TZVKNMnvMid3Z3TTdDHmLDzlOdIiZq138Exvo0G+G0wTdVYolxKb4AYwC+38pxodiInVtJSA==";
       };
     };
     "caseless-0.12.0" = {
@@ -2057,13 +2057,13 @@ let
         sha512 = "bd79DPpx+1Ilh9+30aT5O1sgpQd4Ttg8oqkqi51ZzhedMM1omD2e6IOF48Z/DzDCZ2svp49tN/3vneTK6ZBkXw==";
       };
     };
-    "core-js-compat-3.20.2" = {
+    "core-js-compat-3.20.3" = {
       name = "core-js-compat";
       packageName = "core-js-compat";
-      version = "3.20.2";
+      version = "3.20.3";
       src = fetchurl {
-        url = "https://registry.npmjs.org/core-js-compat/-/core-js-compat-3.20.2.tgz";
-        sha512 = "qZEzVQ+5Qh6cROaTPFLNS4lkvQ6mBzE3R6A6EEpssj7Zr2egMHgsy4XapdifqJDGC9CBiNv7s+ejI96rLNQFdg==";
+        url = "https://registry.npmjs.org/core-js-compat/-/core-js-compat-3.20.3.tgz";
+        sha512 = "c8M5h0IkNZ+I92QhIpuSijOxGAcj3lgpsWdkCqmUTZNwidujF4r3pi6x1DCN+Vcs5qTS2XWWMfWSuCqyupX8gw==";
       };
     };
     "core-util-is-1.0.2" = {
@@ -2408,7 +2408,7 @@ let
         sha512 = "BQ6F4vycLXBvdrJZ6S3gZewt6rcrks9KBgM9vrhW+knGRqc8uEdT7fuCwloc7nny5xNoMJ17HGH0R/6fpo8ECA==";
       };
     };
-    "dns-txt-https://github.com/jean-emmanuel/dns-txt#v2.0.3" = {
+    "dns-txt-git+https://github.com/jean-emmanuel/dns-txt#v2.0.3" = {
       name = "dns-txt";
       packageName = "dns-txt";
       version = "2.0.3";
@@ -2544,13 +2544,13 @@ let
         sha512 = "DWvhKv36GsdXKnaFFhEiK8kZZA+24/yFLgtTwJJHc7AFgDjNRIBJZ/jq62Y/dWv9E4ypYwrVWN2bVrCYw1uv7Q==";
       };
     };
-    "electron-to-chromium-1.4.40" = {
+    "electron-to-chromium-1.4.46" = {
       name = "electron-to-chromium";
       packageName = "electron-to-chromium";
-      version = "1.4.40";
+      version = "1.4.46";
       src = fetchurl {
-        url = "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.40.tgz";
-        sha512 = "j+eVIyQGt2EU5xPWUblhpp5P5z5xyAdRgzogBgfe2F5JGV17gr9pfzWBua6DlPL00LavbOjxubWkWkbVQe9Wlw==";
+        url = "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.46.tgz";
+        sha512 = "UtV0xUA/dibCKKP2JMxOpDtXR74zABevuUEH4K0tvduFSIoxRVcYmQsbB51kXsFTX8MmOyWMt8tuZAlmDOqkrQ==";
       };
     };
     "elliptic-6.5.4" = {
@@ -4326,7 +4326,7 @@ let
         sha512 = "XsP+KhQif4bjX1kbuSiySJFNAehNxgLb6hPRGJ9QsUr8ajHkuXGdrHmFUTUUXhDwVX2R5bY4JNZEwbUiMhV+MA==";
       };
     };
-    "loop-protect-https://github.com/jean-emmanuel/loop-protect#v1.0.1" = {
+    "loop-protect-git+https://github.com/jean-emmanuel/loop-protect#v1.0.1" = {
       name = "loop-protect";
       packageName = "loop-protect";
       version = "1.0.1";
@@ -4633,7 +4633,7 @@ let
         sha512 = "sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==";
       };
     };
-    "multicast-dns-https://github.com/jean-emmanuel/multicast-dns" = {
+    "multicast-dns-git+https://github.com/jean-emmanuel/multicast-dns" = {
       name = "multicast-dns";
       packageName = "multicast-dns";
       version = "7.2.1";
@@ -5579,13 +5579,13 @@ let
         sha512 = "eOf6vka5IO151Jfsw2NO9WpGX58W6wWmefK3I1zEGr0lOD0u8rwPaNqQL1aRxUaxLeKO3ArNh3VYg1KbaD+FFw==";
       };
     };
-    "regexp.prototype.flags-1.3.1" = {
+    "regexp.prototype.flags-1.4.1" = {
       name = "regexp.prototype.flags";
       packageName = "regexp.prototype.flags";
-      version = "1.3.1";
+      version = "1.4.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/regexp.prototype.flags/-/regexp.prototype.flags-1.3.1.tgz";
-        sha512 = "JiBdRBq91WlY7uRJ0ds7R+dU02i6LKi8r3BuQhNXn+kmeLN+EfHhfjqMRis1zJxnlu88hq/4dx0P2OP3APRTOA==";
+        url = "https://registry.npmjs.org/regexp.prototype.flags/-/regexp.prototype.flags-1.4.1.tgz";
+        sha512 = "pMR7hBVUUGI7PMA37m2ofIdQCsomVnas+Jn5UPGAHQ+/LlwKm/aTLJHdasmHRzlfeZwHiAOaRSo2rbBDm3nNUQ==";
       };
     };
     "regexpp-3.2.0" = {
@@ -7122,7 +7122,7 @@ let
   args = {
     name = "open-stage-control";
     packageName = "open-stage-control";
-    version = "1.13.2";
+    version = "1.14.0";
     src = ./.;
     dependencies = [
       sources."@babel/code-frame-7.16.7"
@@ -7324,7 +7324,7 @@ let
         ];
       })
       sources."bn.js-5.2.0"
-      sources."bonjour-https://github.com/jean-emmanuel/bonjour"
+      sources."bonjour-git+https://github.com/jean-emmanuel/bonjour"
       (sources."boxen-4.2.0" // {
         dependencies = [
           sources."ansi-styles-4.3.0"
@@ -7373,7 +7373,7 @@ let
       sources."camel-case-3.0.0"
       sources."camelcase-5.3.1"
       sources."camelcase-keys-6.2.2"
-      sources."caniuse-lite-1.0.30001298"
+      sources."caniuse-lite-1.0.30001300"
       sources."caseless-0.12.0"
       sources."chalk-2.4.2"
       sources."chokidar-3.5.1"
@@ -7410,7 +7410,7 @@ let
       sources."constants-browserify-1.0.0"
       sources."convert-source-map-1.8.0"
       sources."core-js-3.11.0"
-      (sources."core-js-compat-3.20.2" // {
+      (sources."core-js-compat-3.20.3" // {
         dependencies = [
           sources."semver-7.0.0"
         ];
@@ -7461,7 +7461,7 @@ let
       })
       sources."dns-equal-1.0.0"
       sources."dns-packet-1.3.4"
-      sources."dns-txt-https://github.com/jean-emmanuel/dns-txt#v2.0.3"
+      sources."dns-txt-git+https://github.com/jean-emmanuel/dns-txt#v2.0.3"
       sources."doctrine-3.0.0"
       (sources."dom-serializer-1.3.2" // {
         dependencies = [
@@ -7483,7 +7483,7 @@ let
       sources."ee-first-1.1.1"
       sources."electron-is-accelerator-0.1.2"
       sources."electron-localshortcut-3.2.1"
-      sources."electron-to-chromium-1.4.40"
+      sources."electron-to-chromium-1.4.46"
       (sources."elliptic-6.5.4" // {
         dependencies = [
           sources."bn.js-4.12.0"
@@ -7717,7 +7717,7 @@ let
       sources."lodash.memoize-3.0.4"
       sources."lodash.truncate-4.4.2"
       sources."long-4.0.0"
-      sources."loop-protect-https://github.com/jean-emmanuel/loop-protect#v1.0.1"
+      sources."loop-protect-git+https://github.com/jean-emmanuel/loop-protect#v1.0.1"
       sources."lower-case-1.1.4"
       sources."lowercase-keys-1.0.1"
       sources."lru-cache-6.0.0"
@@ -7761,7 +7761,7 @@ let
         ];
       })
       sources."ms-2.1.2"
-      sources."multicast-dns-https://github.com/jean-emmanuel/multicast-dns"
+      sources."multicast-dns-git+https://github.com/jean-emmanuel/multicast-dns"
       sources."multicast-dns-service-types-1.1.0"
       sources."mutexify-1.4.0"
       sources."nan-2.15.0"
@@ -7923,7 +7923,7 @@ let
       sources."regenerate-unicode-properties-9.0.0"
       sources."regenerator-runtime-0.13.9"
       sources."regenerator-transform-0.14.5"
-      sources."regexp.prototype.flags-1.3.1"
+      sources."regexp.prototype.flags-1.4.1"
       sources."regexpp-3.2.0"
       sources."regexpu-core-4.8.0"
       sources."registry-auth-token-4.2.1"
@@ -8065,7 +8065,7 @@ let
       sources."syntax-error-1.4.0"
       (sources."table-6.8.0" // {
         dependencies = [
-          sources."ajv-8.8.2"
+          sources."ajv-8.9.0"
           sources."json-schema-traverse-1.0.0"
         ];
       })

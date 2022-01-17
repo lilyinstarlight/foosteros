@@ -11,8 +11,8 @@ nodeComposition.package.override rec {
   src = fetchFromGitHub {
     owner = "jean-emmanuel";
     repo = "open-stage-control";
-    rev = "v1.13.2";
-    sha256 = "sha256-yQ5WRMakxr5R6dJH+bqiKex0s1I+kc37aZXOsBMY5qA=";
+    rev = "v1.14.0";
+    sha256 = "sha256-34gM6zERJ+wf+k7gL8uLlio4UpRM13awJMMp6Wjy+sM=";
   };
 
   nativeBuildInputs = [ makeWrapper ];
