@@ -2544,13 +2544,13 @@ let
         sha512 = "DWvhKv36GsdXKnaFFhEiK8kZZA+24/yFLgtTwJJHc7AFgDjNRIBJZ/jq62Y/dWv9E4ypYwrVWN2bVrCYw1uv7Q==";
       };
     };
-    "electron-to-chromium-1.4.46" = {
+    "electron-to-chromium-1.4.47" = {
       name = "electron-to-chromium";
       packageName = "electron-to-chromium";
-      version = "1.4.46";
+      version = "1.4.47";
       src = fetchurl {
-        url = "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.46.tgz";
-        sha512 = "UtV0xUA/dibCKKP2JMxOpDtXR74zABevuUEH4K0tvduFSIoxRVcYmQsbB51kXsFTX8MmOyWMt8tuZAlmDOqkrQ==";
+        url = "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.47.tgz";
+        sha512 = "ZHc8i3/cgeCRK/vC7W2htAG6JqUmOUgDNn/f9yY9J8UjfLjwzwOVEt4MWmgJAdvmxyrsR5KIFA/6+kUHGY0eUA==";
       };
     };
     "elliptic-6.5.4" = {
@@ -7122,7 +7122,7 @@ let
   args = {
     name = "open-stage-control";
     packageName = "open-stage-control";
-    version = "1.14.0";
+    version = "1.14.1";
     src = ./.;
     dependencies = [
       sources."@babel/code-frame-7.16.7"
@@ -7483,7 +7483,7 @@ let
       sources."ee-first-1.1.1"
       sources."electron-is-accelerator-0.1.2"
       sources."electron-localshortcut-3.2.1"
-      sources."electron-to-chromium-1.4.46"
+      sources."electron-to-chromium-1.4.47"
       (sources."elliptic-6.5.4" // {
         dependencies = [
           sources."bn.js-4.12.0"
