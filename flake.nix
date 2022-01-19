@@ -18,19 +18,10 @@
       inputs.utils.follows = "flake-utils";
     };
 
-    # TODO: temporary fix for NixOS/nix#5728
-    poetry2nix = {
-      url = "github:nix-community/poetry2nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
-    };
-
     nix-alien = {
       url = "github:thiagokokada/nix-alien";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
-      # TODO: temporary fix for NixOS/nix#5728
-      inputs.poetry2nix.follows = "poetry2nix";
     };
 
     envfs = {
