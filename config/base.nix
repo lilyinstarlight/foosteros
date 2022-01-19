@@ -27,29 +27,7 @@
         };
       })
       ({ pkgs, ... }: {
-        systemd.user.services.nix-index = {
-          Unit = {
-            Description = "Update nix-index cache";
-          };
-
-          Service = {
-            Type = "oneshot";
-            ExecStart = "${pkgs.nix-index}/bin/nix-index";
-          };
-        };
-
-        systemd.user.timers.nix-index = {
-          Install = { WantedBy = [ "timers.target" ]; };
-
-          Unit = {
-            Description = "Update nix-index cache";
-          };
-
-          Timer = {
-            OnCalendar = "weekly";
-            Persistent = true;
-          };
-        };
+        home.file.".cache/nix-index/files".source = "${pkgs.nix-index-database}/files";
       })
     ];
   };
@@ -153,7 +131,7 @@
     cachix fpaste ftmp furi
     git gitAndTools.delta ripgrep
     shellcheck progress
-    nix-index nix-alien
+    nix-index nix-alien comma
   ];
 
   environment.shellAliases = {
