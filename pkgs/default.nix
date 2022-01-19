@@ -31,6 +31,7 @@ in
   logmail = callPackage ./logmail {};
   mkusb = callPackage ./mkusb {};
   mkwin = callPackage ./mkwin {};
+  nix-index-database = callPackage ./nix-index-database {};
   open-stage-control = callPackage ./open-stage-control {
     electron = resolveDep "electron_15";
     nodejs = resolveDep "nodejs-14_x";
