@@ -136,6 +136,7 @@
     })
     homebank hledger
     virt-manager podman-compose
+    ripgrep-all
     mkusb mkwin
     openssl wireshark dogdns picocom
     (ansible.overrideAttrs (attrs: {
