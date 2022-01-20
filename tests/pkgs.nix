@@ -143,14 +143,6 @@ lib.filterAttrs (name: value: value != "skip") {
     touch $out
   '');
 
-  rofi-wayland-bin = ifSupported rofi-wayland (runCommand "test-rofi-wayland-bin" {
-    buildInputs = [ rofi-wayland ];
-  } ''
-    rofi -version
-
-    touch $out
-  '');
-
   sonic-pi-bin = ifSupported sonic-pi (runCommand "test-sonic-pi-bin" {
     buildInputs = [ sonic-pi which ];
   } ''
