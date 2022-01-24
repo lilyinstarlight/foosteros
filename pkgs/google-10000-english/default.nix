@@ -9,7 +9,7 @@ stdenvNoCC.mkDerivation rec {
     repo = pname;
     #rev = "v${version}";
     rev = "d0736d492489198e4f9d650c7ab4143bc14c1e9e";
-    sha256 = "12mlyqqlv37397j0a9g7qg31f58p6n85rmydmd6k9zcb4f4qkr3f";
+    hash = "sha256-buSJiSOL/TRNq83XXJA1FxUXxsPnJQXkSeOMTTH2tIo=";
   };
 
   dontConfigure = true;

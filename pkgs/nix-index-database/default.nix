@@ -7,7 +7,7 @@ stdenvNoCC.mkDerivation rec {
 
   src = fetchurl {
     url = "https://github.com/Mic92/nix-index-database/releases/download/${version}/index-x86_64-linux";
-    sha256 = "sha256-PYCpxcfPxX+D1auKUfzrw/t9Lj/5Dz5bsZYZSLIELVY=";
+    hash = "sha256-PYCpxcfPxX+D1auKUfzrw/t9Lj/5Dz5bsZYZSLIELVY=";
   };
 
   dontUnpack = true;

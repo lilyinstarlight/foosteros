@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
     owner = "sago007";
     repo = "PlatformFolders";
     rev = version;
-    sha256 = "098vzw5a6wmxi0mf0flb3m0p0mijq38k87xj2sm0j1w4lvimha8i";
+    hash = "sha256-ESlY46aEBwmqFrIfNNHAMlZwQR2LOuAqiL1yowr/GyU=";
   };
 
   cmakeFlags = [

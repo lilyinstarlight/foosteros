@@ -8,7 +8,7 @@ stdenvNoCC.mkDerivation rec {
     owner = "lilyinstarlight";
     repo = pname;
     rev = "7ea80486077d0f2436ab6031a17eddcb8259af50";
-    sha256 = "sha256-oMGABa58MijGcVW4UF/kMetC5yVyQv1kmJSai4f8r00=";
+    hash = "sha256-oMGABa58MijGcVW4UF/kMetC5yVyQv1kmJSai4f8r00=";
   };
 
   nativeBuildInputs = [

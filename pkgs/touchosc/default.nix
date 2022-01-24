@@ -34,7 +34,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://hexler.net/pub/touchosc/${pname}-${version}-${suffix}.deb";
-    sha256 = {
+    hash = {
       x86_64-linux  = "sha256-g7R3EZaGxmhr2/VfpgrSpH+fGy4Zdy73tq9koA2z8ms=";
       aarch64-linux = "sha256-JgoBPB279GT3jFXYWh3OAHWXq6VL+zNghzk7a+CQY0g=";
       armv7l-linux  = "sha256-noz20ydWDiXGzS+9HR5+rV+B7QRJNnXW7JvES2Ce11g=";

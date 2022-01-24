@@ -6,7 +6,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://github.com/supercollider/sc3-plugins/releases/download/Version-${version}/sc3-plugins-${version}-Source.tar.bz2";
-    sha256 = "0i5yi4ny70ag8qxzlz3m1sg48d41yq5zisr68vr1vyy9nfxjcd96";
+    hash = "sha256-JjUmu7PJ+x3yRibr+Av2gTREng51fPo7Rk+B4y2JvkQ=";
   };
 
   nativeBuildInputs = [ cmake ];

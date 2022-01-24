@@ -8,7 +8,7 @@ stdenvNoCC.mkDerivation rec {
     owner = "lilyinstarlight";
     repo = "tmp";
     rev = "v${version}";
-    sha256 = "sha256-9X9uhqEutS3HAgyQxV6Gh4scJhX70AROHHpBIpTrUS8=";
+    hash = "sha256-9X9uhqEutS3HAgyQxV6Gh4scJhX70AROHHpBIpTrUS8=";
   };
 
   pythonPath = [ httpx ];

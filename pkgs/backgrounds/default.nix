@@ -7,7 +7,7 @@ stdenvNoCC.mkDerivation rec {
   src = fetchzip {
     url = "https://file.lily.flowers/foosteros/backgrounds/20210525.zip";
     stripRoot = false;
-    sha256 = "08206p4d2dvmaxlf92zhgycvqqhl1rddvgs07vh44dfjq3c2x4jj";
+    hash = "sha256-UpIu2MDSNULgPkC/3VoOFGK8mX/wi+RoV3U30cg1QCA=";
   };
 
   dontConfigure = true;

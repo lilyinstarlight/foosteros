@@ -9,7 +9,7 @@ buildPythonApplication rec {
     repo = pname;
     #rev = "v${version}";
     rev = "b955369294b7669b2706b26d388ec2c2a9d0d3a2";
-    sha256 = "06y8a6fjhc5yi1db687wsi8qn4jd9kqvzq1lv4p4rlg6d1j540hy";
+    hash = "sha256-HgJSZGjm0Uwu2TTgv/FMTRKLUdT8ILNaiL4wKJ1RyBs=";
   };
 
   pythonPath = [

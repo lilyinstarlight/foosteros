@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://hexler.net/pub/kodelife/${pname}-${version}-${suffix}.deb";
-    sha256 = {
+    hash = {
       x86_64-linux  = "sha256-kzF374KC0Rcylisa5T6IkanzhCbOYci/1G18acf4n/E=";
       aarch64-linux = "sha256-VQgl7NE9fynsUprxsEQihBshBKSSKoEuP7x3GtXGBhw=";
       armv7l-linux  = "sha256-rBUDsaKncnlHuM4Ofznw8TTXLaqyMJGUr6rp2+EwHp0=";

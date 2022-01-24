@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
     owner = "skaslev";
     repo = pname;
     rev = "3755745085ac2e865fd22270cfe9169c26640f70";
-    sha256 = "0bc4mb7f7d8dqyzyqrm6prdqy0v4jvzkg0bp2nmfv6jdfan0bb3p";
+    hash = "sha256-d6wFrHJNmu2qFXeBN/+WZAOPW76mZuy/xw21486qhC0=";
   };
 
   nativeBuildInputs = [ python3 cmake ];

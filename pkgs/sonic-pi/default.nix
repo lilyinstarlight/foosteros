@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
     owner = "sonic-pi-net";
     repo = pname;
     rev = "v${version}";
-    sha256 = "1ykhwmlh2223szi6s6q67sl9qwndhqbraa8knj058nv74fwy4kh0";
+    hash = "sha256-AE7iuSNnW1SAtBMplReGzXKcqD4GG23i10MIAWnlcPo=";
   };
 
   buildInputs = [

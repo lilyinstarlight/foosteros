@@ -40,7 +40,7 @@ stdenv.mkDerivation rec {
     repo = pname;
     #rev = "v${version}";
     rev = "3959d0e5924f58af9fb174036891e233d677b767";
-    sha256 = "sha256-Uu+MeKZ0aF+5gVZowGEGucusuEkuLZmC6btM8ycZXS8=";
+    hash = "sha256-Uu+MeKZ0aF+5gVZowGEGucusuEkuLZmC6btM8ycZXS8=";
   };
 
   mixFodDeps = beamPackages.fetchMixDeps {
