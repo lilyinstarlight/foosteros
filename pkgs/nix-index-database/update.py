@@ -7,7 +7,7 @@ import subprocess
 import urllib.request
 
 
-version = sorted((release['tag_name'] for release in json.load(urllib.request.urlopen('https://api.github.com/repos/Mic92/nix-index-database/releases'))), key=lambda ver: int(ver.replace('-', '')))[-1]
+version = json.load(urllib.request.urlopen('https://api.github.com/repos/Mic92/nix-index-database/releases/latest'))['tag_name']
 narhash = json.loads(subprocess.run(
     ['nix', '--extra-experimental-features', 'nix-command', 'store', 'prefetch-file', '--json', f'https://github.com/Mic92/nix-index-database/releases/download/{version}/index-x86_64-linux'],
     capture_output=True, check=True).stdout)['hash']
