@@ -1,5 +1,6 @@
-{ stdenvNoCC, lib, wrapPython, fetchFromGitHub, httpx, runCommand, ftmp }:
+{ stdenvNoCC, lib, wrapPython, fetchFromGitHub, httpx, runCommand }:
 
+let ftmp =
 stdenvNoCC.mkDerivation rec {
   pname = "ftmp";
   version = "0.1.1";
@@ -34,3 +35,4 @@ stdenvNoCC.mkDerivation rec {
     license = licenses.mit;
   };
 }
+; in ftmp

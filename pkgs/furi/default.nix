@@ -1,5 +1,6 @@
-{ stdenvNoCC, lib, wrapPython, fetchFromGitHub, httpx, runCommand, furi }:
+{ stdenvNoCC, lib, wrapPython, fetchFromGitHub, httpx, runCommand }:
 
+let furi =
 stdenvNoCC.mkDerivation rec {
   pname = "furi";
   version = "0.1.0";
@@ -34,3 +35,4 @@ stdenvNoCC.mkDerivation rec {
     license = licenses.mit;
   };
 }
+; in furi

@@ -1,5 +1,6 @@
-{ lib, materia-theme, bc, resvg, optipng, gnused, gtk4, gnome, util-linux, runCommand, fooster-materia-theme }:
+{ lib, materia-theme, bc, resvg, optipng, gnused, gtk4, gnome, util-linux, runCommand }:
 
+let fooster-materia-theme =
 materia-theme.overrideAttrs (attrs: rec {
   nativeBuildInputs = attrs.nativeBuildInputs ++ [ bc resvg optipng gnused gtk4 gnome.gnome-shell util-linux ];
 
@@ -39,3 +40,4 @@ materia-theme.overrideAttrs (attrs: rec {
     platforms = platforms.linux;
   };
 })
+; in fooster-materia-theme

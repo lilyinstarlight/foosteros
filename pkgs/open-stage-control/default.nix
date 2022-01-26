@@ -1,4 +1,4 @@
-{ pkgs, stdenv, lib, fetchFromGitHub, makeWrapper, makeDesktopItem, nodejs, electron, python3, runCommand, open-stage-control, ... }:
+{ pkgs, stdenv, lib, fetchFromGitHub, makeWrapper, makeDesktopItem, nodejs, electron, python3, runCommand, ... }:
 
 let
   nodeComposition = import ./node-composition.nix {
@@ -7,6 +7,7 @@ let
   };
 in
 
+let open-stage-control =
 nodeComposition.package.override rec {
   pname = "open-stage-control";
   inherit (nodeComposition.args) version;
@@ -78,3 +79,4 @@ nodeComposition.package.override rec {
     platforms = [ "x86_64-linux" "aarch64-linux" "i686-linux" "armv7l-linux" ];
   };
 }
+; in open-stage-control

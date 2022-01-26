@@ -1,5 +1,6 @@
-{ lib, buildPythonApplication, fetchFromGitHub, click, oscpy, psutil, sonic-pi, ruby, erlang, bash, supercollider, jack2, runCommand, sonic-pi-tool }:
+{ lib, buildPythonApplication, fetchFromGitHub, click, oscpy, psutil, sonic-pi, ruby, erlang, bash, supercollider, jack2, runCommand }:
 
+let sonic-pi-tool =
 buildPythonApplication rec {
   pname = "sonic-pi-tool";
   version = "unstable-2021-03-07";
@@ -51,3 +52,4 @@ buildPythonApplication rec {
     platforms = [ "x86_64-linux" "i686-linux" "aarch64-linux" "armv7l-linux" ];
   };
 }
+; in sonic-pi-tool

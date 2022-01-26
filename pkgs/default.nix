@@ -66,6 +66,7 @@ in
   };
   supercollider = libsForQt5.callPackage ./supercollider {
     fftw = resolveDep "fftwSinglePrec";
+    supercolliderPlugins = resolveDep "supercolliderPlugins";
   };
   supercollider-with-sc3-plugins = (resolveDep "supercollider").override {
     plugins = [ (resolveDep "supercolliderPlugins.sc3-plugins") ];

@@ -1,5 +1,6 @@
-{ stdenv, lib, fetchFromGitHub, runCommand, pridecat }:
+{ stdenv, lib, fetchFromGitHub, runCommand }:
 
+let pridecat =
 stdenv.mkDerivation rec {
   pname = "pridecat";
   version = "unstable-2020-06-19";
@@ -37,3 +38,4 @@ stdenv.mkDerivation rec {
     mainProgram = "pridecat";
   };
 }
+; in pridecat

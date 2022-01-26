@@ -1,5 +1,6 @@
-{ lib, buildGoModule, fetchFromGitHub, makeWrapper, sway, runCommand, swaynag-battery }:
+{ lib, buildGoModule, fetchFromGitHub, makeWrapper, sway, runCommand }:
 
+let swaynag-battery =
 buildGoModule rec {
   pname = "swaynag-battery";
   version = "unstable-2021-10-17";
@@ -42,3 +43,4 @@ buildGoModule rec {
     mainProgram = "swaynag-battery";
   };
 }
+; in swaynag-battery

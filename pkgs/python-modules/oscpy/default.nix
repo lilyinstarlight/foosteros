@@ -1,4 +1,4 @@
-{ pkgs, buildPythonPackage, fetchPypi, runCommand, python3, python3Packages }:
+{ lib, buildPythonPackage, fetchPypi, runCommand, python3, python3Packages }:
 
 buildPythonPackage rec {
   pname = "oscpy";
@@ -11,7 +11,7 @@ buildPythonPackage rec {
 
   pythonImportsCheck = [ "oscpy" ];
 
-  meta = with pkgs.lib; {
+  meta = with lib; {
     description = "A modern implementation of OSC for Python 2/3";
     homepage = "https://github.com/kivy/oscpy";
     license = licenses.mit;

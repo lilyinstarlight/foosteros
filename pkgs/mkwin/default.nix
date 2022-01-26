@@ -1,5 +1,6 @@
-{ stdenvNoCC, lib, fetchFromGitHub, makeWrapper, grub2_efi, grub2, dosfstools, dialog, ntfs3g, p7zip, runCommand, mkwin }:
+{ stdenvNoCC, lib, fetchFromGitHub, makeWrapper, grub2_efi, grub2, dosfstools, dialog, ntfs3g, p7zip, runCommand }:
 
+let mkwin =
 stdenvNoCC.mkDerivation rec {
   pname = "mkwin";
   version = "0.1.8";
@@ -42,3 +43,4 @@ stdenvNoCC.mkDerivation rec {
     platforms = [ "x86_64-linux" "i686-linux" "aarch64-linux" "armv7l-linux" ];
   };
 }
+; in mkwin

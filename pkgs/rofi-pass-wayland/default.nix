@@ -1,5 +1,6 @@
-{ lib, rofi-pass, rofi-wayland, pass-wayland, coreutils, util-linux, gnugrep, libnotify, pwgen, findutils, gawk, gnused, wl-clipboard, wtype, runCommand, rofi-pass-wayland }:
+{ lib, rofi-pass, rofi-wayland, pass-wayland, coreutils, util-linux, gnugrep, libnotify, pwgen, findutils, gawk, gnused, wl-clipboard, wtype, runCommand }:
 
+let rofi-pass-wayland =
 rofi-pass.overrideAttrs (attrs: rec {
   version = attrs.version + "-wayland";
 
@@ -51,3 +52,4 @@ rofi-pass.overrideAttrs (attrs: rec {
     platforms = platforms.linux;
   };
 })
+; in rofi-pass-wayland

@@ -1,5 +1,6 @@
-{ stdenvNoCC, lib, wrapPython, fetchFromGitHub, httpx, runCommand, fpaste }:
+{ stdenvNoCC, lib, wrapPython, fetchFromGitHub, httpx, runCommand }:
 
+let fpaste =
 stdenvNoCC.mkDerivation rec {
   pname = "fpaste";
   version = "0.2.0";
@@ -34,3 +35,4 @@ stdenvNoCC.mkDerivation rec {
     license = licenses.mit;
   };
 }
+; in fpaste

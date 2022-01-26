@@ -1,5 +1,6 @@
-{ stdenvNoCC, lib, fetchFromGitHub, makeWrapper, grub2_efi, grub2, dosfstools, dialog, syslinux, runCommand, mkusb }:
+{ stdenvNoCC, lib, fetchFromGitHub, makeWrapper, grub2_efi, grub2, dosfstools, dialog, syslinux, runCommand }:
 
+let mkusb =
 stdenvNoCC.mkDerivation rec {
   pname = "mkusb";
   version = "0.3.0";
@@ -43,3 +44,4 @@ stdenvNoCC.mkDerivation rec {
     platforms = [ "x86_64-linux" "i686-linux" ];
   };
 }
+; in mkusb
