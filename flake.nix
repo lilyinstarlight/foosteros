@@ -45,11 +45,6 @@
       supportedSystems = with nixpkgs.lib; (intersectLists (platforms.x86_64 ++ platforms.aarch64 ++ platforms.i686) platforms.linux) ++ (intersectLists (platforms.x86_64 ++ platforms.aarch64) platforms.darwin);
 
       forAllSystems = f: nixpkgs.lib.genAttrs supportedSystems (system: f system);
-
-      systempkgs = ({ system }: import nixpkgs {
-        inherit system;
-        overlays = nixpkgs.lib.attrValues self.overlays;
-      });
     in
   {
     lib = {
@@ -62,6 +57,7 @@
           envfs.nixosModules.envfs
           {
             config._module.args = {
+              fpkgs = self.legacyPackages.${system};
               inherit self;
               inherit (self) inputs outputs;
             };
@@ -72,13 +68,13 @@
     };
 
     legacyPackages = forAllSystems (system: import ./pkgs {
-      pkgs = systempkgs { inherit system; };
+      pkgs = nixpkgs.legacyPackages.${system};
       isOverlay = false;
     });
 
     defaultPackage = forAllSystems (system:
       let
-        pkgs = systempkgs { inherit system; };
+        pkgs = nixpkgs.legacyPackages.${system};
       in
         pkgs.linkFarmFromDrvs "foosteros-pkgs" (nixpkgs.lib.filter (drv: !drv.meta.unsupported) (nixpkgs.lib.collect (drv: nixpkgs.lib.isDerivation drv) (
           import ./pkgs {
@@ -98,7 +94,8 @@
     overlay = self.overlays.foosteros;
 
     nixosModules.foosteros = { config, system, ... }: import ./modules/nixos {
-      pkgs = systempkgs { inherit system; };
+      pkgs = nixpkgs.legacyPackages.${system};
+      fpkgs = self.legacyPackages.${system};
       inherit self;
       inherit (self) inputs outputs;
       inherit config;
@@ -106,7 +103,8 @@
     nixosModule = self.nixosModules.foosteros;
 
     checks = forAllSystems (system: import ./tests {
-      pkgs = systempkgs { inherit system; };
+      pkgs = nixpkgs.legacyPackages.${system};
+      fpkgs = self.legacyPackages.${system};
       inherit self;
       inherit (self) inputs outputs;
       inherit system;

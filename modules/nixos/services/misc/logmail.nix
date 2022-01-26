@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, fpkgs ? pkgs, ... }:
 
 with lib;
 
@@ -18,8 +18,8 @@ in
 
     package = mkOption {
       type = types.package;
-      default = pkgs.logmail;
-      defaultText = "pkgs.logmail";
+      default = fpkgs.logmail;
+      defaultText = literalExpression "fpkgs.logmail";
       description = ''
         logmail derivation to use.
       '';

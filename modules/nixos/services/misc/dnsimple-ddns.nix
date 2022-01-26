@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, fpkgs ? pkgs, ... }:
 
 with lib;
 
@@ -18,8 +18,8 @@ in
 
     package = mkOption {
       type = types.package;
-      default = pkgs.dnsimple-ddns;
-      defaultText = "pkgs.dnsimple-ddns";
+      default = fpkgs.dnsimple-ddns;
+      defaultText = literalExpression "fpkgs.dnsimple-ddns";
       description = ''
         dnsimple-ddns derivation to use.
       '';
