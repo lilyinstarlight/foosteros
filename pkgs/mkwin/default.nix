@@ -1,4 +1,4 @@
-{ stdenvNoCC, lib, fetchFromGitHub, makeWrapper, grub2_efi, grub2, dosfstools, dialog, ntfs3g, p7zip }:
+{ stdenvNoCC, lib, fetchFromGitHub, makeWrapper, grub2_efi, grub2, dosfstools, dialog, ntfs3g, p7zip, runCommand, mkwin }:
 
 stdenvNoCC.mkDerivation rec {
   pname = "mkwin";
@@ -27,6 +27,13 @@ stdenvNoCC.mkDerivation rec {
       --set MKWIN_GRUB_PC ${grub2}/bin/grub-install \
       --prefix PATH : ${dosfstools}/bin:${dialog}/bin:${ntfs3g}/bin:${p7zip}/bin
   '';
+
+  passthru.tests = {
+    # test to make sure executable runs
+    help = runCommand "${mkwin.name}-help-test" {} ''
+      ${mkwin}/bin/mkwin --help >$out
+    '';
+  };
 
   meta = with lib; {
     description = "A shell script to create a Windows installation USB from ISO";

@@ -1,4 +1,4 @@
-{ stdenvNoCC, lib, fetchFromGitHub, makeWrapper, grub2_efi, grub2, dosfstools, dialog, syslinux }:
+{ stdenvNoCC, lib, fetchFromGitHub, makeWrapper, grub2_efi, grub2, dosfstools, dialog, syslinux, runCommand, mkusb }:
 
 stdenvNoCC.mkDerivation rec {
   pname = "mkusb";
@@ -28,6 +28,13 @@ stdenvNoCC.mkDerivation rec {
       --set MKUSB_MEMDISK ${syslinux}/share/syslinux/memdisk \
       --prefix PATH : ${dosfstools}/bin:${dialog}/bin
   '';
+
+  passthru.tests = {
+    # test to make sure executable runs
+    help = runCommand "${mkusb.name}-help-test" {} ''
+      ${mkusb}/bin/mkusb --help >$out
+    '';
+  };
 
   meta = with lib; {
     description = "A shell script to create ISO multiboot USB flash drives that support both legacy and EFI boot";

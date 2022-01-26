@@ -14,7 +14,7 @@ let
 in
 
 (lib.optionalAttrs (lib.elem system lib.platforms.linux) {
-  minimal-config = testSystem ../hosts/minimal/configuration.nix;
+  host-test-minimal = testSystem ../hosts/minimal/configuration.nix;
 }) // (lib.optionalAttrs (system == "x86_64-linux") {
-  bina-config = testSystem ../hosts/bina/configuration.nix;
+  host-test-bina = testSystem ../hosts/bina/configuration.nix;
 })

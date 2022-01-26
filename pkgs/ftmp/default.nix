@@ -1,4 +1,4 @@
-{ stdenvNoCC, lib, wrapPython, fetchFromGitHub, httpx }:
+{ stdenvNoCC, lib, wrapPython, fetchFromGitHub, httpx, runCommand, ftmp }:
 
 stdenvNoCC.mkDerivation rec {
   pname = "ftmp";
@@ -18,7 +18,15 @@ stdenvNoCC.mkDerivation rec {
   dontBuild = true;
 
   installPhase = "install -D util/ftmp $out/bin/ftmp";
+
   postFixup = "wrapPythonPrograms";
+
+  passthru.tests = {
+    # test to make sure executable runs
+    help = runCommand "${ftmp.name}-help-test" {} ''
+      ${ftmp}/bin/ftmp --help >$out
+    '';
+  };
 
   meta = with lib; {
     description = "Command line utility for FoosterNET Temp";

@@ -1,6 +1,8 @@
-{ lib, rofi-pass, rofi-wayland, pass-wayland, coreutils, util-linux, gnugrep, libnotify, pwgen, findutils, gawk, gnused, wl-clipboard, wtype }:
+{ lib, rofi-pass, rofi-wayland, pass-wayland, coreutils, util-linux, gnugrep, libnotify, pwgen, findutils, gawk, gnused, wl-clipboard, wtype, runCommand, rofi-pass-wayland }:
 
 rofi-pass.overrideAttrs (attrs: rec {
+  version = attrs.version + "-wayland";
+
   wrapperPath = with lib; makeBinPath [
     coreutils
     findutils
@@ -37,6 +39,13 @@ rofi-pass.overrideAttrs (attrs: rec {
     wrapProgram $out/bin/rofi-pass \
       --prefix PATH : "${wrapperPath}"
   '';
+
+  passthru.tests = {
+    # test to make sure executable runs
+    help = runCommand "${rofi-pass-wayland.name}-help-test" {} ''
+      ${rofi-pass-wayland}/bin/rofi-pass --help >$out
+    '';
+  };
 
   meta = with lib; attrs.meta // {
     platforms = platforms.linux;

@@ -1,4 +1,4 @@
-{ stdenvNoCC, lib, wrapPython, fetchFromGitHub, httpx }:
+{ stdenvNoCC, lib, wrapPython, fetchFromGitHub, httpx, runCommand, fpaste }:
 
 stdenvNoCC.mkDerivation rec {
   pname = "fpaste";
@@ -18,7 +18,15 @@ stdenvNoCC.mkDerivation rec {
   dontBuild = true;
 
   installPhase = "install -D util/fpaste $out/bin/fpaste";
+
   postFixup = "wrapPythonPrograms";
+
+  passthru.tests = {
+    # test to make sure executable runs
+    help = runCommand "${fpaste.name}-help-test" {} ''
+      ${fpaste}/bin/fpaste --help >$out
+    '';
+  };
 
   meta = with lib; {
     description = "Command line utility for FoosterNET Paste";

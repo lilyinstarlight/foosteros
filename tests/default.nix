@@ -1,8 +1,8 @@
 { ... } @ args:
 
 let
-  config-tests = import ./config.nix args;
+  hosts-tests = import ./hosts.nix args;
   pkgs-tests = import ./pkgs.nix args;
 in
 
-config-tests // pkgs-tests
+hosts-tests // pkgs-tests // {}

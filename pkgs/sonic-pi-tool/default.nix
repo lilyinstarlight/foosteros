@@ -1,4 +1,4 @@
-{ lib, buildPythonApplication, fetchFromGitHub, click, oscpy, psutil, sonic-pi, ruby, erlang, bash, supercollider, jack2 }:
+{ lib, buildPythonApplication, fetchFromGitHub, click, oscpy, psutil, sonic-pi, ruby, erlang, bash, supercollider, jack2, runCommand, sonic-pi-tool }:
 
 buildPythonApplication rec {
   pname = "sonic-pi-tool";
@@ -36,6 +36,13 @@ buildPythonApplication rec {
 
     substituteInPlace "$out/bin/sonic-pi-tool" --replace 'default_paths = (' 'default_paths = ('"'"'${sonic-pi}/app'"'"', '
   '';
+
+  passthru.tests = {
+    # test to make sure executable runs
+    help = runCommand "${sonic-pi-tool.name}-help-test" {} ''
+      ${sonic-pi-tool}/bin/sonic-pi-tool --help >$out
+    '';
+  };
 
   meta = with lib; {
     description = "Tool for interfacing with the Sonic Pi server from the command line";

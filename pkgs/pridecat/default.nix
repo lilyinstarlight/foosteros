@@ -1,4 +1,4 @@
-{ stdenv, lib, fetchFromGitHub }:
+{ stdenv, lib, fetchFromGitHub, runCommand, pridecat }:
 
 stdenv.mkDerivation rec {
   pname = "pridecat";
@@ -22,6 +22,13 @@ stdenv.mkDerivation rec {
     mkdir -p $out/bin
     make PREFIX=$out install
   '';
+
+  passthru.tests = {
+    # test to make sure executable runs
+    help = runCommand "${pridecat.name}-help-test" {} ''
+      ${pridecat}/bin/pridecat --help >$out
+    '';
+  };
 
   meta = with lib; {
     homepage = "https://github.com/lunasorcery/pridecat";

@@ -1,4 +1,4 @@
-{ stdenvNoCC, lib, wrapPython, fetchFromGitHub, httpx }:
+{ stdenvNoCC, lib, wrapPython, fetchFromGitHub, httpx, runCommand, furi }:
 
 stdenvNoCC.mkDerivation rec {
   pname = "furi";
@@ -18,7 +18,15 @@ stdenvNoCC.mkDerivation rec {
   dontBuild = true;
 
   installPhase = "install -D util/furi $out/bin/furi";
+
   postFixup = "wrapPythonPrograms";
+
+  passthru.tests = {
+    # test to make sure executable runs
+    help = runCommand "${furi.name}-help-test" {} ''
+      ${furi}/bin/furi --help >$out
+    '';
+  };
 
   meta = with lib; {
     description = "Command line utility for FoosterNET Redirect";

@@ -1,4 +1,4 @@
-{ lib, buildGoModule, fetchFromGitHub, makeWrapper, sway }:
+{ lib, buildGoModule, fetchFromGitHub, makeWrapper, sway, runCommand, swaynag-battery }:
 
 buildGoModule rec {
   pname = "swaynag-battery";
@@ -26,6 +26,13 @@ buildGoModule rec {
     wrapProgram $out/bin/swaynag-battery \
       --prefix PATH : "${sway}/bin"
   '';
+
+  passthru.tests = {
+    # test to make sure executable runs
+    help = runCommand "${swaynag-battery.name}-help-test" {} ''
+      ${swaynag-battery}/bin/swaynag-battery --help >$out
+    '';
+  };
 
   meta = with lib; {
     homepage = "https://github.com/m00qek/swaynag-battery";

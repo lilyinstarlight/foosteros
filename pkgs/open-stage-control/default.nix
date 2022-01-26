@@ -1,4 +1,4 @@
-{ pkgs, stdenv, lib, fetchFromGitHub, makeWrapper, makeDesktopItem, nodejs, electron, python3, ... }:
+{ pkgs, stdenv, lib, fetchFromGitHub, makeWrapper, makeDesktopItem, nodejs, electron, python3, runCommand, open-stage-control, ... }:
 
 let
   nodeComposition = import ./node-composition.nix {
@@ -8,10 +8,13 @@ let
 in
 
 nodeComposition.package.override rec {
+  pname = "open-stage-control";
+  inherit (nodeComposition.args) version;
+
   src = fetchFromGitHub {
     owner = "jean-emmanuel";
     repo = "open-stage-control";
-    rev = "v1.14.3";
+    rev = "v${version}";
     hash = "sha256-C5TDDduMzIILYmz4quQ+dftAfOvSJnt+T3oMst3se40=";
   };
 
@@ -58,6 +61,13 @@ nodeComposition.package.override rec {
     categories = "Network;Audio;AudioVideo;Midi;";
     extraEntries = ''
       StartupWMClass=open-stage-control
+    '';
+  };
+
+  passthru.tests = {
+    # test to make sure executable runs
+    help = runCommand "${open-stage-control.name}-help-test" {} ''
+      env XDG_CONFIG_HOME="$(mktemp -d)" ${open-stage-control}/bin/open-stage-control --help >$out
     '';
   };
 
