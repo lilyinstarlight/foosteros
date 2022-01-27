@@ -57,12 +57,11 @@
   nix = {
     package = pkgs.nixUnstable;
 
-    binaryCachePublicKeys = [ "foosteros.cachix.org-1:rrDalTfOT1YohJXiMv8upgN+mFLKZp7eWW1+OGbPRww=" ];
-    binaryCaches = [ "https://foosteros.cachix.org/" ];
-
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
+    settings = {
+      substituters = [ "https://foosteros.cachix.org/" ];
+      trusted-public-keys = [ "foosteros.cachix.org-1:rrDalTfOT1YohJXiMv8upgN+mFLKZp7eWW1+OGbPRww=" ];
+      experimental-features = [ "nix-command" "flakes" ];
+    };
 
     registry = (lib.mapAttrs (name: value: { flake = value; }) (lib.filterAttrs (name: value: value ? outputs) inputs)) // { foosteros = { flake = self; }; };
     nixPath = (lib.mapAttrsToList (name: value: name + "=" + value) inputs) ++ [ ("foosteros=" + ../.) ("nixpkgs-overlays=" + ../. + "/overlays.nix") ];
