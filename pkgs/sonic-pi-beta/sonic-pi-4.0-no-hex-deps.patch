@@ -1,5 +1,5 @@
 diff --git a/app/linux-prebuild.sh b/app/linux-prebuild.sh
-index eb7c06f5c..547c03933 100755
+index bb9d53bd5..cdc4564b2 100755
 --- a/app/linux-prebuild.sh
 +++ b/app/linux-prebuild.sh
 @@ -69,11 +69,11 @@ PATH=`pkg-config --variable bindir Qt5`:$PATH lrelease "${SCRIPT_DIR}"/gui/qt/la

@@ -1,5 +1,5 @@
 diff --git a/app/gui/imgui/CMakeLists.txt b/app/gui/imgui/CMakeLists.txt
-index ebfcc3c6c..c687b5d08 100644
+index 3d5de638f..e94bd2722 100644
 --- a/app/gui/imgui/CMakeLists.txt
 +++ b/app/gui/imgui/CMakeLists.txt
 @@ -16,6 +16,16 @@ find_package(gl3w CONFIG REQUIRED)
@@ -19,7 +19,7 @@ index ebfcc3c6c..c687b5d08 100644
  set(SPIMGUI_APP_SOURCE
      ${APP_ROOT}/main.cpp
      ${APP_ROOT}/app.cpp
-@@ -87,8 +97,7 @@ target_link_libraries (${APP_NAME}
+@@ -91,8 +101,7 @@ target_link_libraries (${APP_NAME}
      PRIVATE
      SonicPi::API
      gl3w
