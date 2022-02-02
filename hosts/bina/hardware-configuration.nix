@@ -31,7 +31,5 @@
   hardware.enableRedistributableFirmware = true;
   hardware.cpu.intel.updateMicrocode = true;
 
-  powerManagement.cpuFreqGovernor = lib.mkDefault "schedutil";
-
   nix.maxJobs = lib.mkDefault 4;
 }
