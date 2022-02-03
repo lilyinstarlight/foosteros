@@ -30,6 +30,4 @@
 
   hardware.enableRedistributableFirmware = true;
   hardware.cpu.intel.updateMicrocode = true;
-
-  nix.maxJobs = lib.mkDefault 4;
 }
