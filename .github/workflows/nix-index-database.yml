@@ -26,6 +26,8 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
       - run: pkgs/nix-index-database/update.py
+        env:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
       - name: Push changes
         run: |
           if ! git diff --exit-code --quiet pkgs/nix-index-database/default.nix; then

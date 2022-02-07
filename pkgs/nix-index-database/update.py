@@ -2,12 +2,16 @@
 #! nix-shell -i python3 -p
 
 import json
+import os
 import os.path
 import subprocess
 import urllib.request
 
 
-version = json.load(urllib.request.urlopen('https://api.github.com/repos/Mic92/nix-index-database/releases/latest'))['tag_name']
+api_headers = {'Authorization': f'token {os.environ["GITHUB_TOKEN"]}'} if 'GITHUB_TOKEN' in os.environ else {}
+
+version = json.load(urllib.request.urlopen(
+    urllib.request.Request('https://api.github.com/repos/Mic92/nix-index-database/releases/latest', headers=api_headers)))['tag_name']
 narhash = json.loads(subprocess.run(
     ['nix', '--extra-experimental-features', 'nix-command', 'store', 'prefetch-file', '--json', f'https://github.com/Mic92/nix-index-database/releases/download/{version}/index-x86_64-linux'],
     capture_output=True, check=True).stdout)['hash']
