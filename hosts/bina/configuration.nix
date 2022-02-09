@@ -136,6 +136,7 @@
     sonic-pi sonic-pi-tool open-stage-control
     lilypond
     mpv ffmpeg-full
+    retroarchFull
     (wrapOBS {
       plugins = with obs-studio-plugins; [ wlrobs obs-gstreamer obs-move-transition ] ++ (lib.optionals config.nixpkgs.config.allowUnfree [ obs-ndi ]);
     })
