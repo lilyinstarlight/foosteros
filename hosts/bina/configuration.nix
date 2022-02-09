@@ -139,7 +139,7 @@
     (wrapOBS {
       plugins = with obs-studio-plugins; [ wlrobs obs-gstreamer obs-move-transition ] ++ (lib.optionals config.nixpkgs.config.allowUnfree [ obs-ndi ]);
     })
-    homebank hledger
+    hledger homebank
     virt-manager podman-compose
     ripgrep-all
     mkusb mkwin
