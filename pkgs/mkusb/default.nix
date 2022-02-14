@@ -3,13 +3,13 @@
 let mkusb =
 stdenvNoCC.mkDerivation rec {
   pname = "mkusb";
-  version = "0.3.0";
+  version = "0.3.1";
 
   src = fetchFromGitHub {
     owner = "lilyinstarlight";
     repo = pname;
     rev = "v${version}";
-    hash = "sha256-xcaTBhioV2L4hnnyHucBkodUzgWqhdJkmCgbhamFF8c=";
+    hash = "sha256-TyL1TCJ/Z/Ko1b0GJdhoLvBbqHhFDpY49rQxDBX0zjw=";
   };
 
   nativeBuildInputs = [ makeWrapper ];
