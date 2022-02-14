@@ -3,13 +3,13 @@
 let mkwin =
 stdenvNoCC.mkDerivation rec {
   pname = "mkwin";
-  version = "0.1.8";
+  version = "0.1.9";
 
   src = fetchFromGitHub {
     owner = "lilyinstarlight";
     repo = pname;
     rev = "v${version}";
-    hash = "sha256-s6qdcRLWTMpSXKVXZRxe60euky5Zn239bgQ4BIFHsAQ=";
+    hash = "sha256-WrxDlrHKW1gwXQVc7pKOtqMDEbXUSRAWWR2C8VEF70Q=";
   };
 
   nativeBuildInputs = [ makeWrapper ];
