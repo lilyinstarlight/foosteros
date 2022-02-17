@@ -8,7 +8,6 @@
 , catch2
 , qtbase
 , qtsvg
-, qtwebengine
 , qwt
 , kissfft
 , crossguid
@@ -25,6 +24,9 @@
 , jack2
 , supercollider
 
+, withTauWidget ? false
+, qtwebengine
+
 , withImGui ? false
 , gl3w
 , SDL2
@@ -39,8 +41,8 @@ stdenv.mkDerivation rec {
     owner = "sonic-pi-net";
     repo = pname;
     #rev = "v${version}";
-    rev = "726abfa19ededa5940893a170b7f1c7b6e18f451";
-    hash = "sha256-ktuIaorlGlwQkOvo/y2s2rYAwQyhxDJYdA2YwgeW/Wc=";
+    rev = "f4b17fffdeb143e8eb19c3d14ed440f2f6e037f1";
+    hash = "sha256-8nwyRd1VAziTg6Yw9WIakaj/8r4vyAQyFg0uLGee4KU=";
   };
 
   mixFodDeps = beamPackages.fetchMixDeps {
@@ -53,10 +55,12 @@ stdenv.mkDerivation rec {
   patches = [
     ./sonic-pi-4.0-no-vcpkg.patch
     ./sonic-pi-4.0-no-hex-deps.patch
-  ] ++ lib.optional withImGui [
+  ] ++ (lib.optionals withTauWidget [
+    ./sonic-pi-4.0-qt5-webengine.patch
+  ]) ++ (lib.optionals withImGui [
     ./sonic-pi-4.0-imgui-app-root.patch
     ./sonic-pi-4.0-imgui-dynamic-sdl2.patch
-  ];
+  ]);
 
   nativeBuildInputs = [
     wrapQtAppsHook
@@ -67,7 +71,6 @@ stdenv.mkDerivation rec {
   buildInputs = [
     qtbase
     qtsvg
-    qtwebengine
     qwt
     kissfft
     catch2
@@ -83,12 +86,13 @@ stdenv.mkDerivation rec {
     alsa-lib
     rtmidi
     boost
-  ]
-  ++ lib.optional withImGui [
+  ] ++ (lib.optionals withTauWidget [
+    qtwebengine
+  ]) ++ (lib.optionals withImGui [
     gl3w
     SDL2.dev
     fmt.dev
-  ];
+  ]);
 
   dontUseCmakeConfigure = true;
 
@@ -124,7 +128,7 @@ stdenv.mkDerivation rec {
     # Configure CMake
     mkdir -p app/build
     pushd app/build
-      cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DAPP_INSTALL_ROOT="$out/app" -DBUILD_IMGUI_INTERFACE=${if withImGui then "ON" else "OFF"} ..
+      cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DAPP_INSTALL_ROOT="$out/app" -DBUILD_IMGUI_INTERFACE=${if withImGui then "ON" else "OFF"} -DWITH_QT_GUI_WEBENGINE=${if withTauWidget then "ON" else "OFF"} ..
     popd
 
     # Build
@@ -207,8 +211,8 @@ stdenv.mkDerivation rec {
       fi
     done
 
-    # Remove unnecessary/sensitive Erlang artifacts
-    rm $out/app/server/beam/tau/_build/prod/rel/tau/{releases/COOKIE,bin/tau.bat}
+    # Remove unnecessary Erlang artifacts
+    rm $out/app/server/beam/tau/_build/prod/rel/tau/bin/tau.bat
 
     # Remove runtime Erlang references
     for file in $(grep -FrIl '${erlang}/lib/erlang' $out/app/server/beam/tau); do
