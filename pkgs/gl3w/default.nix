@@ -16,6 +16,8 @@ stdenv.mkDerivation rec {
 
   dontUseCmakeBuildDir = true;
 
+  # These files must be copied rather than linked since they are considered
+  # outputs for the custom command, and CMake expects to be able to touch them
   preConfigure = ''
     mkdir -p include/{GL,KHR}
     cp ${libglvnd.dev}/include/GL/glcorearb.h include/GL/glcorearb.h
