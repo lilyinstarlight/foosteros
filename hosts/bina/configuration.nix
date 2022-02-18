@@ -122,7 +122,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    firefox chromium
+    firefox-wayland ungoogled-chromium
     udiskie
     gnupg pass-wayland-otp
     rofi-pass-wayland rofi-mpd
