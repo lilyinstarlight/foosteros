@@ -70,6 +70,8 @@
     overlays = lib.attrValues outputs.overlays;
   };
 
+  system.nixos.label = lib.concatStringsSep "-" ((lib.sort (x: y: x < y) config.system.nixos.tags) ++ [ config.system.nixos.version ] ++ [ "foosteros" (self.shortRev or "dirty") ]);
+
   environment.variables = {
     EDITOR = "vi";
     VISUAL = "vi";
