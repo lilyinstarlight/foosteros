@@ -319,6 +319,7 @@ in
       client.urgent #f29bd4 #f29bd4 #333333 #f29bd4 #444444
 
       ### rules
+      for_window [title="Firefox — Sharing Indicator"] floating enable
 
       ### key bindings
       floating_modifier $mod normal
