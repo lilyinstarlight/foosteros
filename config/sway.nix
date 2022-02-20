@@ -617,7 +617,11 @@ in
     platformTheme = "gnome";
   };
 
-  xdg.portal.enable = true;
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    gtkUsePortal = true;
+  };
 
   programs.tmux.extraConfig = ''
     # status
