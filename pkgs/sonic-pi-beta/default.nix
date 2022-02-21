@@ -41,8 +41,8 @@ stdenv.mkDerivation rec {
     owner = "sonic-pi-net";
     repo = pname;
     #rev = "v${version}";
-    rev = "f4b17fffdeb143e8eb19c3d14ed440f2f6e037f1";
-    hash = "sha256-8nwyRd1VAziTg6Yw9WIakaj/8r4vyAQyFg0uLGee4KU=";
+    rev = "88f4462c51f6f80f6ebaac62e6aada3e9ace512e";
+    hash = "sha256-yc6oEvgDC53zvGluvi7n9nPQU926EBJPYJuXnIGUUGc=";
   };
 
   mixFodDeps = beamPackages.fetchMixDeps {
@@ -55,12 +55,9 @@ stdenv.mkDerivation rec {
   patches = [
     ./sonic-pi-4.0-no-vcpkg.patch
     ./sonic-pi-4.0-no-hex-deps.patch
-  ] ++ (lib.optionals withTauWidget [
-    ./sonic-pi-4.0-qt5-webengine.patch
-  ]) ++ (lib.optionals withImGui [
     ./sonic-pi-4.0-imgui-app-root.patch
     ./sonic-pi-4.0-imgui-dynamic-sdl2.patch
-  ]);
+  ];
 
   nativeBuildInputs = [
     wrapQtAppsHook
@@ -90,8 +87,8 @@ stdenv.mkDerivation rec {
     qtwebengine
   ]) ++ (lib.optionals withImGui [
     gl3w
-    SDL2.dev
-    fmt.dev
+    SDL2
+    fmt
   ]);
 
   dontUseCmakeConfigure = true;
