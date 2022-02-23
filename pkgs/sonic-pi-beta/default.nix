@@ -41,8 +41,8 @@ stdenv.mkDerivation rec {
     owner = "sonic-pi-net";
     repo = pname;
     #rev = "v${version}";
-    rev = "88f4462c51f6f80f6ebaac62e6aada3e9ace512e";
-    hash = "sha256-yc6oEvgDC53zvGluvi7n9nPQU926EBJPYJuXnIGUUGc=";
+    rev = "c8cc302621d0941815c2d296b11545cc732949f5";
+    hash = "sha256-OMfdZG+xlHB12aZQAOaL17kd2NJitz/RSeeQizVWFQI=";
   };
 
   mixFodDeps = beamPackages.fetchMixDeps {
@@ -53,10 +53,7 @@ stdenv.mkDerivation rec {
   };
 
   patches = [
-    ./sonic-pi-4.0-no-vcpkg.patch
-    ./sonic-pi-4.0-no-hex-deps.patch
-    ./sonic-pi-4.0-imgui-app-root.patch
-    ./sonic-pi-4.0-imgui-dynamic-sdl2.patch
+    ./sonic-pi-4.0-offline-build.patch
   ];
 
   nativeBuildInputs = [
@@ -119,13 +116,13 @@ stdenv.mkDerivation rec {
   buildPhase = ''
     # Prebuild vendored dependencies and BEAM server
     pushd app
-      ./linux-prebuild.sh
+      ./linux-prebuild.sh -o
     popd
 
     # Configure CMake
     mkdir -p app/build
     pushd app/build
-      cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DAPP_INSTALL_ROOT="$out/app" -DBUILD_IMGUI_INTERFACE=${if withImGui then "ON" else "OFF"} -DWITH_QT_GUI_WEBENGINE=${if withTauWidget then "ON" else "OFF"} ..
+      cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DAPP_INSTALL_ROOT="$out/app" -DUSE_SYSTEM_LIBS=ON -DBUILD_IMGUI_INTERFACE=${if withImGui then "ON" else "OFF"} -DWITH_QT_GUI_WEBENGINE=${if withTauWidget then "ON" else "OFF"} ..
     popd
 
     # Build
@@ -137,44 +134,14 @@ stdenv.mkDerivation rec {
   installPhase = ''
     runHook preInstall
 
-    # Copy distributable files
+    # Run Linux release script
+    pushd app
+      ./linux-release.sh
+    popd
+
+    # Copy dist directory to output
     mkdir $out
-    cp -r {bin,etc} $out/
-
-    # Copy example configs
-    mkdir -p $out/app
-    cp -r app/config $out/app/
-
-    # Copy server natives
-    mkdir -p $out/app/server
-    cp -r app/server/native $out/app/server/
-
-    # Copy Spider (Ruby) server
-    mkdir -p $out/app/server
-    cp -r app/server/ruby $out/app/server/
-
-    # Copy built Tau (BEAM) server
-    mkdir -p $out/app/server/beam/tau
-    cp -r app/server/beam/tau/{_build,boot-lin.sh} $out/app/server/beam/tau/
-
-    # Copy only necessary files for the Qt GUI
-    mkdir -p $out/app/gui/qt
-    cp -r app/gui/qt/theme $out/app/gui/qt/
-
-    # Copy Qt GUI binary
-    mkdir -p $out/app/build/gui/qt
-    cp app/build/gui/qt/sonic-pi $out/app/build/gui/qt/sonic-pi
-
-    # If ImGui was built
-    if [ -x app/build/gui/imgui/sonic-pi-imgui ]; then
-      # Copy ImGui files
-      mkdir -p $out/app/gui/imgui/res
-      cp -r app/gui/imgui/res/Cousine-Regular.ttf $out/app/gui/imgui/res/
-
-      # Copy ImGui binary
-      mkdir -p $out/app/build/gui/imgui
-      cp app/build/gui/imgui/sonic-pi-imgui $out/app/build/gui/imgui/sonic-pi-imgui
-    fi
+    cp -r app/build/linux_dist/* $out/
 
     # Copy icon
     install -Dm644 app/gui/qt/images/icon-smaller.png $out/share/icons/hicolor/256x256/apps/sonic-pi.png
@@ -201,25 +168,10 @@ stdenv.mkDerivation rec {
         --prefix PATH : ${lib.makeBinPath [ ruby supercollider jack2 ]}
     fi
 
-    # Remove non-essential files from vendored Ruby gems
-    for file in $out/app/server/ruby/vendor/*/*; do
-      if [ "$(basename "$file")" != "lib" ]; then
-        rm -r "$file"
-      fi
-    done
-
-    # Remove unnecessary Erlang artifacts
-    rm $out/app/server/beam/tau/_build/prod/rel/tau/bin/tau.bat
-
     # Remove runtime Erlang references
     for file in $(grep -FrIl '${erlang}/lib/erlang' $out/app/server/beam/tau); do
       substituteInPlace "$file" --replace '${erlang}/lib/erlang' $out/app/server/beam/tau/_build/prod/rel/tau
     done
-
-    # Strip Erlang BEAMs
-    erl -noinput -eval \
-      "lists:foreach(fun(F) -> beam_lib:strip(F) end, filelib:wildcard(\"$out/app/server/beam/tau/**/*.beam\"))" \
-      -s init stop
   '';
 
   stripDebugList = [ "app" "bin" ];
