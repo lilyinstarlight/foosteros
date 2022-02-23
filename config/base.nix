@@ -128,6 +128,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    man-pages man-pages-posix
     bc file htop python3 tree unzip xxd
     cachix fpaste ftmp furi
     git gitAndTools.delta ripgrep
