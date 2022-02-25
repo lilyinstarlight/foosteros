@@ -41,8 +41,8 @@ stdenv.mkDerivation rec {
     owner = "sonic-pi-net";
     repo = pname;
     #rev = "v${version}";
-    rev = "c8cc302621d0941815c2d296b11545cc732949f5";
-    hash = "sha256-OMfdZG+xlHB12aZQAOaL17kd2NJitz/RSeeQizVWFQI=";
+    rev = "1acae43170ea43afef12c9905f0b54e270bace07";
+    hash = "sha256-eL5Wj8gbknGXmPxtmZMG2Jrpmi4B9ZLqZG9dU8twZVs=";
   };
 
   mixFodDeps = beamPackages.fetchMixDeps {
@@ -96,7 +96,6 @@ stdenv.mkDerivation rec {
 
     export HEX_HOME="$TEMPDIR/hex"
     export HEX_OFFLINE=1
-    export MIX_REBAR="${beamPackages.rebar}/bin/rebar"
     export MIX_REBAR3="${beamPackages.rebar3}/bin/rebar3"
     export REBAR_GLOBAL_CONFIG_DIR="$TEMPDIR/rebar3"
     export REBAR_CACHE_DIR="$TEMPDIR/rebar3.cache"

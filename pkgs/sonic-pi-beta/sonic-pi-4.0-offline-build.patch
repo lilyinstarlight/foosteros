@@ -1,4 +1,4 @@
-commit 26484afad3d720c5e7b3bf05748f01f4ff240b55
+commit ebaef042f619ef5689618b42b3a86de60ba049f8
 Author: Lily Foster <lily@lily.flowers>
 Date:   Tue Feb 22 17:50:35 2022 -0500
 
@@ -43,7 +43,7 @@ index 44234946a..61d59dbbe 100755
  cp "${SCRIPT_DIR}"/external/build/aubio-prefix/src/aubio-build/aubio_onset "${SCRIPT_DIR}"/server/native/
  
 
-commit fa42f8f2c5ed60d1626b5e4799cdc45deb2b4fd8
+commit 55cfc8fee8ba33d2f313929712ecfab150b729dc
 Author: Lily Foster <lily@lily.flowers>
 Date:   Tue Feb 22 17:47:59 2022 -0500
 
@@ -53,7 +53,7 @@ Date:   Tue Feb 22 17:47:59 2022 -0500
 
 diff --git a/app/linux-release.sh b/app/linux-release.sh
 new file mode 100755
-index 000000000..49b74a1c7
+index 000000000..835ab2aef
 --- /dev/null
 +++ b/app/linux-release.sh
 @@ -0,0 +1,66 @@
@@ -117,14 +117,14 @@ index 000000000..49b74a1c7
 +
 +# Strip Erlang BEAMs
 +erl -noinput -eval \
-+  'lists:foreach(fun(F) -> beam_lib:strip(F) end, filelib:wildcard("linux_dist/app/server/beam/tau/**/*.beam"))' \
++  'lists:foreach(fun(F) -> beam_lib:strip(F) end, filelib:wildcard("build/linux_dist/app/server/beam/tau/**/*.beam"))' \
 +  -s init stop
 +
 +echo
 +echo "app/build/linux_dist is now ready for packaging"
 +echo
 
-commit 55737768964773582db2f55781d495114f3f8bda
+commit 0e82140b2374ef5651ba3f5fb811d93419d996cf
 Author: Lily Foster <lily@lily.flowers>
 Date:   Tue Feb 22 13:50:20 2022 -0500
 
@@ -334,7 +334,7 @@ index c9ab55824..44234946a 100755
  cp src/tau.app.src ebin/tau.app
  
 
-commit 480efeedeb56f43c7f66cc2bebf113179d5d1c43
+commit 4753d8b4a2a534fa8d6bb8dad9e9ecc54d6f6692
 Author: Lily Foster <lily@lily.flowers>
 Date:   Tue Feb 22 13:49:38 2022 -0500
 
@@ -359,7 +359,7 @@ index 2c9d73ab6..231165d85 100644
  # Configures Elixir's Logger
  config :logger, :console,
 
-commit 0af4569418d32fa3627f44475c5f2d17eafe1dfa
+commit 5a959689b1bf4c75496613d464e333ade57191b2
 Author: Lily Foster <lily@lily.flowers>
 Date:   Tue Feb 22 13:48:38 2022 -0500
 
@@ -395,14 +395,14 @@ index c4614531e..e82bc36fb 100644
      //io.Fonts->AddFontFromFileTTF("../../misc/fonts/ProggyTiny.ttf", 10.0f);
      //ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
 
-commit 303f2eee8c365495e4bb61bc4e14e0f981924088
+commit 02cfa9e19b824c1fe569a72e0882103c1527f68c
 Author: Lily Foster <lily@lily.flowers>
 Date:   Tue Feb 22 13:48:00 2022 -0500
 
     Build - add support for using system libraries
 
 diff --git a/app/CMakeLists.txt b/app/CMakeLists.txt
-index 01a8d1cc7..dd02994cb 100644
+index 01a8d1cc7..7b0e2ad53 100644
 --- a/app/CMakeLists.txt
 +++ b/app/CMakeLists.txt
 @@ -1,5 +1,7 @@
@@ -418,7 +418,7 @@ index 01a8d1cc7..dd02994cb 100644
  
  # vcpkg toolchain - Must be declared before project
 -set(CMAKE_TOOLCHAIN_FILE ${APP_ROOT}/vcpkg/scripts/buildsystems/vcpkg.cmake CACHE STRING "Vcpkg toolchain file")
-+if (EXISTS ${APP_ROOT}/vcpkg/scripts/buildsystems/vcpkg.cmake)
++if (NOT USE_SYSTEM_LIBS)
 +  set(CMAKE_TOOLCHAIN_FILE ${APP_ROOT}/vcpkg/scripts/buildsystems/vcpkg.cmake CACHE STRING "Vcpkg toolchain file")
 +endif()
  
@@ -528,7 +528,7 @@ index f5580e7b3..cfe2a006a 100644
      )
  
 
-commit f22d95fa86f5855d0967e12157b2e302a59e69e5
+commit e6bf991e0af570e83cfbd8e97be1bc5fcd71781d
 Author: Lily Foster <lily@lily.flowers>
 Date:   Tue Feb 22 13:24:14 2022 -0500
 
