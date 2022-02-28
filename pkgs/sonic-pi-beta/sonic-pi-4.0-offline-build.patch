@@ -1,4 +1,4 @@
-commit ebaef042f619ef5689618b42b3a86de60ba049f8
+commit 214f1d81ca012ba70f576428c788de36c18a42bd
 Author: Lily Foster <lily@lily.flowers>
 Date:   Tue Feb 22 17:50:35 2022 -0500
 
@@ -43,7 +43,7 @@ index 44234946a..61d59dbbe 100755
  cp "${SCRIPT_DIR}"/external/build/aubio-prefix/src/aubio-build/aubio_onset "${SCRIPT_DIR}"/server/native/
  
 
-commit 55cfc8fee8ba33d2f313929712ecfab150b729dc
+commit 504c6b935ac86a2d227e0f18f5617497e6f31e30
 Author: Lily Foster <lily@lily.flowers>
 Date:   Tue Feb 22 17:47:59 2022 -0500
 
@@ -53,10 +53,10 @@ Date:   Tue Feb 22 17:47:59 2022 -0500
 
 diff --git a/app/linux-release.sh b/app/linux-release.sh
 new file mode 100755
-index 000000000..835ab2aef
+index 000000000..017764aa0
 --- /dev/null
 +++ b/app/linux-release.sh
-@@ -0,0 +1,66 @@
+@@ -0,0 +1,67 @@
 +#!/bin/bash -e
 +
 +SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -83,8 +83,9 @@ index 000000000..835ab2aef
 +cp -r server/ruby build/linux_dist/app/server/
 +
 +# Copy built Tau (BEAM) server
-+mkdir -p build/linux_dist/app/server/beam/tau
-+cp -r server/beam/tau/{_build,boot-lin.sh} build/linux_dist/app/server/beam/tau/
++mkdir -p build/linux_dist/app/server/beam/tau/_build/prod
++cp -r server/beam/tau/_build/prod/rel build/linux_dist/app/server/beam/tau/_build/prod/
++cp server/beam/tau/boot-lin.sh build/linux_dist/app/server/beam/tau/
 +
 +# Copy only necessary files for the Qt GUI
 +mkdir -p build/linux_dist/app/gui/qt
@@ -124,7 +125,7 @@ index 000000000..835ab2aef
 +echo "app/build/linux_dist is now ready for packaging"
 +echo
 
-commit 0e82140b2374ef5651ba3f5fb811d93419d996cf
+commit 89280193d41f637fdca621956b1fb4028f4ed0d7
 Author: Lily Foster <lily@lily.flowers>
 Date:   Tue Feb 22 13:50:20 2022 -0500
 
@@ -334,7 +335,7 @@ index c9ab55824..44234946a 100755
  cp src/tau.app.src ebin/tau.app
  
 
-commit 4753d8b4a2a534fa8d6bb8dad9e9ecc54d6f6692
+commit f6109105cb4ccace5bf2155754062ac75a1c1cbc
 Author: Lily Foster <lily@lily.flowers>
 Date:   Tue Feb 22 13:49:38 2022 -0500
 
@@ -359,7 +360,7 @@ index 2c9d73ab6..231165d85 100644
  # Configures Elixir's Logger
  config :logger, :console,
 
-commit 5a959689b1bf4c75496613d464e333ade57191b2
+commit a9a5cb0675a815bbb21e1e50e527458cdc90eaa0
 Author: Lily Foster <lily@lily.flowers>
 Date:   Tue Feb 22 13:48:38 2022 -0500
 
@@ -395,7 +396,7 @@ index c4614531e..e82bc36fb 100644
      //io.Fonts->AddFontFromFileTTF("../../misc/fonts/ProggyTiny.ttf", 10.0f);
      //ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
 
-commit 02cfa9e19b824c1fe569a72e0882103c1527f68c
+commit 691cf7172629c36e39a4fc23c3b1988ce3af9207
 Author: Lily Foster <lily@lily.flowers>
 Date:   Tue Feb 22 13:48:00 2022 -0500
 
@@ -425,7 +426,7 @@ index 01a8d1cc7..7b0e2ad53 100644
  project(SonicPi)
  
 diff --git a/app/api/CMakeLists.txt b/app/api/CMakeLists.txt
-index 6a2c8704d..770af62d9 100644
+index 6a2c8704d..bc06d1661 100644
 --- a/app/api/CMakeLists.txt
 +++ b/app/api/CMakeLists.txt
 @@ -47,7 +47,12 @@ find_package(platform_folders CONFIG REQUIRED)
@@ -435,7 +436,7 @@ index 6a2c8704d..770af62d9 100644
 -find_package(unofficial-kissfft CONFIG REQUIRED)
 +if (USE_SYSTEM_LIBS)
 +    find_package(PkgConfig REQUIRED)
-+    pkg_check_modules(kissfft REQUIRED IMPORTED_TARGET kissfft)
++    pkg_check_modules(kissfft REQUIRED IMPORTED_TARGET kissfft-float)
 +else()
 +    find_package(unofficial-kissfft CONFIG REQUIRED)
 +endif()
