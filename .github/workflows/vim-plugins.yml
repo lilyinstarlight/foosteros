@@ -18,7 +18,7 @@ jobs:
       - uses: cachix/cachix-action@v10
         with:
           name: foosteros
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           ssh-key: ${{ secrets.REPO_KEY }}
       - name: Configure git
