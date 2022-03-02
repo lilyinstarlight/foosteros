@@ -59,10 +59,8 @@ nodeComposition.package.override rec {
     icon = "open-stage-control";
     desktopName = "Open Stage Control";
     comment = meta.description;
-    categories = "Network;Audio;AudioVideo;Midi;";
-    extraEntries = ''
-      StartupWMClass=open-stage-control
-    '';
+    categories = [ "Network" "Audio" "AudioVideo" "Midi" ];
+    startupWMClass = "open-stage-control";
   };
 
   passthru.tests = {

@@ -181,7 +181,7 @@ stdenv.mkDerivation rec {
     icon = "sonic-pi";
     desktopName = "Sonic Pi";
     comment = meta.description;
-    categories = "Audio;AudioVideo;Education;";
+    categories = [ "Audio" "AudioVideo" "Education" ];
   };
 
   meta = with lib; {
