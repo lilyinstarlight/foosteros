@@ -1,4 +1,4 @@
-{ pkgs, stdenv, lib, fetchFromGitHub, makeWrapper, makeDesktopItem, nodejs, electron, python3, runCommand, ... }:
+{ pkgs, stdenv, lib, fetchFromGitHub, makeWrapper, makeDesktopItem, copyDesktopItems, nodejs, electron, python3, runCommand, ... }:
 
 let
   nodeComposition = import ./node-composition.nix {
@@ -19,7 +19,11 @@ nodeComposition.package.override rec {
     hash = "sha256-uDVV34nsZd3l13taJ8bvlTSbDzyKxVLQByk8/20u6E8=";
   };
 
-  nativeBuildInputs = [ makeWrapper ];
+  nativeBuildInputs = [
+    copyDesktopItems
+    makeWrapper
+  ];
+
   buildInputs = [
     python3.pkgs.python-rtmidi
   ];
@@ -41,10 +45,6 @@ nodeComposition.package.override rec {
     install -Dm644 resources/images/logo.png $out/share/icons/hicolor/256x256/apps/open-stage-control.png
     install -Dm644 resources/images/logo.svg $out/share/icons/hicolor/scalable/apps/open-stage-control.svg
 
-    # make desktop item
-    mkdir -p $out/share
-    ln -s "${desktopItem}/share/applications" $out/share/applications
-
     # wrap electron and include python-rtmidi
     makeWrapper '${electron}/bin/electron' $out/bin/open-stage-control \
       --argv0 $out/bin/open-stage-control \
@@ -53,15 +53,17 @@ nodeComposition.package.override rec {
       --prefix PATH : ${lib.makeBinPath [ python3 ]}
   '';
 
-  desktopItem = makeDesktopItem {
-    name = "open-stage-control";
-    exec = "open-stage-control";
-    icon = "open-stage-control";
-    desktopName = "Open Stage Control";
-    comment = meta.description;
-    categories = [ "Network" "Audio" "AudioVideo" "Midi" ];
-    startupWMClass = "open-stage-control";
-  };
+  desktopItems = [
+    (makeDesktopItem {
+      name = "open-stage-control";
+      exec = "open-stage-control";
+      icon = "open-stage-control";
+      desktopName = "Open Stage Control";
+      comment = meta.description;
+      categories = [ "Network" "Audio" "AudioVideo" "Midi" ];
+      startupWMClass = "open-stage-control";
+    })
+  ];
 
   passthru.tests = {
     # test to make sure executable runs

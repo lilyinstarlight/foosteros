@@ -3,6 +3,7 @@
 , fetchFromGitHub
 , wrapQtAppsHook
 , makeDesktopItem
+, copyDesktopItems
 , cmake
 , pkg-config
 , catch2
@@ -58,6 +59,7 @@ stdenv.mkDerivation rec {
   ];
 
   nativeBuildInputs = [
+    copyDesktopItems
     wrapQtAppsHook
     cmake
     pkg-config
@@ -147,10 +149,6 @@ stdenv.mkDerivation rec {
     # Copy icon
     install -Dm644 app/gui/qt/images/icon-smaller.png $out/share/icons/hicolor/256x256/apps/sonic-pi.png
 
-    # Link desktop item
-    mkdir -p $out/share
-    ln -s "${desktopItem}/share/applications" $out/share/applications
-
     runHook postInstall
   '';
 
@@ -177,14 +175,16 @@ stdenv.mkDerivation rec {
 
   stripDebugList = [ "app" "bin" ];
 
-  desktopItem = makeDesktopItem {
-    name = "sonic-pi";
-    exec = "sonic-pi";
-    icon = "sonic-pi";
-    desktopName = "Sonic Pi";
-    comment = meta.description;
-    categories = [ "Audio" "AudioVideo" "Education" ];
-  };
+  desktopItems = [
+    (makeDesktopItem {
+      name = "sonic-pi";
+      exec = "sonic-pi";
+      icon = "sonic-pi";
+      desktopName = "Sonic Pi";
+      comment = meta.description;
+      categories = [ "Audio" "AudioVideo" "Education" ];
+    })
+  ];
 
   meta = with lib; {
     homepage = "https://sonic-pi.net/";
