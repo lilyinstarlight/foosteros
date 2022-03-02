@@ -8,6 +8,7 @@
 , catch2
 , qtbase
 , qtsvg
+, qttools
 , qwt
 , kissfft
 , crossguid
@@ -41,8 +42,8 @@ stdenv.mkDerivation rec {
     owner = "sonic-pi-net";
     repo = pname;
     #rev = "v${version}";
-    rev = "1acae43170ea43afef12c9905f0b54e270bace07";
-    hash = "sha256-eL5Wj8gbknGXmPxtmZMG2Jrpmi4B9ZLqZG9dU8twZVs=";
+    rev = "cd68cb81a2d0d9736971a052e0c8a4e1b0a9aac4";
+    hash = "sha256-hVgVBKvdDJsrEjdNMrwAIjJoXGA9F+o5qF44z/TpYtA=";
   };
 
   mixFodDeps = beamPackages.fetchMixDeps {
@@ -65,6 +66,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     qtbase
     qtsvg
+    qttools
     qwt
     kissfft
     catch2
