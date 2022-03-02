@@ -13,8 +13,12 @@ jobs:
     runs-on: ubuntu-latest
     if: github.actor == 'dependabot[bot]'
     steps:
-      - name: Auto-merge Dependabot PR
-        run: gh pr merge --auto --rebase "$PR_URL"
+      - name: Wait for checks to complete
+        run: gh pr checks --watch
         env:
-          PR_URL: '${{ github.event.pull_request.html_url }}'
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+
+      - name: Auto-merge Dependabot PR
+        run: gh pr merge --auto --squash
+        env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
