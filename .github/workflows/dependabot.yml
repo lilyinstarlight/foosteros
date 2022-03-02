@@ -12,13 +12,12 @@ jobs:
     name: Auto-merge
     runs-on: ubuntu-latest
     if: github.actor == 'dependabot[bot]'
+    env:
+      PR_URL: '${{ github.event.pull_request.html_url }}'
+      GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
     steps:
       - name: Wait for checks to complete
-        run: gh pr checks --watch
-        env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+        run: gh pr checks --watch "$PR_URL"
 
       - name: Auto-merge Dependabot PR
-        run: gh pr merge --auto --squash
-        env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+        run: gh pr merge --auto --squash "$PR_URL"
