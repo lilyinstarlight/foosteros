@@ -14,9 +14,6 @@ let
     libxkbcommon
     wayland
   ];
-
-  simBinDeps = [
-  ];
 in
 
 stdenv.mkDerivation rec {
@@ -66,13 +63,13 @@ stdenv.mkDerivation rec {
     # MIME resources
     for size in 16 32 48 512; do
       mkdir -p $out/share/icons/hicolor/$sizex$size/mimetypes
-      ln -s $out/Resources/file-icon/data-$size.png $out/share/icons/hicolor/$sizex$size/mimetypes/application-x-playdate.png
+      ln -s $out/sdk/Resources/file-icon/data-$size.png $out/share/icons/hicolor/$sizex$size/mimetypes/application-x-playdate.png
     done
     mkdir -p $out/share/icons/hicolor/scalable/apps
-    ln -s $out/Resources/date.play.simulator.svg $out/share/icons/hicolor/scalable/apps/date.play.simulator.svg
+    ln -s $out/sdk/Resources/date.play.simulator.svg $out/share/icons/hicolor/scalable/apps/date.play.simulator.svg
 
     mkdir -p $out/share/mime/packages
-    ln -s ../../../sdk/Resources/playdate-types.xml $out/share/mime/packages/playdate-types.xml
+    ln -s $out/sdk/Resources/playdate-types.xml $out/share/mime/packages/playdate-types.xml
 
     # Executables
     makeWrapper $out/sdk/bin/pdc $out/bin/pdc \
@@ -85,7 +82,6 @@ stdenv.mkDerivation rec {
       --argv0 $out/sdk/bin/PlaydateSimulator \
       "''${gappsWrapperArgs[@]}" \
       --prefix LD_LIBRARY_PATH : '${lib.makeLibraryPath simLibDeps}' \
-      --prefix PATH : '${lib.makeBinPath simBinDeps}' \
       --run '[ -d "$HOME/.Playdate Simulator/sdk" ] || (echo "Creating SDK and virtual disk in $HOME/.Playdate Simluator/sdk..."; mkdir -p "$HOME/.Playdate Simulator/sdk"; for dir in '"'$out'"'/sdk/*; do if [ "$(basename "$dir")" != "Disk" ]; then ln -s "$dir" "$HOME/.Playdate Simulator/sdk/$(basename "$dir")"; else cp -r "$dir" "$HOME/.Playdate Simulator/sdk/$(basename "$dir")"; chmod -R u=rwX,g=rX,o=rX "$HOME/.Playdate Simulator/sdk/$(basename "$dir")"; fi; done)' \
       --run 'echo "Setting SDK path to $HOME/.Playdate Simluator/sdk..."; if grep -qs "^SDKDirectory=" "$HOME/.Playdate Simulator/Playdate Simulator.ini"; then sed -i -e "s#^SDKDirectory=.*\$#SDKDirectory=$HOME/.Playdate Simulator/sdk#" "$HOME/.Playdate Simulator/Playdate Simulator.ini"; else echo >"$HOME/.Playdate Simulator/Playdate Simulator.ini"; sed -i -e "1iSDKDirectory=$HOME/.Playdate Simulator/sdk\n[LastUsed]\nPDXDirectory=$HOME/.Playdate Simulator/sdk/Disk/System/Launcher.pdx/" "$HOME/.Playdate Simulator/Playdate Simulator.ini"; fi'
   '';
