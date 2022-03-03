@@ -94,6 +94,7 @@ in
   kodelife = callPackage ./kodelife {
     inherit (gst_all_1) gstreamer gst-plugins-base;
   };
+  playdate-sdk = callPackage ./playdate-sdk {};
   touchosc = callPackage ./touchosc {};
 });
 
