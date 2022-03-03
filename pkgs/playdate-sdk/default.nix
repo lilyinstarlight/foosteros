@@ -76,13 +76,13 @@ stdenv.mkDerivation rec {
 
     # Executables
     makeWrapper $out/sdk/bin/pdc $out/bin/pdc \
-      --argv0 $out/bin/pdc \
+      --argv0 $out/sdk/bin/pdc
 
     makeWrapper $out/sdk/bin/pdutil $out/bin/pdutil \
-      --argv0 $out/bin/pdutil
+      --argv0 $out/sdk/bin/pdutil
 
     makeWrapper $out/sdk/bin/PlaydateSimulator $out/bin/PlaydateSimulator \
-      --argv0 $out/bin/PlaydateSimulator \
+      --argv0 $out/sdk/bin/PlaydateSimulator \
       "''${gappsWrapperArgs[@]}" \
       --prefix LD_LIBRARY_PATH : '${lib.makeLibraryPath simLibDeps}' \
       --prefix PATH : '${lib.makeBinPath simBinDeps}' \
