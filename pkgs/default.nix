@@ -1,4 +1,4 @@
-{ pkgs ? import <nixpkgs> {}, outpkgs ? pkgs, allowUnfree ? (!(builtins.getEnv "FOOSTEROS_EXCLUDE_UNFREE" == "1")), isOverlay ? false, ... }:
+{ pkgs ? import <nixpkgs> {}, outpkgs ? pkgs, fenix ? import <fenix> {}, allowUnfree ? (!(builtins.getEnv "FOOSTEROS_EXCLUDE_UNFREE" == "1")), isOverlay ? false, ... }:
 
 with pkgs;
 
@@ -91,6 +91,17 @@ in
   python3Packages = recurseIntoAttrs (pkgs.python3Packages.callPackage ./python-modules {});
   vimPlugins = recurseIntoAttrs (callPackage ./vim-plugins {});
 }) // (lib.optionalAttrs allowUnfree {
+  # dependents of unfree packages
+  crank = callPackage ./crank {
+    rustNightlyToolchain = fenix.complete.withComponents [
+      "rustc"
+      "cargo"
+      "rust-src"
+    ];
+    playdate-sdk = resolveDep "playdate-sdk";
+  };
+
+  # unfree packages
   kodelife = callPackage ./kodelife {
     inherit (gst_all_1) gstreamer gst-plugins-base;
   };

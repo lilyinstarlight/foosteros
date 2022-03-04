@@ -1,0 +1,148 @@
+commit 6c57127eb459304b872ad6e4f9a91356e1db5ea9
+Author: Lily Foster <lily@lily.flowers>
+Date:   Fri Mar 4 12:39:04 2022 -0500
+
+    Add Linux support
+
+diff --git a/src/main.rs b/src/main.rs
+index 4a5212a..4b71508 100644
+--- a/src/main.rs
++++ b/src/main.rs
+@@ -16,14 +16,18 @@ use zip_extensions::zip_create_from_directory_with_options;
+ #[cfg(unix)]
+ use anyhow::Context;
+ 
+-#[cfg(unix)]
++#[cfg(target_os = "macos")]
+ const GCC_PATH_STR: &'static str = "/usr/local/bin/arm-none-eabi-gcc";
++#[cfg(all(unix, not(target_os = "macos")))]
++const GCC_PATH_STR: &'static str = "arm-none-eabi-gcc";
+ #[cfg(windows)]
+ const GCC_PATH_STR: &'static str =
+     r"C:\Program Files (x86)\GNU Tools Arm Embedded\9 2019-q4-major\bin\arm-none-eabi-gcc.exe";
+ 
+-#[cfg(unix)]
++#[cfg(target_os = "macos")]
+ const OBJCOPY_PATH_STR: &'static str = "/usr/local/bin/arm-none-eabi-objcopy";
++#[cfg(all(unix, not(target_os = "macos")))]
++const OBJCOPY_PATH_STR: &'static str = "arm-none-eabi-objcopy";
+ #[cfg(windows)]
+ const OBJCOPY_PATH_STR: &'static str =
+     r"C:\Program Files (x86)\GNU Tools Arm Embedded\9 2019-q4-major\bin\arm-none-eabi-objcopy.exe";
+@@ -46,7 +50,7 @@ const SDK_DIR: &'static str = "Documents";
+ 
+ fn playdate_sdk_path() -> Result<PathBuf, Error> {
+     let home_dir = dirs::home_dir().ok_or(anyhow!("Can't find home dir"))?;
+-    Ok(home_dir.join(SDK_DIR).join("PlaydateSDK"))
++    Ok(env::var("PLAYDATE_SDK").map_or(home_dir.join(SDK_DIR).join("PlaydateSDK"), |path| PathBuf::from(path)))
+ }
+ 
+ fn playdate_c_api_path() -> Result<PathBuf, Error> {
+@@ -337,13 +341,19 @@ impl Build {
+         info!("run_target");
+ 
+         let pdutil_path = playdate_sdk_path()?.join("bin").join(PDUTIL_NAME);
+-        let modem_path = Path::new("/dev/cu.usbmodemPDU1_Y0005491");
+-        let data_path = Path::new("/Volumes/PLAYDATE");
++        #[cfg(target_os = "macos")]
++        let modem_path = PathBuf::from(env::var("PLAYDATE_DEVICE").unwrap_or(String::from("/dev/cu.usbmodemPDU1_Y0005491")));
++        #[cfg(not(target_os = "macos"))]
++        let modem_path = PathBuf::from(env::var("PLAYDATE_DEVICE").unwrap_or(String::from("/dev/ttyACM0")));
++        #[cfg(target_os = "macos")]
++        let data_path = PathBuf::from(env::var("PLAYDATE_DATA").unwrap_or(String::from("/Volumes/PLAYDATE")));
++        #[cfg(not(target_os = "macos"))]
++        let data_path = PathBuf::from(env::var("PLAYDATE_DATA").unwrap_or(format!("/run/media/{}/PLAYDATE", env::var("USER").expect("user"))));
+ 
+         let duration = time::Duration::from_millis(100);
+         if modem_path.exists() {
+             let mut cmd = Command::new(&pdutil_path);
+-            cmd.arg(modem_path).arg("datadisk").arg(pdx_dir);
++            cmd.arg(modem_path.clone()).arg("datadisk").arg(pdx_dir);
+             info!("datadisk cmd: {:#?}", cmd);
+             let _ = cmd.status()?;
+ 
+@@ -364,10 +374,20 @@ impl Build {
+         fs::create_dir(&games_target_dir).context("Creating game directory on device")?;
+         Self::copy_directory(&pdx_dir, &games_target_dir)?;
+ 
+-        let mut cmd = Command::new("diskutil");
+-        cmd.arg("eject").arg(&data_path);
+-        info!("eject cmd: {:#?}", cmd);
+-        let _ = cmd.status()?;
++        #[cfg(target_os = "macos")]
++        {
++            let mut cmd = Command::new("diskutil");
++            cmd.arg("eject").arg(&data_path);
++            info!("eject cmd: {:#?}", cmd);
++            let _ = cmd.status()?;
++        }
++
++        #[cfg(not(target_os = "macos"))]
++        {
++            let mut cmd = Command::new("eject");
++            info!("eject cmd: {:#?}", cmd);
++            let _ = cmd.status()?;
++        }
+ 
+         while !modem_path.exists() {
+             thread::sleep(duration);
+@@ -399,7 +419,7 @@ impl Build {
+             fs::copy(&lib_target_path, &source_dir_path)?;
+         }
+ 
+-        #[cfg(unix)]
++        #[cfg(target_os = "macos")]
+         {
+             let lib_target_path = target_dir.join(format!("lib{}.dylib", example_name));
+             let source_dir_path = source_dir.join("pdex.dylib");
+@@ -407,6 +427,14 @@ impl Build {
+             fs::copy(&lib_target_path, &source_dir_path)?;
+         }
+ 
++        #[cfg(all(unix, not(target_os = "macos")))]
++        {
++            let lib_target_path = target_dir.join(format!("lib{}.so", example_name));
++            let source_dir_path = source_dir.join("pdex.so");
++            debug!("copy: {:?} -> {:?}", lib_target_path, source_dir_path);
++            fs::copy(&lib_target_path, &source_dir_path)?;
++        }
++
+         let pdx_bin_path = source_dir.join("pdex.bin");
+         if !pdx_bin_path.exists() {
+             fs::File::create(&pdx_bin_path)?;
+@@ -424,7 +452,7 @@ impl Build {
+             cmd.status()?
+         };
+ 
+-        #[cfg(unix)]
++        #[cfg(target_os = "macos")]
+         let status = {
+             let mut cmd = Command::new("open");
+             cmd.arg("-a");
+@@ -433,6 +461,13 @@ impl Build {
+             cmd.status()?
+         };
+ 
++        #[cfg(all(unix, not(target_os = "macos")))]
++        let status = {
++            let mut cmd = Command::new("PlaydateSimulator");
++            cmd.arg(&pdx_path);
++            cmd.status()?
++        };
++
+         if !status.success() {
+             bail!("open failed with error {:?}", status);
+         }
+@@ -597,6 +632,12 @@ impl Package {
+                 .arg(target_archive)
+                 .status()?;
+         }
++        #[cfg(target_os = "linux")]
++        if self.reveal {
++            let _ = Command::new("xdg-open")
++                .arg(parent)
++                .status()?;
++        }
+         Ok(())
+     }
+ }

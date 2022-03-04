@@ -32,6 +32,11 @@
       inputs.utils.follows = "flake-utils";
     };
 
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     flake-utils.url = "github:numtide/flake-utils";
 
     flake-compat = {
@@ -40,7 +45,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, sops-nix, nix-ld, nix-alien, envfs, ... }:
+  outputs = { self, nixpkgs, home-manager, sops-nix, nix-ld, nix-alien, envfs, fenix, ... }:
     let
       supportedSystems = with nixpkgs.lib; (intersectLists (platforms.x86_64 ++ platforms.aarch64 ++ platforms.i686) platforms.linux) ++ (intersectLists (platforms.x86_64 ++ platforms.aarch64) platforms.darwin);
 
@@ -69,6 +74,7 @@
 
     legacyPackages = forAllSystems (system: import ./pkgs {
       pkgs = nixpkgs.legacyPackages.${system};
+      fenix = fenix.packages.${system};
       isOverlay = false;
     });
 
@@ -79,6 +85,7 @@
         pkgs.linkFarmFromDrvs "foosteros-pkgs" (nixpkgs.lib.filter (drv: !drv.meta.unsupported) (nixpkgs.lib.collect (drv: nixpkgs.lib.isDerivation drv) (
           import ./pkgs {
             inherit pkgs;
+            fenix = fenix.packages.${system};
             allowUnfree = false;
             isOverlay = false;
           })
@@ -88,6 +95,7 @@
     overlays.foosteros = (final: prev: import ./pkgs {
       pkgs = prev;
       outpkgs = final;
+      fenix = fenix.packages.${final.stdenv.hostPlatform.system};
       isOverlay = true;
     });
     overlays.nix-alien = nix-alien.overlay;
