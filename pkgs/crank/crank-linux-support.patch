@@ -1,11 +1,11 @@
-commit 6c57127eb459304b872ad6e4f9a91356e1db5ea9
+commit d7f5c803462fbd4c091569937b6de45b76016e13
 Author: Lily Foster <lily@lily.flowers>
-Date:   Fri Mar 4 12:39:04 2022 -0500
+Date:   Sat Mar 5 08:19:36 2022 -0500
 
     Add Linux support
 
 diff --git a/src/main.rs b/src/main.rs
-index 4a5212a..4b71508 100644
+index 4a5212a..0c7bee9 100644
 --- a/src/main.rs
 +++ b/src/main.rs
 @@ -16,14 +16,18 @@ use zip_extensions::zip_create_from_directory_with_options;
@@ -34,7 +34,7 @@ index 4a5212a..4b71508 100644
  fn playdate_sdk_path() -> Result<PathBuf, Error> {
      let home_dir = dirs::home_dir().ok_or(anyhow!("Can't find home dir"))?;
 -    Ok(home_dir.join(SDK_DIR).join("PlaydateSDK"))
-+    Ok(env::var("PLAYDATE_SDK").map_or(home_dir.join(SDK_DIR).join("PlaydateSDK"), |path| PathBuf::from(path)))
++    Ok(env::var("PLAYDATE_SDK_PATH").map_or(home_dir.join(SDK_DIR).join("PlaydateSDK"), |path| PathBuf::from(path)))
  }
  
  fn playdate_c_api_path() -> Result<PathBuf, Error> {
@@ -45,13 +45,13 @@ index 4a5212a..4b71508 100644
 -        let modem_path = Path::new("/dev/cu.usbmodemPDU1_Y0005491");
 -        let data_path = Path::new("/Volumes/PLAYDATE");
 +        #[cfg(target_os = "macos")]
-+        let modem_path = PathBuf::from(env::var("PLAYDATE_DEVICE").unwrap_or(String::from("/dev/cu.usbmodemPDU1_Y0005491")));
++        let modem_path = PathBuf::from(env::var("PLAYDATE_SERIAL_DEVICE").unwrap_or(String::from("/dev/cu.usbmodemPDU1_Y0005491")));
 +        #[cfg(not(target_os = "macos"))]
-+        let modem_path = PathBuf::from(env::var("PLAYDATE_DEVICE").unwrap_or(String::from("/dev/ttyACM0")));
++        let modem_path = PathBuf::from(env::var("PLAYDATE_SERIAL_DEVICE").unwrap_or(String::from("/dev/ttyACM0")));
 +        #[cfg(target_os = "macos")]
-+        let data_path = PathBuf::from(env::var("PLAYDATE_DATA").unwrap_or(String::from("/Volumes/PLAYDATE")));
++        let data_path = PathBuf::from(env::var("PLAYDATE_MOUNT_POINT").unwrap_or(String::from("/Volumes/PLAYDATE")));
 +        #[cfg(not(target_os = "macos"))]
-+        let data_path = PathBuf::from(env::var("PLAYDATE_DATA").unwrap_or(format!("/run/media/{}/PLAYDATE", env::var("USER").expect("user"))));
++        let data_path = PathBuf::from(env::var("PLAYDATE_MOUNT_POINT").unwrap_or(format!("/run/media/{}/PLAYDATE", env::var("USER").expect("user"))));
  
          let duration = time::Duration::from_millis(100);
          if modem_path.exists() {

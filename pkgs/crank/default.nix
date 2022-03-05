@@ -22,7 +22,7 @@ rustPlatform.buildRustPackage rec {
   postInstall = ''
     wrapProgram $out/bin/crank \
       --prefix PATH : '${lib.makeBinPath [ rustNightlyToolchain cargo-xbuild gcc-arm-embedded playdate-sdk ]}' \
-      --set PLAYDATE_SDK '${playdate-sdk}/sdk'
+      --set PLAYDATE_SDK_PATH '${playdate-sdk}/sdk'
   '';
 
   meta = with lib; {
