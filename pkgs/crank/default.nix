@@ -13,6 +13,7 @@ rustPlatform.buildRustPackage rec {
 
   cargoPatches = [
     ./crank-linux-support.patch
+    ./crank-pdxinfo.patch
   ];
 
   cargoHash = "sha256-kCH9+ea+I+n8w6A0peyIRATZb0Ss+YZmF+SPvKXDem4=";
