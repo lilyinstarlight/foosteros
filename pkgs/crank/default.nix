@@ -1,4 +1,4 @@
-{ lib, stdenv, rustPlatform, fetchFromGitHub, makeWrapper, rustNightlyToolchain, cargo-xbuild, gcc-arm-embedded, playdate-sdk }:
+{ lib, stdenv, rustPlatform, fetchFromGitHub, makeWrapper, rustNightlyToolchain, cargo-xbuild, gcc-arm-embedded, playdate-sdk, xdg-utils }:
 
 rustPlatform.buildRustPackage rec {
   pname = "crank";
@@ -22,7 +22,7 @@ rustPlatform.buildRustPackage rec {
 
   postInstall = ''
     wrapProgram $out/bin/crank \
-      --prefix PATH : '${lib.makeBinPath [ rustNightlyToolchain cargo-xbuild gcc-arm-embedded playdate-sdk ]}' \
+      --prefix PATH : '${lib.makeBinPath [ rustNightlyToolchain cargo-xbuild gcc-arm-embedded playdate-sdk xdg-utils ]}' \
       --set PLAYDATE_SDK_PATH '${playdate-sdk}/sdk'
   '';
 
