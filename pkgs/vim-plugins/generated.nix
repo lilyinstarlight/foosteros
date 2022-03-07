@@ -17,12 +17,12 @@ final: prev:
 
   vim-fish = buildVimPluginFrom2Nix {
     pname = "vim-fish";
-    version = "2021-05-21";
+    version = "2022-03-06";
     src = fetchFromGitHub {
       owner = "inkch";
       repo = "vim-fish";
-      rev = "9e2472a8f3f3953f23343b3e053d80ad0ce6a25f";
-      sha256 = "1bz32wfq3402yflj6hfk4jww1ykiki01g191vdji14vyg0dpl91w";
+      rev = "e648eaf250be676eef02b3e2c9e25eabfdb2ed75";
+      sha256 = "1zpjg656wgxgq5za06ql1z7ajls58gbcy1chkm83fnh1h2kr6c99";
     };
     meta.homepage = "https://github.com/inkch/vim-fish/";
   };
