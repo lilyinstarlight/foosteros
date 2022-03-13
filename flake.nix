@@ -78,18 +78,16 @@
       isOverlay = false;
     });
 
-    defaultPackage = forAllSystems (system:
-      let
-        pkgs = nixpkgs.legacyPackages.${system};
-      in
-        pkgs.linkFarmFromDrvs "foosteros-pkgs" (nixpkgs.lib.filter (drv: !drv.meta.unsupported) (nixpkgs.lib.collect (drv: nixpkgs.lib.isDerivation drv) (
+    packages = forAllSystems (system: {
+        default = nixpkgs.legacyPackages.${system}.linkFarmFromDrvs "foosteros-pkgs" (nixpkgs.lib.filter (drv: !drv.meta.unsupported) (nixpkgs.lib.collect (drv: nixpkgs.lib.isDerivation drv) (
           import ./pkgs {
-            inherit pkgs;
+            pkgs = nixpkgs.legacyPackages.${system};
             fenix = fenix.packages.${system};
             allowUnfree = false;
             isOverlay = false;
           })
-        ))
+        ));
+      }
     );
 
     overlays.foosteros = (final: prev: import ./pkgs {
@@ -99,7 +97,7 @@
       isOverlay = true;
     });
     overlays.nix-alien = nix-alien.overlay;
-    overlay = self.overlays.foosteros;
+    overlays.default = self.overlays.foosteros;
 
     nixosModules.foosteros = { config, system, ... }: import ./modules/nixos {
       pkgs = nixpkgs.legacyPackages.${system};
