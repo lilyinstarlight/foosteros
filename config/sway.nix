@@ -1,19 +1,27 @@
 { config, lib, pkgs, ... }:
 
 let
-  sway-gsettings-desktop-schemas = pkgs.runCommand "sway-gsettings-desktop-schemas" { preferLocalBuild = true; } ''
-    mkdir -p $out/share/gsettings-schemas/sway-gsettings-overrides/glib-2.0/schemas/
-
-    cp -rf ${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/*/glib-2.0/schemas/*.xml $out/share/gsettings-schemas/sway-gsettings-overrides/glib-2.0/schemas/
-
-    cat - >$out/share/gsettings-schemas/sway-gsettings-overrides/glib-2.0/schemas/sway-interface.gschema.override <<- EOF
-      [org.gnome.desktop.interface]
+  sway-dconf-settings = pkgs.writeTextFile {
+    name = "sway-dconf-settings";
+    destination = "/dconf/sway-custom";
+    text = ''
+      [org/gnome/desktop/interface]
       gtk-theme='Materia-Fooster'
       icon-theme='Papirus-Dark'
       cursor-theme='Bibata-Modern-Classic'
-    EOF
 
-    ${pkgs.glib.dev}/bin/glib-compile-schemas $out/share/gsettings-schemas/sway-gsettings-overrides/glib-2.0/schemas/
+      [org/gnome/desktop/wm/preferences]
+      theme='Materia-Fooster'
+    '';
+  };
+
+  sway-dconf-db = pkgs.runCommand "sway-dconf-db" { preferLocalBuild = true; } ''
+    ${pkgs.dconf}/bin/dconf compile $out ${sway-dconf-settings}/dconf
+  '';
+
+  sway-dconf-profile = pkgs.writeText "sway-dconf-profile" ''
+    user-db:user
+    file-db:${sway-dconf-db}
   '';
 in
 
@@ -610,8 +618,6 @@ in
     '';
   };
 
-  environment.sessionVariables.NIX_GSETTINGS_OVERRIDES_DIR = "${sway-gsettings-desktop-schemas}/share/gsettings-schemas/sway-gsettings-overrides/glib-2.0/schemas";
-
   qt5 = {
     enable = true;
     style = "adwaita-dark";
@@ -623,6 +629,8 @@ in
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
     gtkUsePortal = true;
   };
+
+  programs.dconf.profiles.sway = sway-dconf-profile;
 
   programs.tmux.extraConfig = ''
     # status
@@ -645,6 +653,7 @@ in
     ];
     extraSessionCommands = ''
       export XDG_SESSION_TYPE=wayland
+      export DCONF_PROFILE=sway
     '';
   };
 
