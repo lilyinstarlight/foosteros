@@ -32,6 +32,10 @@
     ];
   };
 
+  boot.kernel.sysctl = {
+    "net.ipv4.conf.all.arp_filter" = 1;
+  };
+
   boot.loader = {
     efi.canTouchEfiVariables = true;
 
