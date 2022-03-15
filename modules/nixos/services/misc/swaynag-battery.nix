@@ -72,7 +72,7 @@ in
         ExecStart = "${cfg.package}/bin/swaynag-battery --threshold ${toString cfg.threshold} --interval ${cfg.interval} --uevent /sys/class/power_supply/${cfg.powerSupply}/uevent";
       };
     } // optionalAttrs cfg.enable {
-      wantedBy = [ "sway-session.target" ];
+      wantedBy = [ "wlr-session.target" ];
     };
 
     environment.systemPackages = [ cfg.package ];

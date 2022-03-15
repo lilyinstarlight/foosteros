@@ -39,7 +39,7 @@ in
 
     targets = mkOption {
       type = types.listOf types.str;
-      default = [ "sway-session.target" ];
+      default = [ "wlr-session.target" ];
       description = ''
         Systemd user targets to enable mako for.
       '';
@@ -62,7 +62,7 @@ in
       partOf = [ "graphical-session.target" ];
 
       serviceConfig = {
-        Type = "simple";
+        Type = "dbus";
         ExecStart = pkgs.writeScript "mako" ''
           #!/bin/sh
           makoconfig=""

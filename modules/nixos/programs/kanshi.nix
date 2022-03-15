@@ -39,7 +39,7 @@ in
 
     targets = mkOption {
       type = types.listOf types.str;
-      default = [ "sway-session.target" ];
+      default = [ "wlr-session.target" ];
       description = ''
         Systemd user targets to enable kanshi for.
       '';

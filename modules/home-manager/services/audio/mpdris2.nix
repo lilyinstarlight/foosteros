@@ -90,15 +90,16 @@ in {
     xdg.configFile."mpDris2/mpDris2.conf".text = toIni mpdris2Conf;
 
     systemd.user.services.mpdris2 = {
-      Install = { WantedBy = [ "default.target" ]; };
+      Install = { WantedBy = [ "graphical-session.target" ]; };
 
       Unit = {
         Description = "MPRIS 2 support for MPD";
+        PartOf = [ "graphical-session.target" ];
         After = [ cfg.mpd.service ];
       };
 
       Service = {
-        Type = "simple";
+        Type = "dbus";
         Restart = "on-failure";
         RestartSec = "5s";
         ExecStart = "${cfg.package}/bin/mpDris2";
