@@ -9,9 +9,6 @@ let
       gtk-theme='Materia-Fooster'
       icon-theme='Papirus-Dark'
       cursor-theme='Bibata-Modern-Classic'
-
-      [org/gnome/desktop/wm/preferences]
-      theme='Materia-Fooster'
     '';
   };
 
