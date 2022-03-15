@@ -106,7 +106,7 @@
       inherit (self) inputs outputs;
       inherit config;
     };
-    nixosModule = self.nixosModules.foosteros;
+    nixosModules.default = self.nixosModules.foosteros;
 
     checks = forAllSystems (system: import ./tests {
       pkgs = nixpkgs.legacyPackages.${system};
