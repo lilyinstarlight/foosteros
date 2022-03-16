@@ -71,7 +71,7 @@
 
   nixpkgs = {
     config.allowUnfree = true;
-    overlays = lib.attrValues outputs.overlays;
+    overlays = lib.attrValues (removeAttrs outputs.overlays [ "default" ]);
   };
 
   system.nixos.label = lib.concatStringsSep "-" ((lib.sort (x: y: x < y) config.system.nixos.tags) ++ [ config.system.nixos.version ] ++ [ "foosteros" (self.shortRev or "dirty") ]);

@@ -1,4 +1,4 @@
-builtins.attrValues (import (
+builtins.attrValues (removeAttrs (import (
     let
       lock = builtins.fromJSON (builtins.readFile ./flake.lock);
     in fetchTarball {
@@ -9,4 +9,4 @@ builtins.attrValues (import (
   {
     src =  ./.;
   }
-).defaultNix.overlays
+).defaultNix.overlays [ "default" ])
