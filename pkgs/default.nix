@@ -48,6 +48,9 @@ in
   };
   swaynag-battery = callPackage ./swaynag-battery {};
 
+  mpdris2 = callPackage ./mpdris2 {
+    inherit (pkgs) mpdris2;
+  };
   sonic-pi = libsForQt5.callPackage ./sonic-pi {
     supercollider = resolveDep "supercollider-with-sc3-plugins";
   };
