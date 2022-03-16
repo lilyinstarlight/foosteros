@@ -475,7 +475,12 @@
       tray = "never";
     };
 
-    systemd.user.services.mpdris2.Unit.After = [ "mako.service" ];
+    systemd.user.services.mpdris2 = {
+      # wait for mako since mpdris2 disables notifications if the org.freedesktop.Notifications busname is not available yet
+      Unit.After = [ "mako.service" ];
+      # wait for mpd port to become available to avoid reconnected notification on bootup
+      Service.ExecStartPre = "${pkgs.coreutils}/bin/timeout 60 ${pkgs.bash}/bin/sh -c 'while ! ${pkgs.iproute2}/sbin/ss -tlnH sport = :6600 | ${pkgs.gnugrep}/bin/grep -q \"^LISTEN.*:6600\"; do ${pkgs.coreutils}/bin/sleep 1; done'";
+    };
 
     programs.beets = {
       enable = true;
