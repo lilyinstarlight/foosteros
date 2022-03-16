@@ -188,7 +188,7 @@
     })) azure-cli
     neofetch
     texlive.combined.scheme-full
-    gnumake clang binutils
+    gnumake llvmPackages_latest.clang llvmPackages_latest.bintools llvmPackages_latest.lldb
   ] ++ (lib.optionals config.nixpkgs.config.allowUnfree [
     discord slack teams
   ]);
