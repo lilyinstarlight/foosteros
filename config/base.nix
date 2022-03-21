@@ -1,7 +1,10 @@
 { config, lib, pkgs, self, inputs, outputs, ... }:
 
 {
-  imports = (import ../modules/nixos/module-list.nix) ++ [
+  imports = [
+    inputs.home-manager.nixosModules.home-manager
+    inputs.sops-nix.nixosModules.sops
+  ] ++ (import ../modules/nixos/module-list.nix) ++ [
     ./fish.nix
     ./neovim.nix
     ./tmux.nix
@@ -137,7 +140,7 @@
     cachix fpaste ftmp furi
     git gitAndTools.delta ripgrep
     shellcheck progress
-    nix-index nix-alien comma
+    nix-index comma
   ];
 
   environment.shellAliases = {

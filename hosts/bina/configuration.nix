@@ -4,6 +4,7 @@
   imports = [
     ./hardware-configuration.nix
 
+    ../../config/alien.nix
     ../../config/pki.nix
     ../../config/lsp.nix
     ../../config/intelgfx.nix

@@ -12,12 +12,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-ld = {
-      url = "github:Mic92/nix-ld";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.utils.follows = "flake-utils";
-    };
-
     nix-alien = {
       url = "github:thiagokokada/nix-alien";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -45,7 +39,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, sops-nix, nix-ld, nix-alien, envfs, fenix, ... }:
+  outputs = { self, nixpkgs, home-manager, sops-nix, nix-alien, envfs, fenix, ... }@inputs:
     let
       supportedSystems = with nixpkgs.lib; (intersectLists (platforms.x86_64 ++ platforms.aarch64 ++ platforms.i686) platforms.linux) ++ (intersectLists (platforms.x86_64 ++ platforms.aarch64) platforms.darwin);
 
@@ -55,18 +49,12 @@
     lib = {
       baseSystem = { system ? "x86_64-linux", modules ? [], baseModules ? [] }: nixpkgs.lib.nixosSystem {
         system = system;
+        specialArgs = {
+          fpkgs = self.legacyPackages.${system};
+          inherit self;
+          inherit (self) inputs outputs;
+        };
         modules = baseModules ++ [
-          home-manager.nixosModules.home-manager
-          sops-nix.nixosModules.sops
-          nix-ld.nixosModules.nix-ld
-          envfs.nixosModules.envfs
-          {
-            config._module.args = {
-              fpkgs = self.legacyPackages.${system};
-              inherit self;
-              inherit (self) inputs outputs;
-            };
-          }
           ./config/base.nix
         ] ++ modules;
       };
@@ -96,7 +84,6 @@
       fenix = fenix.packages.${final.stdenv.hostPlatform.system};
       isOverlay = true;
     });
-    overlays.nix-alien = nix-alien.overlay;
     overlays.default = self.overlays.foosteros;
 
     nixosModules.foosteros = { config, system, ... }: import ./modules/nixos {
