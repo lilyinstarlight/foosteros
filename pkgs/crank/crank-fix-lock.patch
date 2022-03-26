@@ -1,0 +1,13 @@
+diff --git a/Cargo.lock b/Cargo.lock
+index c1b42ec..706a4bf 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -162,7 +162,7 @@ checksum = "245097e9a4535ee1e3e3931fcfcd55a796a44c643e8596ff6566d68f09b87bbc"
+ 
+ [[package]]
+ name = "crank"
+-version = "0.2.3"
++version = "0.2.4"
+ dependencies = [
+  "Inflector",
+  "anyhow",
