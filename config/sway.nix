@@ -21,12 +21,12 @@ let
     file-db:${sway-dconf-db}
   '';
 
-  sway-default-cursor-theme = pkgs.writeTextFile {
-    name = "sway-default-cursor-theme";
+  sway-default-icon-theme = pkgs.writeTextFile {
+    name = "sway-default-icon-theme";
     destination = "/share/icons/default/index.theme";
     text = ''
       [icon theme]
-      Inherits=Bibata-Modern-Classic
+      Inherits=Papirus-Dark;Bibata-Modern-Classic
     '';
   };
 in
@@ -652,7 +652,7 @@ in
       pulseaudio brightnessctl playerctl jq glib
       swaybg swaylock swayidle
       kanshi i3status swaywsr mako rofi-wayland alacritty
-      fooster-backgrounds fooster-materia-theme bibata-cursors papirus-icon-theme sway-default-cursor-theme
+      fooster-backgrounds fooster-materia-theme bibata-cursors papirus-icon-theme sway-default-icon-theme
       slurp grim wl-clipboard libnotify sway-contrib.grimshot swappy wf-recorder wl-mirror
       xwayland
       xdg-utils
