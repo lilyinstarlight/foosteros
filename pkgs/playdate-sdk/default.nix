@@ -18,11 +18,11 @@ in
 
 stdenv.mkDerivation rec {
   pname = "playdate-sdk";
-  version = "1.9.0";
+  version = "1.9.3";
 
   src = fetchurl {
     url = "https://download.panic.com/playdate_sdk/Linux/PlaydateSDK-${version}.tar.gz";
-    hash = "sha256-t6qphN2ygwwN3pQ0btVH/960445VU+iqx8ORJnNVKes=";
+    hash = "sha256-nSthRrtCI+RfgRTXw7eSnckNKGb43LzY2fy7k2K/z3g=";
   };
 
   nativeBuildInputs = [
@@ -56,9 +56,6 @@ stdenv.mkDerivation rec {
     # SDK
     mkdir -p $out/sdk
     cp -r * $out/sdk/
-
-    # TODO: remove with next release (ref: https://devforum.play.date/t/segmentation-fault-running-playdatesimulator-on-linux/3360/3)
-    sed -i -e s/png_/PNG_/g $out/sdk/bin/PlaydateSimulator
 
     # MIME resources
     for size in 16 32 48 512; do
