@@ -41,12 +41,12 @@ final: prev:
 
   vim-jdaddy = buildVimPluginFrom2Nix {
     pname = "vim-jdaddy";
-    version = "2019-11-13";
+    version = "2022-03-26";
     src = fetchFromGitHub {
       owner = "tpope";
       repo = "vim-jdaddy";
-      rev = "5cffddb8e644d3a3d0c0ee6a7abf5b713e3c4f97";
-      sha256 = "1vzay1f9x3m971ivnd9lfiwmyli8gblzgnw21cs6y20d99xgn670";
+      rev = "23b67752cb869dd9c8f3109173b69aa96a1f3acf";
+      sha256 = "1frkyq5zpwkwrrjcf0sscmr6q696vaaxnc0r93mk9psv5zbna4vl";
     };
     meta.homepage = "https://github.com/tpope/vim-jdaddy/";
   };
