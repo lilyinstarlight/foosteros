@@ -994,13 +994,13 @@ let
         sha512 = "j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==";
       };
     };
-    "ajv-8.10.0" = {
+    "ajv-8.11.0" = {
       name = "ajv";
       packageName = "ajv";
-      version = "8.10.0";
+      version = "8.11.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/ajv/-/ajv-8.10.0.tgz";
-        sha512 = "bzqAEZOjkrUMl2afH8dknrq5KEk2SrwdBROR+vH1EKVQTqaUbJVPdc/gEdggTMM0Se+s+Ja4ju4TlNcStKl2Hw==";
+        url = "https://registry.npmjs.org/ajv/-/ajv-8.11.0.tgz";
+        sha512 = "wGgprdCvMalC0BztXvitD2hC04YffAvtsUn93JbGXYLAtCUO4xd17mCCZQxUOItiBwZvJScWo8NIvQMQ71rdpg==";
       };
     };
     "amdefine-1.0.1" = {
@@ -1634,13 +1634,13 @@ let
         sha512 = "YrwaA0vEKazPBkn0ipTiMpSajYDSe+KjQfrjhcBMxJt/znbvlHd8Pw/Vamaz5EB4Wfhs3SUR3Z9mwRu/P3s3Yg==";
       };
     };
-    "caniuse-lite-1.0.30001319" = {
+    "caniuse-lite-1.0.30001323" = {
       name = "caniuse-lite";
       packageName = "caniuse-lite";
-      version = "1.0.30001319";
+      version = "1.0.30001323";
       src = fetchurl {
-        url = "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001319.tgz";
-        sha512 = "xjlIAFHucBRSMUo1kb5D4LYgcN1M45qdKP++lhqowDpwJwGkpIRTt5qQqnhxjj1vHcI7nrJxWhCC1ATrCEBTcw==";
+        url = "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001323.tgz";
+        sha512 = "e4BF2RlCVELKx8+RmklSEIVub1TWrmdhvA5kEUueummz1XyySW0DVk+3x9HyhU9MuWTa2BhqLgEuEmUwASAdCA==";
       };
     };
     "caseless-0.12.0" = {
@@ -2400,13 +2400,13 @@ let
         sha512 = "DWvhKv36GsdXKnaFFhEiK8kZZA+24/yFLgtTwJJHc7AFgDjNRIBJZ/jq62Y/dWv9E4ypYwrVWN2bVrCYw1uv7Q==";
       };
     };
-    "electron-to-chromium-1.4.89" = {
+    "electron-to-chromium-1.4.103" = {
       name = "electron-to-chromium";
       packageName = "electron-to-chromium";
-      version = "1.4.89";
+      version = "1.4.103";
       src = fetchurl {
-        url = "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.89.tgz";
-        sha512 = "z1Axg0Fu54fse8wN4fd+GAINdU5mJmLtcl6bqIcYyzNVGONcfHAeeJi88KYMQVKalhXlYuVPzKkFIU5VD0raUw==";
+        url = "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.103.tgz";
+        sha512 = "c/uKWR1Z/W30Wy/sx3dkZoj4BijbXX85QKWu9jJfjho3LBAXNEGAEW3oWiGb+dotA6C6BzCTxL2/aLes7jlUeg==";
       };
     };
     "elliptic-6.5.4" = {
@@ -2499,13 +2499,13 @@ let
         sha512 = "chLOW0ZGRf4s8raLrDxa5sdkvPec5YdvwbFnqJme4rk0rFajP8mPtrDL1+I+CwrQDCjswDA5sREX7jYQDQs9vA==";
       };
     };
-    "es-abstract-1.19.1" = {
+    "es-abstract-1.19.2" = {
       name = "es-abstract";
       packageName = "es-abstract";
-      version = "1.19.1";
+      version = "1.19.2";
       src = fetchurl {
-        url = "https://registry.npmjs.org/es-abstract/-/es-abstract-1.19.1.tgz";
-        sha512 = "2vJ6tjA/UfqLm2MPs7jxVybLoB8i1t1Jd9R3kISld20sIxPcTbLuggQOUxeWeAvIUkduv/CfMjuh4WmiXr2v9w==";
+        url = "https://registry.npmjs.org/es-abstract/-/es-abstract-1.19.2.tgz";
+        sha512 = "gfSBJoZdlL2xRiOCy0g8gLMryhoe1TlimjzU99L/31Z8QEGIhVQI+EWwt5lT+AuU9SnorVupXFqqOGqGfsyO6w==";
       };
     };
     "es-to-primitive-1.2.1" = {
@@ -4345,13 +4345,13 @@ let
         sha512 = "yJHVQEhyqPLUTgt9B83PXu6W3rx4MvvHvSUvToogpwoGDOUQ+yDrR0HRot+yOCdCO7u4hX3pWft6kWBBcqh0UA==";
       };
     };
-    "minimist-1.2.5" = {
+    "minimist-1.2.6" = {
       name = "minimist";
       packageName = "minimist";
-      version = "1.2.5";
+      version = "1.2.6";
       src = fetchurl {
-        url = "https://registry.npmjs.org/minimist/-/minimist-1.2.5.tgz";
-        sha512 = "FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==";
+        url = "https://registry.npmjs.org/minimist/-/minimist-1.2.6.tgz";
+        sha512 = "Jsjnk4bw3YJqYzbdyBiNsPWHPfO++UGG749Cxs6peCu5Xg4nrena6OVxOYxrQTqww0Jmwt+Ref8rggumkTLz9Q==";
       };
     };
     "minimist-options-4.1.0" = {
@@ -4381,13 +4381,13 @@ let
         sha512 = "bAxsR8BVfj60DWXHE3u30oHzfl4G7khkSuPW+qvpd7jFRHm7dLxOjUk1EHACJ/hxLY8phGJ0YhYHZo7jil7Qdg==";
       };
     };
-    "mkdirp-0.5.5" = {
+    "mkdirp-0.5.6" = {
       name = "mkdirp";
       packageName = "mkdirp";
-      version = "0.5.5";
+      version = "0.5.6";
       src = fetchurl {
-        url = "https://registry.npmjs.org/mkdirp/-/mkdirp-0.5.5.tgz";
-        sha512 = "NKmAlESf6jMGym1++R0Ra7wvhV+wFW63FaSOFPwRahvea0gMUcGUhVeAg/0BC0wiv9ih5NYPB1Wn1UEI1/L+xQ==";
+        url = "https://registry.npmjs.org/mkdirp/-/mkdirp-0.5.6.tgz";
+        sha512 = "FP+p8RB8OWpF3YZBCrP5gtADmtXApB5AMLn+vdyA+PyxCjrCs00mjyUozssO33cwDeT3wNGdLxJ5M//YqtHAJw==";
       };
     };
     "mkdirp-1.0.4" = {
@@ -6871,7 +6871,7 @@ let
   args = {
     name = "open-stage-control";
     packageName = "open-stage-control";
-    version = "1.15.6";
+    version = "1.15.7";
     src = ./.;
     dependencies = [
       sources."@babel/code-frame-7.16.7"
@@ -7105,7 +7105,7 @@ let
       sources."camel-case-3.0.0"
       sources."camelcase-5.3.1"
       sources."camelcase-keys-6.2.2"
-      sources."caniuse-lite-1.0.30001319"
+      sources."caniuse-lite-1.0.30001323"
       sources."caseless-0.12.0"
       sources."chalk-2.4.2"
       sources."chokidar-3.5.1"
@@ -7214,7 +7214,7 @@ let
       sources."ee-first-1.1.1"
       sources."electron-is-accelerator-0.1.2"
       sources."electron-localshortcut-3.2.1"
-      sources."electron-to-chromium-1.4.89"
+      sources."electron-to-chromium-1.4.103"
       (sources."elliptic-6.5.4" // {
         dependencies = [
           sources."bn.js-4.12.0"
@@ -7228,7 +7228,7 @@ let
       sources."env-paths-2.2.1"
       sources."error-ex-1.3.2"
       sources."error-stack-parser-2.0.7"
-      sources."es-abstract-1.19.1"
+      sources."es-abstract-1.19.2"
       sources."es-to-primitive-1.2.1"
       sources."escalade-3.1.1"
       sources."escape-goat-2.1.1"
@@ -7476,11 +7476,11 @@ let
       sources."minimalistic-assert-1.0.1"
       sources."minimalistic-crypto-utils-1.0.1"
       sources."minimatch-3.0.4"
-      sources."minimist-1.2.5"
+      sources."minimist-1.2.6"
       sources."minimist-options-4.1.0"
       sources."minipass-3.1.6"
       sources."minizlib-2.1.2"
-      sources."mkdirp-0.5.5"
+      sources."mkdirp-0.5.6"
       sources."mkdirp-classic-0.5.3"
       sources."module-deps-6.2.3"
       (sources."mold-source-map-0.4.0" // {
@@ -7779,7 +7779,7 @@ let
       sources."syntax-error-1.4.0"
       (sources."table-6.8.0" // {
         dependencies = [
-          sources."ajv-8.10.0"
+          sources."ajv-8.11.0"
           sources."json-schema-traverse-1.0.0"
         ];
       })
