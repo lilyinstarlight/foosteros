@@ -99,7 +99,7 @@ in
   inherit nodePackages python3Packages vimPlugins;
 } else {
   # TODO: currently nodePackages in nixpkgs uses nodejs-14_x
-  nodePackages = recurseIntoAttrs (callPackage ./node-packages {
+  nodePackages = dontRecurseIntoAttrs (callPackage ./node-packages {
     nodejs = resolveDep "nodejs-14_x";
   });
   python3Packages = recurseIntoAttrs (pkgs.python3Packages.callPackage ./python-modules {});
