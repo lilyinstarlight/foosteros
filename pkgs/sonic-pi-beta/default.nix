@@ -19,6 +19,7 @@
 , erlang
 , elixir
 , esbuild
+, tailwindcss
 , beamPackages
 , alsa-lib
 , rtmidi
@@ -36,22 +37,22 @@
 }:
 
 stdenv.mkDerivation rec {
-  version = "4.0.0-beta3";
+  version = "4.0.0-beta4";
   pname = "sonic-pi";
 
   src = fetchFromGitHub {
     owner = "sonic-pi-net";
     repo = pname;
     #rev = "v${version}";
-    rev = "cd68cb81a2d0d9736971a052e0c8a4e1b0a9aac4";
-    hash = "sha256-hVgVBKvdDJsrEjdNMrwAIjJoXGA9F+o5qF44z/TpYtA=";
+    rev = "81291453cddd52035817dfe2cb8b1f56b85581ca";
+    hash = "sha256-3zULxe/yYrZ0yy/QtCPck2takst1FRBjJEp6wMxk89M=";
   };
 
   mixFodDeps = beamPackages.fetchMixDeps {
     inherit version;
     pname = "mix-deps-${pname}";
     src = "${src}/app/server/beam/tau";
-    sha256 = "sha256-UVYq0wTTNcciA1RGoBjxEzg3+o/KAsn+wmrpu0jEdf8=";
+    sha256 = "sha256-U1O/DqBOnaN97xLECSOLNKn4wVC8V2EqUw023EyN39M=";
   };
 
   patches = [
@@ -61,8 +62,16 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     copyDesktopItems
     wrapQtAppsHook
+
     cmake
     pkg-config
+
+    erlang
+    elixir
+    beamPackages.hex
+    beamPackages.rebar3
+    esbuild
+    tailwindcss
   ];
 
   buildInputs = [
@@ -76,11 +85,6 @@ stdenv.mkDerivation rec {
     reproc
     platform-folders
     ruby
-    erlang
-    elixir
-    esbuild
-    beamPackages.hex
-    beamPackages.rebar3
     alsa-lib
     rtmidi
     boost
@@ -100,10 +104,11 @@ stdenv.mkDerivation rec {
 
     export HEX_HOME="$TEMPDIR/hex"
     export HEX_OFFLINE=1
-    export MIX_REBAR3="${beamPackages.rebar3}/bin/rebar3"
+    export MIX_REBAR3="$(type -p rebar3)"
     export REBAR_GLOBAL_CONFIG_DIR="$TEMPDIR/rebar3"
     export REBAR_CACHE_DIR="$TEMPDIR/rebar3.cache"
-    export MIX_ESBUILD_PATH="${esbuild}/bin/esbuild"
+    export MIX_ESBUILD_PATH="$(type -p esbuild)"
+    export MIX_TAILWINDCSS_PATH="$(type -p tailwindcss)"
     export MIX_HOME="$TEMPDIR/mix"
     export MIX_DEPS_PATH="$TEMPDIR/deps"
     export MIX_ENV=prod

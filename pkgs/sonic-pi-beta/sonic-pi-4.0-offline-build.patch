@@ -1,4 +1,4 @@
-commit 214f1d81ca012ba70f576428c788de36c18a42bd
+commit da519130ee0693642e4cb416b9dbc96377a01bff
 Author: Lily Foster <lily@lily.flowers>
 Date:   Tue Feb 22 17:50:35 2022 -0500
 
@@ -30,7 +30,7 @@ index 0916ec485..ef13a808e 100755
  echo "Building external deps..."
  cmake --build . --config Release
 diff --git a/app/linux-prebuild.sh b/app/linux-prebuild.sh
-index 44234946a..61d59dbbe 100755
+index 0c2f6efd2..61a20a15d 100755
 --- a/app/linux-prebuild.sh
 +++ b/app/linux-prebuild.sh
 @@ -57,7 +57,7 @@ fi
@@ -43,7 +43,7 @@ index 44234946a..61d59dbbe 100755
  cp "${SCRIPT_DIR}"/external/build/aubio-prefix/src/aubio-build/aubio_onset "${SCRIPT_DIR}"/server/native/
  
 
-commit 504c6b935ac86a2d227e0f18f5617497e6f31e30
+commit 50bbc0b8cc048f7cedd68b3914144194e1969663
 Author: Lily Foster <lily@lily.flowers>
 Date:   Tue Feb 22 17:47:59 2022 -0500
 
@@ -53,11 +53,12 @@ Date:   Tue Feb 22 17:47:59 2022 -0500
 
 diff --git a/app/linux-release.sh b/app/linux-release.sh
 new file mode 100755
-index 000000000..017764aa0
+index 000000000..04b6a5088
 --- /dev/null
 +++ b/app/linux-release.sh
-@@ -0,0 +1,67 @@
+@@ -0,0 +1,68 @@
 +#!/bin/bash -e
++shopt -s dotglob
 +
 +SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 +
@@ -125,7 +126,7 @@ index 000000000..017764aa0
 +echo "app/build/linux_dist is now ready for packaging"
 +echo
 
-commit 89280193d41f637fdca621956b1fb4028f4ed0d7
+commit ddddfc6330628c8f62a6fadb06653f05acc289a2
 Author: Lily Foster <lily@lily.flowers>
 Date:   Tue Feb 22 13:50:20 2022 -0500
 
@@ -231,7 +232,7 @@ index d4d1713e8..70fc928fc 100755
  cd "${SCRIPT_DIR}"
  
 diff --git a/app/linux-prebuild.sh b/app/linux-prebuild.sh
-index c9ab55824..44234946a 100755
+index 214fba878..0c2f6efd2 100755
 --- a/app/linux-prebuild.sh
 +++ b/app/linux-prebuild.sh
 @@ -6,43 +6,55 @@ WORKING_DIR="$(pwd)"
@@ -312,55 +313,70 @@ index c9ab55824..44234946a 100755
  # Build external dependencies and copy to build tree
  echo "Building external binary dependencies..."
  "${SCRIPT_DIR}"/external/linux_build_externals.sh
-@@ -69,11 +81,16 @@ PATH=`pkg-config --variable bindir Qt5`:$PATH lrelease "${SCRIPT_DIR}"/gui/qt/la
+@@ -66,13 +78,18 @@ ruby "${SCRIPT_DIR}"/server/ruby/bin/qt-doc.rb -o "${SCRIPT_DIR}"/gui/qt/utils/r
  echo "Compiling Erlang/Elixir files..."
  cd "${SCRIPT_DIR}"/server/beam/tau
  
 -MIX_ENV=prod mix local.hex --force
 -MIX_ENV=prod mix local.rebar --force
 -MIX_ENV=prod mix deps.get
--MIX_ENV=prod mix assets.deploy
+-MIX_ENV=prod mix assets.deploy.prod
+-MIX_ENV=prod mix tailwind.install
+-MIX_ENV=prod mix esbuild.install
 -MIX_ENV=prod mix release --overwrite
 +if [ "$mix_offline" == "true" ]; then
-+  MIX_ENV=prod mix assets.deploy
++  MIX_ENV=prod mix assets.deploy.prod
 +  MIX_ENV=prod mix release --overwrite --no-deps-check
 +else
 +  MIX_ENV=prod mix local.hex --force
 +  MIX_ENV=prod mix local.rebar --force
 +  MIX_ENV=prod mix deps.get
-+  MIX_ENV=prod mix assets.deploy
++  MIX_ENV=prod mix assets.deploy.prod
++  MIX_ENV=prod mix tailwind.install
++  MIX_ENV=prod mix esbuild.install
 +  MIX_ENV=prod mix release --overwrite
 +fi
  
  cp src/tau.app.src ebin/tau.app
  
 
-commit f6109105cb4ccace5bf2155754062ac75a1c1cbc
+commit 3358ad6217a562d7b5578e1e52e3b408630926a1
 Author: Lily Foster <lily@lily.flowers>
 Date:   Tue Feb 22 13:49:38 2022 -0500
 
-    Tau - allow using MIX_DEPS_PATH and MIX_ESBUILD_PATH for pre-downloaded dependencies
+    Tau - allow using MIX_DEPS_PATH, MIX_ESBUILD_PATH, and MIX_TAILWINDCSS_PATH for pre-downloaded dependencies
     
     This is designed to aid in packaging for Linux distros.
 
 diff --git a/app/server/beam/tau/config/config.exs b/app/server/beam/tau/config/config.exs
-index 2c9d73ab6..231165d85 100644
+index e05427b9d..c3a8ab0d7 100644
 --- a/app/server/beam/tau/config/config.exs
 +++ b/app/server/beam/tau/config/config.exs
-@@ -32,8 +32,9 @@ config :esbuild,
-   default: [
-     args: ~w(js/app.js --bundle --target=es2016 --outdir=../priv/static/assets),
+@@ -25,9 +25,9 @@ config :esbuild,
+     args:
+       ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
      cd: Path.expand("../assets", __DIR__),
 -    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
--  ]
+-
+-]
 +    env: %{"NODE_PATH" => System.get_env("MIX_DEPS_PATH") || Path.expand("../deps", __DIR__)}
 +  ],
 +  path: System.get_env("MIX_ESBUILD_PATH")
  
  # Configures Elixir's Logger
  config :logger, :console,
+@@ -48,7 +48,8 @@ config :tailwind,
+       --output=../priv/static/assets/app.css
+     ),
+     cd: Path.expand("../assets", __DIR__)
+-  ]
++  ],
++  path: System.get_env("MIX_TAILWINDCSS_PATH")
+ 
+ # Import environment specific config. This must remain at the bottom
+ # of this file so it overrides the configuration defined above.
 
-commit a9a5cb0675a815bbb21e1e50e527458cdc90eaa0
+commit 23c3e61898eb7d43c4dd7f1292e60bdbb35e97a7
 Author: Lily Foster <lily@lily.flowers>
 Date:   Tue Feb 22 13:48:38 2022 -0500
 
@@ -396,14 +412,14 @@ index c4614531e..e82bc36fb 100644
      //io.Fonts->AddFontFromFileTTF("../../misc/fonts/ProggyTiny.ttf", 10.0f);
      //ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
 
-commit 691cf7172629c36e39a4fc23c3b1988ce3af9207
+commit 9f7f5be8fdecfa13ad934e116f76b5654d985ba2
 Author: Lily Foster <lily@lily.flowers>
 Date:   Tue Feb 22 13:48:00 2022 -0500
 
     Build - add support for using system libraries
 
 diff --git a/app/CMakeLists.txt b/app/CMakeLists.txt
-index 01a8d1cc7..7b0e2ad53 100644
+index d27907b54..db22c9b9c 100644
 --- a/app/CMakeLists.txt
 +++ b/app/CMakeLists.txt
 @@ -1,5 +1,7 @@
@@ -529,7 +545,7 @@ index f5580e7b3..cfe2a006a 100644
      )
  
 
-commit e6bf991e0af570e83cfbd8e97be1bc5fcd71781d
+commit 674c6f6c6b74fa803262383ccd108d5d3fef1df8
 Author: Lily Foster <lily@lily.flowers>
 Date:   Tue Feb 22 13:24:14 2022 -0500
 
