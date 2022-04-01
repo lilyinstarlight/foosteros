@@ -7,6 +7,11 @@ let mypkgs = let
   resolvePath = attrset: path: lib.getAttrFromPath (lib.splitString "." path) attrset;
   resolveDep = path: if isOverlay then (resolvePath outpkgs path) else if (hasPath mypkgs path) then (resolvePath mypkgs path) else (resolvePath pkgs path);
 
+  # TODO: currently nodePackages in nixpkgs uses nodejs-14_x
+  nodePackages = pkgs.nodePackages // (callPackage ./node-packages {
+    nodejs = pkgs.nodejs-14_x;
+  });
+
   python3 = let
     self = pkgs.python3.override {
       packageOverrides = (self: super: super.pkgs.callPackage ./python-modules {});
@@ -60,6 +65,7 @@ in
     gl3w = resolveDep "gl3w";
     platform-folders = resolveDep "platform-folders";
     supercollider = resolveDep "supercollider-with-sc3-plugins";
+    tailwindcss = resolveDep "tailwindcss";
   };
   supercolliderPlugins = recurseIntoAttrs {
     sc3-plugins = callPackage ./supercollider/plugins/sc3-plugins.nix {
@@ -74,6 +80,7 @@ in
   supercollider-with-sc3-plugins = (resolveDep "supercollider").override {
     plugins = [ (resolveDep "supercolliderPlugins.sc3-plugins") ];
   };
+  tailwindcss = nodePackages.tailwindcss;
   wtype = callPackage ./wtype {
     inherit (pkgs) wtype;
   };
@@ -89,8 +96,12 @@ in
     };
   });
 } // (if isOverlay then {
-  inherit python3Packages vimPlugins;
+  inherit nodePackages python3Packages vimPlugins;
 } else {
+  # TODO: currently nodePackages in nixpkgs uses nodejs-14_x
+  nodePackages = recurseIntoAttrs (callPackage ./node-packages {
+    nodejs = resolveDep "nodejs-14_x";
+  });
   python3Packages = recurseIntoAttrs (pkgs.python3Packages.callPackage ./python-modules {});
   vimPlugins = recurseIntoAttrs (callPackage ./vim-plugins {});
 }) // (lib.optionalAttrs allowUnfree {

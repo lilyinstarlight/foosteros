@@ -1,0 +1,10 @@
+[
+  "@swc/core"
+, "@swc/cli"
+, "@swc/register"
+, "autoprefixer"
+, "cssnano"
+, "postcss"
+, "rimraf"
+, "tailwindcss"
+]
