@@ -67,14 +67,14 @@
     });
 
     packages = forAllSystems (system: {
-        default = nixpkgs.legacyPackages.${system}.linkFarmFromDrvs "foosteros-pkgs" (nixpkgs.lib.filter (drv: !drv.meta.unsupported) (nixpkgs.lib.collect (drv: nixpkgs.lib.isDerivation drv) (
+        default = nixpkgs.legacyPackages.${system}.linkFarmFromDrvs "foosteros-pkgs" (nixpkgs.lib.unique (nixpkgs.lib.filter (drv: !drv.meta.unsupported) (nixpkgs.lib.collect (drv: nixpkgs.lib.isDerivation drv) (
           import ./pkgs {
             pkgs = nixpkgs.legacyPackages.${system};
             fenix = fenix.packages.${system};
             allowUnfree = false;
             isOverlay = false;
           })
-        ));
+        )));
       }
     );
 
