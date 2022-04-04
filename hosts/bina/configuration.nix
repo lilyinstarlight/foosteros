@@ -169,7 +169,7 @@
     ncmpcpp beets
     inkscape gimp-with-plugins krita
     mupdf
-    element-desktop jitsi-meet-electron
+    element-desktop-wayland jitsi-meet-electron
     helvum qjackctl qsynth vmpk calf
     ardour lmms
     sonic-pi sonic-pi-tool open-stage-control
