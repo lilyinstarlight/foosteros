@@ -11,5 +11,5 @@
 
   services.resolved.dnssec = "false";
 
-  system.stateVersion = "21.05";
+  system.stateVersion = "22.05";
 }
