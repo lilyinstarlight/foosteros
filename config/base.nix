@@ -4,6 +4,7 @@
   imports = [
     inputs.home-manager.nixosModules.home-manager
     inputs.sops-nix.nixosModules.sops
+    inputs.impermanence.nixosModules.impermanence
   ] ++ (import ../modules/nixos/module-list.nix) ++ [
     ./fish.nix
     ./neovim.nix
@@ -14,6 +15,7 @@
     useUserPackages = true;
     useGlobalPkgs = true;
     sharedModules = [
+      inputs.impermanence.nixosModules.home-manager.impermanence
       ../modules/home-manager/services/audio/mopidy.nix
       ../modules/home-manager/services/audio/mpdris2.nix
       ({ pkgs, ... }: {
