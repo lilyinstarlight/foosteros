@@ -1,12 +1,13 @@
-fidian/hexmode
-gisraptor/vim-lilypond-integrator
-glts/vim-magnum
-glts/vim-radical
-inkch/vim-fish
-lfv89/vim-interestingwords
-lilyinstarlight/vim-resolve
-lilyinstarlight/vim-sonic-pi
-lilyinstarlight/vim-spl
-tpope/vim-jdaddy
-vimwiki/vimwiki@dev as vimwiki-dev
-zeek/vim-zeek
+repo,branch,alias
+https://github.com/fidian/hexmode/,,
+https://github.com/inkch/vim-fish/,,
+https://github.com/lfv89/vim-interestingwords/,,
+https://github.com/tpope/vim-jdaddy/,,
+https://github.com/gisraptor/vim-lilypond-integrator/,,
+https://github.com/glts/vim-magnum/,,
+https://github.com/glts/vim-radical/,,
+https://github.com/lilyinstarlight/vim-resolve/,,
+https://github.com/lilyinstarlight/vim-sonic-pi/,,
+https://github.com/lilyinstarlight/vim-spl/,,
+https://github.com/zeek/vim-zeek/,,
+https://github.com/vimwiki/vimwiki/,dev,vimwiki-dev
