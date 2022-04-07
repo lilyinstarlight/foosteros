@@ -17,7 +17,14 @@ jobs:
       GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
     steps:
       - name: Wait for checks to complete
-        run: gh pr checks --watch "$PR_URL"
+        run: |
+          while gh pr checks "$PR_URL" | grep -qv $'^Auto-merge\tpending\t' | grep -q $'^[^\t]*\tpending\t'; do
+            gh pr checks "$PR_URL" | grep -qv $'^Auto-merge\tpending\t'
+            sleep 10
+          done
+
+          gh pr checks "$PR_URL" | grep -qv $'^Auto-merge\tpending\t'
+          ! gh pr checks "$PR_URL" | grep -q $'^[^\t]*\tfail\t'
 
       - name: Auto-merge Dependabot PR
         run: gh pr merge --auto --squash "$PR_URL"
