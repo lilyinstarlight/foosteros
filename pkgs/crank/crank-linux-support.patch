@@ -1,11 +1,34 @@
-commit 251003b92491f373a13bfdbbce1d1541e9f07eb7
+commit e64de84f4a11fffb91043fa7854528052cdb295c
 Author: Lily Foster <lily@lily.flowers>
-Date:   Sat Mar 5 08:19:36 2022 -0500
+Date:   Sun Apr 10 09:58:44 2022 -0400
 
     Add Linux support
 
+diff --git a/.github/workflows/tests.yml b/.github/workflows/tests.yml
+index 62d5383..75acb2c 100644
+--- a/.github/workflows/tests.yml
++++ b/.github/workflows/tests.yml
+@@ -61,8 +61,8 @@ jobs:
+       matrix:
+         os:
+           - macos-latest
+-          # TODO: enable linux & windows and fix the crank
+-          # - ubuntu-latest
++          - ubuntu-latest
++          # TODO: enable windows and fix the crank
+           # - windows-latest
+         sdk:
+           - latest
+@@ -97,6 +97,7 @@ jobs:
+       - name: install SDK (linux)
+         if: ${{ matrix.os == 'ubuntu-latest' }}
+         run: |
++          sudo apt install -y gcc-arm-none-eabi
+           curl -L --silent --show-error --fail "https://download.panic.com/playdate_sdk/Linux/PlaydateSDK-${{ matrix.sdk }}.tar.gz" -o sdk.tar.gz
+           mkdir sdk
+           tar -zxf sdk.tar.gz -C sdk
 diff --git a/src/main.rs b/src/main.rs
-index b9bb253..6a79430 100644
+index b9bb253..c7e3efb 100644
 --- a/src/main.rs
 +++ b/src/main.rs
 @@ -18,14 +18,18 @@ use anyhow::Context;
@@ -29,29 +52,46 @@ index b9bb253..6a79430 100644
  #[cfg(windows)]
  const OBJCOPY_PATH_STR: &'static str =
      r"C:\Program Files (x86)\GNU Tools Arm Embedded\9 2019-q4-major\bin\arm-none-eabi-objcopy.exe";
-@@ -69,7 +73,7 @@ fn playdate_sdk_path() -> Result<PathBuf, Error> {
+@@ -68,8 +72,13 @@ fn playdate_sdk_path() -> Result<PathBuf, Error> {
+ }
  
  fn playdate_sdk_path_default() -> Result<PathBuf, Error> {
-     let home_dir = dirs::home_dir().ok_or(anyhow!("Can't find home dir"))?;
+-    let home_dir = dirs::home_dir().ok_or(anyhow!("Can't find home dir"))?;
 -    Ok(home_dir.join(SDK_DIR).join("PlaydateSDK"))
-+    Ok(env::var("PLAYDATE_SDK_PATH").map_or(home_dir.join(SDK_DIR).join("PlaydateSDK"), |path| PathBuf::from(path)))
++    match env::var("PLAYDATE_SDK_PATH") {
++        Ok(path) => Ok(PathBuf::from(path)),
++        Err(_) => {
++            let home_dir = dirs::home_dir().ok_or(anyhow!("Can't find home dir"))?;
++            Ok(home_dir.join(SDK_DIR).join("PlaydateSDK"))
++        }
++    }
  }
  
  fn playdate_c_api_path() -> Result<PathBuf, Error> {
-@@ -360,13 +364,19 @@ impl Build {
+@@ -360,13 +369,29 @@ impl Build {
          info!("run_target");
  
          let pdutil_path = playdate_sdk_path()?.join("bin").join(PDUTIL_NAME);
 -        let modem_path = Path::new("/dev/cu.usbmodemPDU1_Y0005491");
 -        let data_path = Path::new("/Volumes/PLAYDATE");
 +        #[cfg(target_os = "macos")]
-+        let modem_path = PathBuf::from(env::var("PLAYDATE_SERIAL_DEVICE").unwrap_or(String::from("/dev/cu.usbmodemPDU1_Y0005491")));
++        let modem_path = PathBuf::from(
++            env::var("PLAYDATE_SERIAL_DEVICE")
++                .unwrap_or(String::from("/dev/cu.usbmodemPDU1_Y0005491")),
++        );
 +        #[cfg(not(target_os = "macos"))]
-+        let modem_path = PathBuf::from(env::var("PLAYDATE_SERIAL_DEVICE").unwrap_or(String::from("/dev/ttyACM0")));
++        let modem_path = PathBuf::from(
++            env::var("PLAYDATE_SERIAL_DEVICE").unwrap_or(String::from("/dev/ttyACM0")),
++        );
 +        #[cfg(target_os = "macos")]
-+        let data_path = PathBuf::from(env::var("PLAYDATE_MOUNT_POINT").unwrap_or(String::from("/Volumes/PLAYDATE")));
++        let data_path = PathBuf::from(
++            env::var("PLAYDATE_MOUNT_POINT").unwrap_or(String::from("/Volumes/PLAYDATE")),
++        );
 +        #[cfg(not(target_os = "macos"))]
-+        let data_path = PathBuf::from(env::var("PLAYDATE_MOUNT_POINT").unwrap_or(format!("/run/media/{}/PLAYDATE", env::var("USER").expect("user"))));
++        let data_path = PathBuf::from(env::var("PLAYDATE_MOUNT_POINT").unwrap_or(format!(
++            "/run/media/{}/PLAYDATE",
++            env::var("USER").expect("user")
++        )));
  
          let duration = time::Duration::from_millis(100);
          if modem_path.exists() {
@@ -61,7 +101,7 @@ index b9bb253..6a79430 100644
              info!("datadisk cmd: {:#?}", cmd);
              let _ = cmd.status()?;
  
-@@ -387,10 +397,20 @@ impl Build {
+@@ -387,10 +412,21 @@ impl Build {
          fs::create_dir(&games_target_dir).ok();
          Self::copy_directory(&pdx_dir, &games_target_dir)?;
  
@@ -80,28 +120,14 @@ index b9bb253..6a79430 100644
 +        #[cfg(not(target_os = "macos"))]
 +        {
 +            let mut cmd = Command::new("eject");
++            cmd.arg(&data_path);
 +            info!("eject cmd: {:#?}", cmd);
 +            let _ = cmd.status()?;
 +        }
  
          while !modem_path.exists() {
              thread::sleep(duration);
-@@ -432,6 +452,14 @@ impl Build {
-         debug!("copy: {:?} -> {:?}", lib_target_path, source_dir_path);
-         fs::copy(&lib_target_path, &source_dir_path)?;
- 
-+        #[cfg(all(unix, not(target_os = "macos")))]
-+        {
-+            let lib_target_path = target_dir.join(format!("lib{}.so", example_name));
-+            let source_dir_path = source_dir.join("pdex.so");
-+            debug!("copy: {:?} -> {:?}", lib_target_path, source_dir_path);
-+            fs::copy(&lib_target_path, &source_dir_path)?;
-+        }
-+
-         let pdx_bin_path = source_dir.join("pdex.bin");
-         if !pdx_bin_path.exists() {
-             fs::File::create(&pdx_bin_path)?;
-@@ -449,7 +477,7 @@ impl Build {
+@@ -449,7 +485,7 @@ impl Build {
              cmd.status()?
          };
  
@@ -110,7 +136,7 @@ index b9bb253..6a79430 100644
          let status = {
              let mut cmd = Command::new("open");
              cmd.arg("-a");
-@@ -458,6 +486,13 @@ impl Build {
+@@ -458,6 +494,13 @@ impl Build {
              cmd.status()?
          };
  
@@ -124,15 +150,13 @@ index b9bb253..6a79430 100644
          if !status.success() {
              bail!("open failed with error {:?}", status);
          }
-@@ -622,6 +657,12 @@ impl Package {
+@@ -622,6 +665,10 @@ impl Package {
                  .arg(target_archive)
                  .status()?;
          }
 +        #[cfg(target_os = "linux")]
 +        if self.reveal {
-+            let _ = Command::new("xdg-open")
-+                .arg(parent)
-+                .status()?;
++            let _ = Command::new("xdg-open").arg(parent).status()?;
 +        }
          Ok(())
      }
