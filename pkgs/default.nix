@@ -46,7 +46,6 @@ in
   pridecat = callPackage ./pridecat {};
   rofi-pass-wayland = callPackage ./rofi-pass-wayland {
     rofi-wayland = resolveDep "rofi-wayland";
-    wtype = resolveDep "wtype";
   };
   sonic-pi-tool = python3Packages.callPackage ./sonic-pi-tool {
     supercollider = resolveDep "supercollider-with-sc3-plugins";
@@ -81,9 +80,6 @@ in
     plugins = [ (resolveDep "supercolliderPlugins.sc3-plugins") ];
   };
   tailwindcss = nodePackages.tailwindcss;
-  wtype = callPackage ./wtype {
-    inherit (pkgs) wtype;
-  };
 
   monofur-nerdfont = nerdfonts.override {
     fonts = [ "Monofur" ];
