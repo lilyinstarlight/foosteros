@@ -1,11 +1,11 @@
-commit e64de84f4a11fffb91043fa7854528052cdb295c
+commit 28c7d821054c6698ed788cbda0f4d54305e21f6c
 Author: Lily Foster <lily@lily.flowers>
 Date:   Sun Apr 10 09:58:44 2022 -0400
 
     Add Linux support
 
 diff --git a/.github/workflows/tests.yml b/.github/workflows/tests.yml
-index 62d5383..75acb2c 100644
+index 41f1ec2..2bca8ba 100644
 --- a/.github/workflows/tests.yml
 +++ b/.github/workflows/tests.yml
 @@ -61,8 +61,8 @@ jobs:
@@ -19,16 +19,8 @@ index 62d5383..75acb2c 100644
            # - windows-latest
          sdk:
            - latest
-@@ -97,6 +97,7 @@ jobs:
-       - name: install SDK (linux)
-         if: ${{ matrix.os == 'ubuntu-latest' }}
-         run: |
-+          sudo apt install -y gcc-arm-none-eabi
-           curl -L --silent --show-error --fail "https://download.panic.com/playdate_sdk/Linux/PlaydateSDK-${{ matrix.sdk }}.tar.gz" -o sdk.tar.gz
-           mkdir sdk
-           tar -zxf sdk.tar.gz -C sdk
 diff --git a/src/main.rs b/src/main.rs
-index b9bb253..c7e3efb 100644
+index 797d1d3..15677f3 100644
 --- a/src/main.rs
 +++ b/src/main.rs
 @@ -18,14 +18,18 @@ use anyhow::Context;
@@ -52,23 +44,7 @@ index b9bb253..c7e3efb 100644
  #[cfg(windows)]
  const OBJCOPY_PATH_STR: &'static str =
      r"C:\Program Files (x86)\GNU Tools Arm Embedded\9 2019-q4-major\bin\arm-none-eabi-objcopy.exe";
-@@ -68,8 +72,13 @@ fn playdate_sdk_path() -> Result<PathBuf, Error> {
- }
- 
- fn playdate_sdk_path_default() -> Result<PathBuf, Error> {
--    let home_dir = dirs::home_dir().ok_or(anyhow!("Can't find home dir"))?;
--    Ok(home_dir.join(SDK_DIR).join("PlaydateSDK"))
-+    match env::var("PLAYDATE_SDK_PATH") {
-+        Ok(path) => Ok(PathBuf::from(path)),
-+        Err(_) => {
-+            let home_dir = dirs::home_dir().ok_or(anyhow!("Can't find home dir"))?;
-+            Ok(home_dir.join(SDK_DIR).join("PlaydateSDK"))
-+        }
-+    }
- }
- 
- fn playdate_c_api_path() -> Result<PathBuf, Error> {
-@@ -360,13 +369,29 @@ impl Build {
+@@ -367,13 +371,29 @@ impl Build {
          info!("run_target");
  
          let pdutil_path = playdate_sdk_path()?.join("bin").join(PDUTIL_NAME);
@@ -101,7 +77,7 @@ index b9bb253..c7e3efb 100644
              info!("datadisk cmd: {:#?}", cmd);
              let _ = cmd.status()?;
  
-@@ -387,10 +412,21 @@ impl Build {
+@@ -394,10 +414,21 @@ impl Build {
          fs::create_dir(&games_target_dir).ok();
          Self::copy_directory(&pdx_dir, &games_target_dir)?;
  
@@ -127,7 +103,7 @@ index b9bb253..c7e3efb 100644
  
          while !modem_path.exists() {
              thread::sleep(duration);
-@@ -449,7 +485,7 @@ impl Build {
+@@ -456,7 +487,7 @@ impl Build {
              cmd.status()?
          };
  
@@ -136,7 +112,7 @@ index b9bb253..c7e3efb 100644
          let status = {
              let mut cmd = Command::new("open");
              cmd.arg("-a");
-@@ -458,6 +494,13 @@ impl Build {
+@@ -465,6 +496,13 @@ impl Build {
              cmd.status()?
          };
  
@@ -150,7 +126,7 @@ index b9bb253..c7e3efb 100644
          if !status.success() {
              bail!("open failed with error {:?}", status);
          }
-@@ -622,6 +665,10 @@ impl Package {
+@@ -629,6 +667,10 @@ impl Package {
                  .arg(target_archive)
                  .status()?;
          }

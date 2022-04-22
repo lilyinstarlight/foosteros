@@ -1,8 +1,8 @@
 diff --git a/src/main.rs b/src/main.rs
-index b9bb253..c492119 100644
+index 797d1d3..7e92cb8 100644
 --- a/src/main.rs
 +++ b/src/main.rs
-@@ -475,7 +475,7 @@ impl Build {
+@@ -482,7 +482,7 @@ impl Build {
          let current_dir = std::env::current_dir()?;
          let manifest_path_str;
          let mut args = if self.device {

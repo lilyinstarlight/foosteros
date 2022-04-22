@@ -1,11 +1,11 @@
-commit 5c2b9f565b2c5b700ccb7de52b81718bbdde68ce
+commit b0995c179bfcafcc5c7b8543821e6af457ab025c
 Author: Lily Foster <lily@lily.flowers>
 Date:   Sun Apr 10 10:08:33 2022 -0400
 
     Add support for generating pdxinfo files from metadata in Crank.toml
 
 diff --git a/src/main.rs b/src/main.rs
-index b9bb253..b4b4add 100644
+index 797d1d3..aaf1380 100644
 --- a/src/main.rs
 +++ b/src/main.rs
 @@ -5,6 +5,7 @@ use serde_derive::Deserialize;
@@ -16,7 +16,7 @@ index b9bb253..b4b4add 100644
      path::{Path, PathBuf},
      process::Command,
      thread, time,
-@@ -78,10 +79,23 @@ fn playdate_c_api_path() -> Result<PathBuf, Error> {
+@@ -85,10 +86,23 @@ fn playdate_c_api_path() -> Result<PathBuf, Error> {
  
  type Assets = Vec<String>;
  
@@ -41,7 +41,7 @@ index b9bb253..b4b4add 100644
  }
  
  #[derive(Clone, Debug, Default, Deserialize)]
-@@ -286,8 +300,12 @@ impl Build {
+@@ -293,8 +307,12 @@ impl Build {
      ) -> Result<(), Error> {
          info!("copy_assets");
          let target = crank_manifest.get_target(target_name);
@@ -56,7 +56,7 @@ index b9bb253..b4b4add 100644
                  let src_path = source_dir.join(asset);
                  let dst_path = dest_dir.join(asset);
                  info!("copy {:?} to {:?}", src_path, dst_path);
-@@ -300,6 +318,50 @@ impl Build {
+@@ -307,6 +325,50 @@ impl Build {
          Ok(())
      }
  
@@ -107,7 +107,7 @@ index b9bb253..b4b4add 100644
      fn run_pdc(&self, source_dir: &PathBuf, dest_dir: &PathBuf) -> Result<(), Error> {
          info!("run_pdc");
          let pdc_path = playdate_sdk_path()?.join("bin").join(PDC_NAME);
-@@ -521,7 +583,11 @@ impl Build {
+@@ -528,7 +590,11 @@ impl Build {
          }
  
          let overall_target_dir = project_path.join("target");
@@ -120,7 +120,7 @@ index b9bb253..b4b4add 100644
          let source_path = self.make_source_dir(&overall_target_dir, &game_title)?;
          let dest_path = overall_target_dir.join(format!("{}.pdx", &game_title));
          if dest_path.exists() {
-@@ -536,6 +602,7 @@ impl Build {
+@@ -543,6 +609,7 @@ impl Build {
              self.link_binary(&target_dir, &target_name, &lib_file)?;
              self.make_binary(&target_dir, &target_name, &source_path)?;
              self.copy_assets(&target_name, &project_path, &crank_manifest, &source_path)?;
@@ -128,7 +128,7 @@ index b9bb253..b4b4add 100644
              self.run_pdc(&source_path, &dest_path)?;
              if self.run {
                  self.run_target(&dest_path, &game_title)?;
-@@ -544,6 +611,7 @@ impl Build {
+@@ -551,6 +618,7 @@ impl Build {
              target_dir = target_dir.join(dir_name).join(target_path);
              self.link_dylib(&target_dir, &target_name, &source_path)?;
              self.copy_assets(&target_name, &project_path, &crank_manifest, &source_path)?;
