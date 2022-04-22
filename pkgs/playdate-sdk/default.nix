@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchurl, makeDesktopItem, copyDesktopItems, makeWrapper, wrapGAppsHook, autoPatchelfHook, libpng, zlib, udev, gtk3, pango, cairo, gdk-pixbuf, glib, libX11, libglvnd, alsa-lib, libXext, libXcursor, libXinerama, libXi, libXrandr, libXScrnSaver, libXxf86vm, libxkbcommon, wayland }:
+{ lib, stdenv, fetchurl, makeDesktopItem, copyDesktopItems, makeWrapper, wrapGAppsHook, autoPatchelfHook, libpng, zlib, udev, gtk3, pango, cairo, gdk-pixbuf, glib, libX11, webkitgtk, libglvnd, alsa-lib, libXext, libXcursor, libXinerama, libXi, libXrandr, libXScrnSaver, libXxf86vm, libxkbcommon, wayland }:
 
 let
   simLibDeps = [
@@ -18,11 +18,11 @@ in
 
 stdenv.mkDerivation rec {
   pname = "playdate-sdk";
-  version = "1.9.3";
+  version = "1.10.0";
 
   src = fetchurl {
     url = "https://download.panic.com/playdate_sdk/Linux/PlaydateSDK-${version}.tar.gz";
-    hash = "sha256-nSthRrtCI+RfgRTXw7eSnckNKGb43LzY2fy7k2K/z3g=";
+    hash = "sha256-aBk5aVfk2iUj53h1acOzOtQdltFG+v5AupyzFX2LPKQ=";
   };
 
   nativeBuildInputs = [
@@ -46,6 +46,7 @@ stdenv.mkDerivation rec {
     glib
     libX11
     stdenv.cc.cc.lib
+    webkitgtk
   ];
 
   dontConfigure = true;
