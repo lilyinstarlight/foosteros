@@ -106,11 +106,11 @@
         "poetry2nix": "poetry2nix"
       },
       "locked": {
-        "lastModified": 1649747452,
-        "narHash": "sha256-/3A3kiElwIZlM1BZxKLD4azQLQTaOc9rFOXiTxhSLZA=",
+        "lastModified": 1650671505,
+        "narHash": "sha256-i8R/0FZdjfM8KH0LL06KgapHnBxT300Cdufl/+d46KU=",
         "owner": "thiagokokada",
         "repo": "nix-alien",
-        "rev": "2820f11c5a3e0ccae4fa705cc9898084ec1f523c",
+        "rev": "25d1c0dd434871c6717013ddec70278fe1cb41f9",
         "type": "github"
       },
       "original": {
@@ -147,11 +147,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1642215333,
-        "narHash": "sha256-hOs6lr62ITT8gAnpj5C248K0PW4IrCuXzgoan+VUgiM=",
+        "lastModified": 1650634391,
+        "narHash": "sha256-YPvqEWQjUmTKIwbUh0D7dlsKQAbPoRyyRCdT7uMPrOY=",
         "owner": "nix-community",
         "repo": "poetry2nix",
-        "rev": "7b5c8e3b838d534e0d4dcaa6bbe6530086ebf407",
+        "rev": "80c070de9a0683df114549b80f9af73697a48a70",
         "type": "github"
       },
       "original": {
