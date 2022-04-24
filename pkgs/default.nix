@@ -47,37 +47,19 @@ in
   rofi-pass-wayland = callPackage ./rofi-pass-wayland {
     rofi-wayland = resolveDep "rofi-wayland";
   };
-  sonic-pi-tool = python3Packages.callPackage ./sonic-pi-tool {
-    supercollider = resolveDep "supercollider-with-sc3-plugins";
-  };
+  sonic-pi-tool = python3Packages.callPackage ./sonic-pi-tool {};
   swaynag-battery = callPackage ./swaynag-battery {};
 
   mpdris2 = callPackage ./mpdris2 {
     inherit (pkgs) mpdris2;
   };
-  sonic-pi = libsForQt5.callPackage ./sonic-pi {
-    supercollider = resolveDep "supercollider-with-sc3-plugins";
-  };
+  sonic-pi = libsForQt5.callPackage ./sonic-pi {};
   sonic-pi-beta = libsForQt5.callPackage ./sonic-pi-beta {
     kissfft = resolveDep "kissfftFloat";
     crossguid = resolveDep "crossguid";
     gl3w = resolveDep "gl3w";
     platform-folders = resolveDep "platform-folders";
-    supercollider = resolveDep "supercollider-with-sc3-plugins";
     tailwindcss = resolveDep "tailwindcss";
-  };
-  supercolliderPlugins = recurseIntoAttrs {
-    sc3-plugins = callPackage ./supercollider/plugins/sc3-plugins.nix {
-      fftw = resolveDep "fftwSinglePrec";
-      supercollider = resolveDep "supercollider";
-    };
-  };
-  supercollider = libsForQt5.callPackage ./supercollider {
-    fftw = resolveDep "fftwSinglePrec";
-    supercolliderPlugins = resolveDep "supercolliderPlugins";
-  };
-  supercollider-with-sc3-plugins = (resolveDep "supercollider").override {
-    plugins = [ (resolveDep "supercolliderPlugins.sc3-plugins") ];
   };
   tailwindcss = nodePackages.tailwindcss;
 

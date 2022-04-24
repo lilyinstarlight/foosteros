@@ -15,7 +15,7 @@
 , boost
 , bash
 , jack2
-, supercollider
+, supercollider-with-sc3-plugins
 }:
 
 stdenv.mkDerivation rec {
@@ -103,7 +103,7 @@ stdenv.mkDerivation rec {
   dontWrapQtApps = true;
   preFixup = ''
     wrapQtApp "$out/bin/sonic-pi" \
-      --prefix PATH : ${lib.makeBinPath [ ruby erlang supercollider jack2 ]}
+      --prefix PATH : ${lib.makeBinPath [ ruby erlang supercollider-with-sc3-plugins jack2 ]}
   '';
 
   meta = with lib; {

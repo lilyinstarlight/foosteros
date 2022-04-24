@@ -25,7 +25,7 @@
 , rtmidi
 , boost
 , jack2
-, supercollider
+, supercollider-with-sc3-plugins
 
 , withTauWidget ? false
 , qtwebengine
@@ -162,14 +162,14 @@ stdenv.mkDerivation rec {
   preFixup = ''
     # Wrap Qt GUI (distributed binary)
     wrapQtApp $out/bin/sonic-pi \
-      --prefix PATH : ${lib.makeBinPath [ ruby supercollider jack2 ]}
+      --prefix PATH : ${lib.makeBinPath [ ruby supercollider-with-sc3-plugins jack2 ]}
 
     # If ImGui was built
     if [ -x $out/app/build/gui/imgui/sonic-pi-imgui ]; then
       # Wrap ImGui into bin
       makeWrapper $out/app/build/gui/imgui/sonic-pi-imgui $out/bin/sonic-pi-imgui \
         --argv0 $out/bin/sonic-pi-imgui \
-        --prefix PATH : ${lib.makeBinPath [ ruby supercollider jack2 ]}
+        --prefix PATH : ${lib.makeBinPath [ ruby supercollider-with-sc3-plugins jack2 ]}
     fi
 
     # Remove runtime Erlang references

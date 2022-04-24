@@ -1,4 +1,4 @@
-{ lib, buildPythonApplication, fetchFromGitHub, click, oscpy, psutil, sonic-pi, ruby, erlang, bash, supercollider, jack2, runCommand }:
+{ lib, buildPythonApplication, fetchFromGitHub, click, oscpy, psutil, sonic-pi, ruby, erlang, bash, supercollider-with-sc3-plugins, jack2, runCommand }:
 
 let sonic-pi-tool =
 buildPythonApplication rec {
@@ -22,7 +22,7 @@ buildPythonApplication rec {
     # sonic-pi runtime deps
     ruby
     erlang
-    supercollider
+    supercollider-with-sc3-plugins
     jack2
   ];
 
