@@ -33,6 +33,7 @@ stdenvNoCC.mkDerivation rec {
     description = "Command line utility for FoosterNET Paste";
     homepage = "https://github.com/lilyinstarlight/paste";
     license = licenses.mit;
+    maintainers = with maintainers; [ lilyinstarlight ];
   };
 }
 ; in fpaste

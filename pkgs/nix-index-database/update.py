@@ -42,6 +42,7 @@ stdenvNoCC.mkDerivation rec {{
     description = "Weekly updated pre-built nix-index database";
     homepage = "https://github.com/Mic92/nix-index-database";
     license = licenses.publicDomain;
+    maintainers = with maintainers; [ lilyinstarlight ];
   }};
 }}
 '''

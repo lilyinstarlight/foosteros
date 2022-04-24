@@ -15,5 +15,6 @@ buildPythonPackage rec {
     description = "A modern implementation of OSC for Python 2/3";
     homepage = "https://github.com/kivy/oscpy";
     license = licenses.mit;
+    maintainers = with maintainers; [ lilyinstarlight ];
   };
 }

@@ -41,6 +41,7 @@ stdenvNoCC.mkDerivation rec {
     description = "A shell script to create ISO multiboot USB flash drives that support both legacy and EFI boot";
     homepage = "https://github.com/lilyinstarlight/mkusb";
     license = licenses.mit;
+    maintainers = with maintainers; [ lilyinstarlight ];
     platforms = [ "x86_64-linux" "i686-linux" ];
   };
 }

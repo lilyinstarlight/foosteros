@@ -70,6 +70,7 @@ stdenv.mkDerivation rec {
     homepage = "https://hexler.net/kodelife";
     description = "Real-time GPU shader editor";
     license = licenses.unfree;
+    maintainers = with maintainers; [ lilyinstarlight ];
     platforms = [ "x86_64-linux" "aarch64-linux" "armv7l-linux" ];
     mainProgram = "KodeLife";
   };

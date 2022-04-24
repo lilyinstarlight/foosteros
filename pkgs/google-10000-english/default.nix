@@ -24,5 +24,6 @@ stdenvNoCC.mkDerivation rec {
     description = "The 10,000 most common English words in order of frequency";
     homepage = "https://github.com/first20hours/google-10000-english";
     license = licenses.publicDomain;
+    maintainers = with maintainers; [ lilyinstarlight ];
   };
 }

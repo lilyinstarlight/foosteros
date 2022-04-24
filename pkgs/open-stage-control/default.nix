@@ -76,6 +76,7 @@ nodeComposition.package.override rec {
     description = "Libre and modular OSC / MIDI controller";
     homepage = "https://openstagecontrol.ammd.net/";
     license = licenses.gpl3;
+    maintainers = with maintainers; [ lilyinstarlight ];
     platforms = [ "x86_64-linux" "aarch64-linux" "i686-linux" "armv7l-linux" ];
   };
 }

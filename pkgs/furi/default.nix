@@ -33,6 +33,7 @@ stdenvNoCC.mkDerivation rec {
     description = "Command line utility for FoosterNET Redirect";
     homepage = "https://github.com/lilyinstarlight/uri";
     license = licenses.mit;
+    maintainers = with maintainers; [ lilyinstarlight ];
   };
 }
 ; in furi

@@ -35,6 +35,7 @@ stdenv.mkDerivation rec {
     homepage = "https://github.com/lunasorcery/pridecat";
     description = "Like cat but more colorful! ✨";
     license = licenses.cc-by-sa-40;
+    maintainers = with maintainers; [ lilyinstarlight ];
     mainProgram = "pridecat";
   };
 }

@@ -39,6 +39,7 @@ buildGoModule rec {
     homepage = "https://github.com/m00qek/swaynag-battery";
     description = "Show a message when battery is low and discharging";
     license = licenses.mit;
+    maintainers = with maintainers; [ lilyinstarlight ];
     platforms = platforms.linux;
     mainProgram = "swaynag-battery";
   };

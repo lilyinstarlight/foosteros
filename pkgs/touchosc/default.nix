@@ -69,6 +69,7 @@ stdenv.mkDerivation rec {
     homepage = "https://hexler.net/touchosc";
     description = "Next generation modular control surface";
     license = licenses.unfree;
+    maintainers = with maintainers; [ lilyinstarlight ];
     platforms = [ "x86_64-linux" "aarch64-linux" "armv7l-linux" ];
     mainProgram = "TouchOSC";
   };
