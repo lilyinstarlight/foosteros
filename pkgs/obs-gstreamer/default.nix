@@ -27,6 +27,6 @@ stdenv.mkDerivation rec {
     homepage = "https://github.com/fzwoch/obs-gstreamer";
     maintainers = with maintainers; [ ahuzik ];
     license = licenses.gpl2Plus;
-    platforms = [ "x86_64-linux" "i686-linux" ];
+    platforms = [ "x86_64-linux" ];
   };
 }
