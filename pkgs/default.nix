@@ -21,6 +21,11 @@ let mypkgs = let
   python3Packages = recurseIntoAttrs python3.pkgs;
 
   vimPlugins = pkgs.vimPlugins.extend (self: super: callPackage ./vim-plugins {});
+
+  # TODO: remove once nixpkgs PR is merged
+  obs-studio-plugins = pkgs.obs-studio-plugins // {
+    obs-gstreamer = callPackage ./obs-gstreamer {};
+  };
 in
 
 {
@@ -74,7 +79,8 @@ in
     };
   });
 } // (if isOverlay then {
-  inherit nodePackages python3Packages vimPlugins;
+  # TODO: remove obs-studio-plugins once nixpkgs PR is merged
+  inherit nodePackages python3Packages vimPlugins obs-studio-plugins;
 } else {
   # TODO: currently nodePackages in nixpkgs uses nodejs-14_x
   nodePackages = dontRecurseIntoAttrs (callPackage ./node-packages {
@@ -82,6 +88,8 @@ in
   });
   python3Packages = recurseIntoAttrs (pkgs.python3Packages.callPackage ./python-modules {});
   vimPlugins = recurseIntoAttrs (callPackage ./vim-plugins {});
+  # TODO: remove once nixpkgs PR is merged
+  obs-studio-plugins = { obs-gstreamer = callPackage ./obs-gstreamer {}; };
 }) // (lib.optionalAttrs allowUnfree {
   # dependents of unfree packages
   crank = callPackage ./crank {
