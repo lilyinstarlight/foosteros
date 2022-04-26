@@ -532,6 +532,12 @@
         shell=${pkgs.fish}/bin/fish
         session1=sway
       '';
+
+      "sessions/sway".source = pkgs.writeScript "sway" ''
+        #!/bin/sh
+        export NIXOS_OZONE_WL=1
+        exec /etc/sessions/sway
+      '';
     };
 
     home.file = {
