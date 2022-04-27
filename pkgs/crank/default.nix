@@ -2,23 +2,21 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "crank";
-  version = "0.2.5";
+  version = "unstable-2022-04-25";
 
   src = fetchFromGitHub {
     owner = "pd-rs";
     repo = pname;
-    rev = version;
-    hash = "sha256-CD2x4Y4/9q/RtqHRWxID5+jBlZdnAkqxfNMcQpEMAyo=";
+    rev = "50b3ba869cdfe8c2830311616304a49b5f8d1db9";
+    hash = "sha256-lkbF01bibEgJ45r7JanVKRyTybF0xsHMFadiErIk2+Y=";
   };
 
   cargoPatches = [
-    ./crank-linux-support.patch
-    ./crank-pdxinfo.patch
-    ./crank-fix-build-std.patch
+    ./crank-fix-no-rustup.patch
     ./crank-fix-lock.patch
   ];
 
-  cargoHash = "sha256-HmZCtj+QQS7fUoQQoBzMNIfVwmSaWNbWccg2/gEuR+c=";
+  cargoHash = "sha256-rZF8dpq8i2YMnVqZFUOQBOQbqYWVOMCgZjIixEZHlwQ=";
 
   nativeBuildInputs = [ makeWrapper ];
 
