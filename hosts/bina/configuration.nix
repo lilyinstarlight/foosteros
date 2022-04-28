@@ -4,6 +4,8 @@
   imports = [
     ./hardware-configuration.nix
 
+    ../../config/restic.nix
+
     ../../config/alien.nix
     ../../config/pki.nix
     ../../config/lsp.nix
@@ -28,6 +30,8 @@
     lily-password = {
       neededForUsers = true;
     };
+    restic-backup-password = {};
+    restic-backup-environment = {};
     wireless-networks = {
       restartUnits = [ "supplicant-wlp4s0.service" ];
     };
@@ -214,6 +218,11 @@
     General = {
       Name = "Bina";
     };
+  };
+
+  services.restic.backups.bina = {
+    passwordFile = config.sops.secrets.restic-backup-password.path;
+    environmentFile = config.sops.secrets.restic-backup-environment.path;
   };
 
   virtualisation.spiceUSBRedirection.enable = true;
