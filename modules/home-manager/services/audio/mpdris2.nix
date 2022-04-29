@@ -26,6 +26,7 @@ let
     Bling = {
       notify = cfg.notifications;
       mmkeys = cfg.multimediaKeys;
+      cdprev = cfg.cdPrevious;
     };
   };
 
@@ -36,6 +37,7 @@ in {
     enable = mkEnableOption "mpDris2 the MPD to MPRIS2 bridge";
     notifications = mkEnableOption "song change notifications";
     multimediaKeys = mkEnableOption "multimedia key support";
+    cdPrevious = mkEnableOption "CD-like previous command";
 
     package = mkOption {
       type = types.package;

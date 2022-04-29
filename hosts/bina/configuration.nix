@@ -465,6 +465,8 @@
     services.mpdris2 = {
       enable = true;
       notifications = true;
+      multimediaKeys = false;
+      cdPrevious = true;
       mpd = {
         musicDirectory = cfg.services.mopidy.settings.local.media_dir;
         service = "mopidy.service";
