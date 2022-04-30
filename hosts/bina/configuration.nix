@@ -19,6 +19,8 @@
   ];
 
   sops.defaultSopsFile = ./secrets.yaml;
+  sops.age.sshKeyPaths = [];
+  sops.gnupg.sshKeyPaths = [ "/state/etc/ssh/ssh_host_rsa_key" ];
   sops.secrets = {
     root-password = {
       neededForUsers = true;
@@ -43,6 +45,76 @@
       owner = config.users.users.lily.name;
       group = config.users.users.lily.group;
       restartUnits = [ "mopidy.service" ];
+    };
+  };
+
+  environment.persistence."/state" = {
+    hideMounts = true;
+    directories = [
+      "/etc/nixos"
+      "/var/db/sudo"
+      "/var/lib/bluetooth"
+      "/var/lib/libvirt"
+      "/var/log"
+    ];
+    files = [
+      "/etc/machine-id"
+      "/etc/ssh/ssh_host_ed25519_key"
+      "/etc/ssh/ssh_host_ed25519_key.pub"
+      "/etc/ssh/ssh_host_rsa_key"
+      "/etc/ssh/ssh_host_rsa_key.pub"
+    ];
+    users.lily = {
+      directories = [
+        "docs"
+        "emu"
+        "music"
+        "pics"
+        "public"
+        "src"
+        "vids"
+        ".azure"
+        ".backgrounds"
+        ".config/Element"
+        ".config/discord"
+        ".config/obs-studio"
+        ".config/pipewire"
+        ".config/rncbc.org"
+        ".config/teams"
+        ".gnupg/crls.d"
+        ".gnupg/private-keys-v1.d"
+        ".local/share/fish"
+        ".local/share/mopidy"
+        ".local/share/nvim"
+        ".local/share/qutebrowser"
+        ".mozilla"
+        ".password-store"
+        ".sonic-pi"
+      ];
+      files = [
+        ".android/adbkey"
+        ".android/adbkey.pub"
+        ".config/qutebrowser/autoconfig.yml"
+        ".config/qutebrowser/quickmarks"
+        ".gnupg/pubring.kbx"
+        ".gnupg/random_seed"
+        ".gnupg/tofu.db"
+        ".gnupg/trustdb.gpg"
+        ".lmmsrc.xml"
+        ".ssh/id_ed25519"
+        ".ssh/id_ed25519.pub"
+        ".ssh/known_hosts"
+      ];
+    };
+  };
+
+  environment.persistence."/persist" = {
+    hideMounts = true;
+    users.lily = {
+      directories = [
+        "iso"
+        "tmp"
+      ];
     };
   };
 
@@ -447,7 +519,7 @@
   users.users.root.passwordFile = config.sops.secrets.root-password.path;
   users.users.lily.passwordFile = config.sops.secrets.lily-password.path;
 
-  home-manager.users.lily = let cfg = config.home-manager.users.lily; in {
+  home-manager.users.lily = { pkgs, lib, ... }: let cfg = config.home-manager.users.lily; in {
     services.mopidy = {
       enable = true;
       settings = {
@@ -633,6 +705,12 @@
         '';
         executable = true;
       };
+    };
+
+    home.activation = {
+      linkHomeMnt = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        $DRY_RUN_CMD ln -sTf $VERBOSE_ARG /run/media/"$USER" "$HOME"/mnt
+      '';
     };
   };
 

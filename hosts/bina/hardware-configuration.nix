@@ -12,19 +12,65 @@
 
   boot.initrd.luks.devices."nixos".device = "/dev/disk/by-partlabel/nixos";
 
+  boot.initrd.postDeviceCommands = lib.mkAfter ''
+    mkdir -p /mnt-root
+    mount -t btrfs -o rw,subvol=/ /dev/disk/by-label/root /mnt-root
+
+    num="$(printf '%s\n' "$(find /mnt-root -mindepth 1 -maxdepth 1 -type d -name 'root-*')" | sed -e 's#^\s*$#0#' -e 's#^/mnt-root/root-\(.*\)$#\1#' | sort -n | tail -n 1 | xargs -I '{}' expr 1 + '{}')"
+
+    mv /mnt-root/root /mnt-root/root-"$num"
+    btrfs property set /mnt-root/root-"$num" ro true
+
+    btrfs subvolume create /mnt-root/root
+    btrfs subvolume set-default /mnt-root/root
+
+    find /mnt-root -mindepth 1 -maxdepth 1 -type d -name 'root-*' | sed -e 's#^/mnt-root/root-\(.*\)$#\1#' | sort -n | head -n -30 | xargs -I '{}' sh -c "btrfs property set '/mnt-root/root-{}' ro false && btrfs subvolume list -o '/mnt-root/root-{}' | cut -d' ' -f9- | xargs -I '[]' btrfs subvolume delete '/mnt-root/[]' && btrfs subvolume delete '/mnt-root/root-{}'"
+
+    umount /mnt-root
+  '';
+
   fileSystems."/" = {
-    device = "/dev/disk/by-label/root";
+    label = "root";
     fsType = "btrfs";
+    options = [
+      "subvol=/root"
+    ];
+  };
+
+  fileSystems."/nix" = {
+    label = "root";
+    fsType = "btrfs";
+    options = [
+      "subvol=/nix"
+    ];
+  };
+
+  fileSystems."/state" = {
+    label = "root";
+    fsType = "btrfs";
+    options = [
+      "subvol=/state"
+    ];
+    neededForBoot = true;
+  };
+
+  fileSystems."/persist" = {
+    label = "root";
+    fsType = "btrfs";
+    options = [
+      "subvol=/persist"
+    ];
+    neededForBoot = true;
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-label/esp";
+    label = "esp";
     fsType = "vfat";
   };
 
   swapDevices = [
     {
-      device = "/dev/disk/by-label/swap";
+      label = "swap";
     }
   ];
 
