@@ -14,7 +14,7 @@ Feel free to take any pieces in this repository that you like! Please don't try 
 2. Add installation dependencies and binary cache.
     ```
     nix-env -iA nixos.{bc,git,cachix}
-    cachix use foosteros
+    cachix use -m user-nixconf foosteros
     ```
 3. Partition the disks with at least an EFI System Partition and preferably root and swap in an encrypted LVM.
     ```
@@ -39,6 +39,22 @@ Feel free to take any pieces in this repository that you like! Please don't try 
     swapon /dev/disk/by-label/swap
     mkdir -p /mnt
     mount /dev/disk/by-label/root /mnt
+
+    ## Create persistent store layout if used.
+    # btrfs subvolume create /mnt/state
+    # btrfs subvolume create /mnt/persist
+    # btrfs subvolume create /mnt/nix
+    # btrfs subvolume create /mnt/root
+    # btrfs subvolume set-default /mnt/root
+    # umount /mnt
+    # mount -o subvol=/root /dev/disk/by-label/root /mnt
+    # mkdir -p /mnt/nix
+    # mount -o subvol=/nix /dev/disk/by-label/root /mnt/nix
+    # mkdir -p /mnt/persist
+    # mount -o subvol=/persist /dev/disk/by-label/root /mnt/persist
+    # mkdir -p /mnt/state
+    # mount -o subvol=/state /dev/disk/by-label/root /mnt/state
+
     mkdir -p /mnt/boot
     mount /dev/disk/by-label/esp /mnt/boot
     ```
@@ -47,18 +63,20 @@ Feel free to take any pieces in this repository that you like! Please don't try 
     mkdir -p /mnt/etc
     git clone https://github.com/lilyinstarlight/foosteros.git /mnt/etc/nixos
     ```
-6. Install SSH key for host (for sops secret decryption on activation).
+6. Run nixos-install for the target host.
     ```
-    mkdir -p /mnt/etc/ssh
-    cp ssh_host_rsa_key{,.pub} /mnt/etc/ssh/
-    chmod u=rw,go= /mnt/etc/ssh/ssh_host_rsa_key
+    ## Install SSH key for host (for sops secret decryption on activation).
+    # mkdir -p /mnt/state/etc/ssh
+    # cp ssh_host_{rsa,ed25519}_key{,.pub} /mnt/state/etc/ssh/
+    # chmod u=rw,go= /mnt/state/etc/ssh/ssh_host_{rsa,ed25519}_key
+
+    ## Copy repository into persistent store if used.
+    # mkdir -p /mnt/state/etc
+    # cp -a /mnt/etc/nixos /mnt/state/etc/
+
+    nixos-install --flake '/mnt/etc/nixos#minimal' --no-channel-copy  # use --no-root-password as well for systems without mutable users
     ```
-7. Run nixos-install for the target host.
-    ```
-    # NOTE: Needs impure due to fetched nmd not being added to allowed paths (ref: https://github.com/nix-community/home-manager/issues/2074)
-    nixos-install --impure --flake '/mnt/etc/nixos#minimal' --no-channel-copy
-    ```
-8. Reboot into the new system.
+7. Reboot into the new system.
     ```
     systemctl reboot
     ```
