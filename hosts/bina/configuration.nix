@@ -91,6 +91,7 @@
         ".local/share/mopidy"
         ".local/share/nvim"
         ".local/share/qutebrowser"
+        ".local/state/wireplumber"
         ".mozilla"
         ".password-store"
         ".sonic-pi"
