@@ -3,14 +3,14 @@
 let swaynag-battery =
 buildGoModule rec {
   pname = "swaynag-battery";
-  version = "unstable-2021-10-17";
+  version = "unstable-2022-04-30";
 
   src = fetchFromGitHub {
     owner = "m00qek";
     repo = pname;
     #rev = "v${version}";
-    rev = "43b31b776a7eed612749a461b50373ac4f23887b";
-    hash = "sha256-JIEXap17xSa461xt+HzhVpKmf4/h6WQ2JXdoTZ9slVw=";
+    rev = "ba9f3594e1f051a26bb9964240adc31b90327f9e";
+    hash = "sha256-ARkXU0zOcptMlo5947oT0KZvARFNU1DBIEYdue2FzfY=";
   };
   vendorSha256 = "sha256-h9Zj3zmQ0Xpili5Pl6CXh1L0bb2uL1//B79I4/ron08=";
 
