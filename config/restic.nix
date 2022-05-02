@@ -13,5 +13,9 @@
       "--keep-monthly 12"
       "--keep-yearly 2"
     ];
+    timerConfig = {
+      OnCalendar = "daily";
+      Persistent = true;
+    };
   };
 }
