@@ -81,6 +81,7 @@
         ".backgrounds"
         ".config/Element"
         ".config/discord"
+        ".config/Microsoft/Microsoft Teams"
         ".config/obs-studio"
         ".config/pipewire"
         ".config/rncbc.org"
