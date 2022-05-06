@@ -1,4 +1,4 @@
-{ lib, buildGoModule, fetchFromGitHub, makeWrapper, sway, runCommand }:
+{ lib, buildGoModule, fetchFromGitHub, fetchpatch, makeWrapper, sway, runCommand }:
 
 let swaynag-battery =
 buildGoModule rec {
@@ -14,14 +14,17 @@ buildGoModule rec {
   };
   vendorSha256 = "sha256-h9Zj3zmQ0Xpili5Pl6CXh1L0bb2uL1//B79I4/ron08=";
 
+  patches = [
+    (fetchpatch {
+      name = "swaynag-fix-minor-typo.patch";
+      url = "https://github.com/m00qek/swaynag-battery/commit/75250871eab89a06e6623afc608927b996211711.patch";
+      hash = "sha256-q0Jb9WD6lCP3hg7SGYOO0wp+ucw5xNA93ib7d3qc5o4=";
+    })
+  ];
+
   nativeBuildInputs = [
     makeWrapper
   ];
-
-  patchPhase = ''
-    substituteInPlace parameters.go \
-      --replace 'message:   "You battery is running low. Please plug in a power adapter"' 'message:   "Your battery is running low. Please plug in a power adapter"'
-  '';
 
   fixupPhase = ''
     wrapProgram $out/bin/swaynag-battery \
