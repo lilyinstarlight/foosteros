@@ -1,4 +1,4 @@
-commit c3ace769a6d173c2e98bdd027fbad5ccd051b29f
+commit daa8a55e3fe8706a79831a4381c75ecb8d2f7083
 Author: Lily Foster <lily@lily.flowers>
 Date:   Tue Feb 22 17:50:35 2022 -0500
 
@@ -30,7 +30,7 @@ index 0916ec485..ef13a808e 100755
  echo "Building external deps..."
  cmake --build . --config Release
 diff --git a/app/linux-prebuild.sh b/app/linux-prebuild.sh
-index 33f645fa1..76553d376 100755
+index 6fac0c952..cec49767f 100755
 --- a/app/linux-prebuild.sh
 +++ b/app/linux-prebuild.sh
 @@ -32,7 +32,7 @@ fi
@@ -43,7 +43,7 @@ index 33f645fa1..76553d376 100755
  echo "Compiling native ruby extensions..."
  ruby "${SCRIPT_DIR}"/server/ruby/bin/compile-extensions.rb
 
-commit eec21a2bca0340a9ae71614eb36960e649ca1fb9
+commit 2abfe1f7e7edcdac1b16fc9a882a0b57733b9b49
 Author: Lily Foster <lily@lily.flowers>
 Date:   Tue Feb 22 17:47:59 2022 -0500
 
@@ -126,9 +126,9 @@ index 000000000..04b6a5088
 +echo "app/build/linux_dist is now ready for packaging"
 +echo
 
-commit 2c329f401c7178ba903c755d3a2db62452a1c838
+commit a976f05ebd3fd917d08637829a08e546df16333c
 Author: Lily Foster <lily@lily.flowers>
-Date:   Fri May 6 08:50:16 2022 -0400
+Date:   Fri May 6 10:01:59 2022 -0400
 
     Build - overhaul linux (and mac) build scripts to allow offline or vcpkg-less builds
 
@@ -150,10 +150,10 @@ index 5672c27a6..2d4616f18 100755
  # Restore working directory as it was prior to this script running...
  cd "${WORKING_DIR}"
 diff --git a/app/linux-config.sh b/app/linux-config.sh
-index d4d1713e8..e324dbf4a 100755
+index d4d1713e8..cac0d43b6 100755
 --- a/app/linux-config.sh
 +++ b/app/linux-config.sh
-@@ -3,37 +3,38 @@ set -e # Quit script on error
+@@ -3,37 +3,39 @@ set -e # Quit script on error
  SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
  WORKING_DIR="$(pwd)"
  
@@ -170,6 +170,7 @@ index d4d1713e8..e324dbf4a 100755
 -  esac
 -done
 -
++args=("$@")
  config=""
 -
 -if [ "$1" = "--config" ]; then
@@ -222,7 +223,7 @@ index d4d1713e8..e324dbf4a 100755
  
  echo "Creating build directory..."
  mkdir -p "${SCRIPT_DIR}/build"
-@@ -41,12 +42,15 @@ mkdir -p "${SCRIPT_DIR}/build"
+@@ -41,12 +43,15 @@ mkdir -p "${SCRIPT_DIR}/build"
  echo "Generating makefiles..."
  cd "${SCRIPT_DIR}/build"
  
@@ -245,13 +246,14 @@ index d4d1713e8..e324dbf4a 100755
  cd "${SCRIPT_DIR}"
  
 diff --git a/app/linux-pre-tau-prod-release.sh b/app/linux-pre-tau-prod-release.sh
-index 0c85a01f8..83408289d 100755
+index 0c85a01f8..750cc4e60 100755
 --- a/app/linux-pre-tau-prod-release.sh
 +++ b/app/linux-pre-tau-prod-release.sh
-@@ -3,16 +3,44 @@ set -e # Quit script on error
+@@ -3,16 +3,45 @@ set -e # Quit script on error
  SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
  WORKING_DIR="$(pwd)"
  
++args=("$@")
 +offline_build=false
 +
 +# extract options and their arguments into variables.
@@ -301,10 +303,10 @@ index 0c85a01f8..83408289d 100755
  cp src/tau.app.src ebin/tau.app
  
 diff --git a/app/linux-pre-vcpkg.sh b/app/linux-pre-vcpkg.sh
-index 84091f415..5d50c79bb 100755
+index 84091f415..a75e875ae 100755
 --- a/app/linux-pre-vcpkg.sh
 +++ b/app/linux-pre-vcpkg.sh
-@@ -1,17 +1,24 @@
+@@ -1,17 +1,25 @@
  #!/bin/bash
  set -e # Quit script on error
  
@@ -319,6 +321,7 @@ index 84091f415..5d50c79bb 100755
 -      exit 1
 -      ;;
 -  esac
++args=("$@")
 +no_imgui=false
 +
 +# extract options and their arguments into variables.
@@ -340,7 +343,7 @@ index 84091f415..5d50c79bb 100755
  done
  
  SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-@@ -34,8 +41,7 @@ fi
+@@ -34,8 +42,7 @@ fi
  
  cd vcpkg
  
@@ -351,10 +354,13 @@ index 84091f415..5d50c79bb 100755
  else
      ./vcpkg install kissfft fmt crossguid sdl2[x11] gl3w reproc gsl-lite concurrentqueue platform-folders catch2 --recurse
 diff --git a/app/linux-prebuild.sh b/app/linux-prebuild.sh
-index 0e1eaace2..33f645fa1 100755
+index 0e1eaace2..6fac0c952 100755
 --- a/app/linux-prebuild.sh
 +++ b/app/linux-prebuild.sh
-@@ -4,28 +4,30 @@ set -e # Quit script on error
+@@ -1,31 +1,33 @@
+ #!/bin/bash
+-
+ set -e # Quit script on error
  SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
  WORKING_DIR="$(pwd)"
  
@@ -371,6 +377,7 @@ index 0e1eaace2..33f645fa1 100755
 -      exit 1
 -      ;;
 -  esac
++args=("$@")
 +system_libs=false
 +
 +# extract options and their arguments into variables.
@@ -399,7 +406,7 @@ index 0e1eaace2..33f645fa1 100755
 -else
 -  "${SCRIPT_DIR}"/linux-pre-vcpkg.sh
 +if [ ! "$system_libs" == true ]; then
-+  "${SCRIPT_DIR}"/linux-pre-vcpkg.sh "$@"
++  "${SCRIPT_DIR}"/linux-pre-vcpkg.sh "${args[@]}"
  fi
  
  # Build external dependencies and copy to build tree
@@ -410,9 +417,9 @@ index 0e1eaace2..33f645fa1 100755
 -"${SCRIPT_DIR}"/linux-pre-translations.sh
 -"${SCRIPT_DIR}"/linux-pre-copy-binaries.sh
 -"${SCRIPT_DIR}"/linux-pre-tau-prod-release.sh
-+"${SCRIPT_DIR}"/linux-pre-translations.sh "$@"
-+"${SCRIPT_DIR}"/linux-pre-copy-binaries.sh "$@"
-+"${SCRIPT_DIR}"/linux-pre-tau-prod-release.sh "$@"
++"${SCRIPT_DIR}"/linux-pre-translations.sh "${args[@]}"
++"${SCRIPT_DIR}"/linux-pre-copy-binaries.sh "${args[@]}"
++"${SCRIPT_DIR}"/linux-pre-tau-prod-release.sh "${args[@]}"
  
  # Restore working directory as it was prior to this script running...
  cd "${WORKING_DIR}"
@@ -438,15 +445,16 @@ index 068c95a46..72b4750cb 100755
  # Restore working directory as it was prior to this script running...
  cd "${WORKING_DIR}"
 diff --git a/app/mac-config.sh b/app/mac-config.sh
-index e61deedd1..03c7da7f0 100755
+index e61deedd1..86f76dcca 100755
 --- a/app/mac-config.sh
 +++ b/app/mac-config.sh
-@@ -4,30 +4,53 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+@@ -3,31 +3,53 @@ set -e # Quit script on error
+ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
  WORKING_DIR="$(pwd)"
  
++args=("$@")
  config=""
 +no_imgui=false
-+system_libs=false
  
 -if [ "$1" = "--config" ]; then
 -  case $2 in
@@ -485,7 +493,6 @@ index e61deedd1..03c7da7f0 100755
 +            shift
 +            ;;
 +        -s|--system-libs|-o|--offline-build)
-+            system_libs=true
 +            shift
 +            ;;
 +        --) shift ; break ;;
@@ -508,7 +515,7 @@ index e61deedd1..03c7da7f0 100755
 +  fi
 +}
 +
-+cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE="$config" -DBUILD_IMGUI_INTERFACE="$(option "!$no_imgui")" -DUSE_SYSTEM_LIBS="$(option "$system_libs")" ..
++cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE="$config" -DBUILD_IMGUI_INTERFACE="$(option "!$no_imgui")" ..
  
  
  # Restore working directory as it was prior to this script running...
@@ -526,10 +533,10 @@ index 3fee16053..fc3d07ef3 100755
  # Restore working directory as it was prior to this script running...
  cd "${WORKING_DIR}"
 diff --git a/app/mac-pre-vcpkg.sh b/app/mac-pre-vcpkg.sh
-index 399542f64..1a56ef770 100755
+index 399542f64..df1bf02ac 100755
 --- a/app/mac-pre-vcpkg.sh
 +++ b/app/mac-pre-vcpkg.sh
-@@ -1,17 +1,24 @@
+@@ -1,17 +1,25 @@
  #!/bin/bash
  set -e # Quit script on error
  
@@ -544,6 +551,7 @@ index 399542f64..1a56ef770 100755
 -      exit 1
 -      ;;
 -  esac
++args=("$@")
 +no_imgui=false
 +
 +# extract options and their arguments into variables.
@@ -565,7 +573,7 @@ index 399542f64..1a56ef770 100755
  done
  
  SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-@@ -35,8 +42,7 @@ fi
+@@ -35,8 +43,7 @@ fi
  cd vcpkg
  triplet=(x64-osx)
  
@@ -640,14 +648,15 @@ index 64df1c43e..a2cde6937 100755
  # Restore working directory as it was prior to this script running...
  cd "${WORKING_DIR}"
 diff --git a/app/pi-config.sh b/app/pi-config.sh
-index 8c9e808c2..b218fbf64 100755
+index 8c9e808c2..3bdad0c4f 100755
 --- a/app/pi-config.sh
 +++ b/app/pi-config.sh
-@@ -2,16 +2,13 @@
+@@ -2,16 +2,14 @@
  set -e # Quit script on error
  SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
  WORKING_DIR="$(pwd)"
 +
++args=("$@")
  config=""
  no_imgui=false
 -
@@ -663,7 +672,7 @@ index 8c9e808c2..b218fbf64 100755
      case "$1" in
          -c|--config)
              case $2 in
-@@ -30,8 +27,12 @@ while true ; do
+@@ -30,8 +28,12 @@ while true ; do
              no_imgui=true
              shift
              ;;
@@ -677,7 +686,7 @@ index 8c9e808c2..b218fbf64 100755
      esac
  done
  
-@@ -41,12 +42,15 @@ mkdir -p "${SCRIPT_DIR}/build"
+@@ -41,12 +43,15 @@ mkdir -p "${SCRIPT_DIR}/build"
  echo "Generating makefiles..."
  cd "${SCRIPT_DIR}/build"
  
