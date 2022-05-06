@@ -49,7 +49,7 @@ rofi-pass.overrideAttrs (attrs: rec {
   };
 
   meta = with lib; attrs.meta // {
-    maintainers = with maintainers; [ lilyinstarlight ] ++ attrs.maintainers;
+    maintainers = with maintainers; [ lilyinstarlight ] ++ (if attrs.meta ? maintainers then attrs.meta.maintainers else []);
     platforms = platforms.linux;
   };
 })

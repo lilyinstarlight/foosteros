@@ -37,7 +37,7 @@ materia-theme.overrideAttrs (attrs: rec {
   };
 
   meta = with lib; attrs.meta // {
-    maintainers = with maintainers; [ lilyinstarlight ] ++ (if attrs ? maintainers then attrs.maintainers else []);
+    maintainers = with maintainers; [ lilyinstarlight ] ++ (if attrs.meta ? maintainers then attrs.meta.maintainers else []);
     platforms = platforms.linux;
   };
 })
