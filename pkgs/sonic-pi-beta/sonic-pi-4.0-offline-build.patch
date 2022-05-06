@@ -1,4 +1,4 @@
-commit daa8a55e3fe8706a79831a4381c75ecb8d2f7083
+commit 989e69e4cca4487de18d43f3549756d4f72ae04e
 Author: Lily Foster <lily@lily.flowers>
 Date:   Tue Feb 22 17:50:35 2022 -0500
 
@@ -43,7 +43,7 @@ index 6fac0c952..cec49767f 100755
  echo "Compiling native ruby extensions..."
  ruby "${SCRIPT_DIR}"/server/ruby/bin/compile-extensions.rb
 
-commit 2abfe1f7e7edcdac1b16fc9a882a0b57733b9b49
+commit a48038a048762a5f3ff935b0e0abe993f5a55965
 Author: Lily Foster <lily@lily.flowers>
 Date:   Tue Feb 22 17:47:59 2022 -0500
 
@@ -126,303 +126,12 @@ index 000000000..04b6a5088
 +echo "app/build/linux_dist is now ready for packaging"
 +echo
 
-commit a976f05ebd3fd917d08637829a08e546df16333c
+commit 86894a81cd95411867963c47728ed77dbf543591
 Author: Lily Foster <lily@lily.flowers>
-Date:   Fri May 6 10:01:59 2022 -0400
+Date:   Fri May 6 18:17:04 2022 -0400
 
-    Build - overhaul linux (and mac) build scripts to allow offline or vcpkg-less builds
+    Build - make mac/pi script arg handling and usage consistent
 
-diff --git a/app/linux-build-all.sh b/app/linux-build-all.sh
-index 5672c27a6..2d4616f18 100755
---- a/app/linux-build-all.sh
-+++ b/app/linux-build-all.sh
-@@ -4,9 +4,9 @@ set -e # Quit script on error
- SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
- WORKING_DIR="$(pwd)"
- 
--"${SCRIPT_DIR}"/linux-prebuild.sh
--"${SCRIPT_DIR}"/linux-config.sh
--"${SCRIPT_DIR}"/linux-build-gui.sh
-+"${SCRIPT_DIR}"/linux-prebuild.sh "$@"
-+"${SCRIPT_DIR}"/linux-config.sh "$@"
-+"${SCRIPT_DIR}"/linux-build-gui.sh "$@"
- 
- # Restore working directory as it was prior to this script running...
- cd "${WORKING_DIR}"
-diff --git a/app/linux-config.sh b/app/linux-config.sh
-index d4d1713e8..cac0d43b6 100755
---- a/app/linux-config.sh
-+++ b/app/linux-config.sh
-@@ -3,37 +3,39 @@ set -e # Quit script on error
- SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
- WORKING_DIR="$(pwd)"
- 
--while getopts ":n" opt; do
--  case $opt in
--    n)
--      no_imgui=true
--      echo "Running config script without support for IMGUI-based GUI"
--      ;;
--    \?)
--      echo "Invalid option: -$OPTARG" >&2
--      exit 1
--      ;;
--  esac
--done
--
-+args=("$@")
- config=""
--
--if [ "$1" = "--config" ]; then
--  case $2 in
--    Release|Debug|RelWithDebInfo|MinSizeRel)
--      config="$2"
--      ;;
--    *)
--      echo "`basename $0`: Error: invalid configuration: '${2}'" 1>&2
--      echo "Valid configurations: Release, Debug, RelWithDebInfo, MinSizeRel" 1>&2
--      exit 1
--      ;;
--  esac
--elif [ ! -z $1 ]; then
--  echo "`basename $0`: Error: invalid parameter: '${1}'" 1>&2
--  echo "Usage: `basename $0` [--config <Release|Debug|RelWithDebInfo|MinSizeRel>]" 1>&2
--  exit 1
--fi
-+no_imgui=false
-+system_libs=false
-+
-+# extract options and their arguments into variables.
-+while [ -n "$1" ]; do
-+    case "$1" in
-+        -c|--config)
-+            case $2 in
-+                Release|Debug|RelWithDebInfo|MinSizeRel)
-+                    config="$2"
-+                    ;;
-+                *)
-+                    echo "`basename $0`: Error: invalid configuration: '${2}'" 1>&2
-+                    echo "Valid configurations: Release, Debug, RelWithDebInfo, MinSizeRel" 1>&2
-+                    exit 1
-+                    ;;
-+            esac
-+            shift 2
-+            ;;
-+        -n|--no-imgui)
-+            no_imgui=true
-+            shift
-+            ;;
-+        -s|--system-libs|-o|--offline-build)
-+            system_libs=true
-+            shift
-+            ;;
-+        --) shift ; break ;;
-+        *) echo "Invalid argument: $1" ; exit 1 ;;
-+    esac
-+done
- 
- echo "Creating build directory..."
- mkdir -p "${SCRIPT_DIR}/build"
-@@ -41,12 +43,15 @@ mkdir -p "${SCRIPT_DIR}/build"
- echo "Generating makefiles..."
- cd "${SCRIPT_DIR}/build"
- 
--if [ "$no_imgui" == true ]
--then
--    cmake -G "Unix Makefiles" -DBUILD_IMGUI_INTERFACE=OFF -DCMAKE_BUILD_TYPE="$config" ..
--else
--    cmake -G "Unix Makefiles" -DBUILD_IMGUI_INTERFACE=ON -DCMAKE_BUILD_TYPE="$config" ..
--fi
-+option() {
-+  if [ "$1" == "true" ] || [ "$1" == "!" ] || [ "$1" == "!false" ]; then
-+    echo ON
-+  else
-+    echo OFF
-+  fi
-+}
-+
-+cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE="$config" -DBUILD_IMGUI_INTERFACE="$(option "!$no_imgui")" -DUSE_SYSTEM_LIBS="$(option "$system_libs")" ..
- 
- cd "${SCRIPT_DIR}"
- 
-diff --git a/app/linux-pre-tau-prod-release.sh b/app/linux-pre-tau-prod-release.sh
-index 0c85a01f8..750cc4e60 100755
---- a/app/linux-pre-tau-prod-release.sh
-+++ b/app/linux-pre-tau-prod-release.sh
-@@ -3,16 +3,45 @@ set -e # Quit script on error
- SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
- WORKING_DIR="$(pwd)"
- 
-+args=("$@")
-+offline_build=false
-+
-+# extract options and their arguments into variables.
-+while [ -n "$1" ]; do
-+    case "$1" in
-+        -c|--config)
-+            shift 2
-+            ;;
-+        -n|--no-imgui)
-+            shift
-+            ;;
-+        -s|--system-libs)
-+            shift
-+            ;;
-+        -o|--offline-build)
-+            offline_build=true
-+            shift
-+            ;;
-+        --) shift ; break ;;
-+        *) echo "Invalid argument: $1" ; exit 1 ;;
-+    esac
-+done
-+
- echo "Compiling Erlang/Elixir files..."
- cd "${SCRIPT_DIR}"/server/beam/tau
- 
--MIX_ENV=prod mix local.hex --force
--MIX_ENV=prod mix local.rebar --force
--MIX_ENV=prod mix deps.get
--MIX_ENV=prod mix assets.deploy.prod
--MIX_ENV=prod mix tailwind.install
--MIX_ENV=prod mix esbuild.install
--MIX_ENV=prod mix release --overwrite
-+if [ "$offline_build" == true ]; then
-+    MIX_ENV=prod mix assets.deploy.prod
-+    MIX_ENV=prod mix release --overwrite --no-deps-check
-+else
-+    MIX_ENV=prod mix local.hex --force
-+    MIX_ENV=prod mix local.rebar --force
-+    MIX_ENV=prod mix deps.get
-+    MIX_ENV=prod mix assets.deploy.prod
-+    MIX_ENV=prod mix tailwind.install
-+    MIX_ENV=prod mix esbuild.install
-+    MIX_ENV=prod mix release --overwrite
-+fi
- 
- cp src/tau.app.src ebin/tau.app
- 
-diff --git a/app/linux-pre-vcpkg.sh b/app/linux-pre-vcpkg.sh
-index 84091f415..a75e875ae 100755
---- a/app/linux-pre-vcpkg.sh
-+++ b/app/linux-pre-vcpkg.sh
-@@ -1,17 +1,25 @@
- #!/bin/bash
- set -e # Quit script on error
- 
--while getopts ":n" opt; do
--  case $opt in
--    n)
--      no_imgui=true
--      echo "Running prebuild script without support for IMGUI-based GUI"
--      ;;
--    \?)
--      echo "Invalid option: -$OPTARG" >&2
--      exit 1
--      ;;
--  esac
-+args=("$@")
-+no_imgui=false
-+
-+# extract options and their arguments into variables.
-+while [ -n "$1" ]; do
-+    case "$1" in
-+        -c|--config)
-+            shift 2
-+            ;;
-+        -n|--no-imgui)
-+            no_imgui=true
-+            shift
-+            ;;
-+        -s|--system-libs|-o|--offline-build)
-+            shift
-+            ;;
-+        --) shift ; break ;;
-+        *) echo "Invalid argument: $1" ; exit 1 ;;
-+    esac
- done
- 
- SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-@@ -34,8 +42,7 @@ fi
- 
- cd vcpkg
- 
--if [ "$no_imgui" == true ]
--then
-+if [ "$no_imgui" == true ]; then
-     ./vcpkg install kissfft crossguid platform-folders reproc catch2 --recurse
- else
-     ./vcpkg install kissfft fmt crossguid sdl2[x11] gl3w reproc gsl-lite concurrentqueue platform-folders catch2 --recurse
-diff --git a/app/linux-prebuild.sh b/app/linux-prebuild.sh
-index 0e1eaace2..6fac0c952 100755
---- a/app/linux-prebuild.sh
-+++ b/app/linux-prebuild.sh
-@@ -1,31 +1,33 @@
- #!/bin/bash
--
- set -e # Quit script on error
- SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
- WORKING_DIR="$(pwd)"
- 
--cd "${SCRIPT_DIR}"
--
--while getopts ":n" opt; do
--  case $opt in
--    n)
--      no_imgui=true
--      echo "Running prebuild script without support for IMGUI-based GUI"
--      ;;
--    \?)
--      echo "Invalid option: -$OPTARG" >&2
--      exit 1
--      ;;
--  esac
-+args=("$@")
-+system_libs=false
-+
-+# extract options and their arguments into variables.
-+while [ -n "$1" ]; do
-+    case "$1" in
-+        -c|--config)
-+            shift 2
-+            ;;
-+        -n|--no-imgui)
-+            shift
-+            ;;
-+        -s|--system-libs|-o|--offline-build)
-+            system_libs=true
-+            shift
-+            ;;
-+        --) shift ; break ;;
-+        *) echo "Invalid argument: $1" ; exit 1 ;;
-+    esac
- done
- 
- cd "${SCRIPT_DIR}"
- 
--if [ "$no_imgui" == true ]
--then
--  "${SCRIPT_DIR}"/linux-pre-vcpkg.sh -n
--else
--  "${SCRIPT_DIR}"/linux-pre-vcpkg.sh
-+if [ ! "$system_libs" == true ]; then
-+  "${SCRIPT_DIR}"/linux-pre-vcpkg.sh "${args[@]}"
- fi
- 
- # Build external dependencies and copy to build tree
-@@ -35,9 +37,9 @@ echo "Building external binary dependencies..."
- echo "Compiling native ruby extensions..."
- ruby "${SCRIPT_DIR}"/server/ruby/bin/compile-extensions.rb
- 
--"${SCRIPT_DIR}"/linux-pre-translations.sh
--"${SCRIPT_DIR}"/linux-pre-copy-binaries.sh
--"${SCRIPT_DIR}"/linux-pre-tau-prod-release.sh
-+"${SCRIPT_DIR}"/linux-pre-translations.sh "${args[@]}"
-+"${SCRIPT_DIR}"/linux-pre-copy-binaries.sh "${args[@]}"
-+"${SCRIPT_DIR}"/linux-pre-tau-prod-release.sh "${args[@]}"
- 
- # Restore working directory as it was prior to this script running...
- cd "${WORKING_DIR}"
 diff --git a/app/mac-clean.sh b/app/mac-clean.sh
 index 068c95a46..72b4750cb 100755
 --- a/app/mac-clean.sh
@@ -779,7 +488,305 @@ index 169e4fdb5..068d11d03 100755
  # Restore working directory as it was prior to this script running...
  cd "${WORKING_DIR}"
 
-commit b3ea73e9154323356c466823eeaa53de028b084b
+commit de8014a54a6efa0250ec09a50e861c93f698ff8e
+Author: Lily Foster <lily@lily.flowers>
+Date:   Fri May 6 18:16:37 2022 -0400
+
+    Build - overhaul linux build scripts to allow offline or vcpkg-less builds
+
+diff --git a/app/linux-build-all.sh b/app/linux-build-all.sh
+index 5672c27a6..2d4616f18 100755
+--- a/app/linux-build-all.sh
++++ b/app/linux-build-all.sh
+@@ -4,9 +4,9 @@ set -e # Quit script on error
+ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+ WORKING_DIR="$(pwd)"
+ 
+-"${SCRIPT_DIR}"/linux-prebuild.sh
+-"${SCRIPT_DIR}"/linux-config.sh
+-"${SCRIPT_DIR}"/linux-build-gui.sh
++"${SCRIPT_DIR}"/linux-prebuild.sh "$@"
++"${SCRIPT_DIR}"/linux-config.sh "$@"
++"${SCRIPT_DIR}"/linux-build-gui.sh "$@"
+ 
+ # Restore working directory as it was prior to this script running...
+ cd "${WORKING_DIR}"
+diff --git a/app/linux-config.sh b/app/linux-config.sh
+index d4d1713e8..cac0d43b6 100755
+--- a/app/linux-config.sh
++++ b/app/linux-config.sh
+@@ -3,37 +3,39 @@ set -e # Quit script on error
+ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+ WORKING_DIR="$(pwd)"
+ 
+-while getopts ":n" opt; do
+-  case $opt in
+-    n)
+-      no_imgui=true
+-      echo "Running config script without support for IMGUI-based GUI"
+-      ;;
+-    \?)
+-      echo "Invalid option: -$OPTARG" >&2
+-      exit 1
+-      ;;
+-  esac
+-done
+-
++args=("$@")
+ config=""
+-
+-if [ "$1" = "--config" ]; then
+-  case $2 in
+-    Release|Debug|RelWithDebInfo|MinSizeRel)
+-      config="$2"
+-      ;;
+-    *)
+-      echo "`basename $0`: Error: invalid configuration: '${2}'" 1>&2
+-      echo "Valid configurations: Release, Debug, RelWithDebInfo, MinSizeRel" 1>&2
+-      exit 1
+-      ;;
+-  esac
+-elif [ ! -z $1 ]; then
+-  echo "`basename $0`: Error: invalid parameter: '${1}'" 1>&2
+-  echo "Usage: `basename $0` [--config <Release|Debug|RelWithDebInfo|MinSizeRel>]" 1>&2
+-  exit 1
+-fi
++no_imgui=false
++system_libs=false
++
++# extract options and their arguments into variables.
++while [ -n "$1" ]; do
++    case "$1" in
++        -c|--config)
++            case $2 in
++                Release|Debug|RelWithDebInfo|MinSizeRel)
++                    config="$2"
++                    ;;
++                *)
++                    echo "`basename $0`: Error: invalid configuration: '${2}'" 1>&2
++                    echo "Valid configurations: Release, Debug, RelWithDebInfo, MinSizeRel" 1>&2
++                    exit 1
++                    ;;
++            esac
++            shift 2
++            ;;
++        -n|--no-imgui)
++            no_imgui=true
++            shift
++            ;;
++        -s|--system-libs|-o|--offline-build)
++            system_libs=true
++            shift
++            ;;
++        --) shift ; break ;;
++        *) echo "Invalid argument: $1" ; exit 1 ;;
++    esac
++done
+ 
+ echo "Creating build directory..."
+ mkdir -p "${SCRIPT_DIR}/build"
+@@ -41,12 +43,15 @@ mkdir -p "${SCRIPT_DIR}/build"
+ echo "Generating makefiles..."
+ cd "${SCRIPT_DIR}/build"
+ 
+-if [ "$no_imgui" == true ]
+-then
+-    cmake -G "Unix Makefiles" -DBUILD_IMGUI_INTERFACE=OFF -DCMAKE_BUILD_TYPE="$config" ..
+-else
+-    cmake -G "Unix Makefiles" -DBUILD_IMGUI_INTERFACE=ON -DCMAKE_BUILD_TYPE="$config" ..
+-fi
++option() {
++  if [ "$1" == "true" ] || [ "$1" == "!" ] || [ "$1" == "!false" ]; then
++    echo ON
++  else
++    echo OFF
++  fi
++}
++
++cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE="$config" -DBUILD_IMGUI_INTERFACE="$(option "!$no_imgui")" -DUSE_SYSTEM_LIBS="$(option "$system_libs")" ..
+ 
+ cd "${SCRIPT_DIR}"
+ 
+diff --git a/app/linux-pre-tau-prod-release.sh b/app/linux-pre-tau-prod-release.sh
+index 0c85a01f8..750cc4e60 100755
+--- a/app/linux-pre-tau-prod-release.sh
++++ b/app/linux-pre-tau-prod-release.sh
+@@ -3,16 +3,45 @@ set -e # Quit script on error
+ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+ WORKING_DIR="$(pwd)"
+ 
++args=("$@")
++offline_build=false
++
++# extract options and their arguments into variables.
++while [ -n "$1" ]; do
++    case "$1" in
++        -c|--config)
++            shift 2
++            ;;
++        -n|--no-imgui)
++            shift
++            ;;
++        -s|--system-libs)
++            shift
++            ;;
++        -o|--offline-build)
++            offline_build=true
++            shift
++            ;;
++        --) shift ; break ;;
++        *) echo "Invalid argument: $1" ; exit 1 ;;
++    esac
++done
++
+ echo "Compiling Erlang/Elixir files..."
+ cd "${SCRIPT_DIR}"/server/beam/tau
+ 
+-MIX_ENV=prod mix local.hex --force
+-MIX_ENV=prod mix local.rebar --force
+-MIX_ENV=prod mix deps.get
+-MIX_ENV=prod mix assets.deploy.prod
+-MIX_ENV=prod mix tailwind.install
+-MIX_ENV=prod mix esbuild.install
+-MIX_ENV=prod mix release --overwrite
++if [ "$offline_build" == true ]; then
++    MIX_ENV=prod mix assets.deploy.prod
++    MIX_ENV=prod mix release --overwrite --no-deps-check
++else
++    MIX_ENV=prod mix local.hex --force
++    MIX_ENV=prod mix local.rebar --force
++    MIX_ENV=prod mix deps.get
++    MIX_ENV=prod mix assets.deploy.prod
++    MIX_ENV=prod mix tailwind.install
++    MIX_ENV=prod mix esbuild.install
++    MIX_ENV=prod mix release --overwrite
++fi
+ 
+ cp src/tau.app.src ebin/tau.app
+ 
+diff --git a/app/linux-pre-vcpkg.sh b/app/linux-pre-vcpkg.sh
+index 84091f415..a75e875ae 100755
+--- a/app/linux-pre-vcpkg.sh
++++ b/app/linux-pre-vcpkg.sh
+@@ -1,17 +1,25 @@
+ #!/bin/bash
+ set -e # Quit script on error
+ 
+-while getopts ":n" opt; do
+-  case $opt in
+-    n)
+-      no_imgui=true
+-      echo "Running prebuild script without support for IMGUI-based GUI"
+-      ;;
+-    \?)
+-      echo "Invalid option: -$OPTARG" >&2
+-      exit 1
+-      ;;
+-  esac
++args=("$@")
++no_imgui=false
++
++# extract options and their arguments into variables.
++while [ -n "$1" ]; do
++    case "$1" in
++        -c|--config)
++            shift 2
++            ;;
++        -n|--no-imgui)
++            no_imgui=true
++            shift
++            ;;
++        -s|--system-libs|-o|--offline-build)
++            shift
++            ;;
++        --) shift ; break ;;
++        *) echo "Invalid argument: $1" ; exit 1 ;;
++    esac
+ done
+ 
+ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+@@ -34,8 +42,7 @@ fi
+ 
+ cd vcpkg
+ 
+-if [ "$no_imgui" == true ]
+-then
++if [ "$no_imgui" == true ]; then
+     ./vcpkg install kissfft crossguid platform-folders reproc catch2 --recurse
+ else
+     ./vcpkg install kissfft fmt crossguid sdl2[x11] gl3w reproc gsl-lite concurrentqueue platform-folders catch2 --recurse
+diff --git a/app/linux-prebuild.sh b/app/linux-prebuild.sh
+index 0e1eaace2..6fac0c952 100755
+--- a/app/linux-prebuild.sh
++++ b/app/linux-prebuild.sh
+@@ -1,31 +1,33 @@
+ #!/bin/bash
+-
+ set -e # Quit script on error
+ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+ WORKING_DIR="$(pwd)"
+ 
+-cd "${SCRIPT_DIR}"
+-
+-while getopts ":n" opt; do
+-  case $opt in
+-    n)
+-      no_imgui=true
+-      echo "Running prebuild script without support for IMGUI-based GUI"
+-      ;;
+-    \?)
+-      echo "Invalid option: -$OPTARG" >&2
+-      exit 1
+-      ;;
+-  esac
++args=("$@")
++system_libs=false
++
++# extract options and their arguments into variables.
++while [ -n "$1" ]; do
++    case "$1" in
++        -c|--config)
++            shift 2
++            ;;
++        -n|--no-imgui)
++            shift
++            ;;
++        -s|--system-libs|-o|--offline-build)
++            system_libs=true
++            shift
++            ;;
++        --) shift ; break ;;
++        *) echo "Invalid argument: $1" ; exit 1 ;;
++    esac
+ done
+ 
+ cd "${SCRIPT_DIR}"
+ 
+-if [ "$no_imgui" == true ]
+-then
+-  "${SCRIPT_DIR}"/linux-pre-vcpkg.sh -n
+-else
+-  "${SCRIPT_DIR}"/linux-pre-vcpkg.sh
++if [ ! "$system_libs" == true ]; then
++  "${SCRIPT_DIR}"/linux-pre-vcpkg.sh "${args[@]}"
+ fi
+ 
+ # Build external dependencies and copy to build tree
+@@ -35,9 +37,9 @@ echo "Building external binary dependencies..."
+ echo "Compiling native ruby extensions..."
+ ruby "${SCRIPT_DIR}"/server/ruby/bin/compile-extensions.rb
+ 
+-"${SCRIPT_DIR}"/linux-pre-translations.sh
+-"${SCRIPT_DIR}"/linux-pre-copy-binaries.sh
+-"${SCRIPT_DIR}"/linux-pre-tau-prod-release.sh
++"${SCRIPT_DIR}"/linux-pre-translations.sh "${args[@]}"
++"${SCRIPT_DIR}"/linux-pre-copy-binaries.sh "${args[@]}"
++"${SCRIPT_DIR}"/linux-pre-tau-prod-release.sh "${args[@]}"
+ 
+ # Restore working directory as it was prior to this script running...
+ cd "${WORKING_DIR}"
+
+commit ce5dca789361f5fbb1c137b9aaa3b1e633e6824d
 Author: Lily Foster <lily@lily.flowers>
 Date:   Tue Feb 22 13:49:38 2022 -0500
 
@@ -815,7 +822,7 @@ index e05427b9d..c3a8ab0d7 100644
  # Import environment specific config. This must remain at the bottom
  # of this file so it overrides the configuration defined above.
 
-commit b4fe8db9030ac5e328adf5822a2976cc565b088f
+commit 88bdb29f0df0e35e2b5c8383cd830212b641e9b0
 Author: Lily Foster <lily@lily.flowers>
 Date:   Tue Feb 22 13:48:38 2022 -0500
 
@@ -851,7 +858,7 @@ index c4614531e..e82bc36fb 100644
      //io.Fonts->AddFontFromFileTTF("../../misc/fonts/ProggyTiny.ttf", 10.0f);
      //ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
 
-commit 5bf1dc6c862b77174f43cdbda4fc07c3be81ab1d
+commit 33890c88d45a866682636d0afe5648e15f876d60
 Author: Lily Foster <lily@lily.flowers>
 Date:   Tue Feb 22 13:48:00 2022 -0500
 
