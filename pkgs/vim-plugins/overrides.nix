@@ -1,4 +1,4 @@
-{ buildVimPluginFrom2Nix }:
+{ buildVimPluginFrom2Nix, luaPackages }:
 
 self: super: {
   vim-radical = super.vim-radical.overrideAttrs (attrs: {
