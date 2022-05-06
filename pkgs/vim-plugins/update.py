@@ -86,8 +86,8 @@ let
   checksums = lib.mapAttrs getChecksum generated;
 in lib.filterAttrs (n: v: v != null) checksums)"""
 
-GET_PLUGINS_LUA = """
-with import <localpkgs> {};
+GET_PLUGINS_LUA = f"""
+with import <localpkgs> {{}};
 
 with import (
     let
