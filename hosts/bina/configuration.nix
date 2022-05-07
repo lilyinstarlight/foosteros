@@ -80,6 +80,7 @@
         ".azure"
         ".backgrounds"
         ".config/Element"
+        ".config/dconf"
         ".config/discord"
         ".config/Microsoft/Microsoft Teams"
         ".config/obs-studio"
@@ -100,7 +101,6 @@
       files = [
         ".android/adbkey"
         ".android/adbkey.pub"
-        ".config/dconf/user"
         ".config/qutebrowser/autoconfig.yml"
         ".config/qutebrowser/quickmarks"
         ".gnupg/pubring.kbx"
