@@ -44,8 +44,8 @@ stdenv.mkDerivation rec {
     owner = "sonic-pi-net";
     repo = pname;
     #rev = "v${version}";
-    rev = "ab2be71b593456b1baa7b156f656aec6cde4af24";
-    hash = "sha256-D1liVRkztDURiXU8rs1KqAGtQbcCMf7nCRHTiK3snd0=";
+    rev = "02b8c892b90f1ecbfe6e074a2f4f2cbe50b92e84";
+    hash = "sha256-/nvl+96A19rNc58iYtgcRpc/C2Pkh7vXQ0iK89zmmjI=";
   };
 
   mixFodDeps = beamPackages.fetchMixDeps {
@@ -54,10 +54,6 @@ stdenv.mkDerivation rec {
     src = "${src}/app/server/beam/tau";
     sha256 = "sha256-U1O/DqBOnaN97xLECSOLNKn4wVC8V2EqUw023EyN39M=";
   };
-
-  patches = [
-    ./sonic-pi-4.0-offline-build.patch
-  ];
 
   nativeBuildInputs = [
     copyDesktopItems
