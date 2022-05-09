@@ -3,11 +3,11 @@
 
 stdenvNoCC.mkDerivation rec {
   pname = "nix-index-database";
-  version = "2022-05-08";
+  version = "2022-04-10";
 
   src = fetchurl {
     url = "https://github.com/Mic92/nix-index-database/releases/download/${version}/index-x86_64-linux";
-    hash = "sha256-8vZCDbRLfaCiH8kH+w/lObNHLEgJZ/D5lM3yKB47mE0=";
+    hash = "sha256-lXdMSpd0Q2e0OLeeSXtICxf428CqVVEj0876LSSK0CI=";
   };
 
   dontUnpack = true;
