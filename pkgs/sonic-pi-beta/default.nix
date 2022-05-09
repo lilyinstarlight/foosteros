@@ -37,15 +37,15 @@
 }:
 
 stdenv.mkDerivation rec {
-  version = "4.0.0-beta5";
+  version = "4.0.0-beta6";
   pname = "sonic-pi";
 
   src = fetchFromGitHub {
     owner = "sonic-pi-net";
     repo = pname;
     #rev = "v${version}";
-    rev = "02b8c892b90f1ecbfe6e074a2f4f2cbe50b92e84";
-    hash = "sha256-/nvl+96A19rNc58iYtgcRpc/C2Pkh7vXQ0iK89zmmjI=";
+    rev = "60f962eda38728dd07687bd2135cd13b72c3112d";
+    hash = "sha256-z0Y5tj9Twqd7CeNEv3s2S4DT4urtauTgV8niRXUK+sg=";
   };
 
   mixFodDeps = beamPackages.fetchMixDeps {
