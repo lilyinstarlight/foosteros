@@ -21,11 +21,6 @@ let mypkgs = let
   python3Packages = recurseIntoAttrs python3.pkgs;
 
   vimPlugins = pkgs.vimPlugins.extend (self: super: callPackage ./vim-plugins {});
-
-  # TODO: remove once nixpkgs PR is merged
-  obs-studio-plugins = pkgs.obs-studio-plugins // {
-    obs-gstreamer = callPackage ./obs-gstreamer {};
-  };
 in
 
 {
@@ -58,17 +53,12 @@ in
   mpdris2 = callPackage ./mpdris2 {
     inherit (pkgs) mpdris2;
   };
-  sonic-pi = libsForQt5.callPackage ./sonic-pi {
-    # TODO: remove once https://github.com/NixOS/nixpkgs/pull/172208 is in nixos-unstable
-    supercollider-with-sc3-plugins = resolveDep "supercollider-with-sc3-plugins";
-  };
+  sonic-pi = libsForQt5.callPackage ./sonic-pi {};
   sonic-pi-beta = libsForQt5.callPackage ./sonic-pi-beta {
     kissfft = resolveDep "kissfftFloat";
     crossguid = resolveDep "crossguid";
     gl3w = resolveDep "gl3w";
     platform-folders = resolveDep "platform-folders";
-    # TODO: remove once https://github.com/NixOS/nixpkgs/pull/172208 is in nixos-unstable
-    supercollider-with-sc3-plugins = resolveDep "supercollider-with-sc3-plugins";
     tailwindcss = resolveDep "tailwindcss";
   };
   tailwindcss = nodePackages.tailwindcss;
@@ -77,18 +67,6 @@ in
     fonts = [ "Monofur" ];
   };
   kissfftFloat = kissfft.override { datatype = "float"; };
-  # TODO: remove once https://github.com/NixOS/nixpkgs/pull/172208 is in nixos-unstable
-  supercollider = pkgs.supercollider.overrideAttrs (attrs: {
-    patches = attrs.patches ++ [
-      (pkgs.fetchpatch {
-        url = "https://github.com/supercollider/supercollider/commit/b9dd70c4c8d61c93d7a70645e0bd18fa76e6834e.patch";
-        hash = "sha256-6FhEHyY0rnE6d7wC+v0U9K+L0aun5LkTqaEFhr3eQNw=";
-      })
-    ];
-  });
-  supercollider-with-sc3-plugins = pkgs.supercollider-with-sc3-plugins.override {
-    supercollider = resolveDep "supercollider";
-  };
 
   pass-wayland-otp = (pass-wayland.withExtensions (ext: [ ext.pass-otp ])).overrideAttrs (attrs: {
     meta = with lib; attrs.meta // {
@@ -96,8 +74,7 @@ in
     };
   });
 } // (if isOverlay then {
-  # TODO: remove obs-studio-plugins once nixpkgs PR is merged
-  inherit nodePackages python3Packages vimPlugins obs-studio-plugins;
+  inherit nodePackages python3Packages vimPlugins;
 } else {
   # TODO: currently nodePackages in nixpkgs uses nodejs-14_x
   nodePackages = dontRecurseIntoAttrs (callPackage ./node-packages {
@@ -105,8 +82,6 @@ in
   });
   python3Packages = recurseIntoAttrs (pkgs.python3Packages.callPackage ./python-modules {});
   vimPlugins = recurseIntoAttrs (callPackage ./vim-plugins {});
-  # TODO: remove once nixpkgs PR is merged
-  obs-studio-plugins = { obs-gstreamer = callPackage ./obs-gstreamer {}; };
 }) // (lib.optionalAttrs allowUnfree {
   # dependents of unfree packages
   crank = callPackage ./crank {
