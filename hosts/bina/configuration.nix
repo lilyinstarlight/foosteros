@@ -122,6 +122,7 @@
       directories = [
         "iso"
         "tmp"
+        ".cargo/registry"
       ];
     };
   };
