@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchurl, makeDesktopItem, copyDesktopItems, makeWrapper, wrapGAppsHook, autoPatchelfHook, libpng, zlib, udev, gtk3, pango, cairo, gdk-pixbuf, glib, libX11, webkitgtk, libglvnd, alsa-lib, libXext, libXcursor, libXinerama, libXi, libXrandr, libXScrnSaver, libXxf86vm, libxkbcommon, wayland }:
+{ lib, stdenv, fetchurl, makeDesktopItem, copyDesktopItems, makeWrapper, wrapGAppsHook, autoPatchelfHook, libpng, zlib, udev, gtk3, pango, cairo, gdk-pixbuf, glib, libX11, webkitgtk, libglvnd, alsa-lib, libXext, libXcursor, libXinerama, libXi, libXrandr, libXScrnSaver, libXxf86vm, libxkbcommon, wayland, coreutils, gnugrep, gnused }:
 
 let
   simLibDeps = [
@@ -73,25 +73,22 @@ stdenv.mkDerivation rec {
     mkdir -p $out/libexec
     cat >$out/libexec/PlaydateSimulator <<EOF
     #!/bin/sh
-    if [ ! -d "\$HOME/.Playdate Simulator/sdk" ]; then
-        echo "Creating SDK and virtual disk in \$HOME/.Playdate Simluator/sdk..."
-        mkdir -p "\$HOME/.Playdate Simulator/sdk"
-        for dir in $out/sdk/*; do
-            if [ "\$(basename "\$dir")" != "Disk" ]; then
-                ln -s "\$dir" "\$HOME/.Playdate Simulator/sdk/\$(basename "\$dir")"
-            else
-                cp -r "\$dir" "\$HOME/.Playdate Simulator/sdk/\$(basename "\$dir")"
-                chmod -R u=rwX,g=rX,o=rX "\$HOME/.Playdate Simulator/sdk/\$(basename "\$dir")"
-            fi
-        done
-    fi
+    echo "Linking SDK and copying virtual disk into \$HOME/.Playdate Simluator/sdk..."
+    ${coreutils}/bin/mkdir -p "\$HOME/.Playdate Simulator/sdk"
+    for dir in $out/sdk/*; do
+        if [ "\$(basename "\$dir")" != "Disk" ]; then
+            [ ! -e "\$HOME/.Playdate Simulator/sdk/\$(basename "\$dir")" -o -L "\$HOME/.Playdate Simulator/sdk/\$(basename "\$dir")" ] && ${coreutils}/bin/ln -sTf "\$dir" "\$HOME/.Playdate Simulator/sdk/\$(basename "\$dir")"
+        else
+            ${coreutils}/bin/cp -rT --no-preserve=mode,ownership "\$dir" "\$HOME/.Playdate Simulator/sdk/\$(basename "\$dir")"
+        fi
+    done
 
     echo "Setting SDK path to \$HOME/.Playdate Simluator/sdk..."
-    if grep -qs "^SDKDirectory=" "\$HOME/.Playdate Simulator/Playdate Simulator.ini"; then
-        sed -i -e "s#^SDKDirectory=.*\\\$#SDKDirectory=\$HOME/.Playdate Simulator/sdk#" "\$HOME/.Playdate Simulator/Playdate Simulator.ini"
+    if ${gnugrep}/bin/grep -qs "^SDKDirectory=" "\$HOME/.Playdate Simulator/Playdate Simulator.ini"; then
+        ${gnused}/bin/sed -i -e "s#^SDKDirectory=.*\\\$#SDKDirectory=\$HOME/.Playdate Simulator/sdk#" "\$HOME/.Playdate Simulator/Playdate Simulator.ini"
     else
         echo >"\$HOME/.Playdate Simulator/Playdate Simulator.ini"
-        sed -i -e "1iSDKDirectory=\$HOME/.Playdate Simulator/sdk\n[LastUsed]\nPDXDirectory=\$HOME/.Playdate Simulator/sdk/Disk/System/Launcher.pdx/" "\$HOME/.Playdate Simulator/Playdate Simulator.ini"
+        ${gnused}/bin/sed -i -e "1iSDKDirectory=\$HOME/.Playdate Simulator/sdk\n[LastUsed]\nPDXDirectory=\$HOME/.Playdate Simulator/sdk/Disk/System/Launcher.pdx/" "\$HOME/.Playdate Simulator/Playdate Simulator.ini"
     fi
 
     exec $out/sdk/bin/PlaydateSimulator "\$@"
