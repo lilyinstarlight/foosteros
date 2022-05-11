@@ -159,6 +159,10 @@
 
   sound.enable = true;
 
+  services.journald.extraConfig = lib.mkDefault ''
+    SystemMaxUse=256M
+  '';
+
   services.openssh.enable = true;
 
   services.xserver = {
