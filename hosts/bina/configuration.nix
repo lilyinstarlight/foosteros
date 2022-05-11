@@ -96,6 +96,7 @@
         ".local/state/wireplumber"
         ".mozilla"
         ".password-store"
+        ".Playdate Simulator"
         ".sonic-pi"
       ];
       files = [
