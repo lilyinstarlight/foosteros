@@ -59,6 +59,7 @@
       "/var/db/sudo"
       "/var/lib/bluetooth"
       "/var/lib/libvirt"
+      "/var/lib/systemd"
       "/var/log"
     ];
     files = [
