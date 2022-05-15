@@ -226,6 +226,8 @@
     };
   };
 
+  hardware.playdate.enable = true;
+
   services.restic.backups.bina = {
     passwordFile = config.sops.secrets.restic-backup-password.path;
     environmentFile = config.sops.secrets.restic-backup-environment.path;
