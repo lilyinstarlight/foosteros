@@ -26,7 +26,7 @@ stdenvNoCC.mkDerivation rec {{
 
   src = builtins.fetchurl {{
     url = "https://github.com/Mic92/nix-index-database/releases/download/${{version}}/index-x86_64-linux";
-    hash = "{narhash}";
+    sha256 = "{narhash}";
   }};
 
   dontUnpack = true;
