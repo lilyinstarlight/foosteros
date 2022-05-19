@@ -16,8 +16,7 @@
     useGlobalPkgs = true;
     sharedModules = [
       inputs.impermanence.nixosModules.home-manager.impermanence
-      ../modules/home-manager/services/mopidy.nix
-      ../modules/home-manager/services/mpdris2.nix
+    ] ++ (import ../modules/home-manager/module-list.nix) ++ [
       ({ pkgs, ... }: {
         xdg.userDirs = {
           enable = true;
