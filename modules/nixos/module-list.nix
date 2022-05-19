@@ -4,7 +4,7 @@
   ./programs/kanshi.nix
   ./programs/mako.nix
   ./programs/sway.nix
-  ./services/misc/dnsimple-ddns.nix
-  ./services/misc/logmail.nix
-  ./services/misc/swaynag-battery.nix
+  ./services/dnsimple-ddns.nix
+  ./services/logmail.nix
+  ./services/swaynag-battery.nix
 ]
