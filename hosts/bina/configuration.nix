@@ -515,6 +515,7 @@
       kernel: i915 [0-9]\{4\}:[0-9]\{2\}:[0-9]\{2\}.[0-9]: \[drm\] \*ERROR\* Failed to write source OUI
       systemd-udevd\[[0-9]*\]: /nix/store/[0-9a-z]\{32\}-systemd-[^/]*/lib/udev/rules\.d/50-udev-default\.rules:42 Unknown group 'sgx', ignoring
       kernel: Bluetooth: hci0: unexpected event for opcode 0xfc2f
+      kernel: Bluetooth: hci0: SCO packet for unknown connection handle [0-9]*
       bluetoothd\[[0-9]*\]: profiles/sap/server\.c:sap_server_register() Sap driver initialization failed\.
       bluetoothd\[[0-9]*\]: sap-server: Operation not permitted (1)
       pipewire\[[0-9]*\]: jack-device 0x[0-9a-f]\{12\}: can't open client: Input/output error
