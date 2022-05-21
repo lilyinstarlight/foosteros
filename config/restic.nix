@@ -18,4 +18,9 @@
       Persistent = true;
     };
   };
+
+  systemd.services."restic-backups-${config.networking.hostName}" = {
+    wants = [ "network-online.target" ];
+    after = [ "network-online.target" ];
+  };
 }
