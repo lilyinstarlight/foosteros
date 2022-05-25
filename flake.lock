@@ -10,11 +10,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1652532826,
-        "narHash": "sha256-/9kiRLdaHMHXQ16tvGa/armLLLI+xNoi1xniJatEbvs=",
+        "lastModified": 1653432938,
+        "narHash": "sha256-xfx7hRJ3mW8dwTSjehglRJgtDxTwQpYb8MvvMCLtJcY=",
         "owner": "lilyinstarlight",
         "repo": "envfs",
-        "rev": "a6c39d7636748f5c6d4e944950420868e83432a9",
+        "rev": "d06784b0f668324bb83950ada595d4c1acf43cd9",
         "type": "github"
       },
       "original": {
