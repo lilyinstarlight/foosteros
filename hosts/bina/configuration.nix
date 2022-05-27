@@ -275,9 +275,7 @@
     ripgrep-all
     mkusb mkwin
     openssl wireshark dogdns picocom
-    (ansible.overrideAttrs (attrs: {
-      propagatedBuildInputs = attrs.propagatedBuildInputs ++ (with python3Packages; [ passlib ]);
-    })) azure-cli
+    ansible azure-cli
     neofetch
     texlive.combined.scheme-full
     gnumake llvmPackages_latest.clang llvmPackages_latest.bintools llvmPackages_latest.lldb
