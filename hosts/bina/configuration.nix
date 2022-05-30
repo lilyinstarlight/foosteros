@@ -233,7 +233,7 @@
     environmentFile = config.sops.secrets.restic-backup-environment.path;
   };
 
-  systemd.services.restic-backups-bina.serviceConfig.ExecCondition = "${config.systemd.package}/lib/systemd/systemd-networkd-wait-online --interface=enp0s25:routable --timeout=1";
+  systemd.services.restic-backups-bina.serviceConfig.ExecCondition = "${config.systemd.package}/lib/systemd/systemd-networkd-wait-online --interface=enp0s25:routable --timeout=5";
 
   virtualisation.spiceUSBRedirection.enable = true;
 
