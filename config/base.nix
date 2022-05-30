@@ -137,7 +137,7 @@
 
   environment.systemPackages = with pkgs; [
     man-pages man-pages-posix
-    bc file htop python3 tree unzip xxd
+    bc file python3 tree unzip xxd
     cachix fpaste ftmp furi
     git gitAndTools.delta ripgrep
     shellcheck progress
@@ -155,6 +155,13 @@
   };
 
   programs.command-not-found.enable = false;
+
+  programs.htop = {
+    enable = true;
+    settings = {
+      tree_view = true;
+    };
+  };
 
   sound.enable = true;
 
