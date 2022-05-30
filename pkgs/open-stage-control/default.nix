@@ -16,7 +16,7 @@ nodeComposition.package.override rec {
     owner = "jean-emmanuel";
     repo = "open-stage-control";
     rev = "v${version}";
-    hash = "sha256-uQ0Fd8KMEnyYUApbmNTnH99FOzMv9aUFtSJGpqR+tH4=";
+    hash = "sha256-Z0PCrbVultVCPcr/Hxh6hgIuPPzCG2r+iE+rnH43bmQ=";
   };
 
   nativeBuildInputs = [
@@ -27,6 +27,8 @@ nodeComposition.package.override rec {
   buildInputs = [
     python3.pkgs.python-rtmidi
   ];
+
+  dontNpmInstall = true;
 
   preRebuild = ''
     # remove electron dependencies from package.json
