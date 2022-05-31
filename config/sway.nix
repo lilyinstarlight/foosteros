@@ -659,6 +659,7 @@ in
     ];
     extraSessionCommands = ''
       export XDG_SESSION_TYPE=wayland
+      export XDG_DATA_DIRS=$XDG_DATA_DIRS''${XDG_DATA_DIRS:+:}${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}
       export DCONF_PROFILE=sway
     '';
   };
