@@ -7,11 +7,6 @@ let mypkgs = let
   resolvePath = attrset: path: lib.getAttrFromPath (lib.splitString "." path) attrset;
   resolveDep = path: if isOverlay then (resolvePath outpkgs path) else if (hasPath mypkgs path) then (resolvePath mypkgs path) else (resolvePath pkgs path);
 
-  # TODO: currently nodePackages in nixpkgs uses nodejs-14_x
-  nodePackages = pkgs.nodePackages // (callPackage ./node-packages {
-    nodejs = pkgs.nodejs-14_x;
-  });
-
   python3 = let
     self = pkgs.python3.override {
       packageOverrides = (self: super: super.pkgs.callPackage ./python-modules {});
@@ -76,10 +71,6 @@ in
 } // (if isOverlay then {
   inherit nodePackages python3Packages vimPlugins;
 } else {
-  # TODO: currently nodePackages in nixpkgs uses nodejs-14_x
-  nodePackages = dontRecurseIntoAttrs (callPackage ./node-packages {
-    nodejs = resolveDep "nodejs-14_x";
-  });
   python3Packages = recurseIntoAttrs (pkgs.python3Packages.callPackage ./python-modules {});
   vimPlugins = recurseIntoAttrs (callPackage ./vim-plugins {});
 }) // (lib.optionalAttrs allowUnfree {
