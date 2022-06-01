@@ -546,7 +546,7 @@
       };
       extensionPackages = with pkgs; [
         mopidy-local mopidy-iris mopidy-mpd
-      ] ++ (lib.optionals config.nixpkgs.config.allowUnfree [ mopidy-spotify ]);
+      ] ++ (lib.optionals config.nixpkgs.config.allowUnfree [ /*mopidy-spotify*/ ]);
       extraConfigFiles = [
         config.sops.secrets.mopidy-lily-secrets.path
       ];
