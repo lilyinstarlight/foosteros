@@ -636,6 +636,8 @@ in
     gtkUsePortal = true;
   };
 
+  services.xserver.gdk-pixbuf.modulePackages = with pkgs; [ librsvg ];
+
   programs.dconf.profiles.sway = sway-dconf-profile;
 
   programs.tmux.extraConfig = ''
