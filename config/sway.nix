@@ -624,6 +624,8 @@ in
     '';
   };
 
+  environment.sessionVariables.XDG_DATA_DIRS = with pkgs; [ "${gsettings-desktop-schemas}/share/gsettings-schemas/${gsettings-desktop-schemas.name}" ];
+
   qt5 = {
     enable = true;
     style = "adwaita-dark";
@@ -661,7 +663,6 @@ in
     ];
     extraSessionCommands = ''
       export XDG_SESSION_TYPE=wayland
-      export XDG_DATA_DIRS=$XDG_DATA_DIRS''${XDG_DATA_DIRS:+:}${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}
       export DCONF_PROFILE=sway
     '';
   };
