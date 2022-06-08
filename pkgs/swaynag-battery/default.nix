@@ -1,4 +1,4 @@
-{ lib, buildGoModule, fetchFromGitHub, fetchpatch, makeWrapper, sway, runCommand }:
+{ lib, buildGoModule, fetchFromGitHub, makeWrapper, sway, runCommand }:
 
 let swaynag-battery =
 buildGoModule rec {
