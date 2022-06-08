@@ -1,6 +1,7 @@
 { stdenv
 , lib
 , fetchFromGitHub
+, fetchpatch
 , wrapQtAppsHook
 , makeDesktopItem
 , copyDesktopItems
@@ -18,8 +19,6 @@
 , ruby
 , erlang
 , elixir
-, esbuild
-, tailwindcss
 , beamPackages
 , alsa-lib
 , rtmidi
@@ -44,16 +43,24 @@ stdenv.mkDerivation rec {
     owner = "sonic-pi-net";
     repo = pname;
     #rev = "v${version}";
-    rev = "999b53725d31a3f198f003ef72e6ebab6745da0b";
-    hash = "sha256-cQhKdYDS5FSmucGaEjI9YwFi0P2UCzumKck5UIdqfnw=";
+    rev = "f9015eea59dcef8d1182a5f0b47bd7ae28f91c6d";
+    hash = "sha256-PFpp+X1zQ+ssfUXHU7lmlkgST30bjB2lxbcrGwXvPpk=";
   };
 
   mixFodDeps = beamPackages.fetchMixDeps {
     inherit version;
     pname = "mix-deps-${pname}";
     src = "${src}/app/server/beam/tau";
-    sha256 = "sha256-U1O/DqBOnaN97xLECSOLNKn4wVC8V2EqUw023EyN39M=";
+    sha256 = "sha256-bIhRUMassNLMR4Rnaccs7YWKsYxxqUabXWs5g+wMZtA=";
   };
+
+  patches = [
+    (fetchpatch {
+      name = "${pname}-fix-precompiled-assets.patch";
+      url = "https://github.com/sonic-pi-net/sonic-pi/commit/9462c7be30d7467537cec45c6b169330bdd22064.patch";
+      hash = "sha256-hh3ok+E1synC4Gt004yZ5TvtJizXOkGqnxB7gWFCGvE=";
+    })
+  ];
 
   nativeBuildInputs = [
     copyDesktopItems
@@ -66,8 +73,6 @@ stdenv.mkDerivation rec {
     elixir
     beamPackages.hex
     beamPackages.rebar3
-    esbuild
-    tailwindcss
   ];
 
   buildInputs = [
@@ -103,8 +108,6 @@ stdenv.mkDerivation rec {
     export MIX_REBAR3="$(type -p rebar3)"
     export REBAR_GLOBAL_CONFIG_DIR="$TEMPDIR/rebar3"
     export REBAR_CACHE_DIR="$TEMPDIR/rebar3.cache"
-    export MIX_ESBUILD_PATH="$(type -p esbuild)"
-    export MIX_TAILWINDCSS_PATH="$(type -p tailwindcss)"
     export MIX_HOME="$TEMPDIR/mix"
     export MIX_DEPS_PATH="$TEMPDIR/deps"
     export MIX_ENV=prod

@@ -54,7 +54,6 @@ in
     crossguid = resolveDep "crossguid";
     gl3w = resolveDep "gl3w";
     platform-folders = resolveDep "platform-folders";
-    tailwindcss = resolveDep "nodePackages.tailwindcss";
   };
 
   monofur-nerdfont = nerdfonts.override {
