@@ -77,12 +77,12 @@ final: prev:
 
   vim-radical = buildVimPluginFrom2Nix {
     pname = "vim-radical";
-    version = "2019-11-23";
+    version = "2022-06-07";
     src = fetchFromGitHub {
       owner = "glts";
       repo = "vim-radical";
-      rev = "15aaf234ed09978d0cd7ae02e9ecd6cf01f0882e";
-      sha256 = "1aj8kqz3wssqxkmg3sf4zj39fqdbg6ywknlfk96y7za3968g0sfr";
+      rev = "95ad54adf048dfadf54a49ba1a0c906b689f89dd";
+      sha256 = "0frpvcqnblkqjdqfllbxnz7hla29p8ys7vagyncm1ixdzllgfbs6";
     };
     meta.homepage = "https://github.com/glts/vim-radical/";
   };
