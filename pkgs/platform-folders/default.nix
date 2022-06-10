@@ -2,13 +2,13 @@
 
 stdenv.mkDerivation rec {
   pname = "platform-folders";
-  version = "4.1.0";
+  version = "4.2.0";
 
   src = fetchFromGitHub {
     owner = "sago007";
     repo = "PlatformFolders";
     rev = version;
-    hash = "sha256-ESlY46aEBwmqFrIfNNHAMlZwQR2LOuAqiL1yowr/GyU=";
+    hash = "sha256-ruhAP9kjwm6pIFJ5a6oy6VE5W39bWQO3qSrT5IUtiwA=";
   };
 
   cmakeFlags = [
