@@ -1,4 +1,4 @@
-{ config, lib, pkgs, fpkgs ? pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 with lib;
 
@@ -30,8 +30,8 @@ in
 
     package = mkOption {
       type = types.package;
-      default = fpkgs.swaynag-battery;
-      defaultText = literalExpression "fpkgs.swaynag-battery";
+      default = pkgs.swaynag-battery;
+      defaultText = literalExpression "pkgs.swaynag-battery";
       description = ''
         swaynag-battery derivation to use.
       '';
