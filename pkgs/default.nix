@@ -43,7 +43,6 @@ in
     rofi-wayland = resolveDep "rofi-wayland";
   };
   sonic-pi-tool = python3Packages.callPackage ./sonic-pi-tool {};
-  swaynag-battery = callPackage ./swaynag-battery {};
 
   mpdris2 = callPackage ./mpdris2 {
     inherit (pkgs) mpdris2;
