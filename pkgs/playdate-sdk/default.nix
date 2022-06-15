@@ -125,6 +125,7 @@ stdenv.mkDerivation rec {
     homepage = "https://play.date/dev/";
     description = "Playdate SDK with Lua and C APIs and simulator";
     license = licenses.unfree;
+    sourceProvenance = with sourceTypes; [ binaryNativeCode ];
     maintainers = with maintainers; [ lilyinstarlight ];
     platforms = [ "x86_64-linux" ];
     mainProgram = "PlaydateSimulator";
