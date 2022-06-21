@@ -734,6 +734,8 @@
         $DRY_RUN_CMD ln -sTf $VERBOSE_ARG /run/media/"$USER" "$HOME"/mnt
       '';
     };
+
+    home.stateVersion = "21.05";
   };
 
   system.stateVersion = "21.05";
