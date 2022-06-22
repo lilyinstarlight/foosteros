@@ -59,6 +59,8 @@ in
     fonts = [ "Monofur" ];
   };
   kissfftFloat = kissfft.override { datatype = "float"; };
+  # TODO: remove once NixOS/nixpkgs#178576 is merged
+  clickgen = python39Packages.clickgen;
 
   pass-wayland-otp = (pass-wayland.withExtensions (ext: [ ext.pass-otp ])).overrideAttrs (attrs: {
     meta = with lib; attrs.meta // {
