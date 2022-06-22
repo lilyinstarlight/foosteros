@@ -60,7 +60,11 @@ in
   };
   kissfftFloat = kissfft.override { datatype = "float"; };
   # TODO: remove once NixOS/nixpkgs#178576 is merged
-  clickgen = python39Packages.clickgen;
+  clickgen = python39Packages.clickgen.overrideAttrs (attrs: {
+    meta = with lib; attrs.meta // {
+      platforms = platforms.linux;
+    };
+  });
 
   pass-wayland-otp = (pass-wayland.withExtensions (ext: [ ext.pass-otp ])).overrideAttrs (attrs: {
     meta = with lib; attrs.meta // {
