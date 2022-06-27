@@ -36,31 +36,23 @@
 }:
 
 stdenv.mkDerivation rec {
-  version = "4.0.0-beta7";
+  version = "4.0.0-beta8";
   pname = "sonic-pi";
 
   src = fetchFromGitHub {
     owner = "sonic-pi-net";
     repo = pname;
     #rev = "v${version}";
-    rev = "f9015eea59dcef8d1182a5f0b47bd7ae28f91c6d";
-    hash = "sha256-PFpp+X1zQ+ssfUXHU7lmlkgST30bjB2lxbcrGwXvPpk=";
+    rev = "d7fc63fe3bf5a367b3aba8835b096f9538388a98";
+    hash = "sha256-m6t6Gm2wc3Tk3CoUr40i+F0y2fvnQfsFc5QCZEVppzE=";
   };
 
   mixFodDeps = beamPackages.fetchMixDeps {
     inherit version;
     pname = "mix-deps-${pname}";
     src = "${src}/app/server/beam/tau";
-    sha256 = "sha256-bIhRUMassNLMR4Rnaccs7YWKsYxxqUabXWs5g+wMZtA=";
+    sha256 = "sha256-HD5VarSEC93jSG16yRfoVnPWkD/U6TP8AG80R5bDJFs=";
   };
-
-  patches = [
-    (fetchpatch {
-      name = "${pname}-fix-precompiled-assets.patch";
-      url = "https://github.com/sonic-pi-net/sonic-pi/commit/9462c7be30d7467537cec45c6b169330bdd22064.patch";
-      hash = "sha256-hh3ok+E1synC4Gt004yZ5TvtJizXOkGqnxB7gWFCGvE=";
-    })
-  ];
 
   nativeBuildInputs = [
     copyDesktopItems
