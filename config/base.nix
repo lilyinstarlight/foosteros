@@ -1,5 +1,49 @@
 { config, lib, pkgs, self, inputs, outputs, ... }:
 
+let
+  issue = pkgs.writeText "issue" ''
+
+    Welcome to [35;1mFoosterOS/2[0m [34;1mWarp[0m - \l
+
+  '';
+
+  osReleaseContents = {
+    NAME = "NixOS";
+    ID = "nixos";
+    VERSION = "${config.system.nixos.release} (${config.system.nixos.codeName})";
+    VERSION_CODENAME = lib.toLower config.system.nixos.codeName;
+    VERSION_ID = config.system.nixos.release;
+    BUILD_ID = config.system.nixos.version;
+    PRETTY_NAME = "FoosterOS/2 Warp";
+    LOGO = "nix-snowflake";
+    HOME_URL = "https://nixos.org/";
+    DOCUMENTATION_URL = "https://nixos.org/learn.html";
+    SUPPORT_URL = "https://nixos.org/community.html";
+    BUG_REPORT_URL = "https://github.com/NixOS/nixpkgs/issues";
+  };
+
+  initrdReleaseContents = osReleaseContents // {
+    PRETTY_NAME = "${osReleaseContents.PRETTY_NAME} (Initrd)";
+  };
+
+  lsbReleaseContents = {
+    LSB_VERSION = "${config.system.nixos.release} (${config.system.nixos.codeName})";
+    DISTRIB_ID = "nixos";
+    DISTRIB_RELEASE = config.system.nixos.release;
+    DISTRIB_CODENAME = lib.toLower config.system.nixos.codeName;
+    DISTRIB_DESCRIPTION = "FoosterOS/2 Warp";
+  };
+
+  needsEscaping = s: null != builtins.match "[a-zA-Z0-9]+" s;
+  escapeIfNeccessary = s: if needsEscaping s then s else ''"${lib.escape [ "\$" "\"" "\\" "\`" ] s}"'';
+  attrsToText = attrs:
+    lib.concatStringsSep "\n" (
+      lib.mapAttrsToList (n: v: ''${n}=${escapeIfNeccessary (toString v)}'') attrs
+    ) + "\n";
+
+  initrdRelease = pkgs.writeText "initrd-release" (attrsToText initrdReleaseContents);
+in
+
 {
   imports = [
     inputs.home-manager.nixosModules.home-manager
@@ -80,6 +124,11 @@
 
   system.nixos.label = lib.concatStringsSep "-" ((lib.sort (x: y: x < y) config.system.nixos.tags) ++ [ config.system.nixos.version ] ++ [ "foosteros" (self.shortRev or "dirty") ]);
 
+  boot.initrd.systemd.contents = {
+    "/etc/os-release".source = lib.mkForce initrdRelease;
+    "/etc/initrd-release".source = lib.mkForce initrdRelease;
+  };
+
   environment.variables = {
     EDITOR = "vi";
     VISUAL = "vi";
@@ -96,24 +145,10 @@
       }
     '';
 
-    issue.source = lib.mkForce (pkgs.writeText "issue" ''
+    issue.source = lib.mkForce issue;
 
-      Welcome to [35;1mFoosterOS/2[0m [34;1mWarp[0m - \l
-
-    '');
-
-    os-release.text = lib.mkForce ''
-      NAME=NixOS
-      ID=nixos
-      VERSION="${config.system.nixos.version} (${config.system.nixos.codeName})"
-      VERSION_CODENAME=${lib.toLower config.system.nixos.codeName}
-      VERSION_ID="${config.system.nixos.version}"
-      PRETTY_NAME="FoosterOS/2 Warp"
-      LOGO="nix-snowflake"
-      HOME_URL="https://github.com/lilyinstarlight/foosteros"
-      DOCUMENTATION_URL="https://nixos.org/learn.html"
-      BUG_REPORT_URL="https://github.com/lilyinstarlight/foosteros/issues"
-    '';
+    os-release.text = lib.mkForce (attrsToText osReleaseContents);
+    lsb-release.text = lib.mkForce (attrsToText lsbReleaseContents);
 
     "xdg/user-dirs.defaults".text = ''
       XDG_DESKTOP_DIR="$HOME"
