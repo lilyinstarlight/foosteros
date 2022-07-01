@@ -24,11 +24,12 @@ Feel free to take any pieces in this repository that you like! Please don't try 
 
     mkfs.fat -F32 -n esp /dev/disk/by-partlabel/esp
 
-    cryptsetup luksFormat /dev/disk/by-partlabel/nixos
-    cryptsetup open /dev/disk/by-partlabel/nixos nixos
+    ## Create an encrypted partition if used
+    # cryptsetup luksFormat /dev/disk/by-partlabel/nixos
+    # cryptsetup open /dev/disk/by-partlabel/nixos nixos
 
-    pvcreate /dev/mapper/nixos
-    vgcreate nixos /dev/mapper/nixos
+    pvcreate /dev/disk/by-partlabel/nixos  # use /dev/mapper/nixos for encrypted partition
+    vgcreate nixos /dev/disk/by-partlabel/nixos  # use /dev/mapper/nixos for encrypted partition
     lvcreate -L "$(echo 'scale = 2;' "$(vgs -o vg_size --noheadings --units g --nosuffix nixos)" - "$(echo 'scale = 0;' '(' "$(grep -F MemTotal: /proc/meminfo | awk '{print $2}')" + 1024 '*' 1024 ')' / '(' 1024 '*' 1024 ')' | bc)" | bc)"g -n root nixos
     mkfs.btrfs -L root /dev/mapper/nixos-root
     lvcreate -l 100%FREE -n swap nixos
