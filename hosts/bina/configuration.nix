@@ -276,7 +276,7 @@
     virt-manager podman-compose
     ripgrep-all
     mkusb mkwin
-    openssl wireshark dogdns picocom
+    aria2 openssl wireshark dogdns picocom
     (ansible.overrideAttrs (attrs: {
       propagatedBuildInputs = attrs.propagatedBuildInputs ++ (with python3Packages; [ passlib ]);
     })) azure-cli
