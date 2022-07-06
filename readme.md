@@ -13,7 +13,7 @@ Feel free to take any pieces in this repository that you like! Please don't try 
 1. Boot [NixOS minimal install media](https://channels.nixos.org/nixos-unstable/latest-nixos-minimal-x86_64-linux.iso).
 2. Add installation dependencies and binary cache.
     ```
-    nix-env -iA nixos.{bc,git,cachix}
+    nix-shell -p bc git cachix
     cachix use -m user-nixconf foosteros
     ```
 3. Partition the disks with at least an EFI System Partition and preferably root and swap in an encrypted LVM.
