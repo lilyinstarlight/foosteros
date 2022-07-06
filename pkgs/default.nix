@@ -32,10 +32,6 @@ in
   mkusb = callPackage ./mkusb {};
   mkwin = callPackage ./mkwin {};
   nix-index-database = callPackage ./nix-index-database {};
-  open-stage-control = callPackage ./open-stage-control {
-    electron = resolveDep "electron_15";
-    nodejs = resolveDep "nodejs-14_x";
-  };
   petty = callPackage ./petty {};
   platform-folders = callPackage ./platform-folders {};
   pridecat = callPackage ./pridecat {};
@@ -65,6 +61,12 @@ in
       platforms = platforms.linux;
     };
   });
+
+  # TODO: remove when NixOS/nixpkgs#170464 is merged
+  open-stage-control = callPackage ./open-stage-control {
+    electron = resolveDep "electron_15";
+    nodejs = resolveDep "nodejs-16_x";
+  };
 } // (if isOverlay then {
   inherit nodePackages python3Packages vimPlugins;
 } else {

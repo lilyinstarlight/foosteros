@@ -1,4 +1,4 @@
-{ pkgs, stdenv, lib, fetchFromGitHub, makeWrapper, makeDesktopItem, copyDesktopItems, nodejs, electron, python3, runCommand, ... }:
+{ pkgs, stdenv, lib, fetchFromGitHub, makeBinaryWrapper, makeDesktopItem, copyDesktopItems, nodejs, electron, python3, ... }:
 
 let
   nodeComposition = import ./node-composition.nix {
@@ -7,7 +7,6 @@ let
   };
 in
 
-let open-stage-control =
 nodeComposition.package.override rec {
   pname = "open-stage-control";
   inherit (nodeComposition.args) version;
@@ -21,7 +20,7 @@ nodeComposition.package.override rec {
 
   nativeBuildInputs = [
     copyDesktopItems
-    makeWrapper
+    makeBinaryWrapper
   ];
 
   buildInputs = [
@@ -30,16 +29,7 @@ nodeComposition.package.override rec {
 
   dontNpmInstall = true;
 
-  preRebuild = ''
-    # remove electron dependencies from package.json
-    mv package.json package.orig.json
-    grep -v '"electron"\|"electron-installer-debian"\|"electron-packager"\|"electron-packager-plugin-non-proprietary-codecs-ffmpeg"' package.orig.json >package.json
-  '';
-
   postInstall = ''
-    # fix shebangs in node_modules
-    patchShebangs --build $out/lib/node_modules/open-stage-control/node_modules/
-
     # build assets
     npm run build
 
@@ -49,11 +39,16 @@ nodeComposition.package.override rec {
 
     # wrap electron and include python-rtmidi
     makeWrapper '${electron}/bin/electron' $out/bin/open-stage-control \
-      --argv0 $out/bin/open-stage-control \
+      --inherit-argv0 \
       --add-flags $out/lib/node_modules/open-stage-control/app \
-      --prefix PYTHONPATH : $PYTHONPATH \
-      --prefix PATH : ${lib.makeBinPath [ python3 ]}
+      --prefix PYTHONPATH : "$PYTHONPATH" \
+      --prefix PATH : '${lib.makeBinPath [ python3 ]}'
   '';
+
+  installCheckPhase = ''
+    XDG_CONFIG_HOME="$(mktemp -d)" $out/bin/open-stage-control --help
+  '';
+  doInstallCheck = true;
 
   desktopItems = [
     (makeDesktopItem {
@@ -67,19 +62,11 @@ nodeComposition.package.override rec {
     })
   ];
 
-  passthru.tests = {
-    # test to make sure executable runs
-    help = runCommand "${open-stage-control.name}-help-test" {} ''
-      env XDG_CONFIG_HOME="$(mktemp -d)" ${open-stage-control}/bin/open-stage-control --help >$out
-    '';
-  };
-
   meta = with lib; {
     description = "Libre and modular OSC / MIDI controller";
     homepage = "https://openstagecontrol.ammd.net/";
-    license = licenses.gpl3;
+    license = licenses.gpl3Only;
     maintainers = with maintainers; [ lilyinstarlight ];
-    platforms = [ "x86_64-linux" "aarch64-linux" "i686-linux" "armv7l-linux" ];
+    platforms = platforms.linux;
   };
 }
-; in open-stage-control
