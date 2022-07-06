@@ -2,77 +2,127 @@
 , lib
 , fetchFromGitHub
 , wrapQtAppsHook
-, qtbase
-, qtsvg
-, qwt
-, ruby
-, erlang
-, alsa-lib
-, rtmidi
-, aubio
+, makeDesktopItem
+, copyDesktopItems
 , cmake
 , pkg-config
+, catch2
+, qtbase
+, qtsvg
+, qttools
+, qwt
+, kissfftFloat
+, crossguid
+, reproc
+, platform-folders
+, ruby
+, erlang
+, elixir
+, beamPackages
+, alsa-lib
+, rtmidi
 , boost
-, bash
 , jack2
 , supercollider-with-sc3-plugins
+
+, withTauWidget ? false
+, qtwebengine
+
+, withImGui ? false
+, gl3w
+, SDL2
+, fmt
 }:
 
 stdenv.mkDerivation rec {
-  version = "3.3.1";
+  version = "4.0.0";
   pname = "sonic-pi";
 
   src = fetchFromGitHub {
     owner = "sonic-pi-net";
     repo = pname;
     rev = "v${version}";
-    hash = "sha256-AE7iuSNnW1SAtBMplReGzXKcqD4GG23i10MIAWnlcPo=";
+    hash = "sha256-bjaPIe5wltT2pfvrz3iN2YJZITih1okDID6d8lSUrTk=";
   };
 
-  buildInputs = [
-    bash
+  mixFodDeps = beamPackages.fetchMixDeps {
+    inherit version;
+    pname = "mix-deps-${pname}";
+    src = "${src}/app/server/beam/tau";
+    sha256 = "sha256-HD5VarSEC93jSG16yRfoVnPWkD/U6TP8AG80R5bDJFs=";
+  };
+
+  nativeBuildInputs = [
+    copyDesktopItems
+    wrapQtAppsHook
+
     cmake
     pkg-config
-    qtbase
-    qtsvg
-    qwt
-    ruby
+
     erlang
-    alsa-lib
-    rtmidi
-    aubio
-    boost
+    elixir
+    beamPackages.hex
+    beamPackages.rebar3
   ];
 
-  nativeBuildInputs = [ wrapQtAppsHook ];
+  buildInputs = [
+    qtbase
+    qtsvg
+    qttools
+    qwt
+    kissfftFloat
+    catch2
+    crossguid
+    reproc
+    platform-folders
+    ruby
+    alsa-lib
+    rtmidi
+    boost
+  ] ++ (lib.optionals withTauWidget [
+    qtwebengine
+  ]) ++ (lib.optionals withImGui [
+    gl3w
+    SDL2
+    fmt
+  ]);
 
   dontUseCmakeConfigure = true;
 
   preConfigure = ''
+    # Set build environment
+    export SONIC_PI_HOME="$TMPDIR/spi"
+
+    export HEX_HOME="$TEMPDIR/hex"
+    export HEX_OFFLINE=1
+    export MIX_REBAR3="$(type -p rebar3)"
+    export REBAR_GLOBAL_CONFIG_DIR="$TEMPDIR/rebar3"
+    export REBAR_CACHE_DIR="$TEMPDIR/rebar3.cache"
+    export MIX_HOME="$TEMPDIR/mix"
+    export MIX_DEPS_PATH="$TEMPDIR/deps"
+    export MIX_ENV=prod
+
+    # Fix shebangs
     patchShebangs .
-    substituteInPlace app/gui/qt/mainwindow.cpp \
-      --subst-var-by ruby "${ruby}/bin/ruby" \
-      --subst-var out
-    substituteInPlace app/external/linux_build_externals.sh --replace \
-      'cmake --build . --target aubio' \
-      '#cmake --build . --target aubio'
+
+    # Copy Mix dependency sources
+    echo 'Copying ${mixFodDeps} to Mix deps'
+    cp --no-preserve=mode -R '${mixFodDeps}' "$MIX_DEPS_PATH"
   '';
 
   buildPhase = ''
-    export SONIC_PI_HOME=$TMPDIR
-    export AUBIO_LIB=${aubio}/lib/libaubio.so
-
-    mkdir -p app/external/build/aubio-prefix/src/aubio-build
-    pushd app/external
-      echo 'Building build/aubio-prefix/src/aubio-build/aubio_onset'
-      cc -I ${aubio}/include/aubio aubio/examples/aubioonset.c aubio/examples/utils.c -o build/aubio-prefix/src/aubio-build/aubio_onset -l aubio
-    popd
-
+    # Prebuild vendored dependencies and BEAM server
     pushd app
-      ./linux-prebuild.sh
-      ./linux-config.sh
+      ./linux-prebuild.sh -o
     popd
 
+    # Configure CMake
+    mkdir -p app/build
+    pushd app/build
+      cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DAPP_INSTALL_ROOT="$out/app" -DUSE_SYSTEM_LIBS=ON -DBUILD_IMGUI_INTERFACE=${if withImGui then "ON" else "OFF"} -DWITH_QT_GUI_WEBENGINE=${if withTauWidget then "ON" else "OFF"} ..
+    popd
+
+    # Build
     pushd app/build
       cmake --build . --config Release
     popd
@@ -81,20 +131,17 @@ stdenv.mkDerivation rec {
   installPhase = ''
     runHook preInstall
 
+    # Run Linux release script
+    pushd app
+      ./linux-release.sh
+    popd
+
+    # Copy dist directory to output
     mkdir $out
-    cp -r {bin,etc} $out/
+    cp -r app/build/linux_dist/* $out/
 
-    # Copy server whole.
-    mkdir -p $out/app
-    cp -r app/server $out/app/
-
-    # Copy only necessary files for the gui app.
-    mkdir -p $out/app/gui/qt
-    cp -r app/gui/qt/{book,fonts,help,html,images,image_source,info,lang,theme} $out/app/gui/qt/
-
-    # Copy gui app binary.
-    mkdir -p $out/app/build/gui/qt
-    cp app/build/gui/qt/sonic-pi $out/app/build/gui/qt/sonic-pi
+    # Copy icon
+    install -Dm644 app/gui/qt/images/icon-smaller.png $out/share/icons/hicolor/256x256/apps/sonic-pi.png
 
     runHook postInstall
   '';
@@ -102,9 +149,36 @@ stdenv.mkDerivation rec {
   # $out/bin/sonic-pi is a shell script, and wrapQtAppsHook doesn't wrap them.
   dontWrapQtApps = true;
   preFixup = ''
-    wrapQtApp "$out/bin/sonic-pi" \
-      --prefix PATH : ${lib.makeBinPath [ ruby erlang supercollider-with-sc3-plugins jack2 ]}
+    # Wrap Qt GUI (distributed binary)
+    wrapQtApp $out/bin/sonic-pi \
+      --prefix PATH : ${lib.makeBinPath [ ruby supercollider-with-sc3-plugins jack2 ]}
+
+    # If ImGui was built
+    if [ -x $out/app/build/gui/imgui/sonic-pi-imgui ]; then
+      # Wrap ImGui into bin
+      makeWrapper $out/app/build/gui/imgui/sonic-pi-imgui $out/bin/sonic-pi-imgui \
+        --argv0 $out/bin/sonic-pi-imgui \
+        --prefix PATH : ${lib.makeBinPath [ ruby supercollider-with-sc3-plugins jack2 ]}
+    fi
+
+    # Remove runtime Erlang references
+    for file in $(grep -FrIl '${erlang}/lib/erlang' $out/app/server/beam/tau); do
+      substituteInPlace "$file" --replace '${erlang}/lib/erlang' $out/app/server/beam/tau/_build/prod/rel/tau
+    done
   '';
+
+  stripDebugList = [ "app" "bin" ];
+
+  desktopItems = [
+    (makeDesktopItem {
+      name = "sonic-pi";
+      exec = "sonic-pi";
+      icon = "sonic-pi";
+      desktopName = "Sonic Pi";
+      comment = meta.description;
+      categories = [ "Audio" "AudioVideo" "Education" ];
+    })
+  ];
 
   meta = with lib; {
     homepage = "https://sonic-pi.net/";

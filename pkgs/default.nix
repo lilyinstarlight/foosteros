@@ -19,42 +19,34 @@ let mypkgs = let
 in
 
 {
-  crossguid = callPackage ./crossguid {};
   dnsimple-ddns = callPackage ./dnsimple-ddns {};
   fooster-backgrounds = callPackage ./backgrounds {};
   fooster-materia-theme = callPackage ./materia-theme {};
   fpaste = python3Packages.callPackage ./fpaste {};
   ftmp = python3Packages.callPackage ./ftmp {};
   furi = python3Packages.callPackage ./furi {};
-  gl3w = callPackage ./gl3w {};
   google-10000-english = callPackage ./google-10000-english {};
   logmail = callPackage ./logmail {};
   mkusb = callPackage ./mkusb {};
   mkwin = callPackage ./mkwin {};
   nix-index-database = callPackage ./nix-index-database {};
   petty = callPackage ./petty {};
-  platform-folders = callPackage ./platform-folders {};
   pridecat = callPackage ./pridecat {};
   rofi-pass-wayland = callPackage ./rofi-pass-wayland {
     rofi-wayland = resolveDep "rofi-wayland";
   };
-  sonic-pi-tool = python3Packages.callPackage ./sonic-pi-tool {};
+  sonic-pi_3 = libsForQt5.callPackage ./sonic-pi/v3.nix {};
+  sonic-pi-tool = python3Packages.callPackage ./sonic-pi-tool {
+    sonic-pi = resolveDep "sonic-pi_3";
+  };
 
   mpdris2 = callPackage ./mpdris2 {
     inherit (pkgs) mpdris2;
-  };
-  sonic-pi = libsForQt5.callPackage ./sonic-pi {};
-  sonic-pi-beta = libsForQt5.callPackage ./sonic-pi-beta {
-    kissfft = resolveDep "kissfftFloat";
-    crossguid = resolveDep "crossguid";
-    gl3w = resolveDep "gl3w";
-    platform-folders = resolveDep "platform-folders";
   };
 
   monofur-nerdfont = nerdfonts.override {
     fonts = [ "Monofur" ];
   };
-  kissfftFloat = kissfft.override { datatype = "float"; };
 
   pass-wayland-otp = (pass-wayland.withExtensions (ext: [ ext.pass-otp ])).overrideAttrs (attrs: {
     meta = with lib; attrs.meta // {
@@ -66,6 +58,18 @@ in
   open-stage-control = callPackage ./open-stage-control {
     electron = resolveDep "electron_15";
     nodejs = resolveDep "nodejs-16_x";
+  };
+
+  # TODO: remove when NixOS/nixpkgs#xxxxxx is merged
+  kissfftFloat = kissfft.override { datatype = "float"; };
+  crossguid = callPackage ./crossguid {};
+  gl3w = callPackage ./gl3w {};
+  platform-folders = callPackage ./platform-folders {};
+  sonic-pi = libsForQt5.callPackage ./sonic-pi {
+    kissfftFloat = resolveDep "kissfftFloat";
+    crossguid = resolveDep "crossguid";
+    gl3w = resolveDep "gl3w";
+    platform-folders = resolveDep "platform-folders";
   };
 } // (if isOverlay then {
   inherit nodePackages python3Packages vimPlugins;
