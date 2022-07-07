@@ -635,7 +635,6 @@ in
   xdg.portal = {
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-    gtkUsePortal = true;
   };
 
   services.xserver.gdk-pixbuf.modulePackages = with pkgs; [ librsvg ];
