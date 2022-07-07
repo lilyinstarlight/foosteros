@@ -157,7 +157,7 @@ stdenv.mkDerivation rec {
     if [ -x $out/app/build/gui/imgui/sonic-pi-imgui ]; then
       # Wrap ImGui into bin
       makeWrapper $out/app/build/gui/imgui/sonic-pi-imgui $out/bin/sonic-pi-imgui \
-        --argv0 $out/bin/sonic-pi-imgui \
+        --argv0 '$0' \
         --prefix PATH : ${lib.makeBinPath [ ruby supercollider-with-sc3-plugins jack2 ]}
     fi
 
