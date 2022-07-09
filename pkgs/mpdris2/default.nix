@@ -1,17 +1,12 @@
 { lib, fetchFromGitHub, mpdris2 }:
 
 mpdris2.overrideAttrs (attrs: rec {
-  version = "unstable-2022-06-18";
+  version = "unstable-2022-06-30";
 
   src = fetchFromGitHub {
     owner = "eonpatapon";
     repo = attrs.pname;
-    rev = "9c4ef808e9820d38966ff6962c342a542899a691";
-    hash = "sha256-u5Dd3vq852jlJqVN3iHihFLWtc+btqM+w7hivBCYSxc=";
-  };
-
-  meta = with lib; attrs.meta // {
-    # TODO: remove once pyopenssl is fixed on darwin
-    platforms = platforms.linux;
+    rev = "55465b8cf6b6b48fb45da43a8579ad335809c99a";
+    hash = "sha256-1CkpnVThGfLdevU8ev0KfhIeaBp4ZvhVVn9jjisH1Zs=";
   };
 })
