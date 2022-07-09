@@ -54,13 +54,7 @@ in
     };
   });
 
-  # TODO: remove when NixOS/nixpkgs#170464 is merged
-  open-stage-control = callPackage ./open-stage-control {
-    electron = resolveDep "electron_15";
-    nodejs = resolveDep "nodejs-16_x";
-  };
-
-  # TODO: remove when NixOS/nixpkgs#xxxxxx is merged
+  # TODO: remove when NixOS/nixpkgs#180732 is merged
   kissfftFloat = kissfft.override { datatype = "float"; };
   crossguid = callPackage ./crossguid {};
   gl3w = callPackage ./gl3w {};
