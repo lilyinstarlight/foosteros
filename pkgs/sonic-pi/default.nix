@@ -1,16 +1,18 @@
 { stdenv
 , lib
 , fetchFromGitHub
+, fetchpatch
 , wrapQtAppsHook
 , makeDesktopItem
 , copyDesktopItems
 , cmake
 , pkg-config
-, catch2
+, catch2_3
 , qtbase
 , qtsvg
 , qttools
 , qwt
+, qscintilla
 , kissfftFloat
 , crossguid
 , reproc
@@ -22,8 +24,10 @@
 , alsa-lib
 , rtmidi
 , boost
+, aubio
 , jack2
 , supercollider-with-sc3-plugins
+, parallel
 
 , withTauWidget ? false
 , qtwebengine
@@ -35,22 +39,41 @@
 }:
 
 stdenv.mkDerivation rec {
-  version = "4.0.0";
   pname = "sonic-pi";
+  version = "4.0.1";
 
   src = fetchFromGitHub {
     owner = "sonic-pi-net";
     repo = pname;
     rev = "v${version}";
-    hash = "sha256-bjaPIe5wltT2pfvrz3iN2YJZITih1okDID6d8lSUrTk=";
+    hash = "sha256-AWbmQLz25RFBoHhwWqhbYa8STlORw8lM4rCeNl/8/yg=";
   };
 
   mixFodDeps = beamPackages.fetchMixDeps {
     inherit version;
     pname = "mix-deps-${pname}";
+    mixEnv = "test";
     src = "${src}/app/server/beam/tau";
-    sha256 = "sha256-HD5VarSEC93jSG16yRfoVnPWkD/U6TP8AG80R5bDJFs=";
+    sha256 = "sha256-MvwUyVTS23vQKLpGxz46tEVCs/OyYk5dDaBlv+kYg1M=";
   };
+
+  patches = [
+    # sonic-pi-net/sonic-pi#3132 - build vendored C/C++ deps in build phase
+    (fetchpatch {
+      url = "https://github.com/sonic-pi-net/sonic-pi/compare/117ec45fb49295f273db234a7df10a25a2ed1c33~1..1680a109aa3669704102483bb790447f6dfec6f1.diff";
+      hash = "sha256-K5glJ8Exb9wOZMqJ4LSzvonXs6WAPvxju9BeLz7+gAs=";
+    })
+    # sonic-pi-net/sonic-pi#xxxx - devendor aubio - TODO: will make an upstream PR once sonic-pi-net/sonic-pi#3132 is merged
+    (fetchpatch {
+      url = "https://github.com/sonic-pi-net/sonic-pi/compare/c465e6a53e47c7ac6b097ef0a9ace20263e06ec7~1..93a883e515f340c96ee54f4b4b2282e10a99c843.diff";
+      hash = "sha256-QLbDHCL5gyy0Y9kUmAEJ/7FbYOtTuYGyV9xnucH0JoE=";
+    })
+    # sonic-pi-net/sonic-pi#xxxx - devendor qscintilla - TODO: will make an upstream PR once sonic-pi-net/sonic-pi#3132 is merged
+    (fetchpatch {
+      url = "https://github.com/sonic-pi-net/sonic-pi/commit/130a64851a954366699fc8812b38d2ff8c7129c8.diff";
+      hash = "sha256-dlKJTO2mzEFVj0BgAgcNQj1zlyqWFSZH967K1i6Q3i4=";
+    })
+  ];
 
   nativeBuildInputs = [
     copyDesktopItems
@@ -70,8 +93,9 @@ stdenv.mkDerivation rec {
     qtsvg
     qttools
     qwt
+    qscintilla
     kissfftFloat
-    catch2
+    catch2_3
     crossguid
     reproc
     platform-folders
@@ -79,6 +103,7 @@ stdenv.mkDerivation rec {
     alsa-lib
     rtmidi
     boost
+    aubio
   ] ++ (lib.optionals withTauWidget [
     qtwebengine
   ]) ++ (lib.optionals withImGui [
@@ -87,7 +112,30 @@ stdenv.mkDerivation rec {
     fmt
   ]);
 
-  dontUseCmakeConfigure = true;
+  checkInputs = [
+    parallel
+    ruby
+    supercollider-with-sc3-plugins
+    jack2
+  ];
+
+  cmakeFlags = [
+    "-DUSE_SYSTEM_LIBS=ON"
+    "-DBUILD_IMGUI_INTERFACE=${if withImGui then "ON" else "OFF"}"
+    "-DWITH_QT_GUI_WEBENGINE=${if withTauWidget then "ON" else "OFF"}"
+  ];
+
+  doCheck = true;
+
+  postPatch = ''
+    # Fix shebangs on files in app
+    patchShebangs app
+
+    # Move files from patches above since patch apply does not move them
+    mv app/external/aubio/examples/* app/external/aubio/
+    rmdir app/external/aubio/examples
+    mv app/linux-pre-tau-prod-release.sh app/linux-post-tau-prod-release.sh
+  '';
 
   preConfigure = ''
     # Set build environment
@@ -102,46 +150,59 @@ stdenv.mkDerivation rec {
     export MIX_DEPS_PATH="$TEMPDIR/deps"
     export MIX_ENV=prod
 
-    # Fix shebangs
-    patchShebangs .
-
     # Copy Mix dependency sources
     echo 'Copying ${mixFodDeps} to Mix deps'
     cp --no-preserve=mode -R '${mixFodDeps}' "$MIX_DEPS_PATH"
+
+    # Change to project base directory
+    cd app
+
+    # Prebuild Ruby vendored dependencies and Qt docs
+    ./linux-prebuild.sh -o
+
+    # Append CMake flag depending on the value of $out
+    cmakeFlags+=" -DAPP_INSTALL_ROOT=$out/app"
   '';
 
-  buildPhase = ''
-    # Prebuild vendored dependencies and BEAM server
-    pushd app
-      ./linux-prebuild.sh -o
+  postBuild = ''
+    # Build BEAM server
+    ../linux-post-tau-prod-release.sh -o
+  '';
+
+  checkPhase = ''
+    runHook preCheck
+
+    # BEAM tests
+    pushd ../server/beam/tau
+      MIX_ENV=test TAU_ENV=test mix test
     popd
 
-    # Configure CMake
-    mkdir -p app/build
-    pushd app/build
-      cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DAPP_INSTALL_ROOT="$out/app" -DUSE_SYSTEM_LIBS=ON -DBUILD_IMGUI_INTERFACE=${if withImGui then "ON" else "OFF"} -DWITH_QT_GUI_WEBENGINE=${if withTauWidget then "ON" else "OFF"} ..
+    # Ruby tests
+    pushd ../server/ruby
+      rake test
     popd
 
-    # Build
-    pushd app/build
-      cmake --build . --config Release
+    # API tests
+    pushd api-tests
+      # run JACK parallel to tests and quit both when one exits
+      SONIC_PI_ENV=test parallel --no-notice -j2 --halt now,done=1 ::: 'jackd -rd dummy' 'ctest --verbose'
     popd
+
+    runHook postCheck
   '';
 
   installPhase = ''
     runHook preInstall
 
     # Run Linux release script
-    pushd app
-      ./linux-release.sh
-    popd
+    ../linux-release.sh
 
     # Copy dist directory to output
     mkdir $out
-    cp -r app/build/linux_dist/* $out/
+    cp -r linux_dist/* $out/
 
     # Copy icon
-    install -Dm644 app/gui/qt/images/icon-smaller.png $out/share/icons/hicolor/256x256/apps/sonic-pi.png
+    install -Dm644 ../gui/qt/images/icon-smaller.png $out/share/icons/hicolor/256x256/apps/sonic-pi.png
 
     runHook postInstall
   '';
