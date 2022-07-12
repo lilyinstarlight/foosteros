@@ -7,14 +7,6 @@ let mypkgs = let
   resolvePath = attrset: path: lib.getAttrFromPath (lib.splitString "." path) attrset;
   resolveDep = path: if isOverlay then (resolvePath outpkgs path) else if (hasPath mypkgs path) then (resolvePath mypkgs path) else (resolvePath pkgs path);
 
-  python3 = let
-    self = pkgs.python3.override {
-      packageOverrides = (self: super: super.pkgs.callPackage ./python-modules {});
-      inherit self;
-    };
-  in self;
-  python3Packages = recurseIntoAttrs python3.pkgs;
-
   vimPlugins = pkgs.vimPlugins.extend (self: super: callPackage ./vim-plugins {});
 in
 
@@ -38,6 +30,14 @@ in
   sonic-pi_3 = libsForQt5.callPackage ./sonic-pi/v3.nix {};
   sonic-pi-tool = python3Packages.callPackage ./sonic-pi-tool {
     sonic-pi = resolveDep "sonic-pi_3";
+    oscpy = python3Packages.oscpy.overrideAttrs (attrs: {
+      patches = [
+        (fetchpatch {
+          url = "https://github.com/kivy/oscpy/compare/2bc114a97692aef28f8b84d52d0d5a41554a7d93~1..e75ad7f5939cb8759372f7f14f6effd5c5443ccc.diff";
+          hash = "sha256-km4krvrt99mmgVFFkh+Qtqd2oRRClIv4zrcAvgdPrHg=";
+        })
+      ];
+    });
   };
 
   mpdris2 = callPackage ./mpdris2 {
@@ -66,9 +66,8 @@ in
     platform-folders = resolveDep "platform-folders";
   };
 } // (if isOverlay then {
-  inherit nodePackages python3Packages vimPlugins;
+  inherit vimPlugins;
 } else {
-  python3Packages = recurseIntoAttrs (pkgs.python3Packages.callPackage ./python-modules {});
   vimPlugins = recurseIntoAttrs (callPackage ./vim-plugins {});
 }) // (lib.optionalAttrs allowUnfree {
   # dependents of unfree packages
