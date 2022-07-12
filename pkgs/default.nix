@@ -22,7 +22,6 @@ in
   mkusb = callPackage ./mkusb {};
   mkwin = callPackage ./mkwin {};
   nix-index-database = callPackage ./nix-index-database {};
-  petty = callPackage ./petty {};
   pridecat = callPackage ./pridecat {};
   rofi-pass-wayland = callPackage ./rofi-pass-wayland {
     rofi-wayland = resolveDep "rofi-wayland";
