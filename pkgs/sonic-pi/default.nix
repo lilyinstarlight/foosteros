@@ -58,20 +58,25 @@ stdenv.mkDerivation rec {
   };
 
   patches = [
-    # sonic-pi-net/sonic-pi#3132 - build vendored C/C++ deps in build phase
+    # sonic-pi-net/sonic-pi#3132 - build vendored C/C++ deps in build phase - can be removed after 4.0.2+
     (fetchpatch {
       url = "https://github.com/sonic-pi-net/sonic-pi/compare/117ec45fb49295f273db234a7df10a25a2ed1c33~1..1680a109aa3669704102483bb790447f6dfec6f1.diff";
       hash = "sha256-K5glJ8Exb9wOZMqJ4LSzvonXs6WAPvxju9BeLz7+gAs=";
     })
-    # sonic-pi-net/sonic-pi#xxxx - devendor aubio - TODO: will make an upstream PR once sonic-pi-net/sonic-pi#3132 is merged
+    # sonic-pi-net/sonic-pi#3137 - devendor aubio - can be removed after 4.0.2+
     (fetchpatch {
-      url = "https://github.com/sonic-pi-net/sonic-pi/compare/c465e6a53e47c7ac6b097ef0a9ace20263e06ec7~1..93a883e515f340c96ee54f4b4b2282e10a99c843.diff";
+      url = "https://github.com/sonic-pi-net/sonic-pi/compare/266515c2e029d5d15d18d46959c9dc934e4d05c1~1..2be094c69a6b1a58838f44f4f4771dd0a7aeeb80.diff";
       hash = "sha256-QLbDHCL5gyy0Y9kUmAEJ/7FbYOtTuYGyV9xnucH0JoE=";
     })
-    # sonic-pi-net/sonic-pi#xxxx - devendor qscintilla - TODO: will make an upstream PR once sonic-pi-net/sonic-pi#3132 is merged
+    # sonic-pi-net/sonic-pi#3136 - devendor qscintilla - can be removed after 4.0.2+
     (fetchpatch {
-      url = "https://github.com/sonic-pi-net/sonic-pi/commit/130a64851a954366699fc8812b38d2ff8c7129c8.diff";
+      url = "https://github.com/sonic-pi-net/sonic-pi/commit/aa542647a49881fadde53670c9c5723f2becee56.diff";
       hash = "sha256-dlKJTO2mzEFVj0BgAgcNQj1zlyqWFSZH967K1i6Q3i4=";
+    })
+    # sonic-pi-net/sonic-pi#3139 - fix lang packaging - can be removed after 4.0.2+
+    (fetchpatch {
+      url = "https://github.com/sonic-pi-net/sonic-pi/commit/7f30d2a6ec1822f20c30efa08bfd4e9d3aff2052.diff";
+      hash = "sha256-wbtwUkj0yoFUymedwpOqM0VppKsVSlmCpyInS4nrEqU=";
     })
   ];
 
