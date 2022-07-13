@@ -84,6 +84,9 @@ in
     "net.ipv4.conf.all.arp_filter" = 1;
   };
 
+  boot.consoleLogLevel = 3;
+  boot.kernelParams = [ "quiet" ];
+
   boot.loader = {
     efi.canTouchEfiVariables = true;
 

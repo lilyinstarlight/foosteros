@@ -623,17 +623,6 @@
         default_do=typePassOrOtp
         clip=clipboard
       '';
-
-      "petty/pettyrc".text = ''
-        shell=${pkgs.fish}/bin/fish
-        session1=sway
-      '';
-
-      "sessions/sway".source = pkgs.writeScript "sway" ''
-        #!/bin/sh
-        export NIXOS_OZONE_WL=1
-        exec /etc/sessions/sway
-      '';
     };
 
     home.file = {
@@ -664,13 +653,6 @@
       "bin/neofetch" = {
         text = ''
           #!/bin/sh
-          case "$SHELL" in
-            */petty)
-              . "$HOME"/.config/petty/pettyrc
-              export SHELL="$shell"
-              ;;
-          esac
-
           exec /run/current-system/sw/bin/neofetch --colors 5 4 4 5 4 7 --ascii_distro nixos --ascii_colors 5 4 --separator ' ->' "$@"
         '';
         executable = true;

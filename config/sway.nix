@@ -34,7 +34,6 @@ in
 {
   imports = [
     ./fonts.nix
-    ./petty.nix
     ./pipewire.nix
   ];
 
@@ -611,17 +610,6 @@ in
 
         size: 13
     '';
-
-    "petty/pettyrc".text = ''
-      shell=${pkgs.bashInteractive}/bin/bash
-      session1=sway
-    '';
-
-    "sessions/sway".source = pkgs.writeScript "sway" ''
-      #!/bin/sh
-      mkdir -p "$HOME"/.local/share/sway
-      exec sway -d >"$HOME"/.local/share/sway/sway.log 2>&1
-    '';
   };
 
   environment.sessionVariables.XDG_DATA_DIRS = with pkgs; [ "${gsettings-desktop-schemas}/share/gsettings-schemas/${gsettings-desktop-schemas.name}" ];
@@ -635,6 +623,20 @@ in
   xdg.portal = {
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  };
+
+  services.greetd = let
+      sway_session = pkgs.writeScript "sway-session" ''
+        #!/bin/sh
+        mkdir -p "$HOME"/.local/share/sway
+        export NIXOS_OZONE_WL=1
+        exec sway -d >"$HOME"/.local/share/sway/sway.log 2>&1
+      '';
+  in {
+    enable = true;
+    settings = {
+      default_session.command = "${pkgs.greetd.tuigreet}/bin/tuigreet --greeting 'Welcome to FoosterOS/2 Warp' --time --cmd ${sway_session}";
+    };
   };
 
   services.xserver.gdk-pixbuf.modulePackages = with pkgs; [ librsvg ];

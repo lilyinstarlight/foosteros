@@ -9,7 +9,7 @@
     description = "Lily Foster";
     isNormalUser = true;
     extraGroups = [ "wheel" ];
-    shell = lib.mkOverride 500 (if (config.users.defaultUserShell == pkgs.petty) then pkgs.petty else pkgs.fish);  # 100 is default prio and 1000 is module default prio
+    shell = lib.mkOverride 500 pkgs.fish;  # 100 is default prio and 1000 is module default prio
   };
 
   home-manager.users.lily = { pkgs, ... }: {
