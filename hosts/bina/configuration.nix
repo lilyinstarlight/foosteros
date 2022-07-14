@@ -261,7 +261,7 @@
     pavucontrol
     ncmpcpp beets
     inkscape gimp-with-plugins krita
-    mupdf
+    mupdf qalculate-gtk
     element-desktop jitsi-meet-electron
     helvum qjackctl qsynth vmpk calf
     ardour lmms

@@ -172,10 +172,10 @@ in
 
   environment.systemPackages = with pkgs; [
     man-pages man-pages-posix
-    bc file python3 tree unzip xxd
+    file python3 tree unzip xxd
     cachix fpaste ftmp furi
     git gitAndTools.delta ripgrep
-    shellcheck progress
+    shellcheck progress libqalculate
     nix-index comma
   ];
 
@@ -184,7 +184,6 @@ in
     df = "df -h";
     du = "du -h";
     free = "free -h";
-    bc = "bc -l";
     curl = "curl -L";
     cget = "command curl -fLJO --progress-bar";
   };

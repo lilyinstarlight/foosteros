@@ -72,8 +72,8 @@
         nmap <leader>b :Hexmode<cr>
         nmap <leader>p :.!xargs 
         vmap <leader>p :!xargs 
-        nmap <leader>q :.!bc<cr>
-        vmap <leader>q :!bc<cr>
+        nmap <leader>q :.!qalc<cr>
+        vmap <leader>q :!qalc<cr>
         nmap <leader><cr> :make %<cr>
 
         " matchit.vim
