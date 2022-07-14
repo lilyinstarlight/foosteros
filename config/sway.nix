@@ -635,7 +635,7 @@ in
   in {
     enable = true;
     settings = {
-      default_session.command = "${pkgs.greetd.tuigreet}/bin/tuigreet --greeting 'Welcome to FoosterOS/2 Warp' --time --cmd ${sway_session}";
+      default_session.command = "${pkgs.greetd.tuigreet}/bin/tuigreet --greeting 'Welcome to FoosterOS/2 Warp' --time --time-format '%Y-%m-%d %H:%M' --cmd ${sway_session}";
     };
   };
 
