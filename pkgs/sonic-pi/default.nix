@@ -1,7 +1,6 @@
 { stdenv
 , lib
 , fetchFromGitHub
-, fetchpatch
 , wrapQtAppsHook
 , makeDesktopItem
 , copyDesktopItems
@@ -40,13 +39,13 @@
 
 stdenv.mkDerivation rec {
   pname = "sonic-pi";
-  version = "4.0.1";
+  version = "4.0.2";
 
   src = fetchFromGitHub {
     owner = "sonic-pi-net";
     repo = pname;
     rev = "v${version}";
-    hash = "sha256-AWbmQLz25RFBoHhwWqhbYa8STlORw8lM4rCeNl/8/yg=";
+    hash = "sha256-EJvksptfZCKFY6L3Lbeob8b3jFEMBL0cWeHjzaxLywg=";
   };
 
   mixFodDeps = beamPackages.fetchMixDeps {
@@ -56,29 +55,6 @@ stdenv.mkDerivation rec {
     src = "${src}/app/server/beam/tau";
     sha256 = "sha256-MvwUyVTS23vQKLpGxz46tEVCs/OyYk5dDaBlv+kYg1M=";
   };
-
-  patches = [
-    # sonic-pi-net/sonic-pi#3132 - build vendored C/C++ deps in build phase - can be removed after 4.0.2+
-    (fetchpatch {
-      url = "https://github.com/sonic-pi-net/sonic-pi/compare/117ec45fb49295f273db234a7df10a25a2ed1c33~1..1680a109aa3669704102483bb790447f6dfec6f1.diff";
-      hash = "sha256-K5glJ8Exb9wOZMqJ4LSzvonXs6WAPvxju9BeLz7+gAs=";
-    })
-    # sonic-pi-net/sonic-pi#3137 - devendor aubio - can be removed after 4.0.2+
-    (fetchpatch {
-      url = "https://github.com/sonic-pi-net/sonic-pi/compare/266515c2e029d5d15d18d46959c9dc934e4d05c1~1..2be094c69a6b1a58838f44f4f4771dd0a7aeeb80.diff";
-      hash = "sha256-QLbDHCL5gyy0Y9kUmAEJ/7FbYOtTuYGyV9xnucH0JoE=";
-    })
-    # sonic-pi-net/sonic-pi#3136 - devendor qscintilla - can be removed after 4.0.2+
-    (fetchpatch {
-      url = "https://github.com/sonic-pi-net/sonic-pi/commit/aa542647a49881fadde53670c9c5723f2becee56.diff";
-      hash = "sha256-dlKJTO2mzEFVj0BgAgcNQj1zlyqWFSZH967K1i6Q3i4=";
-    })
-    # sonic-pi-net/sonic-pi#3139 - fix lang packaging - can be removed after 4.0.2+
-    (fetchpatch {
-      url = "https://github.com/sonic-pi-net/sonic-pi/commit/7f30d2a6ec1822f20c30efa08bfd4e9d3aff2052.diff";
-      hash = "sha256-wbtwUkj0yoFUymedwpOqM0VppKsVSlmCpyInS4nrEqU=";
-    })
-  ];
 
   nativeBuildInputs = [
     copyDesktopItems
@@ -135,11 +111,6 @@ stdenv.mkDerivation rec {
   postPatch = ''
     # Fix shebangs on files in app
     patchShebangs app
-
-    # Move files from patches above since patch apply does not move them
-    mv app/external/aubio/examples/* app/external/aubio/
-    rmdir app/external/aubio/examples
-    mv app/linux-pre-tau-prod-release.sh app/linux-post-tau-prod-release.sh
   '';
 
   preConfigure = ''
