@@ -42,6 +42,8 @@ stdenv.mkDerivation rec {
 
   unpackCmd = "mkdir root; ${dpkg}/bin/dpkg-deb -x $curSrc root";
 
+  strictDeps = true;
+
   nativeBuildInputs = [
     makeWrapper
     autoPatchelfHook

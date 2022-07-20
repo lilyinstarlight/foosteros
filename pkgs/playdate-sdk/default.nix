@@ -25,6 +25,8 @@ stdenv.mkDerivation rec {
     hash = "sha256-CQABVxtfIPNUYJVXddtdEzXZQHTGbTIeLl57j+pRgqg=";
   };
 
+  strictDeps = true;
+
   nativeBuildInputs = [
     copyDesktopItems
     makeWrapper

@@ -12,6 +12,8 @@ stdenvNoCC.mkDerivation rec {
     hash = "sha256-9X9uhqEutS3HAgyQxV6Gh4scJhX70AROHHpBIpTrUS8=";
   };
 
+  strictDeps = true;
+
   pythonPath = [ httpx ];
 
   nativeBuildInputs = [ wrapPython ];

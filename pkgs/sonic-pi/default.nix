@@ -39,13 +39,13 @@
 
 stdenv.mkDerivation rec {
   pname = "sonic-pi";
-  version = "4.0.2";
+  version = "4.0.3";
 
   src = fetchFromGitHub {
     owner = "sonic-pi-net";
     repo = pname;
     rev = "v${version}";
-    hash = "sha256-EJvksptfZCKFY6L3Lbeob8b3jFEMBL0cWeHjzaxLywg=";
+    hash = "sha256-kTuW+i/kdPhyG3L6SkgQTE9UvADY49KahJcw3+5Uz4k=";
   };
 
   mixFodDeps = beamPackages.fetchMixDeps {
@@ -55,6 +55,9 @@ stdenv.mkDerivation rec {
     src = "${src}/app/server/beam/tau";
     sha256 = "sha256-MvwUyVTS23vQKLpGxz46tEVCs/OyYk5dDaBlv+kYg1M=";
   };
+
+  enableParallelBuilding = true;
+  strictDeps = true;
 
   nativeBuildInputs = [
     copyDesktopItems

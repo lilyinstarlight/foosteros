@@ -13,6 +13,8 @@ stdenv.mkDerivation rec {
     hash = "sha256-PyGLbbsh9lFXhzB1Xn8VQ9zilivycGFEIc7i8KXOxj8=";
   };
 
+  strictDeps = true;
+
   patchPhase = ''
     sed -i -e 's#/usr/local#$(PREFIX)#g' Makefile
   '';

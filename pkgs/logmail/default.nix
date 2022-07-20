@@ -11,6 +11,8 @@ stdenvNoCC.mkDerivation rec {
     hash = "sha256-9nhlGN2oWX/pq/xDa4732U/IFOLTNNYv8embeBX9UXM=";
   };
 
+  strictDeps = true;
+
   nativeBuildInputs = [
     makeWrapper
   ];

@@ -11,6 +11,8 @@ stdenv.mkDerivation rec {
     hash = "sha256-qV/PZmaP5iCHhIzTA2bE4d1RMB6LzRbTsB5gWVvi9bU=";
   };
 
+  strictDeps = true;
+
   nativeBuildInputs = [ python3 cmake ];
   propagatedBuildInputs = [ libglvnd.dev libGLU.dev ];
 

@@ -11,6 +11,9 @@ stdenv.mkDerivation rec {
     hash = "sha256-ruhAP9kjwm6pIFJ5a6oy6VE5W39bWQO3qSrT5IUtiwA=";
   };
 
+  enableParallelBuilding = true;
+  strictDeps = true;
+
   cmakeFlags = [
     "-DBUILD_SHARED_LIBS=${if static then "OFF" else "ON"}"
   ];
