@@ -141,8 +141,8 @@ final: prev:
     src = fetchFromGitHub {
       owner = "vimwiki";
       repo = "vimwiki";
-      rev = "d7ec12645a0460a7d200279c52915e6e080e9869";
-      sha256 = "19xqjwmv0n0cg901r8n9dsfgk2yfkd89cvywj4kh14gf02122f2x";
+      rev = "fc2e9f0dba069f620e2b00b1356aacb8ea869fb8";
+      sha256 = "0fpy3pc42rffdqa3l12ykfhd62rzmbmwqjrrnmm8fahdsvzzbn44";
     };
     meta.homepage = "https://github.com/vimwiki/vimwiki/";
   };
