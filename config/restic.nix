@@ -3,7 +3,7 @@
 {
   services.restic.backups.${config.networking.hostName} = {
     initialize = true;
-    repository = "b2:backup-${config.networking.hostName}";
+    repository = "b2:${lib.replaceStrings ["."] ["-"] config.networking.fqdn}-backup";
     paths = [
       "/state"
     ];
