@@ -653,7 +653,7 @@
       "bin/neofetch" = {
         text = ''
           #!/bin/sh
-          exec /run/current-system/sw/bin/neofetch --colors 5 4 4 5 4 7 --ascii_distro nixos --ascii_colors 5 4 --separator ' ->' "$@"
+          distro="FoosterOS/2 Warp (NixOS ${config.system.nixos.release}) $(${pkgs.coreutils}/bin/uname -m)" exec ${pkgs.neofetch}/bin/neofetch --colors 5 4 4 5 4 7 --ascii_distro nixos --ascii_colors 5 4 --separator ' ->' "$@"
         '';
         executable = true;
       };
