@@ -23,12 +23,11 @@ in
   mkwin = callPackage ./mkwin {};
   nix-index-database = callPackage ./nix-index-database {};
   pridecat = callPackage ./pridecat {};
-  rofi-pass-wayland = callPackage ./rofi-pass-wayland {
-    rofi-wayland = resolveDep "rofi-wayland";
-  };
+  rofi-pass-wayland = callPackage ./rofi-pass-wayland {};
   sonic-pi_3 = libsForQt5.callPackage ./sonic-pi/v3.nix {};
   sonic-pi-tool = python3Packages.callPackage ./sonic-pi-tool {
     sonic-pi = resolveDep "sonic-pi_3";
+    # TODO: remove when NixOS/nixpkgs#183695 is merged
     oscpy = python3Packages.oscpy.overrideAttrs (attrs: {
       patches = [
         (fetchpatch {
