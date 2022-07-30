@@ -63,6 +63,21 @@ in
     gl3w = resolveDep "gl3w";
     platform-folders = resolveDep "platform-folders";
   };
+
+  # TODO: remove following mopidy stuff when NixOS/nixpkgs#184015 is merged
+  inherit (mopidyPackages.overrideScope' (self: super: {
+    mopidy = super.mopidy.overrideAttrs (attrs: {
+      propagatedNativeBuildInputs = [
+        gobject-introspection
+      ];
+    });
+
+    mopidy-local = super.mopidy-local.overrideAttrs (attrs: {
+      meta = with lib; attrs.meta // {
+        platforms = platforms.linux;
+      };
+    });
+  })) mopidy mopidy-iris mopidy-local mopidy-mpd;
 } // (if isOverlay then {
   inherit vimPlugins;
 } else {
