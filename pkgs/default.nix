@@ -36,15 +36,6 @@ in
   sonic-pi_3 = libsForQt5.callPackage ./sonic-pi/v3.nix {};
   sonic-pi-tool = python3Packages.callPackage ./sonic-pi-tool {
     sonic-pi = resolveDep "sonic-pi_3";
-    # TODO: remove when NixOS/nixpkgs#183695 is merged
-    oscpy = python3Packages.oscpy.overrideAttrs (attrs: {
-      patches = [
-        (fetchpatch {
-          url = "https://github.com/kivy/oscpy/compare/2bc114a97692aef28f8b84d52d0d5a41554a7d93~1..e75ad7f5939cb8759372f7f14f6effd5c5443ccc.diff";
-          hash = "sha256-km4krvrt99mmgVFFkh+Qtqd2oRRClIv4zrcAvgdPrHg=";
-        })
-      ];
-    });
   };
 
   mpdris2 = callPackage ./mpdris2 {
@@ -60,18 +51,6 @@ in
       platforms = platforms.linux;
     };
   });
-
-  # TODO: remove when NixOS/nixpkgs#180732 is merged
-  kissfftFloat = kissfft.override { datatype = "float"; };
-  crossguid = callPackage ./crossguid {};
-  gl3w = callPackage ./gl3w {};
-  platform-folders = callPackage ./platform-folders {};
-  sonic-pi = libsForQt5.callPackage ./sonic-pi {
-    kissfftFloat = resolveDep "kissfftFloat";
-    crossguid = resolveDep "crossguid";
-    gl3w = resolveDep "gl3w";
-    platform-folders = resolveDep "platform-folders";
-  };
 
   # TODO: remove following mopidy stuff when NixOS/nixpkgs#184015 is merged
   inherit (mopidyPackages.overrideScope' (self: super: {
