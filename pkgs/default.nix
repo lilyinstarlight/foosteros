@@ -52,6 +52,9 @@ in
     };
   });
 
+  # TODO: remove hyfetch when NixOS/nixpkgs#184645 has been merged
+  hyfetch = python3Packages.callPackage ./hyfetch {};
+
   # TODO: remove following mopidy stuff when NixOS/nixpkgs#184015 is merged
   inherit (mopidyPackages.overrideScope' (self: super: {
     mopidy = super.mopidy.overrideAttrs (attrs: {
