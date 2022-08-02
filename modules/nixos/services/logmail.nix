@@ -11,7 +11,7 @@ in
     enable = mkOption {
       type = types.bool;
       default = false;
-      description = ''
+      description = mdDoc ''
         Whether to enable service for logmail.
       '';
     };
@@ -20,7 +20,7 @@ in
       type = types.package;
       default = fpkgs.logmail;
       defaultText = literalExpression "fpkgs.logmail";
-      description = ''
+      description = mdDoc ''
         logmail derivation to use.
       '';
     };
@@ -28,7 +28,7 @@ in
     interval = mkOption {
       type = types.str;
       default = "hourly";
-      description = ''
+      description = mdDoc ''
         Interval to send log digest.
       '';
     };
@@ -36,7 +36,7 @@ in
     timespan = mkOption {
       type = types.str;
       default = "-1h";
-      description = ''
+      description = mdDoc ''
         Time span of logs to digest.
       '';
     };
@@ -47,7 +47,7 @@ in
       example = ''
         systemd\[[0-9]*\]: Failed to start Mark boot as successful.
       '';
-      description = ''
+      description = mdDoc ''
         Filter of items to remove from digests
       '';
     };
@@ -60,7 +60,7 @@ in
         mailto="logs@example.com"
         subject="Logs for $(hostname) at $(date +"%F %R")"
       '';
-      description = ''
+      description = mdDoc ''
         Basic configuration for logmail.
       '';
     };

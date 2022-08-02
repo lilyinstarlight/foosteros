@@ -15,7 +15,7 @@ in
     group = mkOption {
       type = types.nullOr types.str;
       default = null;
-      description = ''
+      description = mdDoc ''
         Grant access to Playdate devices to users in this group.
       '';
     };

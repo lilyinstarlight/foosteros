@@ -11,7 +11,7 @@ in
     enable = mkOption {
       type = types.bool;
       default = false;
-      description = ''
+      description = mdDoc ''
         Whether to enable a user service for mako.
       '';
     };
@@ -19,12 +19,12 @@ in
     install = mkOption {
       type = types.bool;
       default = false;
-      description = ''
+      description = mdDoc ''
         Whether to install a user service for mako.
 
         The service must be manually started for each user with
-        "systemctl --user start mako" or globally through
-        <varname>programs.mako.enable</varname>.
+        `systemctl --user start mako` or globally through
+        {option}`programs.mako.enable`.
       '';
     };
 
@@ -32,7 +32,7 @@ in
       type = types.package;
       default = pkgs.mako;
       defaultText = literalExpression "pkgs.mako";
-      description = ''
+      description = mdDoc ''
         mako derivation to use.
       '';
     };
@@ -40,7 +40,7 @@ in
     targets = mkOption {
       type = types.listOf types.str;
       default = [ "wlr-session.target" ];
-      description = ''
+      description = mdDoc ''
         Systemd user targets to enable mako for.
       '';
     };
@@ -48,7 +48,7 @@ in
     extraConfig = mkOption {
       type = types.str;
       default = "";
-      description = ''
+      description = mdDoc ''
         Extra configuration for mako.
       '';
     };

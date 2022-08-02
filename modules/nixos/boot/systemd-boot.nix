@@ -101,7 +101,7 @@ in
 
       type = types.bool;
 
-      description = "Whether to enable the systemd-boot (formerly gummiboot) EFI boot manager";
+      description = lib.mdDoc "Whether to enable the systemd-boot (formerly gummiboot) EFI boot manager";
     };
 
     editor = mkOption {
@@ -109,7 +109,7 @@ in
 
       type = types.bool;
 
-      description = ''
+      description = lib.mdDoc ''
         Whether to allow editing the kernel command-line before
         boot. It is recommended to set this to false, as it allows
         gaining root access by passing init=/bin/sh as a kernel
@@ -123,7 +123,7 @@ in
 
       type = types.str;
 
-      description = ''
+      description = lib.mdDoc ''
         Name to put in boot entry titles.
       '';
     };
@@ -132,11 +132,11 @@ in
       default = null;
       example = 120;
       type = types.nullOr types.int;
-      description = ''
+      description = lib.mdDoc ''
         Maximum number of latest generations in the boot menu.
         Useful to prevent boot partition running out of disk space.
 
-        <literal>null</literal> means no limit i.e. all generations
+        `null` means no limit i.e. all generations
         that were not garbage collected yet.
       '';
     };
@@ -176,21 +176,21 @@ in
       enable = mkOption {
         default = false;
         type = types.bool;
-        description = ''
+        description = lib.mdDoc ''
           Make MemTest86 available from the systemd-boot menu. MemTest86 is a
           program for testing memory.  MemTest86 is an unfree program, so
-          this requires <literal>allowUnfree</literal> to be set to
-          <literal>true</literal>.
+          this requires `allowUnfree` to be set to
+          `true`.
         '';
       };
 
       entryFilename = mkOption {
         default = "memtest86.conf";
         type = types.str;
-        description = ''
-          <literal>systemd-boot</literal> orders the menu entries by the config file names,
+        description = lib.mdDoc ''
+          `systemd-boot` orders the menu entries by the config file names,
           so if you want something to appear after all the NixOS entries,
-          it should start with <filename>o</filename> or onwards.
+          it should start with {file}`o` or onwards.
         '';
       };
     };
@@ -199,9 +199,9 @@ in
       enable = mkOption {
         default = false;
         type = types.bool;
-        description = ''
-          Make <literal>netboot.xyz</literal> available from the
-          <literal>systemd-boot</literal> menu. <literal>netboot.xyz</literal>
+        description = lib.mdDoc ''
+          Make `netboot.xyz` available from the
+          `systemd-boot` menu. `netboot.xyz`
           is a menu system that allows you to boot OS installers and
           utilities over the network.
         '';
@@ -210,10 +210,10 @@ in
       entryFilename = mkOption {
         default = "o_netbootxyz.conf";
         type = types.str;
-        description = ''
-          <literal>systemd-boot</literal> orders the menu entries by the config file names,
+        description = lib.mdDoc ''
+          `systemd-boot` orders the menu entries by the config file names,
           so if you want something to appear after all the NixOS entries,
-          it should start with <filename>o</filename> or onwards.
+          it should start with {file}`o` or onwards.
         '';
       };
     };
@@ -227,15 +227,15 @@ in
           efi /efi/memtest86/memtest86.efi
         '''; }
       '';
-      description = ''
-        Any additional entries you want added to the <literal>systemd-boot</literal> menu.
-        These entries will be copied to <filename>/boot/loader/entries</filename>.
+      description = lib.mdDoc ''
+        Any additional entries you want added to the `systemd-boot` menu.
+        These entries will be copied to {file}`/boot/loader/entries`.
         Each attribute name denotes the destination file name,
         and the corresponding attribute value is the contents of the entry.
 
-        <literal>systemd-boot</literal> orders the menu entries by the config file names,
+        `systemd-boot` orders the menu entries by the config file names,
         so if you want something to appear after all the NixOS entries,
-        it should start with <filename>o</filename> or onwards.
+        it should start with {file}`o` or onwards.
       '';
     };
 
@@ -245,10 +245,10 @@ in
       example = literalExpression ''
         { "efi/memtest86/memtest86.efi" = "''${pkgs.memtest86-efi}/BOOTX64.efi"; }
       '';
-      description = ''
-        A set of files to be copied to <filename>/boot</filename>.
+      description = lib.mdDoc ''
+        A set of files to be copied to {file}`/boot`.
         Each attribute name denotes the destination file name in
-        <filename>/boot</filename>, while the corresponding
+        {file}`/boot`, while the corresponding
         attribute value specifies the source file.
       '';
     };
@@ -258,13 +258,13 @@ in
 
       type = types.bool;
 
-      description = ''
-        Invoke <literal>bootctl install</literal> with the <literal>--graceful</literal> option,
+      description = lib.mdDoc ''
+        Invoke `bootctl install` with the `--graceful` option,
         which ignores errors when EFI variables cannot be written or when the EFI System Partition
         cannot be found. Currently only applies to random seed operations.
 
-        Only enable this option if <literal>systemd-boot</literal> otherwise fails to install, as the
-        scope or implication of the <literal>--graceful</literal> option may change in the future.
+        Only enable this option if `systemd-boot` otherwise fails to install, as the
+        scope or implication of the `--graceful` option may change in the future.
       '';
     };
   };

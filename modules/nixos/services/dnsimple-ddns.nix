@@ -11,7 +11,7 @@ in
     enable = mkOption {
       type = types.bool;
       default = false;
-      description = ''
+      description = mdDoc ''
         Whether to enable service for dnsimple-ddns.
       '';
     };
@@ -20,7 +20,7 @@ in
       type = types.package;
       default = fpkgs.dnsimple-ddns;
       defaultText = literalExpression "fpkgs.dnsimple-ddns";
-      description = ''
+      description = mdDoc ''
         dnsimple-ddns derivation to use.
       '';
     };
@@ -28,7 +28,7 @@ in
     interval = mkOption {
       type = types.str;
       default = "hourly";
-      description = ''
+      description = mdDoc ''
         Interval to send log digest.
       '';
     };
@@ -45,7 +45,7 @@ in
 
         ifip=false
       '';
-      description = ''
+      description = mdDoc ''
         Basic configuration for logmail.
       '';
     };

@@ -11,7 +11,7 @@ in
     enable = mkOption {
       type = types.bool;
       default = false;
-      description = ''
+      description = mdDoc ''
         Whether to enable a user service for swaynag-battery.
       '';
     };
@@ -19,12 +19,12 @@ in
     install = mkOption {
       type = types.bool;
       default = false;
-      description = ''
+      description = mdDoc ''
         Whether to install a user service for swaynag-battery.
 
         The service must be manually started for each user with
-        "systemctl --user start swaynag-battery" or globally through
-        <varname>services.swaynag-battery.enable</varname>.
+        `systemctl --user start swaynag-battery` or globally through
+        {option}`services.swaynag-battery.enable`.
       '';
     };
 
@@ -32,7 +32,7 @@ in
       type = types.package;
       default = pkgs.swaynag-battery;
       defaultText = literalExpression "pkgs.swaynag-battery";
-      description = ''
+      description = mdDoc ''
         swaynag-battery derivation to use.
       '';
     };
@@ -40,7 +40,7 @@ in
     threshold = mkOption {
       type = types.ints.unsigned;
       default = 12;
-      description = ''
+      description = mdDoc ''
         Percentage threshold to show notification.
       '';
     };
@@ -48,7 +48,7 @@ in
     interval = mkOption {
       type = types.str;
       default = "1m";
-      description = ''
+      description = mdDoc ''
         Interval to check battery stats.
       '';
     };
@@ -56,7 +56,7 @@ in
     powerSupply = mkOption {
       type = types.str;
       default = "BAT0";
-      description = ''
+      description = mdDoc ''
         Power supply to read battery stats from.
       '';
     };
