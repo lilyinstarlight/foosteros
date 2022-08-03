@@ -51,9 +51,6 @@ in
       platforms = platforms.linux;
     };
   });
-
-  # TODO: remove hyfetch when NixOS/nixpkgs#184645 has been merged
-  hyfetch = python3Packages.callPackage ./hyfetch {};
 } // (if isOverlay then {
   # TODO: remove when NixOS/nixpkgs#183862 is merged
   inherit python3Packages;
