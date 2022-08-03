@@ -51,6 +51,17 @@ in
       platforms = platforms.linux;
     };
   });
+
+  # TODO: remove when NixOS/nixpkgs#xxxxxx is merged
+  nix-bisect = nix-bisect.overrideAttrs (attrs: {
+    patches = attrs.patches ++ [
+      (fetchpatch {
+        # Fixes BuildFailure drvs_failed inconsistency
+        url = "https://github.com/timokau/nix-bisect/commit/9f3a17783046baae64c16f9e2be917c2603977fc.patch";
+        hash = "sha256-U9NUtgwslcgIf/wvH/WE7t0HGs2OP3wvYDKrb5j+lp0=";
+      })
+    ];
+  });
 } // (if isOverlay then {
   # TODO: remove when NixOS/nixpkgs#183862 is merged
   inherit python3Packages;
