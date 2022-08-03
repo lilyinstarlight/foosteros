@@ -15,16 +15,20 @@ jobs:
       - uses: cachix/install-nix-action@v17
         with:
           nix_path: nixpkgs=channel:nixos-unstable
+
       - uses: cachix/cachix-action@v10
         with:
           name: foosteros
+
       - uses: actions/checkout@v3
         with:
           ssh-key: ${{ secrets.REPO_KEY }}
+
       - name: Configure git
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
       - run: pkgs/vim-plugins/update.py
       - name: Push changes
         run: |

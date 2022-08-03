@@ -17,19 +17,25 @@ jobs:
           install_url: https://github.com/numtide/nix-unstable-installer/releases/latest/download/install
           extra_nix_config: |
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+
       - uses: cachix/cachix-action@v10
         with:
           name: foosteros
+
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           ssh-key: ${{ secrets.REPO_KEY }}
+
       - name: Configure git
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
       - run: nix -vL --show-trace flake update
+
       - run: nix -vL --show-trace flake check
+
       - name: Push changes
         run: |
           if ! git diff --exit-code --quiet flake.lock; then

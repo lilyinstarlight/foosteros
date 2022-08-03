@@ -15,19 +15,24 @@ jobs:
       - uses: cachix/install-nix-action@v17
         with:
           nix_path: nixpkgs=channel:nixos-unstable
+
       - uses: cachix/cachix-action@v10
         with:
           name: foosteros
+
       - uses: actions/checkout@v3
         with:
           ssh-key: ${{ secrets.REPO_KEY }}
+
       - name: Configure git
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
       - run: pkgs/nix-index-database/update.py
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+
       - name: Push changes
         run: |
           if ! git diff --exit-code --quiet pkgs/nix-index-database/default.nix; then

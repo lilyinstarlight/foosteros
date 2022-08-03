@@ -18,15 +18,20 @@ jobs:
         with:
           extra_nix_config: |
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+
       - uses: cachix/cachix-action@v10
         with:
           name: foosteros
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
+
       - run: nix -vL --show-trace build
+
       - run: nix -vL --show-trace flake check
+
       - run: nix -vL --show-trace store gc
         if: ${{ always() }}
 
@@ -37,15 +42,20 @@ jobs:
       FOOSTEROS_EXCLUDE_UNFREE: 1
     steps:
       - uses: cachix/install-nix-action@v17
+
       - uses: cachix/cachix-action@v10
         with:
           name: foosteros
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
+
       - run: nix-build --show-trace
+
       - run: nix-build --show-trace --no-out-link test.nix
+
       - run: nix-store --show-trace --gc
         if: ${{ always() }}
 
@@ -60,14 +70,19 @@ jobs:
           install_url: https://github.com/numtide/nix-unstable-installer/releases/latest/download/install
           extra_nix_config: |
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+
       - uses: cachix/cachix-action@v10
         with:
           name: foosteros
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
+
       - run: nix -vL --show-trace build
+
       - run: nix -vL --show-trace flake check
+
       - run: nix -vL --show-trace store gc
         if: ${{ always() }}
