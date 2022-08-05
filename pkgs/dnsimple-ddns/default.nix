@@ -20,6 +20,10 @@ stdenvNoCC.mkDerivation rec {
   dontConfigure = true;
   dontBuild = true;
 
+  postPatch = ''
+    patchShebangs .
+  '';
+
   installPhase = ''
     mkdir -p $out/bin
     cp ddns $out/bin/ddns

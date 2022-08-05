@@ -20,7 +20,9 @@ stdenvNoCC.mkDerivation rec {
   dontConfigure = true;
   dontBuild = true;
 
-  patchPhase = ''
+  postPatch = ''
+    patchShebangs .
+
     substituteInPlace logmail \
       --replace 'sendmail' '${sendmailPath}'
   '';
