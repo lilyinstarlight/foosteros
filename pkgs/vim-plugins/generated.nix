@@ -101,12 +101,12 @@ final: prev:
 
   vim-sonic-pi = buildVimPluginFrom2Nix {
     pname = "vim-sonic-pi";
-    version = "2022-07-29";
+    version = "2022-08-08";
     src = fetchFromGitHub {
       owner = "lilyinstarlight";
       repo = "vim-sonic-pi";
-      rev = "7b17f23b35a13ea973a160415db7fcf1569f4cbd";
-      sha256 = "0mihplhh3bw9ffzrcpgsx5j9llv1s9hnxqhcywh437cwcpvm8fyv";
+      rev = "7af4b0b5039cdb6e1721ef5e19f6f6114f2179bd";
+      sha256 = "099gy6ij54jaa9ln1z19kigxg8gsx0n2plwf8vm0ay9x933cv5jn";
     };
     meta.homepage = "https://github.com/lilyinstarlight/vim-sonic-pi/";
   };
