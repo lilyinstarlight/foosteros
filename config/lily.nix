@@ -1,10 +1,6 @@
 { config, lib, pkgs, ... }:
 
 {
-  environment.systemPackages = with pkgs; [
-    pridecat
-  ];
-
   users.users.lily = {
     description = "Lily Foster";
     isNormalUser = true;
