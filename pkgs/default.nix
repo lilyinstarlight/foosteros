@@ -43,7 +43,7 @@ in
     };
   });
 
-  # TODO: remove when NixOS/nixpkgs#xxxxxx is merged
+  # TODO: remove when NixOS/nixpkgs#185796 is merged
   nix-bisect = nix-bisect.overrideAttrs (attrs: {
     patches = attrs.patches ++ [
       (fetchpatch {
@@ -69,10 +69,13 @@ in
   };
 
   # unfree packages
+  playdate-sdk = callPackage ./playdate-sdk {};
+
+  # TODO: remove when NixOS/nixpkgs#185794 is merged
   kodelife = callPackage ./kodelife {
     inherit (gst_all_1) gstreamer gst-plugins-base;
   };
-  playdate-sdk = callPackage ./playdate-sdk {};
+  # TODO: remove when NixOS/nixpkgs#185795 is merged
   touchosc = callPackage ./touchosc {};
 });
 

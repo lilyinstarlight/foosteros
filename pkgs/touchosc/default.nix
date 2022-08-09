@@ -1,4 +1,25 @@
-{ lib, stdenv, fetchurl, makeWrapper, autoPatchelfHook, dpkg, alsa-lib, curl, avahi, jack2, libxcb, libX11, libXcursor, libXext, libXi, libXinerama, libXrandr, libXrender, libXxf86vm, libglvnd, gnome }:
+{ lib
+, stdenv
+, fetchurl
+, makeWrapper
+, autoPatchelfHook
+, dpkg
+, alsa-lib
+, curl
+, avahi
+, jack2
+, libxcb
+, libX11
+, libXcursor
+, libXext
+, libXi
+, libXinerama
+, libXrandr
+, libXrender
+, libXxf86vm
+, libglvnd
+, gnome
+}:
 
 let
   runLibDeps = [
@@ -27,27 +48,28 @@ stdenv.mkDerivation rec {
   version = "1.1.4.143";
 
   suffix = {
-    x86_64-linux  = "linux-x86_64";
     aarch64-linux = "linux-arm64";
     armv7l-linux  = "linux-armhf";
+    x86_64-linux  = "linux-x86_64";
   }.${stdenv.hostPlatform.system} or (throw "Unsupported system: ${stdenv.hostPlatform.system}");
 
   src = fetchurl {
-    url = "https://hexler.net/pub/touchosc/${pname}-${version}-${suffix}.deb";
+    url = "https://hexler.net/pub/${pname}/${pname}-${version}-${suffix}.deb";
     hash = {
-      x86_64-linux  = "sha256-CD8JR1QVMBe//MyrNfo8RE1ogoVU0H87IU5rTg5rDAU=";
       aarch64-linux = "sha256-BLPTCaFtsvYzesFvOJVCCofgRVpT2hCvrpYbceh95J4=";
       armv7l-linux  = "sha256-RpHAXj2biZDqeE9xy3Q+fcGTIvCXfTJNn/jMObfL44g=";
+      x86_64-linux  = "sha256-CD8JR1QVMBe//MyrNfo8RE1ogoVU0H87IU5rTg5rDAU=";
     }.${stdenv.hostPlatform.system} or (throw "Unsupported system: ${stdenv.hostPlatform.system}");
   };
 
-  unpackCmd = "mkdir root; ${dpkg}/bin/dpkg-deb -x $curSrc root";
+  unpackCmd = "mkdir root; dpkg-deb -x $curSrc root";
 
   strictDeps = true;
 
   nativeBuildInputs = [
     makeWrapper
     autoPatchelfHook
+    dpkg
   ];
 
   buildInputs = [
@@ -55,7 +77,12 @@ stdenv.mkDerivation rec {
     alsa-lib
   ];
 
+  dontConfigure = true;
+  dontBuild = true;
+
   installPhase = ''
+    runHook preInstall
+
     mkdir -p $out
     cp -r usr/share $out/share
 
@@ -65,15 +92,17 @@ stdenv.mkDerivation rec {
     wrapProgram $out/bin/TouchOSC \
       --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath runLibDeps} \
       --prefix PATH : ${lib.makeBinPath runBinDeps}
+
+    runHook postInstall
   '';
 
   meta = with lib; {
     homepage = "https://hexler.net/touchosc";
     description = "Next generation modular control surface";
-    license = licenses.unfree;
     sourceProvenance = with sourceTypes; [ binaryNativeCode ];
+    license = licenses.unfree;
     maintainers = with maintainers; [ lilyinstarlight ];
-    platforms = [ "x86_64-linux" "aarch64-linux" "armv7l-linux" ];
+    platforms = [ "aarch64-linux" "armv7l-linux" "x86_64-linux" ];
     mainProgram = "TouchOSC";
   };
 }

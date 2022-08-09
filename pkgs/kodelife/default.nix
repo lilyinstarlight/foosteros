@@ -1,4 +1,26 @@
-{ lib, stdenv, fetchurl, makeWrapper, autoPatchelfHook, dpkg, alsa-lib, curl, avahi, gstreamer, gst-plugins-base, libxcb, libX11, libXcursor, libXext, libXi, libXinerama, libXrandr, libXrender, libXxf86vm, libglvnd, gnome }:
+{ lib
+, stdenv
+, fetchurl
+, makeWrapper
+, autoPatchelfHook
+, dpkg
+, alsa-lib
+, curl
+, avahi
+, gstreamer
+, gst-plugins-base
+, libxcb
+, libX11
+, libXcursor
+, libXext
+, libXi
+, libXinerama
+, libXrandr
+, libXrender
+, libXxf86vm
+, libglvnd
+, gnome
+}:
 
 let
   runLibDeps = [
@@ -26,27 +48,28 @@ stdenv.mkDerivation rec {
   version = "1.0.5.161";
 
   suffix = {
-    x86_64-linux  = "linux-x86_64";
     aarch64-linux = "linux-arm64";
     armv7l-linux  = "linux-armhf";
+    x86_64-linux  = "linux-x86_64";
   }.${stdenv.hostPlatform.system} or (throw "Unsupported system: ${stdenv.hostPlatform.system}");
 
   src = fetchurl {
-    url = "https://hexler.net/pub/kodelife/${pname}-${version}-${suffix}.deb";
+    url = "https://hexler.net/pub/${pname}/${pname}-${version}-${suffix}.deb";
     hash = {
-      x86_64-linux  = "sha256-5M2tgpF74RmrCLI44RBNXK5t0hMAOHtmcjWu7fypc0U=";
       aarch64-linux = "sha256-6QZ5jCxINCH46GQx+V68FpkIAOIOFw4Kd0tUQTKBRzU=";
       armv7l-linux  = "sha256-eToNjPttY62EzNuRSVvJsHttO6Ux6LXRPRuuIKnvaxM=";
+      x86_64-linux  = "sha256-5M2tgpF74RmrCLI44RBNXK5t0hMAOHtmcjWu7fypc0U=";
     }.${stdenv.hostPlatform.system} or (throw "Unsupported system: ${stdenv.hostPlatform.system}");
   };
 
-  unpackCmd = "mkdir root; ${dpkg}/bin/dpkg-deb -x $curSrc root";
+  unpackCmd = "mkdir root; dpkg-deb -x $curSrc root";
 
   strictDeps = true;
 
   nativeBuildInputs = [
     makeWrapper
     autoPatchelfHook
+    dpkg
   ];
 
   buildInputs = [
@@ -57,6 +80,8 @@ stdenv.mkDerivation rec {
   ];
 
   installPhase = ''
+    runHook preInstall
+
     mkdir -p $out
     cp -r usr/share $out/share
 
@@ -66,15 +91,17 @@ stdenv.mkDerivation rec {
     wrapProgram $out/bin/KodeLife \
       --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath runLibDeps} \
       --prefix PATH : ${lib.makeBinPath runBinDeps}
+
+    runHook postInstall
   '';
 
   meta = with lib; {
     homepage = "https://hexler.net/kodelife";
     description = "Real-time GPU shader editor";
-    license = licenses.unfree;
     sourceProvenance = with sourceTypes; [ binaryNativeCode ];
+    license = licenses.unfree;
     maintainers = with maintainers; [ lilyinstarlight ];
-    platforms = [ "x86_64-linux" "aarch64-linux" "armv7l-linux" ];
+    platforms = [ "aarch64-linux" "armv7l-linux" "x86_64-linux" ];
     mainProgram = "KodeLife";
   };
 }
