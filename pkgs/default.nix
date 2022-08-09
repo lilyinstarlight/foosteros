@@ -22,13 +22,13 @@ in
   mkusb = callPackage ./mkusb {};
   mkwin = callPackage ./mkwin {};
   nix-index-database = callPackage ./nix-index-database {};
-  pridecat = callPackage ./pridecat {};
   rofi-pass-wayland = callPackage ./rofi-pass-wayland {};
   sonic-pi_3 = libsForQt5.callPackage ./sonic-pi/v3.nix {};
   sonic-pi-tool = python3Packages.callPackage ./sonic-pi-tool {
     sonic-pi = resolveDep "sonic-pi_3";
   };
 
+  # TODO: remove when there is a new release
   mpdris2 = callPackage ./mpdris2 {
     inherit (pkgs) mpdris2;
   };
