@@ -79,7 +79,9 @@ stdenv.mkDerivation rec {
     ${coreutils}/bin/mkdir -p "\$HOME/.Playdate Simulator/sdk"
     for dir in $out/sdk/*; do
         if [ "\$(basename "\$dir")" != "Disk" ]; then
-            [ ! -e "\$HOME/.Playdate Simulator/sdk/\$(basename "\$dir")" -o -L "\$HOME/.Playdate Simulator/sdk/\$(basename "\$dir")" ] && ${coreutils}/bin/ln -sTf "\$dir" "\$HOME/.Playdate Simulator/sdk/\$(basename "\$dir")"
+            if [ ! -e "\$HOME/.Playdate Simulator/sdk/\$(basename "\$dir")" ] || [ -L "\$HOME/.Playdate Simulator/sdk/\$(basename "\$dir")" ]; then
+              ${coreutils}/bin/ln -sTf "\$dir" "\$HOME/.Playdate Simulator/sdk/\$(basename "\$dir")"
+            fi
         else
             ${coreutils}/bin/cp -rT --no-preserve=mode,ownership "\$dir" "\$HOME/.Playdate Simulator/sdk/\$(basename "\$dir")"
         fi
@@ -99,13 +101,13 @@ stdenv.mkDerivation rec {
 
     # Executables
     makeWrapper $out/sdk/bin/pdc $out/bin/pdc \
-      --argv0 $out/sdk/bin/pdc
+      --inherit-argv0
 
     makeWrapper $out/sdk/bin/pdutil $out/bin/pdutil \
-      --argv0 $out/sdk/bin/pdutil
+      --inherit-argv0
 
     makeWrapper $out/libexec/PlaydateSimulator $out/bin/PlaydateSimulator \
-      --argv0 $out/libexec/PlaydateSimulator \
+      --inherit-argv0 \
       "''${gappsWrapperArgs[@]}" \
       --prefix LD_LIBRARY_PATH : '${lib.makeLibraryPath simLibDeps}' \
   '';
