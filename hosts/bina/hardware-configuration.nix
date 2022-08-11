@@ -12,25 +12,54 @@
 
   boot.initrd.luks.devices."nixos".device = "/dev/disk/by-partlabel/nixos";
 
-  boot.initrd.postDeviceCommands = lib.mkAfter ''
-    mkdir -p /mnt-root
-    mount -t btrfs -o rw,subvol=/ /dev/disk/by-label/root /mnt-root
+  boot.initrd.systemd.extraBin = {
+    find = "${pkgs.findutils}/bin/find";
+    sed = "${pkgs.busybox}/bin/sed";
+    xargs = "${pkgs.findutils}/bin/xargs";
+  };
+  boot.initrd.systemd.targets.initrd-root-device = {
+    requires = [ "dev-disk-by\\x2dlabel-root.device" ];
+    after = [ "dev-disk-by\\x2dlabel-root.device" ];
+  };
+  boot.initrd.systemd.services.create-root = {
+    description = "Rolling over and creating new filesystem root";
 
-    num="$(printf '%s\n' "$(find /mnt-root -mindepth 1 -maxdepth 1 -type d -name 'root-*')" | sed -e 's#^\s*$#0#' -e 's#^/mnt-root/root-\(.*\)$#\1#' | sort -n | tail -n 1 | xargs -I '{}' expr 1 + '{}')"
+    requires = [ "initrd-root-device.target" ];
+    after = [ "initrd-root-device.target" ];
+    wantedBy = [ "sysroot.mount" "initrd-root-fs.target" ];
+    before = [ "sysroot.mount" "initrd-root-fs.target" ];
 
-    mv /mnt-root/root /mnt-root/root-"$num"
-    btrfs property set /mnt-root/root-"$num" ro true
+    unitConfig = {
+      DefaultDependencies = false;
+    };
 
-    btrfs subvolume create /mnt-root/root
-    btrfs subvolume set-default /mnt-root/root
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
 
-    find /mnt-root -mindepth 1 -maxdepth 1 -type d -name 'root-*' | sed -e 's#^/mnt-root/root-\(.*\)$#\1#' | sort -n | head -n -30 | xargs -I '{}' sh -c "btrfs property set '/mnt-root/root-{}' ro false && btrfs subvolume list -o '/mnt-root/root-{}' | cut -d' ' -f9- | xargs -I '[]' btrfs subvolume delete '/mnt-root/[]' && btrfs subvolume delete '/mnt-root/root-{}'"
+    script = ''
+      mkdir -p /mnt-root
+      mount -t btrfs -o rw,subvol=/ /dev/disk/by-label/root /mnt-root
 
-    umount /mnt-root
-  '';
+      num="$(printf '%s\n' "$(find /mnt-root -mindepth 1 -maxdepth 1 -type d -name 'root-*')" | sed -e 's#^\s*$#0#' -e 's#^/mnt-root/root-\(.*\)$#\1#' | sort -n | tail -n 1 | xargs -I '{}' expr 1 + '{}')"
+
+      mv /mnt-root/root /mnt-root/root-"$num"
+      btrfs property set /mnt-root/root-"$num" ro true
+
+      btrfs subvolume create /mnt-root/root
+      btrfs subvolume set-default /mnt-root/root
+
+      find /mnt-root -mindepth 1 -maxdepth 1 -type d -name 'root-*' | sed -e 's#^/mnt-root/root-\(.*\)$#\1#' | sort -n | head -n -30 | xargs -I '{}' sh -c "btrfs property set '/mnt-root/root-{}' ro false && btrfs subvolume list -o '/mnt-root/root-{}' | cut -d' ' -f9- | xargs -I '[]' btrfs subvolume delete '/mnt-root/[]' && btrfs subvolume delete '/mnt-root/root-{}'"
+
+      umount /mnt-root
+    '';
+  };
 
   fileSystems."/" = {
-    label = "root";
+    # TODO: revert once NixOS/nixpkgs#xxxxxx is merged
+    # label = "root";
+    device = "/dev/disk/by-label/root";
     fsType = "btrfs";
     options = [
       "subvol=/root"
@@ -38,7 +67,9 @@
   };
 
   fileSystems."/nix" = {
-    label = "root";
+    # TODO: revert once NixOS/nixpkgs#xxxxxx is merged
+    # label = "root";
+    device = "/dev/disk/by-label/root";
     fsType = "btrfs";
     options = [
       "subvol=/nix"
@@ -46,7 +77,9 @@
   };
 
   fileSystems."/state" = {
-    label = "root";
+    # TODO: revert once NixOS/nixpkgs#xxxxxx is merged
+    # label = "root";
+    device = "/dev/disk/by-label/root";
     fsType = "btrfs";
     options = [
       "subvol=/state"
@@ -55,7 +88,9 @@
   };
 
   fileSystems."/persist" = {
-    label = "root";
+    # TODO: revert once NixOS/nixpkgs#xxxxxx is merged
+    # label = "root";
+    device = "/dev/disk/by-label/root";
     fsType = "btrfs";
     options = [
       "subvol=/persist"
@@ -64,13 +99,17 @@
   };
 
   fileSystems."/boot" = {
-    label = "esp";
+    # TODO: revert once NixOS/nixpkgs#xxxxxx is merged
+    # label = "esp";
+    device = "/dev/disk/by-label/esp";
     fsType = "vfat";
   };
 
   swapDevices = [
     {
-      label = "swap";
+      # TODO: revert once NixOS/nixpkgs#xxxxxx is merged
+      # label = "swap";
+      device = "/dev/disk/by-label/swap";
     }
   ];
 

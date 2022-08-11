@@ -96,6 +96,8 @@ in
     };
   };
 
+  boot.initrd.systemd.enable = true;
+
   networking = {
     useDHCP = false;
     useNetworkd = true;

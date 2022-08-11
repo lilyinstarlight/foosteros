@@ -2,18 +2,24 @@
 
 {
   fileSystems."/" = {
-    label = "root";
+    # TODO: revert once NixOS/nixpkgs#xxxxxx is merged
+    # label = "root";
+    device = "/dev/disk/by-label/root";
     fsType = "btrfs";
   };
 
   fileSystems."/boot" = {
-    label = "esp";
+    # TODO: revert once NixOS/nixpkgs#xxxxxx is merged
+    # label = "esp";
+    device = "/dev/disk/by-label/esp";
     fsType = "vfat";
   };
 
   swapDevices = [
     {
-      label = "swap";
+      # TODO: revert once NixOS/nixpkgs#xxxxxx is merged
+      # label = "swap";
+      device = "/dev/disk/by-label/swap";
     }
   ];
 }

@@ -68,12 +68,14 @@ Feel free to take any pieces in this repository that you like! Please don't try 
     ```
     ## Install SSH key for host (for sops secret decryption on activation).
     # mkdir -p /mnt/state/etc/ssh
-    # cp ssh_host_{rsa,ed25519}_key{,.pub} /mnt/state/etc/ssh/
-    # chmod u=rw,go= /mnt/state/etc/ssh/ssh_host_{rsa,ed25519}_key
+    # cp ssh_host_{rsa,ed25519}_key{,.pub} /mnt/etc/ssh/
+    # chmod u=rw,go= /mnt/etc/ssh/ssh_host_{rsa,ed25519}_key
 
-    ## Copy repository into persistent store if used.
+    ## Copy repository and SSH key into persistent store if used.
     # mkdir -p /mnt/state/etc
     # cp -a /mnt/etc/nixos /mnt/state/etc/
+    # mkdir -p /mnt/state/etc/ssh
+    # cp -a /mnt/etc/ssh/ssh_host_{rsa,ed25519}_key{,.pub} /mnt/etc/ssh/
 
     nixos-install --flake '/mnt/etc/nixos#minimal' --no-channel-copy  # use --no-root-password as well for systems without mutable users
     ```
