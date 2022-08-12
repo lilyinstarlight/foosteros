@@ -243,6 +243,7 @@
       persistent = true;
     };
     settings = {
+      keep-outputs = true;
       max-jobs = "auto";
     };
   };
