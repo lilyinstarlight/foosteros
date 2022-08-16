@@ -135,6 +135,21 @@
         "type": "github"
       }
     },
+    "nix-index-database": {
+      "locked": {
+        "lastModified": 1660449364,
+        "narHash": "sha256-dkLtErSXnqwDkgTRPmFLgfOd+HnZXQWu3n5NMUQ6gCQ=",
+        "owner": "Mic92",
+        "repo": "nix-index-database",
+        "rev": "29973ffd54414a4a6505fdccb3a0d485ef9558a9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "nix-index-database",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1660485612,
@@ -201,6 +216,7 @@
         "home-manager": "home-manager",
         "impermanence": "impermanence",
         "nix-alien": "nix-alien",
+        "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs",
         "sops-nix": "sops-nix"
       }

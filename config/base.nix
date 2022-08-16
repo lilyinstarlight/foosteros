@@ -75,7 +75,7 @@ in
         };
       })
       ({ pkgs, ... }: {
-        home.file.".cache/nix-index/files".source = "${pkgs.nix-index-database}/files";
+        home.file.".cache/nix-index/files".source = inputs.nix-index-database.legacyPackages.${pkgs.stdenv.hostPlatform.system}.database;
       })
     ];
   };
@@ -91,7 +91,7 @@ in
     efi.canTouchEfiVariables = true;
 
     systemd-boot = {
-      enable = true;
+      enable = lib.mkDefault true;
       bootName = "FoosterOS/2 Warp";
     };
   };

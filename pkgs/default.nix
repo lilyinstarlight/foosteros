@@ -21,7 +21,6 @@ in
   logmail = callPackage ./logmail {};
   mkusb = callPackage ./mkusb {};
   mkwin = callPackage ./mkwin {};
-  nix-index-database = callPackage ./nix-index-database {};
   rofi-pass-wayland = callPackage ./rofi-pass-wayland {};
   sonic-pi_3 = libsForQt5.callPackage ./sonic-pi/v3.nix {};
   sonic-pi-tool = python3Packages.callPackage ./sonic-pi-tool {
