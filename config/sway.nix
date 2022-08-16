@@ -612,8 +612,6 @@ in
     '';
   };
 
-  environment.sessionVariables.XDG_DATA_DIRS = with pkgs; [ "${gsettings-desktop-schemas}/share/gsettings-schemas/${gsettings-desktop-schemas.name}" ];
-
   qt5 = {
     enable = true;
     style = "adwaita-dark";
