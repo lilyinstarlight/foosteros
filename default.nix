@@ -1,4 +1,4 @@
-{ ... }:
+{ system ? builtins.currentSystem, ... }:
 
 (import (
     let
@@ -11,4 +11,4 @@
   {
     src =  ./.;
   }
-).defaultNix.legacyPackages.${builtins.currentSystem}
+).defaultNix.legacyPackages.${system}

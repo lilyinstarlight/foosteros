@@ -1,4 +1,4 @@
-{ ... }:
+{ system ? builtins.currentSystem, ... }:
 
 (import (
     let
@@ -11,4 +11,4 @@
   {
     src =  ./.;
   }
-).defaultNix.checks.${builtins.currentSystem}
+).defaultNix.checks.${system}
