@@ -135,18 +135,27 @@
         "type": "github"
       }
     },
-    "nix-index-database": {
+    "nix-index-db": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
       "locked": {
-        "lastModified": 1660449364,
-        "narHash": "sha256-dkLtErSXnqwDkgTRPmFLgfOd+HnZXQWu3n5NMUQ6gCQ=",
-        "owner": "Mic92",
-        "repo": "nix-index-database",
-        "rev": "29973ffd54414a4a6505fdccb3a0d485ef9558a9",
+        "lastModified": 1660766744,
+        "narHash": "sha256-NSmx0Z34MUcU5pBrik/k6SZ9KM6zEb7d2vbpo3zOtUM=",
+        "owner": "usertam",
+        "repo": "nix-index-db",
+        "rev": "714b06c19f9405a5f0cc8e4f5a66d6739e137914",
         "type": "github"
       },
       "original": {
-        "owner": "Mic92",
-        "repo": "nix-index-database",
+        "owner": "usertam",
+        "ref": "standalone/nixpkgs-unstable",
+        "repo": "nix-index-db",
         "type": "github"
       }
     },
@@ -216,7 +225,7 @@
         "home-manager": "home-manager",
         "impermanence": "impermanence",
         "nix-alien": "nix-alien",
-        "nix-index-database": "nix-index-database",
+        "nix-index-db": "nix-index-db",
         "nixpkgs": "nixpkgs",
         "sops-nix": "sops-nix"
       }

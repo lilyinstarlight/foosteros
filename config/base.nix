@@ -75,7 +75,7 @@ in
         };
       })
       ({ pkgs, ... }: {
-        home.file.".cache/nix-index/files".source = inputs.nix-index-database.legacyPackages.${pkgs.stdenv.hostPlatform.system}.database;
+        home.file.".cache/nix-index/files".source = inputs.nix-index-db.packages.${pkgs.stdenv.hostPlatform.system}.default;
       })
     ];
   };

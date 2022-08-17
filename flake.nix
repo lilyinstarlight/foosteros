@@ -14,7 +14,11 @@
 
     impermanence.url = "github:nix-community/impermanence";
 
-    nix-index-database.url = "github:Mic92/nix-index-database";
+    nix-index-db = {
+      url = "github:usertam/nix-index-db/standalone/nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
 
     nix-alien = {
       url = "github:thiagokokada/nix-alien";
@@ -41,7 +45,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, sops-nix, impermanence, nix-index-database, nix-alien, envfs, fenix, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, sops-nix, impermanence, nix-index-db, nix-alien, envfs, fenix, ... }@inputs:
     let
       supportedSystems = with nixpkgs.lib; (intersectLists (platforms.x86_64 ++ platforms.aarch64 ++ platforms.i686) platforms.linux) ++ (intersectLists (platforms.x86_64 ++ platforms.aarch64) platforms.darwin);
 
