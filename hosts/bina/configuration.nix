@@ -569,6 +569,14 @@
       tray = "never";
     };
 
+    # TODO: remove when nix-community/home-manager#xxxx is merged
+    systemd.user.targets.tray = {
+      Unit = {
+        Description = "Home Manager System Tray";
+        Requires = [ "graphical-session-pre.target" ];
+      };
+    };
+
     systemd.user.services.mpdris2 = {
       # wait for mako since mpdris2 disables notifications if the org.freedesktop.Notifications busname is not available yet
       Unit.After = [ "mako.service" ];
