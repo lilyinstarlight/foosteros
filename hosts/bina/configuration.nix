@@ -479,6 +479,8 @@
 
   services.pipewire.jack.enable = true;
 
+  services.udisks2.enable = true;
+
   services.dnsimple-ddns = {
     enable = true;
     configFile = config.sops.secrets.dnsimple-ddns.path;
