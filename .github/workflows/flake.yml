@@ -34,12 +34,15 @@ jobs:
 
       - run: nix -vL --show-trace flake update
 
+      - name: Commit changes
+        run: |
+          if ! git diff --exit-code --quiet flake.lock; then
+            git commit -m "flake: update inputs" flake.lock
+          fi
+
       - run: nix -vL --show-trace flake check
 
       - name: Push changes
         run: |
-          if ! git diff --exit-code --quiet flake.lock; then
-            git commit -m "flake: update inputs" flake.lock
-            git pull --rebase
-            git push
-          fi
+          git pull --rebase
+          git push
