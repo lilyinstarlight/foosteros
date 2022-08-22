@@ -571,7 +571,7 @@
       tray = "never";
     };
 
-    # TODO: remove when nix-community/home-manager#xxxx is merged
+    # TODO: remove when nix-community/home-manager#3173 is merged
     systemd.user.targets.tray = {
       Unit = {
         Description = "Home Manager System Tray";
