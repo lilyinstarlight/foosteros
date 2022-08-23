@@ -36,8 +36,6 @@ stdenvNoCC.mkDerivation rec {
     homepage = "https://github.com/lilyinstarlight/paste";
     license = licenses.mit;
     maintainers = with maintainers; [ lilyinstarlight ];
-    # TODO: remove once pyopenssl is fixed on darwin
-    platforms = platforms.linux;
   };
 }
 ; in fpaste

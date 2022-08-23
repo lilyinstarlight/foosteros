@@ -1,0 +1,35 @@
+diff --git a/tests/conftest.py b/tests/conftest.py
+index 6ee5a53..ab9e70f 100644
+--- a/tests/conftest.py
++++ b/tests/conftest.py
+@@ -4,9 +4,19 @@ from ssl import SSLContext
+ from typing import Any, Dict, Generator, Tuple
+ 
+ import pytest
+-import trustme
+ from _pytest.fixtures import SubRequest
+-from trustme import CA
++
++try:
++    import trustme
++    from trustme import CA
++
++    # Ensure CA is available in runtime
++    trustme.CA()
++
++    TRUSTME: bool = True
++except ImportError:
++    CA = None
++    TRUSTME = False
+ 
+ uvloop_marks = []
+ uvloop_policy = None
+@@ -47,6 +57,8 @@ def anyio_backend(request: SubRequest) -> Tuple[str, Dict[str, Any]]:
+ 
+ @pytest.fixture(scope="session")
+ def ca() -> CA:
++    if not TRUSTME:
++        pytest.xfail("trustme is not supported")
+     return trustme.CA()
+ 
+ 
