@@ -1,20 +1,19 @@
-{ pkgs, outputs, system, ... }:
+{ pkgs, self, ... }:
 
 with pkgs;
 
 let
-  testSystem = configuration: (outputs.lib.baseSystem {
+  testSystem = configuration: (configuration.override (args: {
     baseModules = [
       { nixpkgs.config.allowUnfree = false; }
-    ];
-    modules = [
-      configuration
-    ];
-  }).config.system.build.toplevel;
+    ] ++ (args.baseModules or []);
+  })).config.system.build.toplevel;
 in
 
-(lib.optionalAttrs (lib.elem system lib.platforms.linux) {
-  host-test-minimal = testSystem ../hosts/minimal/configuration.nix;
-}) // (lib.optionalAttrs (system == "x86_64-linux") {
-  host-test-bina = testSystem ../hosts/bina/configuration.nix;
-})
+lib.listToAttrs (lib.flatten (
+  map (cfg: { name = "host-test-" + cfg.config.networking.hostName; value = testSystem cfg; })
+  (lib.unique (lib.filter (cfg: cfg.pkgs.stdenv.hostPlatform.system == pkgs.stdenv.hostPlatform.system) (lib.collect
+    (cfg: cfg ? config && cfg.config ? system && cfg.config.system ? build && cfg.config.system.build ? toplevel)
+    self.nixosConfigurations
+  )))
+))
