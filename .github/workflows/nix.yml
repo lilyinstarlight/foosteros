@@ -11,8 +11,6 @@ jobs:
   stable-flake-build:
     name: Stable Flake Build
     runs-on: ubuntu-latest
-    env:
-      FOOSTEROS_EXCLUDE_UNFREE: 1
     steps:
       - uses: cachix/install-nix-action@v17
         with:
@@ -38,8 +36,6 @@ jobs:
   stable-impure-build:
     name: Stable Impure Build
     runs-on: ubuntu-latest
-    env:
-      FOOSTEROS_EXCLUDE_UNFREE: 1
     steps:
       - uses: cachix/install-nix-action@v17
 
@@ -62,8 +58,6 @@ jobs:
   unstable-flake-build:
     name: Unstable Flake Build
     runs-on: ubuntu-latest
-    env:
-      FOOSTEROS_EXCLUDE_UNFREE: 1
     steps:
       - uses: cachix/install-nix-action@v17
         with:

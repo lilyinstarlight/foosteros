@@ -1,11 +1,11 @@
-{ pkgs ? import <nixpkgs> {}, outpkgs ? pkgs, fenix ? import <fenix> {}, allowUnfree ? (!(builtins.getEnv "FOOSTEROS_EXCLUDE_UNFREE" == "1")), isOverlay ? false, ... }:
+{ pkgs ? import <nixpkgs> {}, fenix ? import <fenix> {}, ... } @ args:
 
 with pkgs;
 
 let mypkgs = let
   hasPath = attrset: path: lib.hasAttrByPath (lib.splitString "." path) attrset;
   resolvePath = attrset: path: lib.getAttrFromPath (lib.splitString "." path) attrset;
-  resolveDep = path: if isOverlay then (resolvePath outpkgs path) else if (hasPath mypkgs path) then (resolvePath mypkgs path) else (resolvePath pkgs path);
+  resolveDep = path: if (args ? outpkgs) then (resolvePath args.outpkgs path) else if (hasPath mypkgs path) then (resolvePath mypkgs path) else (resolvePath pkgs path);
 
   # TODO: remove both when NixOS/nixpkgs#xxxxxx is merged
   python3 = let
@@ -20,6 +20,7 @@ let mypkgs = let
 in
 
 {
+  # normal packages
   dnsimple-ddns = callPackage ./dnsimple-ddns {};
   fooster-backgrounds = callPackage ./backgrounds {};
   fooster-materia-theme = callPackage ./materia-theme {};
@@ -28,7 +29,9 @@ in
   furi = python3Packages.callPackage ./furi {};
   google-10000-english = callPackage ./google-10000-english {};
   logmail = callPackage ./logmail {};
-  mkusb = callPackage ./mkusb {};
+  mkusb = callPackage ./mkusb {
+    syslinux = resolveDep "${if stdenv.isx86_64 then "" else "pkgsCross.gnu64."}syslinux";
+  };
   mkwin = callPackage ./mkwin {};
   rofi-pass-wayland = callPackage ./rofi-pass-wayland {};
   sonic-pi_3 = libsForQt5.callPackage ./sonic-pi/v3.nix {};
@@ -36,6 +39,7 @@ in
     sonic-pi = resolveDep "sonic-pi_3";
   };
 
+  # overridden packages
   # TODO: remove when there is a new release
   mpdris2 = callPackage ./mpdris2 {
     inherit (pkgs) mpdris2;
@@ -50,15 +54,7 @@ in
       platforms = platforms.linux;
     };
   });
-} // (if isOverlay then {
-  # TODO: remove when NixOS/nixpkgs#xxxxxx is merged
-  inherit python3Packages;
-  inherit vimPlugins;
-} else {
-  # TODO: remove when NixOS/nixpkgs#xxxxxx is merged
-  python3Packages = recurseIntoAttrs (pkgs.python3Packages.callPackage ./python-modules {});
-  vimPlugins = recurseIntoAttrs (callPackage ./vim-plugins {});
-}) // (lib.optionalAttrs allowUnfree {
+
   # dependents of unfree packages
   crank = callPackage ./crank {
     rustNightlyToolchain = fenix.complete.withComponents [
@@ -71,6 +67,14 @@ in
 
   # unfree packages
   playdate-sdk = callPackage ./playdate-sdk {};
+} // (if (args ? outpkgs) then {
+  # TODO: remove when NixOS/nixpkgs#xxxxxx is merged
+  inherit python3Packages;
+  inherit vimPlugins;
+} else {
+  # TODO: remove when NixOS/nixpkgs#xxxxxx is merged
+  python3Packages = recurseIntoAttrs (pkgs.python3Packages.callPackage ./python-modules {});
+  vimPlugins = recurseIntoAttrs (callPackage ./vim-plugins {});
 });
 
 in mypkgs
