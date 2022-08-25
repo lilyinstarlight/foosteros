@@ -20,10 +20,15 @@
       enable = true;
       userName = "Lily Foster";
       userEmail = "lily@lily.flowers";
-      signing.key = "2E23AF668B14BA1F";
+      signing = {
+        key = "49340081E484C893!";
+        signByDefault = true;
+      };
       extraConfig = {
         init.defaultBranch = "main";
         pull.ff = "only";
+        # TODO: remove when nix-community/home-manager#xxxx is merged
+        tag.gpgSign = true;
       };
       aliases = {
         kill = "!sh -c 'git reset HEAD --hard && git clean -xdf'";
