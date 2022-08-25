@@ -1,3 +1,7 @@
-{ config, pkgs, lib ? pkgs.lib, fpkgs ? pkgs, ... }:
+{ fpkgs, ... }:
 
-lib.map (m: import m { inherit config pkgs lib fpkgs; }) (import ./module-list.nix)
+{
+  imports = import ./module-list.nix;
+
+  config._module.args = { inherit fpkgs; };
+}
