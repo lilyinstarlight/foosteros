@@ -20,7 +20,7 @@
 #   OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 #   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-{ config, lib, pkgs, inputs ? { nixpkgs = <nixpkgs>; }, ... }:
+{ config, lib, pkgs, modulesPath, ... }:
 
 with lib;
 
@@ -32,7 +32,7 @@ let
   systemdBootBuilder = pkgs.substituteAll {
     name = "systemd-boot-builder.py";
 
-    src = "${inputs.nixpkgs}/nixos/modules/system/boot/loader/systemd-boot/systemd-boot-builder.py";
+    src = "${modulesPath}/system/boot/loader/systemd-boot/systemd-boot-builder.py";
 
     isExecutable = true;
 
