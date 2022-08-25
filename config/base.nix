@@ -1,4 +1,4 @@
-{ config, lib, pkgs, self, inputs, outputs, ... }:
+{ config, lib, pkgs, self, inputs, ... }:
 
 let
   issue = pkgs.writeText "issue" ''
@@ -49,7 +49,7 @@ in
     inputs.home-manager.nixosModules.home-manager
     inputs.sops-nix.nixosModules.sops
     inputs.impermanence.nixosModules.impermanence
-  ] ++ (import ../modules/nixos/module-list.nix) ++ [
+    self.nixosModules.foosteros
     ./fish.nix
     ./neovim.nix
     ./tmux.nix
@@ -60,7 +60,7 @@ in
     useGlobalPkgs = true;
     sharedModules = [
       inputs.impermanence.nixosModules.home-manager.impermanence
-    ] ++ (import ../modules/home-manager/module-list.nix) ++ [
+      self.homeManagerModules.foosteros
       ({ pkgs, ... }: {
         xdg.userDirs = {
           enable = true;
@@ -124,7 +124,7 @@ in
 
   nixpkgs = {
     config.allowUnfree = true;
-    overlays = lib.attrValues (removeAttrs outputs.overlays [ "default" ]);
+    overlays = lib.attrValues (removeAttrs self.overlays [ "default" ]);
   };
 
   system.nixos.label = lib.concatStringsSep "-" ((lib.sort (x: y: x < y) config.system.nixos.tags) ++ [ config.system.nixos.version ] ++ [ "foosteros" (self.shortRev or "dirty") ]);
