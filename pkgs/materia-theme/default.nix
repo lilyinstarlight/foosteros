@@ -1,6 +1,5 @@
 { lib, materia-theme, bc, resvg, optipng, gnused, gtk4, gnome, util-linux, runCommand }:
 
-let fooster-materia-theme =
 materia-theme.overrideAttrs (attrs: rec {
   nativeBuildInputs = attrs.nativeBuildInputs ++ [ bc resvg optipng gnused gtk4 gnome.gnome-shell util-linux ];
 
@@ -9,6 +8,7 @@ materia-theme.overrideAttrs (attrs: rec {
   ];
 
   dontConfigure = true;
+  doInstallCheck = true;
 
   installPhase = ''
     # fix shebangs
@@ -29,16 +29,10 @@ materia-theme.overrideAttrs (attrs: rec {
     ./change_color.sh -i false -t $out/share/themes -o Materia-Fooster <(echo -e "MATERIA_COLOR_VARIANT=dark\nSEL_BG=F29BD4\nFG=EEEEEE\nBG=181818\nHDR_BG=2d2d2d\nHDR_FG=EEEEEE\nMATERIA_SURFACE=343434\nMATERIA_VIEW=242424\n")
   '';
 
-  passthru.tests = {
-    # test to make sure Materia-Fooster theme was built
-    fooster-index-existence = runCommand "${fooster-materia-theme.name}-fooster-index-existence" {} ''
-      test -f ${fooster-materia-theme}/share/themes/Materia-Fooster/index.theme >$out
-    '';
-  };
+  installCheckPhase = "test -f $out/share/themes/Materia-Fooster/index.theme";
 
   meta = with lib; attrs.meta // {
     maintainers = with maintainers; [ lilyinstarlight ] ++ (if attrs.meta ? maintainers then attrs.meta.maintainers else []);
     platforms = platforms.linux;
   };
 })
-; in fooster-materia-theme

@@ -1,6 +1,5 @@
 { lib, rofi-pass, rofi-wayland, pass-wayland, coreutils, util-linux, gnugrep, libnotify, pwgen, findutils, gawk, gnused, wl-clipboard, wtype, runCommand }:
 
-let rofi-pass-wayland =
 rofi-pass.overrideAttrs (attrs: rec {
   version = attrs.version + "-wayland";
 
@@ -18,6 +17,8 @@ rofi-pass.overrideAttrs (attrs: rec {
     wl-clipboard
     wtype
   ];
+
+  doInstallCheck = true;
 
   fixupPhase = ''
     substituteInPlace $out/bin/rofi-pass \
@@ -41,16 +42,10 @@ rofi-pass.overrideAttrs (attrs: rec {
       --prefix PATH : "${wrapperPath}"
   '';
 
-  passthru.tests = {
-    # test to make sure executable runs
-    help = runCommand "${rofi-pass-wayland.name}-help-test" {} ''
-      ${rofi-pass-wayland}/bin/rofi-pass --help >$out
-    '';
-  };
+  installCheckPhase = "$out/bin/rofi-pass --help";
 
   meta = with lib; attrs.meta // {
     maintainers = with maintainers; [ lilyinstarlight ] ++ (if attrs.meta ? maintainers then attrs.meta.maintainers else []);
     platforms = platforms.linux;
   };
 })
-; in rofi-pass-wayland

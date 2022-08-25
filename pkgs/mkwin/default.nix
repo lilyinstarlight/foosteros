@@ -1,6 +1,5 @@
 { stdenvNoCC, lib, fetchFromGitHub, makeWrapper, grub2_efi, grub2, dosfstools, dialog, ntfs3g, p7zip, runCommand }:
 
-let mkwin =
 stdenvNoCC.mkDerivation rec {
   pname = "mkwin";
   version = "0.1.9";
@@ -18,6 +17,7 @@ stdenvNoCC.mkDerivation rec {
 
   dontConfigure = true;
   dontBuild = true;
+  doInstallCheck = true;
 
   installPhase = ''
     make PREFIX=$out install
@@ -31,12 +31,7 @@ stdenvNoCC.mkDerivation rec {
       --prefix PATH : ${dosfstools}/bin:${dialog}/bin:${ntfs3g}/bin:${p7zip}/bin
   '';
 
-  passthru.tests = {
-    # test to make sure executable runs
-    help = runCommand "${mkwin.name}-help-test" {} ''
-      ${mkwin}/bin/mkwin --help >$out
-    '';
-  };
+  installCheckPhase = "$out/bin/mkwin --help";
 
   meta = with lib; {
     description = "A shell script to create a Windows installation USB from ISO";
@@ -46,4 +41,3 @@ stdenvNoCC.mkDerivation rec {
     platforms = [ "x86_64-linux" "i686-linux" "aarch64-linux" "armv7l-linux" ];
   };
 }
-; in mkwin

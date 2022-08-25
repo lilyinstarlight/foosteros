@@ -32,5 +32,6 @@ rustPlatform.buildRustPackage rec {
     homepage = "https://github.com/rtsuk/crank";
     maintainers = with maintainers; [ lilyinstarlight ];
     platforms = platforms.linux;
+    dependsUnfree = true;
   };
 }

@@ -1,6 +1,5 @@
 { stdenvNoCC, lib, wrapPython, fetchFromGitHub, httpx, runCommand }:
 
-let furi =
 stdenvNoCC.mkDerivation rec {
   pname = "furi";
   version = "0.1.0";
@@ -19,17 +18,13 @@ stdenvNoCC.mkDerivation rec {
   nativeBuildInputs = [ wrapPython ];
 
   dontBuild = true;
+  doInstallCheck = true;
 
   installPhase = "install -D util/furi $out/bin/furi";
 
   postFixup = "wrapPythonPrograms";
 
-  passthru.tests = {
-    # test to make sure executable runs
-    help = runCommand "${furi.name}-help-test" {} ''
-      ${furi}/bin/furi --help >$out
-    '';
-  };
+  installCheckPhase = "$out/bin/furi --help";
 
   meta = with lib; {
     description = "Command line utility for FoosterNET Redirect";
@@ -38,4 +33,3 @@ stdenvNoCC.mkDerivation rec {
     maintainers = with maintainers; [ lilyinstarlight ];
   };
 }
-; in furi

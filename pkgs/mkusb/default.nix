@@ -1,6 +1,5 @@
 { stdenvNoCC, lib, fetchFromGitHub, makeWrapper, grub2_efi, grub2, dosfstools, dialog, syslinux, runCommand }:
 
-let mkusb =
 stdenvNoCC.mkDerivation rec {
   pname = "mkusb";
   version = "0.3.1";
@@ -18,6 +17,7 @@ stdenvNoCC.mkDerivation rec {
 
   dontConfigure = true;
   dontBuild = true;
+  doInstallCheck = true;
 
   installPhase = ''
     make PREFIX=$out install
@@ -32,19 +32,13 @@ stdenvNoCC.mkDerivation rec {
       --prefix PATH : ${dosfstools}/bin:${dialog}/bin
   '';
 
-  passthru.tests = {
-    # test to make sure executable runs
-    help = runCommand "${mkusb.name}-help-test" {} ''
-      ${mkusb}/bin/mkusb --help >$out
-    '';
-  };
+  installCheckPhase = "$out/bin/mkusb --help";
 
   meta = with lib; {
     description = "A shell script to create ISO multiboot USB flash drives that support both legacy and EFI boot";
     homepage = "https://github.com/lilyinstarlight/mkusb";
     license = licenses.mit;
     maintainers = with maintainers; [ lilyinstarlight ];
-    platforms = [ "x86_64-linux" "i686-linux" ];
+    platforms = [ "x86_64-linux" "i686-linux" "aarch64-linux" ];
   };
 }
-; in mkusb
