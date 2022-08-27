@@ -32,7 +32,7 @@ let
   systemdBootBuilder = pkgs.substituteAll {
     name = "systemd-boot-builder.py";
 
-    src = "${modulesPath}/system/boot/loader/systemd-boot/systemd-boot-builder.py";
+    src = /${modulesPath}/system/boot/loader/systemd-boot/systemd-boot-builder.py;
 
     isExecutable = true;
 
