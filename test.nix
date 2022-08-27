@@ -1,14 +1,18 @@
 { system ? builtins.currentSystem, ... }:
 
-(import (
-    let
-      lock = builtins.fromJSON (builtins.readFile ./flake.lock);
-    in fetchTarball {
-      url = "https://github.com/edolstra/flake-compat/archive/${lock.nodes.flake-compat.locked.rev}.tar.gz";
-      sha256 = lock.nodes.flake-compat.locked.narHash;
+let
+  self = (import (
+      let
+        lock = builtins.fromJSON (builtins.readFile ./flake.lock);
+      in fetchTarball {
+        url = "https://github.com/edolstra/flake-compat/archive/${lock.nodes.flake-compat.locked.rev}.tar.gz";
+        sha256 = lock.nodes.flake-compat.locked.narHash;
+      }
+    )
+    {
+      src =  ./.;
     }
-  )
-  {
-    src =  ./.;
-  }
-).defaultNix.checks.${system}
+  ).defaultNix;
+in
+
+self.checks.${system}

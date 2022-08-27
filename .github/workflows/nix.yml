@@ -38,8 +38,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: cachix/install-nix-action@v17
-        with:
-          nix_path: nixpkgs=channel:nixos-unstable
 
       - uses: cachix/cachix-action@v10
         with:
@@ -50,9 +48,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Run nix-build --show-trace -E ...
-        run: |
-          nix-build --show-trace -E 'with (import <nixpkgs> {}).lib; unique (filter (drv: !drv.meta.unsupported && !drv.meta.unfree && (drv.meta ? dependsUnfree -> !drv.meta.dependsUnfree)) (collect (drv: isDerivation drv) (import ./. {})))'
+      - run: nix-build --show-trace -A default
 
       - run: nix-build --show-trace --no-out-link test.nix
 
