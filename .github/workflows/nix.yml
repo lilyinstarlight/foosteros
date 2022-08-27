@@ -50,7 +50,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: nix-build --show-trace -E ...
+      - name: Run nix-build --show-trace -E ...
         run: |
           nix-build --show-trace -E 'with (import <nixpkgs> {}).lib; unique (filter (drv: !drv.meta.unsupported && !drv.meta.unfree && (drv.meta ? dependsUnfree -> !drv.meta.dependsUnfree)) (collect (drv: isDerivation drv) (import ./. {})))'
 
