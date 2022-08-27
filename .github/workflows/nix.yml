@@ -48,7 +48,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - run: nix-build --show-trace
+      - run: nix-build --show-trace -E 'with (import <nixpkgs> {}).lib; unique (filter (drv: !drv.meta.unsupported && !drv.meta.unfree && (drv.meta ? dependsUnfree -> !drv.meta.dependsUnfree)) (collect (drv: isDerivation drv) (import ./. {})))'
 
       - run: nix-build --show-trace --no-out-link test.nix
 
