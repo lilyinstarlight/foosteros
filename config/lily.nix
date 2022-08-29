@@ -27,7 +27,7 @@
       extraConfig = {
         init.defaultBranch = "main";
         pull.ff = "only";
-        # TODO: remove when nix-community/home-manager#xxxx is merged
+        # TODO: remove when nix-community/home-manager#3190 is merged
         tag.gpgSign = true;
       };
       aliases = {
