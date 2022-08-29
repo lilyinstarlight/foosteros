@@ -15,4 +15,4 @@ let
   ).defaultNix;
 in
 
-self.legacyPackages.${system} // { inherit (self.packages.${system}) default; }
+self.legacyPackages.${system} // self.packages.${system}
