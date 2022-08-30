@@ -230,31 +230,6 @@ in
           save_filename_format=screenshot-%Y%m%d-%H%M%S.png
           show_panel=true
         '';
-
-        "swaywsr/config.toml".text = ''
-          [icons]
-          "org.qutebrowser.qutebrowser" = "#"
-          "Firefox" = "#"
-          "Chromium-browser" = "#"
-          "Alacritty" = ">"
-          "Element" = "@"
-          "discord" = "@"
-
-          [aliases]
-          "org.qutebrowser.qutebrowser" = "web"
-          "Firefox" = "firefox"
-          "Chromium-browser" = "chromium"
-          "Alacritty" = "term"
-          "Element" = "chat"
-          "discord" = "discord"
-
-          [general]
-          default_icon = "*"
-          separator = " | "
-
-          [options]
-          remove_duplicates = true
-        '';
       };
     })
   ];
@@ -507,7 +482,6 @@ in
 
       ### desktop services
       exec_always ${pkgs.fooster-backgrounds}/bin/setbg
-      exec_always ${pkgs.swaywsr}/bin/swaywsr -c "$HOME"/.config/swaywsr/config.toml
 
       ### desktop environment
       seat seat0 xcursor_theme "Bibata-Modern-Classic"
@@ -678,6 +652,34 @@ in
       margin=12
       progress-color=over #333333
       text-color=#f29bd4
+    '';
+  };
+
+  programs.swaywsr = {
+    enable = true;
+    extraConfig = ''
+      [icons]
+      "org.qutebrowser.qutebrowser" = "#"
+      "Firefox" = "#"
+      "Chromium-browser" = "#"
+      "Alacritty" = ">"
+      "Element" = "@"
+      "discord" = "@"
+
+      [aliases]
+      "org.qutebrowser.qutebrowser" = "web"
+      "Firefox" = "firefox"
+      "Chromium-browser" = "chromium"
+      "Alacritty" = "term"
+      "Element" = "chat"
+      "discord" = "discord"
+
+      [general]
+      default_icon = "*"
+      separator = " | "
+
+      [options]
+      remove_duplicates = true
     '';
   };
 }
