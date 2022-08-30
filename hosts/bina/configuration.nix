@@ -530,7 +530,7 @@
     };
   };
 
-  services.swaynag-battery = {
+  programs.swaynag-battery = {
     enable = true;
     powerSupply = "BAT0";
   };

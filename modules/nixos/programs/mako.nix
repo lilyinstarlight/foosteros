@@ -61,32 +61,32 @@ in
       description = "Wayland notification daemon";
       partOf = [ "graphical-session.target" ];
 
+      script = ''
+        makoconfig=""
+
+        if [ -z "$XDG_CONFIG_HOME" ]; then
+          XDG_CONFIG_HOME="$HOME/.config"
+        fi
+
+        if [ -f "$HOME"/.mako/config ]; then
+          makoconfig="$HOME/.mako/config"
+        elif [ -f "$XDG_CONFIG_HOME"/mako/config ]; then
+          makoconfig="$XDG_CONFIG_HOME/mako/config"
+        elif [ -f /etc/xdg/mako/config ]; then
+          makoconfig="/etc/xdg/mako/config"
+        elif [ -f /etc/mako/config ]; then
+          makoconfig="/etc/mako/config"
+        fi
+
+        if [ -n "$makoconfig" ]; then
+          exec ${cfg.package}/bin/mako --config "$makoconfig"
+        else
+          exec ${cfg.package}/bin/mako
+        fi
+      '';
+
       serviceConfig = {
         Type = "dbus";
-        ExecStart = pkgs.writeScript "mako" ''
-          #!/bin/sh
-          makoconfig=""
-
-          if [ -z "$XDG_CONFIG_HOME" ]; then
-            XDG_CONFIG_HOME="$HOME/.config"
-          fi
-
-          if [ -f "$HOME"/.mako/config ]; then
-            makoconfig="$HOME/.mako/config"
-          elif [ -f "$XDG_CONFIG_HOME"/mako/config ]; then
-            makoconfig="$XDG_CONFIG_HOME/mako/config"
-          elif [ -f /etc/xdg/mako/config ]; then
-            makoconfig="/etc/xdg/mako/config"
-          elif [ -f /etc/mako/config ]; then
-            makoconfig="/etc/mako/config"
-          fi
-
-          if [ -n "$makoconfig" ]; then
-            exec ${cfg.package}/bin/mako --config "$makoconfig"
-          else
-            exec ${cfg.package}/bin/mako
-          fi
-        '';
         BusName = "org.freedesktop.Notifications";
       };
     } // optionalAttrs cfg.enable {

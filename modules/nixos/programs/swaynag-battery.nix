@@ -3,11 +3,11 @@
 with lib;
 
 let
-  cfg = config.services.swaynag-battery;
+  cfg = config.programs.swaynag-battery;
 in
 
 {
-  options.services.swaynag-battery = {
+  options.programs.swaynag-battery = {
     enable = mkOption {
       type = types.bool;
       default = false;
@@ -24,7 +24,7 @@ in
 
         The service must be manually started for each user with
         `systemctl --user start swaynag-battery` or globally through
-        {option}`services.swaynag-battery.enable`.
+        {option}`programs.swaynag-battery.enable`.
       '';
     };
 

@@ -61,33 +61,31 @@ in
       description = "Wayland notification daemon";
       partOf = [ "graphical-session.target" ];
 
-      serviceConfig = {
-        Type = "simple";
-        ExecStart = pkgs.writeScript "kanshi" ''
-          #!/bin/sh
-          kanshiconfig=""
+      script = ''
+        kanshiconfig=""
 
-          if [ -z "$XDG_CONFIG_HOME" ]; then
-            XDG_CONFIG_HOME="$HOME/.config"
-          fi
+        if [ -z "$XDG_CONFIG_HOME" ]; then
+          XDG_CONFIG_HOME="$HOME/.config"
+        fi
 
-          if [ -f "$HOME"/.kanshi/config ]; then
-            kanshiconfig="$HOME/.kanshi/config"
-          elif [ -f "$XDG_CONFIG_HOME"/kanshi/config ]; then
-            kanshiconfig="$XDG_CONFIG_HOME/kanshi/config"
-          elif [ -f /etc/xdg/kanshi/config ]; then
-            kanshiconfig="/etc/xdg/kanshi/config"
-          elif [ -f /etc/kanshi/config ]; then
-            kanshiconfig="/etc/kanshi/config"
-          fi
+        if [ -f "$HOME"/.kanshi/config ]; then
+          kanshiconfig="$HOME/.kanshi/config"
+        elif [ -f "$XDG_CONFIG_HOME"/kanshi/config ]; then
+          kanshiconfig="$XDG_CONFIG_HOME/kanshi/config"
+        elif [ -f /etc/xdg/kanshi/config ]; then
+          kanshiconfig="/etc/xdg/kanshi/config"
+        elif [ -f /etc/kanshi/config ]; then
+          kanshiconfig="/etc/kanshi/config"
+        fi
 
-          if [ -n "$kanshiconfig" ]; then
-            exec ${cfg.package}/bin/kanshi --config "$kanshiconfig"
-          else
-            exec ${cfg.package}/bin/kanshi
-          fi
-        '';
-      };
+        if [ -n "$kanshiconfig" ]; then
+          exec ${cfg.package}/bin/kanshi --config "$kanshiconfig"
+        else
+          exec ${cfg.package}/bin/kanshi
+        fi
+      '';
+
+      serviceConfig.Type = "simple";
     } // optionalAttrs cfg.enable {
       wantedBy = cfg.targets;
     };
