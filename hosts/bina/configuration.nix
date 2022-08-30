@@ -6,16 +6,17 @@
 
     ../../config/restic.nix
 
-    ../../config/alien.nix
-    ../../config/pki.nix
-    ../../config/lsp.nix
-    ../../config/intelgfx.nix
-    ../../config/sway.nix
-    ../../config/fcitx5.nix
-    ../../config/bluetooth.nix
-    ../../config/podman.nix
-    ../../config/libvirt.nix
     ../../config/adb.nix
+    ../../config/alien.nix
+    ../../config/bluetooth.nix
+    ../../config/fcitx5.nix
+    ../../config/fwupd.nix
+    ../../config/intelgfx.nix
+    ../../config/libvirt.nix
+    ../../config/lsp.nix
+    ../../config/pki.nix
+    ../../config/podman.nix
+    ../../config/sway.nix
 
     ../../config/lily.nix
   ];
