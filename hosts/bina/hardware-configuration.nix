@@ -1,4 +1,4 @@
-{ config, lib, pkgs, modulesPath, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "sd_mod" "rtsx_pci_sdmmc" ];
@@ -39,20 +39,21 @@
     };
 
     script = ''
-      mkdir -p /mnt-root
-      mount -t btrfs -o rw,subvol=/ /dev/disk/by-label/root /mnt-root
+      mkdir -p /run/rootvol
+      mount -t btrfs -o rw,subvol=/ /dev/disk/by-label/root /run/rootvol
 
-      num="$(printf '%s\n' "$(find /mnt-root -mindepth 1 -maxdepth 1 -type d -name 'root-*')" | sed -e 's#^\s*$#0#' -e 's#^/mnt-root/root-\(.*\)$#\1#' | sort -n | tail -n 1 | xargs -I '{}' expr 1 + '{}')"
+      num="$(printf '%s\n' "$(find /run/rootvol -mindepth 1 -maxdepth 1 -type d -name 'root-*')" | sed -e 's#^\s*$#0#' -e 's#^/run/rootvol/root-\(.*\)$#\1#' | sort -n | tail -n 1 | xargs -I '{}' expr 1 + '{}')"
 
-      mv /mnt-root/root /mnt-root/root-"$num"
-      btrfs property set /mnt-root/root-"$num" ro true
+      mv /run/rootvol/root /run/rootvol/root-"$num"
+      btrfs property set /run/rootvol/root-"$num" ro true
 
-      btrfs subvolume create /mnt-root/root
-      btrfs subvolume set-default /mnt-root/root
+      btrfs subvolume create /run/rootvol/root
+      btrfs subvolume set-default /run/rootvol/root
 
-      find /mnt-root -mindepth 1 -maxdepth 1 -type d -name 'root-*' | sed -e 's#^/mnt-root/root-\(.*\)$#\1#' | sort -n | head -n -30 | xargs -I '{}' sh -c "btrfs property set '/mnt-root/root-{}' ro false && btrfs subvolume list -o '/mnt-root/root-{}' | cut -d' ' -f9- | xargs -I '[]' btrfs subvolume delete '/mnt-root/[]' && btrfs subvolume delete '/mnt-root/root-{}'"
+      find /run/rootvol -mindepth 1 -maxdepth 1 -type d -name 'root-*' | sed -e 's#^/run/rootvol/root-\(.*\)$#\1#' | sort -n | head -n -30 | xargs -I '{}' sh -c "btrfs property set '/run/rootvol/root-{}' ro false && btrfs subvolume list -o '/run/rootvol/root-{}' | cut -d' ' -f9- | xargs -I '[]' btrfs subvolume delete '/run/rootvol/[]' && btrfs subvolume delete '/run/rootvol/root-{}'"
 
-      umount /mnt-root
+      umount /run/rootvol
+      rmdir /run/rootvol
     '';
   };
 
