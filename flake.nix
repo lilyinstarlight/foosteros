@@ -48,7 +48,7 @@
 
   outputs = { self, nixpkgs, home-manager, sops-nix, impermanence, nix-index-db, nix-alien, envfs, fenix, ... }:
     let
-      supportedSystems = with nixpkgs.lib; (intersectLists (platforms.x86_64 ++ platforms.aarch64 ++ platforms.i686) platforms.linux) ++ (intersectLists (platforms.x86_64 ++ platforms.aarch64) platforms.darwin);
+      supportedSystems = with nixpkgs.lib; intersectLists (platforms.x86_64 ++ platforms.aarch64) (platforms.linux ++ platforms.darwin);
 
       forAllSystems = f: nixpkgs.lib.genAttrs supportedSystems (system: f system);
     in
