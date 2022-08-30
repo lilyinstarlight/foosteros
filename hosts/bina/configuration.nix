@@ -277,7 +277,7 @@
     })) azure-cli
     hyfetch
     texlive.combined.scheme-full
-    gnumake llvmPackages_latest.clang llvmPackages_latest.bintools llvmPackages_latest.lldb
+    gnumake llvmPackages_latest.clang llvmPackages_latest.lldb
   ] ++ (lib.optionals config.nixpkgs.config.allowUnfree [
     pridecat
     discord slack teams
