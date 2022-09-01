@@ -38,7 +38,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    xdg.configFile."mpDris2/mpDris2.conf".text = toIni mpdris2Conf;
+    xdg.configFile."mpDris2/mpDris2.conf".text = mkOverride 75 (toIni mpdris2Conf);  # 50 is force prio and 100 is default prio
 
     systemd.user.services.mpdris2 = {
       Service.Type = mkOverride 75 "dbus";  # 50 is force prio and 100 is default prio
