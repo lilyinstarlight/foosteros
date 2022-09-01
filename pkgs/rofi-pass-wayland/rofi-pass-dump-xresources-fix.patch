@@ -1,0 +1,33 @@
+diff --git a/rofi-pass b/rofi-pass
+index 7a3011e..a889eb9 100755
+--- a/rofi-pass
++++ b/rofi-pass
+@@ -325,7 +325,7 @@ generatePass () {
+ 		symbols="-n";
+ 	fi
+ 
+-	HELP="<span color='$help_color'>Enter Number or hit Enter to use default length</span>"
++	HELP="<span$help_color_attribute>Enter Number or hit Enter to use default length</span>"
+ 	length=$(printf '%s' "" | _rofi -dmenu -mesg "${HELP}" -p "Password length? (Default: ${password_length}) > ")
+ 	length_exit=$?
+ 
+@@ -683,7 +683,7 @@ manageEntry () {
+ 		PASSWORD_STORE_DIR="${root}" pass cp "$selected_password" "${group}/${new_name}"
+ 		mainMenu
+ 	elif [[ "$1" == "delete" ]]; then
+-		HELP="<span color='$help_color'>Selected entry: ${selected_password}</span>"
++		HELP="<span$help_color_attribute>Selected entry: ${selected_password}</span>"
+ 		ask_content=("Yes"
+ 			"No"
+ 		)
+@@ -841,7 +841,9 @@ main () {
+ 
+ 	# set help color
+ 	if [[ $help_color == "" ]]; then
+-		help_color=$(rofi -dump-xresources | grep 'rofi.color.normal' | gawk -F ',' '/,/{gsub(/ /, "", $2); print $2}')
++		help_color_attribute=""
++	else
++		help_color_attribute=" color='$help_color'"
+ 	fi
+ 
+ 	# check for BROWSER variable, use xdg-open as fallback

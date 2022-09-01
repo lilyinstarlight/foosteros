@@ -1,0 +1,245 @@
+diff --git a/README.md b/README.md
+index fec1ffc..6581dfc 100644
+--- a/README.md
++++ b/README.md
+@@ -71,13 +71,29 @@ in a convenient way using [rofi](https://github.com/DaveDavenport/rofi).
+ * The field names for `user`, `url` and `autotype` are configurable
+ * Bookmarks mode (open stored URLs in browser, default: Alt+x)
+ * Share common used passwords between several entries (with different URLs, usernames etc)
++* Change backend with environment variable `ROFI_PASS_BACKEND`, valid
++  backends are `xdotool` or `wtype`. For example use `rofi-pass` with
++  [wtype](https://github.com/atx/wtype):
+ 
++  ```
++  ROFI_PASS_BACKEND=wtype rofi-pass
++  ```
++
++  or
++
++  ```
++  ROFI_PASS_BACKEND=wtype ROFI_PASS_CLIPBOARD_BACKEND=wl-clipboard rofi-pass
++  ```
++
++  Alternative change the backend in the config file using
++  `backend=wtype` or `clibpoard_backend=wl-clipboard`.
+ ## Requirements
+ 
+ * [pass](http://www.passwordstore.org/)
+ * sed
+ * [rofi](https://github.com/DaveDavenport/rofi)
+-* xdotool
++* xdotool or wtype
++* xclip or wl-clipboard
+ * gawk
+ * bash 4.x
+ * find
+diff --git a/config.example b/config.example
+index ef045dc..2978ff9 100644
+--- a/config.example
++++ b/config.example
+@@ -122,3 +122,13 @@ type_menu="Alt+t"
+ help="Alt+h"
+ switch="Alt+x"
+ insert_pass="Alt+n"
++
++# Change the clipboard backend for rofi-pass, valid backends are:
++# xclip
++# wl-clipboard
++#clibpoard_backend=xclip
++
++# Change the backend for rofi-pass, valid backends are:
++# xdotool
++# wtype
++#backend=xdotool
+diff --git a/rofi-pass b/rofi-pass
+index a889eb9..fb28f1d 100755
+--- a/rofi-pass
++++ b/rofi-pass
+@@ -17,23 +17,6 @@ _image_viewer () {
+ 	feh -
+ }
+ 
+-_clip_in_primary() {
+-	xclip
+-}
+-
+-_clip_in_clipboard() {
+-	xclip -selection clipboard
+-}
+-
+-_clip_out_primary() {
+-	xclip -o
+-}
+-
+-_clip_out_clipboard() {
+-	xclip --selection clipboard -o
+-}
+-
+-
+ config_dir=${XDG_CONFIG_HOME:-$HOME/.config}
+ cache_dir=${XDG_CACHE_HOME:-$HOME/.cache}
+ 
+@@ -76,10 +59,81 @@ insert_pass="Alt+n"
+ qrcode="Alt+q"
+ previous_root="Shift+Left"
+ next_root="Shift+Right"
++clipboard_backend=${ROFI_PASS_CLIPBOARD_BACKEND:-xclip}
++backend=${ROFI_PASS_BACKEND:-xdotool}
++
++case "$clipboard_backend" in
++    "xclip");;
++    "wl-clipboard");;
++    *)
++        >&2 echo "Invalid clipboard backend '$clipboard_backend', falling back to xclip"
++        clipboard_backend=xclip
++        ;;
++esac
++
++case "$backend" in
++    "xdotool");;
++    "wtype");;
++    *)
++        >&2 echo "Invalid backend '$backend', falling back to xdotool"
++        backend=xdotool
++        ;;
++esac
+ 
+ # Safe permissions
+ umask 077
+ 
++# Backends for clipboard manipulation
++_clip_in_primary_wl-clipboard() {
++	wl-copy -p
++}
++
++_clip_in_clipboard_wl-clipboard() {
++	wl-copy
++}
++
++_clip_out_primary_wl-clipboard() {
++	wl-paste -p
++}
++
++_clip_out_clipboard_wl-clipboard() {
++	wl-paste
++}
++
++_clip_in_primary_xclip() {
++	xclip
++}
++
++_clip_in_clipboard_xclip() {
++	xclip -selection clipboard
++}
++
++_clip_out_primary_xclip() {
++	xclip -o
++}
++
++_clip_out_clipboard_xclip() {
++	xclip --selection clipboard -o
++}
++
++# Backends for typing what's in stdin
++_do_type_xdotool() {
++	xdotool type --delay ${xdotool_delay} --clearmodifiers --file -
++}
++
++_do_type_wtype() {
++	wtype -
++}
++
++# Backends for pressing the key specified by the first argument ($1)
++_do_press_key_xdotool() {
++	xdotool key "$1"
++}
++
++_do_press_key_wtype() {
++	wtype -P "$1" -p "$1"
++}
++
+ has_qrencode() {
+ 	command -v qrencode >/dev/null 2>&1
+ }
+@@ -118,19 +172,19 @@ autopass () {
+ 	printf '%s\n' "${root}: $selected_password" > "$cache_dir/rofi-pass/last_used"
+ 	for word in ${stuff["$AUTOTYPE_field"]}; do
+ 		case "$word" in
+-			":tab") xdotool key Tab;;
+-			":space") xdotool key space;;
++			":tab") ${do_press_key} Tab;;
++			":space") ${do_press_key} space;;
+ 			":delay") sleep "${delay}";;
+-			":enter") xdotool key Return;;
+-			":otp") printf '%s' "$(generateOTP)" | xdotool type --delay ${xdotool_delay} --clearmodifiers --file -;;
+-			"pass") printf '%s' "${password}" | xdotool type --delay ${xdotool_delay} --clearmodifiers --file -;;
+-			"path") printf '%s' "${selected_password}" | rev | cut -d'/' -f1 | rev | xdotool type --clearmodifiers --file -;;
+-			*) printf '%s' "${stuff[${word}]}" | xdotool type --delay ${xdotool_delay} --clearmodifiers --file -;;
++			":enter") ${do_press_key} Return;;
++			":otp") printf '%s' "$(generateOTP)" | ${do_type};;
++			"pass") printf '%s' "${password}" | ${do_type};;
++			"path") printf '%s' "${selected_password}" | rev | cut -d'/' -f1 | rev | ${do_type};;
++			*) printf '%s' "${stuff[${word}]}" | ${do_type};;
+ 		esac
+ 	done
+ 
+ 	if [[ ${auto_enter} == "true" ]]; then
+-		xdotool key Return
++		${do_press_key} Return
+ 	fi
+ 
+ 	xset r "$x_repeat_enabled"
+@@ -177,7 +231,7 @@ typeUser () {
+ 	x_repeat_enabled=$(xset q | awk '/auto repeat:/ {print $3}')
+ 	xset r off
+ 
+-	printf '%s' "${stuff[${USERNAME_field}]}" | xdotool type --delay ${xdotool_delay} --clearmodifiers --file -
++	printf '%s' "${stuff[${USERNAME_field}]}" | ${do_type}
+ 
+ 	xset r "$x_repeat_enabled"
+ 	unset x_repeat_enabled
+@@ -191,7 +245,7 @@ typePass () {
+ 	x_repeat_enabled=$(xset q | awk '/auto repeat:/ {print $3}')
+ 	xset r off
+ 
+-	printf '%s' "${password}" | xdotool type --delay ${xdotool_delay} --clearmodifiers --file -
++	printf '%s' "${password}" | ${do_type}
+ 
+ 	if [[ $notify == "true" ]]; then
+ 		if [[ "${stuff[notify]}" == "false" ]]; then
+@@ -224,7 +278,7 @@ typeField () {
+ 		*) to_type="${stuff[${typefield}]}" ;;
+ 	esac
+ 
+-	printf '%s' "$to_type" | xdotool type --delay ${xdotool_delay} --clearmodifiers --file -
++	printf '%s' "$to_type" | ${do_type}
+ 
+ 	xset r "$x_repeat_enabled"
+ 	unset x_repeat_enabled
+@@ -834,10 +888,22 @@ main () {
+ 		mkdir -p "$cache_dir/rofi-pass"
+ 	fi
+ 
+-	# fix keyboard layout if enabled in config
+-	if [[ $fix_layout == "true" ]]; then
+-		layout_cmd
+-	fi
++	# set backends
++	_clip_in_primary=_clip_in_primary_${clipboard_backend}
++	_clip_in_clipboard=_clip_in_clipboard_${clipboard_backend}
++	_clip_out_primary=_clip_out_primary_${clipboard_backend}
++	_clip_out_clipboard=_clip_out_clipboard_${clipboard_backend}
++
++	do_type=_do_type_${backend}
++	do_press_key=_do_press_key_${backend}
++
++        # Only valid for the xdotool backend
++        if [[ $backend == "xdotool" ]]; then
++		# fix keyboard layout if enabled in config
++		if [[ $fix_layout == "true" ]]; then
++			layout_cmd
++		fi
++        fi
+ 
+ 	# set help color
+ 	if [[ $help_color == "" ]]; then

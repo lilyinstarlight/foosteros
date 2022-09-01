@@ -1,7 +1,21 @@
-{ lib, rofi-pass, rofi-wayland, pass-wayland, coreutils, util-linux, gnugrep, libnotify, pwgen, findutils, gawk, gnused, wl-clipboard, wtype, runCommand }:
+{ lib, fetchFromGitHub, rofi-pass, rofi-wayland, pass-wayland, coreutils, util-linux, gnugrep, libnotify, pwgen, findutils, gawk, gnused, wl-clipboard, wtype }:
 
 rofi-pass.overrideAttrs (attrs: rec {
-  version = attrs.version + "-wayland";
+  version = "unstable-2021-04-05-wayland";
+
+  src = fetchFromGitHub {
+    owner = "carnager";
+    repo = "rofi-pass";
+    rev = "629ad8d73a72d90f531ab6ebbdf78db710e25f2f";
+    hash = "sha256-P0ESwjQEvJXFfoi3rjF/99dUbxiAhq+4HxXTMQapSW4=";
+  };
+
+  patches = [
+    # fix error with latest rofi
+    ./rofi-pass-dump-xresources-fix.patch
+    # allow using wayland tools
+    ./rofi-pass-wayland-tools.patch
+  ] ++ (if attrs ? patches then attrs.patches else []);
 
   wrapperPath = with lib; makeBinPath [
     coreutils
@@ -21,25 +35,12 @@ rofi-pass.overrideAttrs (attrs: rec {
   doInstallCheck = true;
 
   fixupPhase = ''
-    substituteInPlace $out/bin/rofi-pass \
-      --replace 'xclip --selection clipboard -o' 'wl-paste' \
-      --replace 'xclip -selection clipboard -o' 'wl-paste' \
-      --replace 'xclip --selection clipboard' 'wl-copy' \
-      --replace 'xclip -selection clipboard' 'wl-copy' \
-      --replace 'xclip -o' 'wl-paste -p' \
-      --replace 'xclip' 'wl-copy -p' \
-      --replace 'xdotool key' 'wtype -k' \
-      --replace 'xdotool type' 'wtype' \
-      --replace '--delay ''${xdotool_delay}' "" \
-      --replace '--clearmodifiers --file -' '-' \
-      --replace 'x_repeat_enabled=' '#x_repeat_enabled=' \
-      --replace 'xset r' '#xset r' \
-      --replace 'unset x_repeat_enabled' '#unset x_repeat_enabled'
-
     patchShebangs $out/bin
 
     wrapProgram $out/bin/rofi-pass \
-      --prefix PATH : "${wrapperPath}"
+      --prefix PATH : "${wrapperPath}" \
+      --set ROFI_PASS_BACKEND wtype \
+      --set ROFI_PASS_CLIPBOARD_BACKEND wl-clipboard
   '';
 
   installCheckPhase = "$out/bin/rofi-pass --help";
@@ -49,3 +50,4 @@ rofi-pass.overrideAttrs (attrs: rec {
     platforms = platforms.linux;
   };
 })
+
