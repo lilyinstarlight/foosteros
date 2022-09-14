@@ -8,5 +8,6 @@
     freefont_ttf
     gyre-fonts
     liberation_ttf
+    roboto comfortaa
   ];
 }
