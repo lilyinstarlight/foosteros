@@ -25,6 +25,10 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
 
+      - name: Configure NIX_PATH
+        run: |
+          echo "NIX_PATH=https://github.com/NixOS/nixpkgs/archive/$(jq -r '.nodes.nixpkgs.locked.rev' flake.lock).tar.gz" >> $GITHUB_ENV
+
       - run: pkgs/vim-plugins/update.py
       - name: Push changes
         run: |
