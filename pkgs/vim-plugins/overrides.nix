@@ -6,8 +6,8 @@ self: super: {
   });
 
   vim-resolve = super.vim-resolve.overrideAttrs (attrs: {
-    preFixup = ''
-      ${gnused}/bin/sed -i -e '1i import sys\nsys.path.append("${python3.pkgs.websocket-client}/${python3.sitePackages}")' $out/rplugin/python3/resolveplugin.py
+    postPatch = ''
+      ${gnused}/bin/sed -i -e '1i import sys\nsys.path.append("${python3.pkgs.websocket-client}/${python3.sitePackages}")' rplugin/python3/resolveplugin.py
     '';
   });
 }
