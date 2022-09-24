@@ -475,8 +475,7 @@ class Editor:
 class CleanEnvironment(object):
     def __enter__(self) -> None:
         self.old_environ = os.environ.copy()
-        local_pkgs = str(Path(__file__).parent.parent)
-        os.environ["NIX_PATH"] = f"localpkgs={local_pkgs}"
+        os.environ["NIX_PATH"] = ""
         self.empty_config = NamedTemporaryFile()
         self.empty_config.write(b"{}")
         self.empty_config.flush()

@@ -1,16 +1,21 @@
-{ pkgs ? import <nixpkgs> {} }:
+{ system ? builtins.currentSystem, ... }:
 
 let
-  sops-nix =
-    let
-      lock = builtins.fromJSON (builtins.readFile ../flake.lock);
-    in fetchTarball {
-      url = "https://github.com/Mic92/sops-nix/archive/${lock.nodes.sops-nix.locked.rev}.tar.gz";
-      sha256 = lock.nodes.sops-nix.locked.narHash;
-    };
+  self = (import (
+      let
+        lock = builtins.fromJSON (builtins.readFile ../flake.lock);
+      in fetchTarball {
+        url = "https://github.com/edolstra/flake-compat/archive/${lock.nodes.flake-compat.locked.rev}.tar.gz";
+        sha256 = lock.nodes.flake-compat.locked.narHash;
+      }
+    )
+    {
+      src =  ../.;
+    }
+  ).defaultNix;
 in
 
-with pkgs;
+with self.inputs.nixpkgs.legacyPackages.${system};
 
 mkShell {
   sopsPGPKeyDirs = [
@@ -18,6 +23,6 @@ mkShell {
     ../keys/users
   ];
   nativeBuildInputs = [
-    (pkgs.callPackage sops-nix {}).sops-import-keys-hook
+    self.inputs.sops-nix.packages.${system}.sops-import-keys-hook
   ];
 }

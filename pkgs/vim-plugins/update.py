@@ -59,7 +59,7 @@ sys.path.insert(0, os.path.join(ROOT.parent.parent, "scripts"))
 import pluginupdate
 from pluginupdate import run_nix_expr, PluginDesc
 
-GET_PLUGINS = f"""(with import <localpkgs> {{}};
+GET_PLUGINS = f"""(with import {ROOT.parent.parent} {{}};
 
 with import (
     let
@@ -87,7 +87,7 @@ let
 in lib.filterAttrs (n: v: v != null) checksums)"""
 
 GET_PLUGINS_LUA = f"""
-with import <localpkgs> {{}};
+with import {ROOT.parent.parent} {{}};
 
 with import (
     let
