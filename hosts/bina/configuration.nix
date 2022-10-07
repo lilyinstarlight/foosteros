@@ -87,6 +87,7 @@
         ".config/Microsoft/Microsoft Teams"
         ".config/obs-studio"
         ".config/pipewire"
+        ".config/PrusaSlicer"
         ".config/qutebrowser"
         ".config/rncbc.org"
         ".config/teams"
@@ -265,10 +266,11 @@
     lilypond
     mpv ffmpeg-full
     retroarchFull
+    prusa-slicer
     (wrapOBS {
       plugins = with obs-studio-plugins; [ wlrobs obs-gstreamer obs-move-transition ] ++ (lib.optionals config.nixpkgs.config.allowUnfree [ obs-ndi ]);
     })
-    hledger homebank
+    hledger
     virt-manager podman-compose
     ripgrep-all
     mkusb mkwin
