@@ -29,6 +29,11 @@ let
       Inherits=Papirus-Dark;Bibata-Modern-Classic
     '';
   };
+
+  polkit-sway = pkgs.runCommand "polkit-sway" { preferLocalBuild = true; } ''
+    mkdir -p $out/etc/xdg/autostart/
+    sed -e 's/^OnlyShowIn=.*$/OnlyShowIn=sway;/' ${pkgs.polkit_gnome}/etc/xdg/autostart/polkit-gnome-authentication-agent-1.desktop >$out/etc/xdg/autostart/polkit-sway-authentication-agent-1.desktop
+  '';
 in
 
 {
@@ -629,7 +634,7 @@ in
       pulseaudio brightnessctl playerctl jq glib
       swaybg swaylock swayidle
       kanshi i3status swaywsr mako rofi-wayland alacritty
-      polkit_gnome
+      polkit-sway
       fooster-backgrounds fooster-materia-theme bibata-cursors papirus-icon-theme sway-default-icon-theme
       slurp grim wl-clipboard libnotify sway-contrib.grimshot swappy wf-recorder wl-mirror
       xwayland
