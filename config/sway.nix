@@ -629,6 +629,7 @@ in
       pulseaudio brightnessctl playerctl jq glib
       swaybg swaylock swayidle
       kanshi i3status swaywsr mako rofi-wayland alacritty
+      polkit_gnome
       fooster-backgrounds fooster-materia-theme bibata-cursors papirus-icon-theme sway-default-icon-theme
       slurp grim wl-clipboard libnotify sway-contrib.grimshot swappy wf-recorder wl-mirror
       xwayland
