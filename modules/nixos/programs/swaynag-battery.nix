@@ -67,6 +67,8 @@ in
       description = "Low battery notification";
       partOf = [ "graphical-session.target" ];
 
+      path = [ pkgs.sway ];
+
       serviceConfig = {
         Type = "simple";
         ExecStart = "${cfg.package}/bin/swaynag-battery --threshold ${toString cfg.threshold} --interval ${cfg.interval} --uevent /sys/class/power_supply/${cfg.powerSupply}/uevent";
