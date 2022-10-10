@@ -1,6 +1,23 @@
-{ lib, buildPythonApplication, fetchFromGitHub, click, oscpy, psutil, sonic-pi, ruby, erlang, bash, supercollider-with-sc3-plugins, jack2, runCommand }:
+{ lib, stdenv, fetchFromGitHub, makePythonPath, makeWrapper, python3, click, oscpy, psutil, sonic-pi, ruby, erlang, bash, supercollider-with-sc3-plugins, jack2 }:
 
-buildPythonApplication rec {
+let
+  pythonPath = makePythonPath [
+    # sonic-pi-tool runtime deps
+    click
+    oscpy
+    psutil
+  ];
+
+  binPath = lib.makeBinPath [
+    # sonic-pi runtime deps
+    ruby
+    erlang
+    supercollider-with-sc3-plugins
+    jack2
+  ];
+in
+
+stdenv.mkDerivation rec {
   pname = "sonic-pi-tool";
   version = "unstable-2021-03-07";
 
@@ -12,30 +29,35 @@ buildPythonApplication rec {
     hash = "sha256-HgJSZGjm0Uwu2TTgv/FMTRKLUdT8ILNaiL4wKJ1RyBs=";
   };
 
-  pythonPath = [
-    # sonic-pi-tool runtime deps
-    click
-    oscpy
-    psutil
+  strictDeps = true;
 
-    # sonic-pi runtime deps
-    ruby
-    erlang
-    supercollider-with-sc3-plugins
-    jack2
+  nativeBuildInputs = [
+    makeWrapper
   ];
 
-  dontUseSetuptoolsBuild = true;
-  dontUsePipInstall = true;
-  dontUseSetuptoolsCheck = true;
+  buildInputs = [
+    python3
+  ];
+
+  dontConfigure = true;
+  dontBuild = true;
   doInstallCheck = true;
 
   installPhase = ''
-    mkdir -p "$out/bin"
-    cp sonic-pi-tool.py "$out/bin/sonic-pi-tool"
-    chmod +x "$out/bin/sonic-pi-tool"
+    mkdir -p $out/bin
+    cp sonic-pi-tool.py $out/bin/sonic-pi-tool
+    chmod +x $out/bin/sonic-pi-tool
 
-    substituteInPlace "$out/bin/sonic-pi-tool" --replace 'default_paths = (' 'default_paths = ('"'"'${sonic-pi}/app'"'"', '
+    substituteInPlace $out/bin/sonic-pi-tool \
+      --replace \
+        'default_paths = (' \
+        'default_paths = ('"'"'${sonic-pi}/app'"'"', '
+
+    patchShebangs $out/bin
+
+    wrapProgram $out/bin/sonic-pi-tool \
+      --prefix PYTHONPATH : "${pythonPath}" \
+      --prefix PATH : "${binPath}"
   '';
 
   installCheckPhase = "$out/bin/sonic-pi-tool --help";
