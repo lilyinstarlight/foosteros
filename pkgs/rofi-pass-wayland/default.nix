@@ -34,7 +34,7 @@ rofi-pass.overrideAttrs (attrs: rec {
 
   doInstallCheck = true;
 
-  fixupPhase = ''
+  postInstall = ''
     patchShebangs $out/bin
 
     wrapProgram $out/bin/rofi-pass \

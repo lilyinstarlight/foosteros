@@ -21,10 +21,8 @@ stdenvNoCC.mkDerivation rec {
 
   installPhase = ''
     make PREFIX=$out install
-  '';
 
-  fixupPhase = ''
-    wrapProgram "$out/bin/mkusb" \
+    wrapProgram $out/bin/mkusb \
       --set MKUSB_GRUB grub \
       --set MKUSB_GRUB_EFI ${grub2_efi}/bin/grub-install \
       --set MKUSB_GRUB_PC ${grub2}/bin/grub-install \

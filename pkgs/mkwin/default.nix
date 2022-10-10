@@ -21,10 +21,8 @@ stdenvNoCC.mkDerivation rec {
 
   installPhase = ''
     make PREFIX=$out install
-  '';
 
-  fixupPhase = ''
-    wrapProgram "$out/bin/mkwin" \
+    wrapProgram $out/bin/mkwin \
       --set MKWIN_GRUB grub \
       --set MKWIN_GRUB_EFI ${grub2_efi}/bin/grub-install \
       --set MKWIN_GRUB_PC ${grub2}/bin/grub-install \
