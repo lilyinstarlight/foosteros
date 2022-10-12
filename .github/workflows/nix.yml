@@ -30,9 +30,6 @@ jobs:
 
       - run: nix -vL --show-trace flake check
 
-      - run: nix -vL --show-trace store gc
-        if: ${{ always() }}
-
   stable-impure-build:
     name: Stable Impure Build
     runs-on: ubuntu-latest
@@ -51,9 +48,6 @@ jobs:
       - run: nix-build --show-trace -A default
 
       - run: nix-build --show-trace --no-out-link test.nix
-
-      - run: nix-store --show-trace --gc
-        if: ${{ always() }}
 
   unstable-flake-build:
     name: Unstable Flake Build
@@ -77,6 +71,3 @@ jobs:
       - run: nix -vL --show-trace build
 
       - run: nix -vL --show-trace flake check
-
-      - run: nix -vL --show-trace store gc
-        if: ${{ always() }}
