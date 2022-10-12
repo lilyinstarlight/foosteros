@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: cachix/install-nix-action@v18
 
-      - uses: cachix/cachix-action@v10
+      - uses: cachix/cachix-action@v11
         with:
           name: foosteros
 
