@@ -10,7 +10,7 @@ jobs:
     name: Update
     runs-on: ubuntu-latest
     steps:
-      - uses: cachix/install-nix-action@v17
+      - uses: cachix/install-nix-action@v18
         with:
           install_url: https://github.com/numtide/nix-unstable-installer/releases/latest/download/install
           extra_nix_config: |

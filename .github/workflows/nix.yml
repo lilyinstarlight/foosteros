@@ -12,7 +12,7 @@ jobs:
     name: Stable Flake Build
     runs-on: ubuntu-latest
     steps:
-      - uses: cachix/install-nix-action@v17
+      - uses: cachix/install-nix-action@v18
         with:
           extra_nix_config: |
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
@@ -34,7 +34,7 @@ jobs:
     name: Stable Impure Build
     runs-on: ubuntu-latest
     steps:
-      - uses: cachix/install-nix-action@v17
+      - uses: cachix/install-nix-action@v18
 
       - uses: cachix/cachix-action@v10
         with:
@@ -53,7 +53,7 @@ jobs:
     name: Unstable Flake Build
     runs-on: ubuntu-latest
     steps:
-      - uses: cachix/install-nix-action@v17
+      - uses: cachix/install-nix-action@v18
         with:
           install_url: https://github.com/numtide/nix-unstable-installer/releases/latest/download/install
           extra_nix_config: |
