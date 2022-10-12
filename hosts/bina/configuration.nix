@@ -266,7 +266,7 @@
     lilypond
     mpv ffmpeg-full
     retroarchFull
-    prusa-slicer
+    freecad prusa-slicer
     (wrapOBS {
       plugins = with obs-studio-plugins; [ wlrobs obs-gstreamer obs-move-transition ] ++ (lib.optionals config.nixpkgs.config.allowUnfree [ obs-ndi ]);
     })
