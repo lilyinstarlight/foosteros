@@ -1,4 +1,4 @@
-{ fetchpatch, comma }:
+{ lib, fetchpatch, comma }:
 
 comma.overrideAttrs (attrs: {
   patches = (attrs.patches or []) ++ [
@@ -9,4 +9,9 @@ comma.overrideAttrs (attrs: {
       hash = "sha256-JdL1/w4QFEAJJ7e81OqZZazP7Vcp7Bwewx3o3FFQabg=";
     })
   ];
+
+  # TODO: Remove when nix-community/comma#35 is merged
+  passthru = (attrs.passthru or {}) // {
+    tests = lib.optionalAttrs (attrs ? passthru && attrs.passthru ? tests) (removeAttrs attrs.passthru.tests [ "version" ]);
+  };
 })
