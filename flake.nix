@@ -27,6 +27,8 @@
     };
 
     envfs = {
+      # TODO: temporarily use personal fork
+      #url = "github:Mic92/envfs";
       url = "github:lilyinstarlight/envfs";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.utils.follows = "flake-utils";
