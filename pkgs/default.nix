@@ -7,15 +7,6 @@ let mypkgs = let
   resolvePath = attrset: path: lib.getAttrFromPath (lib.splitString "." path) attrset;
   resolveDep = path: if (args ? outpkgs) then (resolvePath args.outpkgs path) else if (hasPath mypkgs path) then (resolvePath mypkgs path) else (resolvePath pkgs path);
 
-  # TODO: remove both when NixOS/nixpkgs#187636 is merged
-  python3 = let
-    self = pkgs.python3.override {
-      packageOverrides = (self: super: super.pkgs.callPackage ./python-modules {});
-      inherit self;
-    };
-  in self;
-  python3Packages = recurseIntoAttrs python3.pkgs;
-
   vimPlugins = pkgs.vimPlugins.extend (self: super: callPackage ./vim-plugins {});
 in
 
@@ -73,12 +64,8 @@ in
   # unfree packages
   playdate-sdk = callPackage ./playdate-sdk {};
 } // (if (args ? outpkgs) then {
-  # TODO: remove when NixOS/nixpkgs#187636 is merged
-  inherit python3Packages;
   inherit vimPlugins;
 } else {
-  # TODO: remove when NixOS/nixpkgs#187636 is merged
-  python3Packages = recurseIntoAttrs (pkgs.python3Packages.callPackage ./python-modules {});
   vimPlugins = recurseIntoAttrs (callPackage ./vim-plugins {});
 });
 
