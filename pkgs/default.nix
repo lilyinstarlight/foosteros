@@ -13,7 +13,6 @@ in
 {
   # non-packages
   outPath = (toString ../.);
-  inherit (pkgs) lib;
 
   # normal packages
   dnsimple-ddns = callPackage ./dnsimple-ddns {};
@@ -70,6 +69,11 @@ in
 } // (if (args ? outpkgs) then {
   inherit vimPlugins;
 } else {
+  # non-overlay lib inherits
+  lib = {
+    inherit (lib) getVersion;
+  };
+
   vimPlugins = recurseIntoAttrs (callPackage ./vim-plugins {});
 });
 
