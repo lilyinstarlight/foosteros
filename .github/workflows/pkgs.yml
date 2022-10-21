@@ -31,6 +31,8 @@ jobs:
 
       - run: nix-shell scripts/update.nix --argstr commit true
 
+      - run: nix -vL --show-trace flake check
+
       - name: Push changes
         run: |
           git pull --rebase
