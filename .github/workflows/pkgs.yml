@@ -29,7 +29,7 @@ jobs:
         run: |
           echo "NIX_PATH=nixpkgs=https://github.com/NixOS/nixpkgs/archive/$(jq -r '.nodes.nixpkgs.locked.rev' flake.lock).tar.gz" >> $GITHUB_ENV
 
-      - run: nix-shell scripts/update.nix --argstr commit true
+      - run: echo | nix-shell scripts/update.nix --argstr commit true
 
       - run: nix -vL --show-trace flake check
 
