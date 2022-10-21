@@ -1,4 +1,4 @@
-{ stdenvNoCC, lib, fetchFromGitHub, makeWrapper, iproute2, curl }:
+{ stdenvNoCC, lib, fetchFromGitHub, makeWrapper, iproute2, curl, unstableGitUpdater }:
 
 stdenvNoCC.mkDerivation rec {
   pname = "dnsimple-ddns";
@@ -31,6 +31,11 @@ stdenvNoCC.mkDerivation rec {
     wrapProgram $out/bin/ddns \
       --prefix PATH : "${lib.makeBinPath [ iproute2 curl ]}"
   '';
+
+  passthru.updateScript = unstableGitUpdater {
+    # TODO: remove when NixOS/nixpkgs#160453 is merged
+    url = src.gitRepoUrl;
+  };
 
   meta = with lib; {
     description = "DNSimple zone updater for dynamic IPs";

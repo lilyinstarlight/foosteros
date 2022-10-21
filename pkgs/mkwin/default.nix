@@ -1,4 +1,4 @@
-{ stdenvNoCC, lib, fetchFromGitHub, makeWrapper, grub2_efi, grub2, dosfstools, dialog, ntfs3g, p7zip, runCommand }:
+{ stdenvNoCC, lib, fetchFromGitHub, makeWrapper, grub2_efi, grub2, dosfstools, dialog, ntfs3g, p7zip, runCommand, gitUpdater }:
 
 stdenvNoCC.mkDerivation rec {
   pname = "mkwin";
@@ -30,6 +30,12 @@ stdenvNoCC.mkDerivation rec {
   '';
 
   installCheckPhase = "$out/bin/mkwin --help";
+
+  passthru.updateScript = gitUpdater {
+    # TODO: remove when NixOS/nixpkgs#160453 is merged
+    url = src.gitRepoUrl;
+    rev-prefix = "v";
+  };
 
   meta = with lib; {
     description = "A shell script to create a Windows installation USB from ISO";

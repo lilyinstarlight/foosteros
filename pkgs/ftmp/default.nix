@@ -1,4 +1,4 @@
-{ stdenvNoCC, lib, wrapPython, fetchFromGitHub, httpx, runCommand }:
+{ stdenvNoCC, lib, wrapPython, fetchFromGitHub, httpx, runCommand, gitUpdater }:
 
 stdenvNoCC.mkDerivation rec {
   pname = "ftmp";
@@ -25,6 +25,12 @@ stdenvNoCC.mkDerivation rec {
   postFixup = "wrapPythonPrograms";
 
   installCheckPhase = "$out/bin/ftmp --help";
+
+  passthru.updateScript = gitUpdater {
+    # TODO: remove when NixOS/nixpkgs#160453 is merged
+    url = src.gitRepoUrl;
+    rev-prefix = "v";
+  };
 
   meta = with lib; {
     description = "Command line utility for FoosterNET Temp";

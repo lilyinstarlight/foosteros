@@ -1,4 +1,4 @@
-{ stdenvNoCC, lib, fetchFromGitHub, makeWrapper, grub2_efi, grub2, dosfstools, dialog, syslinux, runCommand }:
+{ stdenvNoCC, lib, fetchFromGitHub, makeWrapper, grub2_efi, grub2, dosfstools, dialog, syslinux, runCommand, gitUpdater }:
 
 stdenvNoCC.mkDerivation rec {
   pname = "mkusb";
@@ -31,6 +31,12 @@ stdenvNoCC.mkDerivation rec {
   '';
 
   installCheckPhase = "$out/bin/mkusb --help";
+
+  passthru.updateScript = gitUpdater {
+    # TODO: remove when NixOS/nixpkgs#160453 is merged
+    url = src.gitRepoUrl;
+    rev-prefix = "v";
+  };
 
   meta = with lib; {
     description = "A shell script to create ISO multiboot USB flash drives that support both legacy and EFI boot";

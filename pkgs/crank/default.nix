@@ -1,14 +1,14 @@
-{ lib, stdenv, rustPlatform, fetchFromGitHub, makeWrapper, rustNightlyToolchain, gcc-arm-embedded, playdate-sdk, xdg-utils }:
+{ lib, stdenv, rustPlatform, fetchFromGitHub, makeWrapper, rustNightlyToolchain, gcc-arm-embedded, playdate-sdk, xdg-utils, unstableGitUpdater }:
 
 rustPlatform.buildRustPackage rec {
   pname = "crank";
-  version = "unstable-2022-04-25";
+  version = "unstable-2022-05-16";
 
   src = fetchFromGitHub {
     owner = "pd-rs";
     repo = pname;
-    rev = "50b3ba869cdfe8c2830311616304a49b5f8d1db9";
-    hash = "sha256-lkbF01bibEgJ45r7JanVKRyTybF0xsHMFadiErIk2+Y=";
+    rev = "b438812657ef4b07368be7ea9dfc1909d793385f";
+    hash = "sha256-ocNnHri+jEhy5uNQZI6R21fsmVx2TbtsnKpg53BtMj0=";
   };
 
   cargoPatches = [
@@ -25,6 +25,11 @@ rustPlatform.buildRustPackage rec {
       --prefix PATH : '${lib.makeBinPath [ rustNightlyToolchain gcc-arm-embedded playdate-sdk xdg-utils ]}' \
       --set PLAYDATE_SDK_PATH '${playdate-sdk}/sdk'
   '';
+
+  passthru.updateScript = unstableGitUpdater {
+    # TODO: remove when NixOS/nixpkgs#160453 is merged
+    url = src.gitRepoUrl;
+  };
 
   meta = with lib; {
     description = "A cargo wrapper for creating games for the Playdate handheld gaming system";

@@ -125,6 +125,8 @@ stdenv.mkDerivation rec {
     })
   ];
 
+  passthru.updateScript = ./update.sh;
+
   meta = with lib; {
     homepage = "https://play.date/dev/";
     description = "Playdate SDK with Lua and C APIs and simulator";

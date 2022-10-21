@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchFromGitHub, makePythonPath, makeWrapper, python3, click, oscpy, psutil, sonic-pi, ruby, erlang, bash, supercollider-with-sc3-plugins, jack2 }:
+{ lib, stdenv, fetchFromGitHub, makePythonPath, makeWrapper, python3, click, oscpy, psutil, sonic-pi, ruby, erlang, bash, supercollider-with-sc3-plugins, jack2, unstableGitUpdater }:
 
 let
   pythonPath = makePythonPath [
@@ -61,6 +61,11 @@ stdenv.mkDerivation rec {
   '';
 
   installCheckPhase = "$out/bin/sonic-pi-tool --help";
+
+  passthru.updateScript = unstableGitUpdater {
+    # TODO: remove when NixOS/nixpkgs#160453 is merged
+    url = src.gitRepoUrl;
+  };
 
   meta = with lib; {
     description = "Tool for interfacing with the Sonic Pi server from the command line";

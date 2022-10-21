@@ -1,7 +1,7 @@
-{ lib, fetchFromGitHub, rofi-pass, rofi-wayland, pass-wayland, coreutils, util-linux, gnugrep, libnotify, pwgen, findutils, gawk, gnused, wl-clipboard, wtype }:
+{ lib, fetchFromGitHub, rofi-pass, rofi-wayland, pass-wayland, coreutils, util-linux, gnugrep, libnotify, pwgen, findutils, gawk, gnused, wl-clipboard, wtype, unstableGitUpdater }:
 
 rofi-pass.overrideAttrs (attrs: rec {
-  version = "unstable-2021-04-05-wayland";
+  version = "unstable-2021-04-05";
 
   src = fetchFromGitHub {
     owner = "carnager";
@@ -45,7 +45,13 @@ rofi-pass.overrideAttrs (attrs: rec {
 
   installCheckPhase = "$out/bin/rofi-pass --help";
 
+  passthru.updateScript = unstableGitUpdater {
+    # TODO: remove when NixOS/nixpkgs#160453 is merged
+    url = src.gitRepoUrl;
+  };
+
   meta = with lib; attrs.meta // {
+    inherit (attrs.meta) description;
     maintainers = with maintainers; [ lilyinstarlight ] ++ (if attrs.meta ? maintainers then attrs.meta.maintainers else []);
     platforms = platforms.linux;
   };

@@ -1,4 +1,4 @@
-{ stdenvNoCC, lib, fetchFromGitHub, makeWrapper, hostname, sendmailPath ? "/run/wrappers/bin/sendmail" }:
+{ stdenvNoCC, lib, fetchFromGitHub, makeWrapper, hostname, sendmailPath ? "/run/wrappers/bin/sendmail", unstableGitUpdater }:
 
 stdenvNoCC.mkDerivation rec {
   pname = "logmail";
@@ -34,6 +34,11 @@ stdenvNoCC.mkDerivation rec {
     wrapProgram $out/bin/logmail \
       --prefix PATH : "${lib.makeBinPath [ hostname ]}"
   '';
+
+  passthru.updateScript = unstableGitUpdater {
+    # TODO: remove when NixOS/nixpkgs#160453 is merged
+    url = src.gitRepoUrl;
+  };
 
   meta = with lib; {
     description = "Log error and failed unit digest emailer";
