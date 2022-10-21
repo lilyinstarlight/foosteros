@@ -9,6 +9,7 @@
     ../../config/adb.nix
     ../../config/alien.nix
     ../../config/bluetooth.nix
+    ../../config/dbus-broker.nix
     ../../config/fcitx5.nix
     ../../config/fwupd.nix
     ../../config/intelgfx.nix
@@ -522,6 +523,7 @@
       bluetoothd\[[0-9]*\]: profiles/sap/server\.c:sap_server_register() Sap driver initialization failed\.
       bluetoothd\[[0-9]*\]: sap-server: Operation not permitted (1)
       pipewire\[[0-9]*\]: jack-device 0x[0-9a-f]\{12\}: can't open client: Input/output error
+      dbus-broker-launch\[[0-9]*\]: Ignoring duplicate name '[^']*' in service file '[^']*'
     '';
   };
 
