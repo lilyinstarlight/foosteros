@@ -101,6 +101,18 @@
       inherit (self) inputs;
     });
 
+    devShells = forAllSystems (system: {
+      sops = nixpkgs.legacyPackages.${system}.mkShell {
+        sopsPGPKeyDirs = [
+          ./keys/hosts
+          ./keys/users
+        ];
+        nativeBuildInputs = [
+          sops-nix.packages.${system}.sops-import-keys-hook
+        ];
+      };
+    });
+
     nixosConfigurations = {
       minimal = self.lib.foosterosSystem {
         system = "x86_64-linux";
