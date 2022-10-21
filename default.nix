@@ -10,11 +10,9 @@ let
       }
     )
     {
-      # hack to prevent flake-compat from using fetchGit with impure entrypoint
-      # needed for stuff like scripts/update.nix to properly find packages
-      src =  { outPath = ./.; };
+      src = ./.;
     }
   ).defaultNix;
 in
 
-self.legacyPackages.${system} // self.packages.${system} // { lib = self.inputs.nixpkgs.legacyPackages.${system}.lib // self.lib; }
+self.legacyPackages.${system} // self.packages.${system} // { lib = self.inputs.nixpkgs.lib // self.lib; }

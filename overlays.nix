@@ -8,9 +8,7 @@ let
       }
     )
     {
-      # hack to prevent flake-compat from using fetchGit with impure entrypoint
-      # needed for stuff like scripts/update.nix to properly find packages
-      src =  { outPath = ./.; };
+      src = ./.;
     }
   ).defaultNix;
 in
