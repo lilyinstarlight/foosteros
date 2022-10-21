@@ -11,6 +11,9 @@ let mypkgs = let
 in
 
 {
+  # non-packages
+  outPath = (toString ../.);
+
   # normal packages
   dnsimple-ddns = callPackage ./dnsimple-ddns {};
   fooster-backgrounds = callPackage ./backgrounds {};
