@@ -15,4 +15,4 @@ let
   ).defaultNix;
 in
 
-self.legacyPackages.${system} // self.packages.${system} // { lib = self.inputs.nixpkgs.lib // self.lib; }
+self.legacyPackages.${system} // self.packages.${system}
