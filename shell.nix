@@ -1,3 +1,5 @@
+{ system ? builtins.currentSystem, ... }:
+
 let
   self = (import (
       let
@@ -15,4 +17,4 @@ let
   ).defaultNix;
 in
 
-builtins.attrValues (removeAttrs self.overlays [ "default" ])
+removeAttrs self.devShells.${system} [ "default" ]
