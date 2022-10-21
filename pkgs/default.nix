@@ -13,6 +13,7 @@ in
 {
   # non-packages
   outPath = (toString ../.);
+  inherit (pkgs) lib;
 
   # normal packages
   dnsimple-ddns = callPackage ./dnsimple-ddns {};
