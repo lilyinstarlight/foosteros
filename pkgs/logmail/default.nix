@@ -35,10 +35,7 @@ stdenvNoCC.mkDerivation rec {
       --prefix PATH : "${lib.makeBinPath [ hostname ]}"
   '';
 
-  passthru.updateScript = unstableGitUpdater {
-    # TODO: remove when NixOS/nixpkgs#160453 is merged
-    url = src.gitRepoUrl;
-  };
+  passthru.updateScript = unstableGitUpdater {};
 
   meta = with lib; {
     description = "Log error and failed unit digest emailer";

@@ -45,10 +45,7 @@ rofi-pass.overrideAttrs (attrs: rec {
 
   installCheckPhase = "$out/bin/rofi-pass --help";
 
-  passthru.updateScript = unstableGitUpdater {
-    # TODO: remove when NixOS/nixpkgs#160453 is merged
-    url = src.gitRepoUrl;
-  };
+  passthru.updateScript = unstableGitUpdater {};
 
   meta = with lib; attrs.meta // {
     inherit (attrs.meta) description;

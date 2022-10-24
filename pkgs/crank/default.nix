@@ -26,10 +26,7 @@ rustPlatform.buildRustPackage rec {
       --set PLAYDATE_SDK_PATH '${playdate-sdk}/sdk'
   '';
 
-  passthru.updateScript = unstableGitUpdater {
-    # TODO: remove when NixOS/nixpkgs#160453 is merged
-    url = src.gitRepoUrl;
-  };
+  passthru.updateScript = unstableGitUpdater {};
 
   meta = with lib; {
     description = "A cargo wrapper for creating games for the Playdate handheld gaming system";

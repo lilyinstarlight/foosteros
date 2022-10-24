@@ -32,10 +32,7 @@ stdenvNoCC.mkDerivation rec {
       --prefix PATH : "${lib.makeBinPath [ iproute2 curl ]}"
   '';
 
-  passthru.updateScript = unstableGitUpdater {
-    # TODO: remove when NixOS/nixpkgs#160453 is merged
-    url = src.gitRepoUrl;
-  };
+  passthru.updateScript = unstableGitUpdater {};
 
   meta = with lib; {
     description = "DNSimple zone updater for dynamic IPs";

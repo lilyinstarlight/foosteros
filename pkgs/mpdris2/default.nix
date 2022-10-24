@@ -11,10 +11,7 @@ mpdris2.overrideAttrs (attrs: rec {
   };
 
   passthru = (attrs.passthru or {}) // {
-    updateScript = unstableGitUpdater {
-      # TODO: remove when NixOS/nixpkgs#160453 is merged
-      url = src.gitRepoUrl;
-    };
+    updateScript = unstableGitUpdater {};
   };
 
   meta = with lib; attrs.meta // {

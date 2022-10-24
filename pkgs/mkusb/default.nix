@@ -33,8 +33,6 @@ stdenvNoCC.mkDerivation rec {
   installCheckPhase = "$out/bin/mkusb --help";
 
   passthru.updateScript = gitUpdater {
-    # TODO: remove when NixOS/nixpkgs#160453 is merged
-    url = src.gitRepoUrl;
     rev-prefix = "v";
   };
 
