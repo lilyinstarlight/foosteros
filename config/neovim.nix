@@ -115,7 +115,7 @@
             }
           },
           rust_analyzer = {},
-          rnix = {},
+          nil_ls = {},
           bashls = {},
         }
 
