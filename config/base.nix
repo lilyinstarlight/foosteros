@@ -130,8 +130,8 @@ in
   system.nixos.label = lib.concatStringsSep "-" ((lib.sort (x: y: x < y) config.system.nixos.tags) ++ [ config.system.nixos.version ] ++ [ "foosteros" (self.shortRev or "dirty") ]);
 
   boot.initrd.systemd.contents = {
-    "/etc/os-release".source = lib.mkForce initrdRelease;
-    "/etc/initrd-release".source = lib.mkForce initrdRelease;
+    "/etc/os-release".source = lib.mkOverride 75 initrdRelease;  # 50 is force prio and 100 is default prio
+    "/etc/initrd-release".source = lib.mkOverride 75 initrdRelease;
   };
 
   environment.variables = {
@@ -150,10 +150,10 @@ in
       }
     '';
 
-    issue.source = lib.mkForce issue;
+    issue.source = issue;
 
-    os-release.text = lib.mkForce (attrsToText osReleaseContents);
-    lsb-release.text = lib.mkForce (attrsToText lsbReleaseContents);
+    os-release.text = lib.mkOverride 75 (attrsToText osReleaseContents);  # 50 is force prio and 100 is default prio
+    lsb-release.text = lib.mkOverride 75 (attrsToText lsbReleaseContents);
 
     "xdg/user-dirs.defaults".text = ''
       XDG_DESKTOP_DIR="$HOME"
