@@ -121,7 +121,9 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "poetry2nix": "poetry2nix"
+        "poetry2nix": [
+          "poetry2nix"
+        ]
       },
       "locked": {
         "lastModified": 1665917083,
@@ -193,20 +195,18 @@
     "poetry2nix": {
       "inputs": {
         "flake-utils": [
-          "nix-alien",
           "flake-utils"
         ],
         "nixpkgs": [
-          "nix-alien",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1665455310,
-        "narHash": "sha256-gEG1UiKz65SNWDU1NJmxLneo+kn7WjxrfucSk1zhU6o=",
+        "lastModified": 1667394176,
+        "narHash": "sha256-WCpUGCl1PeJcnmVpV4ChPA6YvJn8NF9+Nuuzztr6HUw=",
         "owner": "nix-community",
         "repo": "poetry2nix",
-        "rev": "d62ba59f1e28c382665c57203a4b9ad11fd7f449",
+        "rev": "c52e327fc2947f1d4ee15e9896d968d12b48b550",
         "type": "github"
       },
       "original": {
@@ -226,6 +226,7 @@
         "nix-alien": "nix-alien",
         "nix-index-db": "nix-index-db",
         "nixpkgs": "nixpkgs",
+        "poetry2nix": "poetry2nix",
         "sops-nix": "sops-nix"
       }
     },
