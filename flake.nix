@@ -21,7 +21,9 @@
     };
 
     nix-alien = {
-      url = "github:thiagokokada/nix-alien";
+      # TODO: temporarily use personal fork
+      #url = "github:thiagokokada/nix-alien";
+      url = "github:lilyinstarlight/nix-alien/fix/python-pkg-set";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
       inputs.poetry2nix.follows = "poetry2nix";
