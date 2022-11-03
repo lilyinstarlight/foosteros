@@ -150,7 +150,7 @@ in
       }
     '';
 
-    issue.source = lib.mkOverride 75 issue;  # TODO: remove once nixpkgs pin is updated
+    issue.source = issue;
 
     os-release.text = lib.mkOverride 75 (attrsToText osReleaseContents);  # 50 is force prio and 100 is default prio
     lsb-release.text = lib.mkOverride 75 (attrsToText lsbReleaseContents);
