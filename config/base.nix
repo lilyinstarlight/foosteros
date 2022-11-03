@@ -179,7 +179,7 @@ in
     man-pages man-pages-posix
     file python3 tree unzip xxd
     cachix fpaste ftmp furi
-    git gitAndTools.delta ripgrep
+    git gitAndTools.delta fd ripgrep
     shellcheck progress libqalculate
     nix-index comma
   ];
