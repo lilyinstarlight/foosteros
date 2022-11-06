@@ -53,10 +53,10 @@ in
       type = types.bool;
       default = false;
       description = lib.mdDoc ''
-        Whether to enable dbus-broker, implementation of a message bus
-        as defined by the D-Bus specification. Its aim is to provide high
+        Whether to use dbus-broker as implementation of the message bus
+        defined by the D-Bus specification. Its aim is to provide high
         performance and reliability, while keeping compatibility to the D-Bus
-        reference implementation. You must disable services.dbus.enable to use this.
+        reference implementation.
       '';
     };
 
@@ -93,7 +93,6 @@ in
         type = types.enum [ "enabled" "disabled" "required" ];
         description = lib.mdDoc ''
           AppArmor mode for dbus.
-
           `enabled` enables mediation when it's
           supported in the kernel, `disabled`
           always disables AppArmor even with kernel support, and
@@ -128,14 +127,6 @@ in
           + " now always socket activated."
       );
 
-      assertions = [
-        { assertion = brokerCfg.enable -> !cfg.enable;
-          message = ''
-            You cannot use services.dbus.enable with services.dbus-broker.enable. Please disable DBus.
-          '';
-        }
-      ];
-
       environment.etc."dbus-1".source = configDir;
 
       users.users.messagebus = {
@@ -156,29 +147,9 @@ in
         config.system.path
       ];
 
-      systemd.services.dbus = {
-        # Don't restart dbus-daemon. Bad things tend to happen if we do.
-        reloadIfChanged = true;
-        restartTriggers = [
-          configDir
-        ];
-        environment = {
-          LD_LIBRARY_PATH = config.system.nssModules.path;
-        };
-      };
-
-      systemd.user = {
-        services.dbus = {
-          # Don't restart dbus-daemon. Bad things tend to happen if we do.
-          reloadIfChanged = true;
-          restartTriggers = [
-            configDir
-          ];
-        };
-        sockets.dbus.wantedBy = [
-          "sockets.target"
-        ];
-      };
+      systemd.user.sockets.dbus.wantedBy = [
+        "sockets.target"
+      ];
 
       environment.pathsToLink = [
         "/etc/dbus-1"
@@ -200,9 +171,30 @@ in
         setgid = false;
         permissions = "u+rx,g+rx,o-rx";
       };
+
+      systemd.services.dbus = {
+        # Don't restart dbus-daemon. Bad things tend to happen if we do.
+        reloadIfChanged = true;
+        restartTriggers = [
+          configDir
+        ];
+        environment = {
+          LD_LIBRARY_PATH = config.system.nssModules.path;
+        };
+      };
+
+      systemd.user.services.dbus = {
+        # Don't restart dbus-daemon. Bad things tend to happen if we do.
+        reloadIfChanged = true;
+        restartTriggers = [
+          configDir
+        ];
+      };
     })
 
     (mkIf brokerCfg.enable {
+      services.dbus.enable = lib.mkOverride 75 false;  # 50 is force prio and 100 is default prio
+
       environment.systemPackages = [
         pkgs.dbus-broker
       ];
@@ -213,13 +205,30 @@ in
 
       # NixOS Systemd Module doesn't respect 'Install'
       # https://github.com/NixOS/nixpkgs/issues/108643
-      systemd.services.dbus-broker.aliases = [
-        "dbus.service"
-      ];
+      systemd.services.dbus-broker = {
+        aliases = [
+          "dbus.service"
+        ];
+        # Don't restart dbus. Bad things tend to happen if we do.
+        reloadIfChanged = true;
+        restartTriggers = [
+          configDir
+        ];
+        environment = {
+          LD_LIBRARY_PATH = config.system.nssModules.path;
+        };
+      };
 
-      systemd.user.services.dbus-broker.aliases = [
-        "dbus.service"
-      ];
+      systemd.user.services.dbus-broker = {
+        aliases = [
+          "dbus.service"
+        ];
+        # Don't restart dbus. Bad things tend to happen if we do.
+        reloadIfChanged = true;
+        restartTriggers = [
+          configDir
+        ];
+      };
     })
 
   ];
