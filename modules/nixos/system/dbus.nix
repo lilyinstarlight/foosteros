@@ -203,6 +203,10 @@ in
         pkgs.dbus-broker
       ];
 
+      # Just to be sure we don't restart through the unit alias
+      systemd.services.dbus.reloadIfChanged = true;
+      systemd.user.services.dbus.reloadIfChanged = true;
+
       # NixOS Systemd Module doesn't respect 'Install'
       # https://github.com/NixOS/nixpkgs/issues/108643
       systemd.services.dbus-broker = {
