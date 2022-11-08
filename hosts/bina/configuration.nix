@@ -238,8 +238,6 @@
 
   virtualisation.spiceUSBRedirection.enable = true;
 
-  users.users.lily.extraGroups = with config.users.groups; [ keys.name libvirtd.name adbusers.name ];
-
   nix = {
     gc = {
       automatic = true;
@@ -546,7 +544,10 @@
     mutableUsers = false;
     users = {
       root.passwordFile = config.sops.secrets.root-password.path;
-      lily.passwordFile = config.sops.secrets.lily-password.path;
+      lily = {
+        passwordFile = config.sops.secrets.lily-password.path;
+        extraGroups = with config.users.groups; [ keys.name libvirtd.name adbusers.name ];
+      };
     };
   };
 
