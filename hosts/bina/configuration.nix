@@ -22,35 +22,37 @@
     ../../config/lily.nix
   ];
 
-  sops.defaultSopsFile = ./secrets.yaml;
-  sops.age.sshKeyPaths = [];
-  sops.gnupg.sshKeyPaths = [ "/state/etc/ssh/ssh_host_rsa_key" ];
-  sops.secrets = {
-    root-password = {
-      neededForUsers = true;
-    };
-    lily-password = {
-      neededForUsers = true;
-    };
-    restic-backup-password = {};
-    restic-backup-environment = {};
-    wireless-networks = {
-      restartUnits = [ "supplicant-wlp4s0.service" ];
-    };
-    wired-networks = {
-      restartUnits = [ "supplicant-enp0s25.service" ];
-    };
-    dnsimple-ddns = {};
-    nullmailer-remotes = {
-      mode = "0440";
-      group = config.services.nullmailer.group;
-      restartUnits = [ "nullmailer.service" ];
-    };
-    mopidy-lily-secrets = {
-      mode = "0400";
-      owner = config.users.users.lily.name;
-      group = config.users.users.lily.group;
-      restartUnits = [ "mopidy.service" ];
+  sops = {
+    defaultSopsFile = ./secrets.yaml;
+    age.sshKeyPaths = [];
+    gnupg.sshKeyPaths = [ "/state/etc/ssh/ssh_host_rsa_key" ];
+    secrets = {
+      root-password = {
+        neededForUsers = true;
+      };
+      lily-password = {
+        neededForUsers = true;
+      };
+      restic-backup-password = {};
+      restic-backup-environment = {};
+      wireless-networks = {
+        restartUnits = [ "supplicant-wlp4s0.service" ];
+      };
+      wired-networks = {
+        restartUnits = [ "supplicant-enp0s25.service" ];
+      };
+      dnsimple-ddns = {};
+      nullmailer-remotes = {
+        mode = "0440";
+        group = config.services.nullmailer.group;
+        restartUnits = [ "nullmailer.service" ];
+      };
+      mopidy-lily-secrets = {
+        mode = "0400";
+        owner = config.users.users.lily.name;
+        group = config.users.users.lily.group;
+        restartUnits = [ "mopidy.service" ];
+      };
     };
   };
 
@@ -540,9 +542,13 @@
     powerSupply = "BAT0";
   };
 
-  users.mutableUsers = false;
-  users.users.root.passwordFile = config.sops.secrets.root-password.path;
-  users.users.lily.passwordFile = config.sops.secrets.lily-password.path;
+  users = {
+    mutableUsers = false;
+    users = {
+      root.passwordFile = config.sops.secrets.root-password.path;
+      lily.passwordFile = config.sops.secrets.lily-password.path;
+    };
+  };
 
   home-manager.users.lily = { pkgs, lib, ... }: let cfg = config.home-manager.users.lily; in {
     services.mopidy = {
