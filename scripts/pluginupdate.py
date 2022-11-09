@@ -1,5 +1,5 @@
 # Derived from https://github.com/NixOS/nixpkgs under the following license:
-#   Copyright (c) 2003-2021 Eelco Dolstra and the Nixpkgs/NixOS contributors
+#   Copyright (c) 2003-2022 Eelco Dolstra and the Nixpkgs/NixOS contributors
 #
 #   Permission is hereby granted, free of charge, to any person obtaining
 #   a copy of this software and associated documentation files (the
@@ -364,6 +364,7 @@ class Editor:
         self.default_out = default_out or root.joinpath("generated.nix")
         self.deprecated = deprecated or root.joinpath("deprecated.json")
         self.cache_file = cache_file or f"{name}-plugin-cache.json"
+        self.nixpkgs_repo = None
 
     def get_current_plugins(self) -> List[Plugin]:
         """To fill the cache"""
@@ -691,16 +692,15 @@ def update_plugins(editor: Editor, args):
 
     autocommit = not args.no_commit
 
-    repo = None
     if autocommit:
-        repo = git.Repo(editor.root, search_parent_directories=True)
-        commit(repo, f"{editor.attr_path}: update", [args.outfile])
+        editor.nixpkgs_repo = git.Repo(editor.root, search_parent_directories=True)
+        commit(editor.nixpkgs_repo, f"{editor.attr_path}: update", [args.outfile])
 
     if redirects:
         update()
         if autocommit:
             commit(
-                repo,
+                editor.nixpkgs_repo,
                 f"{editor.attr_path}: resolve github repository redirects",
                 [args.outfile, args.input_file, editor.deprecated],
             )
@@ -713,7 +713,7 @@ def update_plugins(editor: Editor, args):
         plugin, _ = prefetch_plugin(pdesc, )
         if autocommit:
             commit(
-                repo,
+                editor.nixpkgs_repo,
                 "{drv_name}: init at {version}".format(
                     drv_name=editor.get_drv_name(plugin.normalized_name),
                     version=plugin.version
