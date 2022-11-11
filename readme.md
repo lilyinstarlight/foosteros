@@ -75,7 +75,7 @@ Feel free to take any pieces in this repository that you like! Please don't try 
     # mkdir -p /mnt/state/etc
     # cp -a /mnt/etc/nixos /mnt/state/etc/
     # mkdir -p /mnt/state/etc/ssh
-    # cp -a /mnt/etc/ssh/ssh_host_{rsa,ed25519}_key{,.pub} /mnt/etc/ssh/
+    # cp -a /mnt/etc/ssh/ssh_host_{rsa,ed25519}_key{,.pub} /mnt/state/etc/ssh/
 
     nixos-install --flake '/mnt/etc/nixos#minimal' --no-channel-copy  # use --no-root-password as well for systems without mutable users
     ```
