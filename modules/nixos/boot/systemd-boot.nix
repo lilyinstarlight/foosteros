@@ -20,7 +20,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    cfg.extraInstallCommands = ''
+    boot.loader.systemd-boot.extraInstallCommands = ''
       sed -i -e 's/^title NixOS$/title '${escapeShellArg cfg.bootName}'/' /boot/loader/entries/"$(grep '^default' /boot/loader/loader.conf | awk '{print $2}')"
     '';
   };
