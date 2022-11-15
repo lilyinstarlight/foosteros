@@ -33,6 +33,9 @@ in
     sonic-pi = resolveDep "sonic-pi_3";
   };
 
+  # TODO: remove after NixOS/nixpkgs#200554 is merged
+  open-stage-control = callPackage ./open-stage-control {};
+
   # overridden packages
   # TODO: remove when there is a new release
   mpdris2 = callPackage ./mpdris2 {
