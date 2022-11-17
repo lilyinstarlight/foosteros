@@ -35,6 +35,11 @@ in
 
   # TODO: remove after NixOS/nixpkgs#200554 is merged
   open-stage-control = callPackage ./open-stage-control {};
+  curl-impersonate = callPackage ./curl-impersonate {
+    callPackage = pkgs.lib.callPackageWith (pkgs // {
+      makeTestPython = config: (import "${pkgs.path}/nixos/tests/make-test-python.nix" config { inherit (stdenv.hostPlatform) system; pkgs = pkgs.lib.recursiveUpdate pkgs mypkgs; }).test;
+    });
+  };
 
   # overridden packages
   # TODO: remove when there is a new release
