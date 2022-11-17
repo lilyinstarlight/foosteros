@@ -16,6 +16,7 @@ jobs:
         with:
           extra_nix_config: |
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+            system-features = benchmark big-parallel kvm nixos-test
 
       - uses: cachix/cachix-action@v12
         with:
@@ -35,6 +36,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: cachix/install-nix-action@v18
+        with:
+          extra_nix_config: |
+            system-features = benchmark big-parallel kvm nixos-test
 
       - uses: cachix/cachix-action@v12
         with:
@@ -58,6 +62,7 @@ jobs:
           install_url: https://github.com/nix-community/nix-unstable-installer/releases/latest/download/install
           extra_nix_config: |
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+            system-features = benchmark big-parallel kvm nixos-test
 
       - uses: cachix/cachix-action@v12
         with:
