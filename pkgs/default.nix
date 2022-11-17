@@ -1,18 +1,22 @@
 { pkgs ? import <nixpkgs> {}, fenix ? import <fenix> {}, ... } @ args:
 
-with pkgs;
-
 let mypkgs = let
-  hasPath = attrset: path: lib.hasAttrByPath (lib.splitString "." path) attrset;
-  resolvePath = attrset: path: lib.getAttrFromPath (lib.splitString "." path) attrset;
-  resolveDep = path: if (args ? outpkgs) then (resolvePath args.outpkgs path) else if (hasPath mypkgs path) then (resolvePath mypkgs path) else (resolvePath pkgs path);
+  outpkgs = if (args ? outpkgs) then args.outpkgs else pkgs.lib.recursiveUpdate pkgs mypkgs;
 
-  vimPlugins = pkgs.vimPlugins.extend (self: super: callPackage ./vim-plugins {});
-in
+  callPackage = if (args ? outpkgs) then args.outpkgs.callPackage else (fn: args: pkgs.lib.callPackageWith (outpkgs // outpkgs.xorg) fn args);
+
+  makeCallPackageScope = if (args ? outpkgs) then pkgs.lib.id else (scope: scope // {
+    callPackage = fn: args: pkgs.lib.callPackageWith (outpkgs // outpkgs.xorg // scope) fn args;
+  });
+
+  python3Packages = makeCallPackageScope outpkgs.python3Packages;
+  libsForQt5 = makeCallPackageScope outpkgs.libsForQt5;
+in with outpkgs;
 
 {
   # non-packages
   outPath = (toString ../.);
+  makeTestPython = config: (import "${pkgs.path}/nixos/tests/make-test-python.nix" config { pkgs = pkgs.lib.recursiveUpdate pkgs mypkgs; system = stdenv.hostPlatform.system; }).test;
 
   # normal packages
   dnsimple-ddns = callPackage ./dnsimple-ddns {};
@@ -24,22 +28,18 @@ in
   google-10000-english = callPackage ./google-10000-english {};
   logmail = callPackage ./logmail {};
   mkusb = callPackage ./mkusb {
-    syslinux = resolveDep "${if stdenv.isx86_64 then "" else "pkgsCross.gnu64."}syslinux";
+    syslinux = if stdenv.isx86_64 then syslinux else pkgsCross.gnu64.syslinux;
   };
   mkwin = callPackage ./mkwin {};
   rofi-pass-wayland = callPackage ./rofi-pass-wayland {};
   sonic-pi_3 = libsForQt5.callPackage ./sonic-pi/v3.nix {};
   sonic-pi-tool = python3Packages.callPackage ./sonic-pi-tool {
-    sonic-pi = resolveDep "sonic-pi_3";
+    sonic-pi = sonic-pi_3;
   };
 
   # TODO: remove after NixOS/nixpkgs#200554 is merged
   open-stage-control = callPackage ./open-stage-control {};
-  curl-impersonate = callPackage ./curl-impersonate {
-    callPackage = pkgs.lib.callPackageWith (pkgs // {
-      makeTestPython = config: (import "${pkgs.path}/nixos/tests/make-test-python.nix" config { inherit (stdenv.hostPlatform) system; pkgs = pkgs.lib.recursiveUpdate pkgs mypkgs; }).test;
-    });
-  };
+  curl-impersonate = callPackage ./curl-impersonate {};
 
   # overridden packages
   # TODO: remove when there is a new release
@@ -69,17 +69,16 @@ in
       "cargo"
       "rust-src"
     ];
-    playdate-sdk = resolveDep "playdate-sdk";
   };
 
   # unfree packages
   playdate-sdk = callPackage ./playdate-sdk {};
 } // (if (args ? outpkgs) then {
-  inherit vimPlugins;
+  vimPlugins = pkgs.vimPlugins.extend (self: super: callPackage ./vim-plugins {});
 } else {
   # non-overlay lib inherits
   lib = {
-    inherit (lib) getVersion;
+    inherit (pkgs.lib) getVersion;
   };
 
   vimPlugins = recurseIntoAttrs (callPackage ./vim-plugins {});

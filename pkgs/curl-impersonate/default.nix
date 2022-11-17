@@ -20,6 +20,7 @@
 , unzip
 , go
 , p11-kit
+, makeTestPython
 }:
 
 let
@@ -183,7 +184,7 @@ symlinkJoin rec {
     inherit (passthru.curl-impersonate-ff) src;
 
     tests = lib.optionalAttrs stdenv.isLinux {
-      curl-impersonate = callPackage ./test.nix {};
+      curl-impersonate = import ./test.nix { inherit makeTestPython; };
     };
   };
 }
