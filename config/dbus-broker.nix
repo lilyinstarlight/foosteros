@@ -1,5 +1,5 @@
 { config, lib, pkgs, ... }:
 
 {
-  services.dbus-broker.enable = true;
+  services.dbus.implementation = "broker";
 }

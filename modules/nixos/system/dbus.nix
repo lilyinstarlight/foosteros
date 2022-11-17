@@ -22,15 +22,11 @@
 
 # D-Bus configuration and system bus daemon.
 
-{ config, lib, options, pkgs, ... }:
-
-with lib;
+{ config, lib, pkgs, ... }:
 
 let
 
   cfg = config.services.dbus;
-
-  brokerCfg = config.services.dbus-broker;
 
   homeDir = "/run/dbus";
 
@@ -40,36 +36,37 @@ let
     serviceDirectories = cfg.packages;
   };
 
+  inherit (lib) mkOption types;
+
 in
 
 {
   disabledModules = [ "services/system/dbus.nix" ];
 
-  ###### interface
-
   options = {
-
-    services.dbus-broker.enable = mkOption {
-      type = types.bool;
-      default = false;
-      description = lib.mdDoc ''
-        Whether to use dbus-broker as implementation of the message bus
-        defined by the D-Bus specification. Its aim is to provide high
-        performance and reliability, while keeping compatibility to the D-Bus
-        reference implementation.
-      '';
-    };
 
     services.dbus = {
 
       enable = mkOption {
         type = types.bool;
-        default = false;
+        default = true;
         internal = true;
         description = lib.mdDoc ''
           Whether to start the D-Bus message bus daemon, which is
           required by many other system services and applications.
         '';
+      };
+
+      implementation = mkOption {
+        type = types.enum [ "dbus" "broker" ];
+        default = "dbus";
+        description = lib.mdDoc ''
+          The implementation to use for the message bus defined by the D-Bus specification.
+          Can be either the classic dbus daemon or dbus-broker, which aims to provide high
+          performance and reliability, while keeping compatibility to the D-Bus
+          reference implementation.
+        '';
+
       };
 
       packages = mkOption {
@@ -93,6 +90,7 @@ in
         type = types.enum [ "enabled" "disabled" "required" ];
         description = lib.mdDoc ''
           AppArmor mode for dbus.
+
           `enabled` enables mediation when it's
           supported in the kernel, `disabled`
           always disables AppArmor even with kernel support, and
@@ -101,31 +99,16 @@ in
         '';
         default = "disabled";
       };
-
-      socketActivated = mkOption {
-        type = types.nullOr types.bool;
-        default = null;
-        visible = false;
-        description = lib.mdDoc ''
-          Removed option, do not use.
-        '';
-      };
     };
   };
 
   ###### implementation
 
-  config = mkMerge [
-    # You still need the dbus reference implementation installed to use dbus-broker
-    (mkIf (cfg.enable || brokerCfg.enable) {
-      warnings = optional (cfg.socketActivated != null) (
-        let
-          files = showFiles options.services.dbus.socketActivated.files;
-        in
-          "The option 'services.dbus.socketActivated' in ${files} no longer has"
-          + " any effect and can be safely removed: the user D-Bus session is"
-          + " now always socket activated."
-      );
+  config = lib.mkIf cfg.enable (lib.mkMerge [
+    ({
+      environment.systemPackages = [
+        pkgs.dbus
+      ];
 
       environment.etc."dbus-1".source = configDir;
 
@@ -139,11 +122,11 @@ in
       users.groups.messagebus.gid = config.ids.gids.messagebus;
 
       systemd.packages = [
-        pkgs.dbus.daemon
+        pkgs.dbus
       ];
 
       services.dbus.packages = [
-        pkgs.dbus.out
+        pkgs.dbus
         config.system.path
       ];
 
@@ -157,14 +140,13 @@ in
       ];
     })
 
-    (mkIf cfg.enable {
+    (lib.mkIf (cfg.implementation == "dbus") {
       environment.systemPackages = [
         pkgs.dbus
-        pkgs.dbus.daemon
       ];
 
       security.wrappers.dbus-daemon-launch-helper = {
-        source = "${pkgs.dbus.daemon}/libexec/dbus-daemon-launch-helper";
+        source = "${pkgs.dbus}/libexec/dbus-daemon-launch-helper";
         owner = "root";
         group = "messagebus";
         setuid = true;
@@ -190,11 +172,10 @@ in
           configDir
         ];
       };
+
     })
 
-    (mkIf brokerCfg.enable {
-      services.dbus.enable = lib.mkOverride 75 false;  # 50 is force prio and 100 is default prio
-
+    (lib.mkIf (cfg.implementation == "broker") {
       environment.systemPackages = [
         pkgs.dbus-broker
       ];
@@ -234,6 +215,5 @@ in
         ];
       };
     })
-
-  ];
+  ]);
 }
