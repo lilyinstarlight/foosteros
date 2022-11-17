@@ -16,7 +16,7 @@ in with outpkgs;
 {
   # non-packages
   outPath = (toString ../.);
-  makeTestPython = config: (import "${pkgs.path}/nixos/tests/make-test-python.nix" config { pkgs = pkgs.lib.recursiveUpdate pkgs mypkgs; system = stdenv.hostPlatform.system; }).test;
+  makeTestPython = config: (import "${pkgs.path}/nixos/tests/make-test-python.nix" config { pkgs = outpkgs; system = stdenv.hostPlatform.system; }).test;
 
   # normal packages
   dnsimple-ddns = callPackage ./dnsimple-ddns {};
