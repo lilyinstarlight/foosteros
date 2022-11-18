@@ -37,8 +37,7 @@ in with outpkgs;
     sonic-pi = sonic-pi_3;
   };
 
-  # TODO: remove after NixOS/nixpkgs#200554 is merged
-  open-stage-control = callPackage ./open-stage-control {};
+  # TODO: remove after NixOS/nixpkgs#194310 is merged
   curl-impersonate = callPackage ./curl-impersonate {};
 
   # overridden packages
