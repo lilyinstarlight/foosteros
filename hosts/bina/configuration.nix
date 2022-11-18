@@ -260,7 +260,7 @@
     ncmpcpp beets
     inkscape gimp-with-plugins krita
     mupdf qalculate-gtk
-    element-desktop # jitsi-meet-electron  # TODO: remove when NixOS/nixpkgs#200420 is merged
+    element-desktop jitsi-meet-electron
     helvum qjackctl qsynth vmpk calf
     ardour lmms
     sonic-pi sonic-pi-tool open-stage-control
