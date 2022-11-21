@@ -1,6 +1,6 @@
 { lib, fetchFromGitHub, mpdris2, unstableGitUpdater }:
 
-mpdris2.overrideAttrs (attrs: rec {
+mpdris2.overrideAttrs (attrs: {
   version = "unstable-2022-06-30";
 
   src = fetchFromGitHub {
@@ -14,7 +14,7 @@ mpdris2.overrideAttrs (attrs: rec {
     updateScript = unstableGitUpdater {};
   };
 
-  meta = with lib; attrs.meta // {
+  meta = attrs.meta // {
     inherit (attrs.meta) description;
   };
 })
