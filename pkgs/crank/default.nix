@@ -74,7 +74,7 @@ rustPlatform.buildRustPackage rec {
     if [ -n "$newhash" ] && [ "$curhash" != "$newhash" ]; then
         sed -i -e "s|\"$curhash\"|\"$newhash\"|" "$pkgpath"
     else
-        echo 'update-crank-unstable.sh: New vendorHash same as old vendorHash, nothing to do.'
+        echo 'update-crank-unstable.sh: New cargoHash same as old cargoHash, nothing to do.'
     fi
   '';
 
