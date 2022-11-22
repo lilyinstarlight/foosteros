@@ -204,6 +204,8 @@ in
 
   sound.enable = true;
 
+  services.dbus.implementation = "broker";
+
   services.journald.extraConfig = lib.mkDefault ''
     SystemMaxUse=256M
   '';

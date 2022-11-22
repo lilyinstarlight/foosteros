@@ -9,7 +9,6 @@
     ../../config/adb.nix
     ../../config/alien.nix
     ../../config/bluetooth.nix
-    ../../config/dbus-broker.nix
     ../../config/fcitx5.nix
     ../../config/fwupd.nix
     ../../config/intelgfx.nix

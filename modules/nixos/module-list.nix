@@ -8,5 +8,4 @@
   ./programs/swaywsr.nix
   ./services/dnsimple-ddns.nix
   ./services/logmail.nix
-  ./system/dbus.nix
 ]
