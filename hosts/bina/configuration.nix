@@ -273,7 +273,7 @@
     })
     hledger
     virt-manager podman-compose
-    ripgrep-all
+    fq ripgrep-all
     mkusb mkwin
     aria2 openssl wireshark dogdns picocom
     (ansible.overrideAttrs (attrs: {
