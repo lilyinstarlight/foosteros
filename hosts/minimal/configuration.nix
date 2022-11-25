@@ -12,8 +12,8 @@
   services.resolved.dnssec = "false";
 
   home-manager.users.lily = {
-    home.stateVersion = "22.11";
+    home.stateVersion = "23.05";
   };
 
-  system.stateVersion = "22.11";
+  system.stateVersion = "23.05";
 }
