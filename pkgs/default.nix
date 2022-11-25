@@ -46,11 +46,6 @@ in with outpkgs;
     inherit (pkgs) mpdris2;
   };
 
-  # TODO: remove after nix-community/comma#34 is merged and a new version released
-  comma = callPackage ./comma {
-    inherit (pkgs) comma;
-  };
-
   monofur-nerdfont = nerdfonts.override {
     fonts = [ "Monofur" ];
   };
