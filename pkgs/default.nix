@@ -41,6 +41,10 @@ in with outpkgs;
   curl-impersonate = callPackage ./curl-impersonate {};
 
   # overridden packages
+  # TODO: remove when tests fixed and added to nixpkgs
+  mopidy-local = callPackage ./mopidy-local {
+    inherit (pkgs) mopidy-local;
+  };
   # TODO: remove when there is a new release
   mpdris2 = callPackage ./mpdris2 {
     inherit (pkgs) mpdris2;
