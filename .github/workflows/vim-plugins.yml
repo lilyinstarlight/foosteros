@@ -37,7 +37,7 @@ jobs:
         run: |
           pkgs/vim-plugins/update.py
 
-          if ! git diff --exit-code --quiet origin/${{ github.ref }}..; then
+          if ! git diff --exit-code --quiet remotes/origin/${{ github.ref_name }}..; then
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
 
