@@ -33,15 +33,19 @@ jobs:
 
       - run: nix -vL --show-trace flake update
 
-      - name: Commit changes
+      - id: commit
+        name: Commit changes
         run: |
           if ! git diff --exit-code --quiet flake.lock; then
             git commit -m "flake: update inputs" flake.lock
+            echo "changed=true" >> $GITHUB_OUTPUT
           fi
 
       - run: nix -vL --show-trace flake check
+        if: steps.commit.outputs.changed == 'true'
 
       - name: Push changes
+        if: steps.commit.outputs.changed == 'true'
         run: |
           git pull --rebase
           git push

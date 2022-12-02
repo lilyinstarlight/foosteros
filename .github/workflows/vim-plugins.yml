@@ -32,9 +32,20 @@ jobs:
         run: |
           echo "NIX_PATH=nixpkgs=https://github.com/NixOS/nixpkgs/archive/$(jq -r '.nodes.nixpkgs.locked.rev' flake.lock).tar.gz" >> $GITHUB_ENV
 
-      - run: pkgs/vim-plugins/update.py
+      - id: update
+        name: pkgs/vim-plugins/update.py
+        run: |
+          pkgs/vim-plugins/update.py
+
+          if ! git diff --exit-code --quiet origin/${{ github.ref }}..; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - run: nix -vL --show-trace flake check
+        if: steps.update.outputs.changed == 'true'
 
       - name: Push changes
+        if: steps.update.outputs.changed == 'true'
         run: |
           git pull --rebase
           git push
