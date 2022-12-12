@@ -3,11 +3,13 @@
 let mypkgs = let
   outpkgs = if (args ? outpkgs) then args.outpkgs else pkgs.lib.recursiveUpdate pkgs mypkgs;
 
-  callPackage = if (args ? outpkgs) then args.outpkgs.callPackage else (fn: args: pkgs.lib.callPackageWith (outpkgs // outpkgs.xorg) fn args);
+  callPackage = if (args ? outpkgs) then args.outpkgs.callPackage else let
+    callPackage = pkgs.lib.callPackageWith (outpkgs // outpkgs.xorg // { inherit callPackage; });
+  in callPackage;
 
-  makeCallPackageScope = if (args ? outpkgs) then pkgs.lib.id else (scope: scope // {
-    callPackage = fn: args: pkgs.lib.callPackageWith (outpkgs // outpkgs.xorg // scope) fn args;
-  });
+  makeCallPackageScope = if (args ? outpkgs) then pkgs.lib.id else (scope: let
+    callPackage = pkgs.lib.callPackageWith (outpkgs // outpkgs.xorg // scope // { inherit callPackage; });
+  in scope // { inherit callPackage; });
 
   python3Packages = makeCallPackageScope outpkgs.python3Packages;
   libsForQt5 = makeCallPackageScope outpkgs.libsForQt5;
@@ -73,6 +75,14 @@ in with outpkgs;
   # unfree packages
   playdate-sdk = callPackage ./playdate-sdk {};
 } // (if (args ? outpkgs) then {
+  # TODO: remove when NixOS/nixpkgs#205803 is merged
+  python3 = let
+    self = pkgs.python3.override {
+      packageOverrides = (self: super: super.pkgs.callPackage ./python-modules {});
+      inherit self;
+    };
+  in self;
+  python3Packages = recurseIntoAttrs python3.pkgs;
   vimPlugins = pkgs.vimPlugins.extend (self: super: callPackage ./vim-plugins {});
 } else {
   # non-overlay lib inherits
@@ -80,6 +90,8 @@ in with outpkgs;
     inherit (pkgs.lib) getVersion;
   };
 
+  # TODO: remove when NixOS/nixpkgs#205803 is merged
+  python3Packages = recurseIntoAttrs (pkgs.python3Packages.callPackage ./python-modules {});
   vimPlugins = recurseIntoAttrs (callPackage ./vim-plugins {});
 });
 
