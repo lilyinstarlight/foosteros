@@ -1,5 +1,25 @@
 {
   "nodes": {
+    "disko": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1670800341,
+        "narHash": "sha256-zT8BrdQRyoUxSNnEaDUPhzmKNVE2nJpbcpwWrxhzcls=",
+        "owner": "nix-community",
+        "repo": "disko",
+        "rev": "935feb7496cbf96119f1eeb951f258c1550b3273",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "disko",
+        "type": "github"
+      }
+    },
     "envfs": {
       "inputs": {
         "nixpkgs": [
@@ -157,6 +177,21 @@
         "type": "github"
       }
     },
+    "nixos-hardware": {
+      "locked": {
+        "lastModified": 1670174919,
+        "narHash": "sha256-XdQr3BUnrvVLRFunLWrZORhwYHDG0+9jUUe0Jv1pths=",
+        "owner": "NixOS",
+        "repo": "nixos-hardware",
+        "rev": "9d87bc030a0bf3f00e953dbf095a7d8e852dab6b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixos-hardware",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1670841420,
@@ -191,6 +226,7 @@
     },
     "root": {
       "inputs": {
+        "disko": "disko",
         "envfs": "envfs",
         "fenix": "fenix",
         "flake-compat": "flake-compat",
@@ -199,6 +235,7 @@
         "impermanence": "impermanence",
         "nix-alien": "nix-alien",
         "nix-index-db": "nix-index-db",
+        "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "sops-nix": "sops-nix"
       }

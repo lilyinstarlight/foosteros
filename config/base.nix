@@ -49,11 +49,15 @@ in
     inputs.home-manager.nixosModules.home-manager
     inputs.sops-nix.nixosModules.sops
     inputs.impermanence.nixosModules.impermanence
+    inputs.disko.nixosModules.disko
     self.nixosModules.foosteros
     ./fish.nix
     ./neovim.nix
     ./tmux.nix
   ];
+
+  # provide default value for disko since their module does not
+  disko.devices = {};
 
   home-manager = {
     useUserPackages = true;
