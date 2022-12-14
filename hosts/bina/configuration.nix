@@ -86,13 +86,12 @@
         ".config/dconf"
         ".config/discord"
         ".config/Element"
-        ".config/Microsoft/Microsoft Teams"
         ".config/obs-studio"
         ".config/pipewire"
         ".config/PrusaSlicer"
         ".config/qutebrowser"
         ".config/rncbc.org"
-        ".config/teams"
+        ".config/teams-for-linux"
         ".gnupg"
         ".local/share/fish"
         ".local/share/mopidy"
@@ -259,7 +258,7 @@
     ncmpcpp beets
     inkscape gimp-with-plugins krita
     mupdf qalculate-gtk
-    element-desktop jitsi-meet-electron
+    element-desktop jitsi-meet-electron teams-for-linux
     helvum qjackctl qsynth vmpk calf
     ardour lmms
     sonic-pi sonic-pi-tool open-stage-control
@@ -283,7 +282,7 @@
     gnumake llvmPackages_latest.clang llvmPackages_latest.lldb
   ] ++ (lib.optionals config.nixpkgs.config.allowUnfree [
     pridecat
-    discord slack teams
+    discord slack
   ]);
 
   environment.etc = {
