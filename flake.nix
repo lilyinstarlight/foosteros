@@ -18,7 +18,9 @@
     impermanence.url = "github:nix-community/impermanence";
 
     disko = {
-      url = "github:nix-community/disko";
+      # TODO: temporarily use personal fork
+      #url = "github:nix-community/disko";
+      url = "github:lilyinstarlight/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -61,32 +63,38 @@
   {
     lib = {
       foosterosSystem = let
-        selfSystem = nixpkgs.lib.makeOverridable ({ system ? "x86_64-linux", modules ? [], baseModules ? [], installer ? null }: nixpkgs.lib.nixosSystem {
-          system = system;
-          specialArgs = {
-            inherit self;
-            inherit (self) inputs;
-          };
-          modules = baseModules ++ [
-            ./config/base.nix
-          ] ++ modules ++ nixpkgs.lib.optionals (installer != null) [
-            {
-              system.build = let
-                installerConfiguration = selfSystem {
-                  inherit system baseModules;
-                  modules = modules ++ [
-                    ./config/installer.nix
-                    installer
-                  ];
+        foosterosSystem = nixpkgs.lib.makeOverridable ({ system ? "x86_64-linux", modules ? [], baseModules ? [], installer ? null }: let
+          selfSystem = nixpkgs.lib.nixosSystem {
+            system = system;
+            specialArgs = {
+              inherit self;
+              inherit (self) inputs;
+            };
+            modules = baseModules ++ [
+              ./config/base.nix
+            ] ++ modules ++ nixpkgs.lib.optionals (installer != null) [
+              {
+                system.build = let
+                  installerConfiguration = foosterosSystem {
+                    inherit system baseModules;
+                    modules = modules ++ [
+                      (nixpkgs.lib.optionalAttrs (selfSystem.config.system.build ? disko) {
+                        system.build.installHostname = selfSystem.config.networking.hostName;
+                        system.build.installDisko = selfSystem.config.system.build.disko;
+                      })
+                      ./config/installer.nix
+                      installer
+                    ];
+                  };
+                in {
+                  installerSystem = installerConfiguration;
+                  installer = installerConfiguration.config.system.build.isoImage;
                 };
-              in {
-                installerSystem = installerConfiguration;
-                installer = installerConfiguration.config.system.build.isoImage;
-              };
-            }
-          ];
-        });
-      in selfSystem;
+              }
+            ];
+          };
+        in selfSystem);
+      in foosterosSystem;
     };
 
     legacyPackages = forAllSystems (system: import ./pkgs {
