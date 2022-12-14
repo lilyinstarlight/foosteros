@@ -10,76 +10,17 @@ Feel free to take any pieces in this repository that you like! Please don't try 
 
 ## Installation
 
-1. Boot [NixOS minimal install media](https://channels.nixos.org/nixos-unstable/latest-nixos-minimal-x86_64-linux.iso).
-2. Add installation dependencies and binary cache.
-    ```
-    nix-shell -p bc git cachix
-    cachix use -m user-nixconf foosteros
-    ```
-3. Partition the disks with at least an EFI System Partition and preferably root and swap in an encrypted LVM.
-    ```
-    sgdisk -og /dev/sda
-    sgdisk -n 1:0:+512M -c 1:esp -t 1:ef00 /dev/sda
-    sgdisk -n 2:0:0 -c 2:nixos -t 2:8e00 /dev/sda
+NOTE: I have not tested these new instructions yet but I plan to soon!
 
-    mkfs.fat -F32 -n esp /dev/disk/by-partlabel/esp
-
-    ## Create an encrypted partition if used
-    # cryptsetup luksFormat /dev/disk/by-partlabel/nixos
-    # cryptsetup open /dev/disk/by-partlabel/nixos nixos
-
-    pvcreate /dev/disk/by-partlabel/nixos  # use /dev/mapper/nixos for encrypted partition
-    vgcreate nixos /dev/disk/by-partlabel/nixos  # use /dev/mapper/nixos for encrypted partition
-    lvcreate -L "$(echo 'scale = 2;' "$(vgs -o vg_size --noheadings --units g --nosuffix nixos)" - "$(echo 'scale = 0;' '(' "$(grep -F MemTotal: /proc/meminfo | awk '{print $2}')" + 1024 '*' 1024 ')' / '(' 1024 '*' 1024 ')' | bc)" | bc)"g -n root nixos
-    mkfs.btrfs -L root /dev/mapper/nixos-root
-    lvcreate -l 100%FREE -n swap nixos
-    mkswap -L swap /dev/mapper/nixos-swap
+1. Build then boot the relevant install media for the given system.
     ```
-4. Mount partitions under /mnt.
+    nix -vL build --no-link --print-out-paths github:lilyinstarlight/foosteros#nixosConfigurations.minimal.config.system.build.isoImage
     ```
-    swapon /dev/disk/by-label/swap
-    mkdir -p /mnt
-    mount /dev/disk/by-label/root /mnt
-
-    ## Create persistent store layout if used.
-    # btrfs subvolume create /mnt/state
-    # btrfs subvolume create /mnt/persist
-    # btrfs subvolume create /mnt/nix
-    # btrfs subvolume create /mnt/root
-    # btrfs subvolume set-default /mnt/root
-    # umount /mnt
-    # mount -o subvol=/root /dev/disk/by-label/root /mnt
-    # mkdir -p /mnt/nix
-    # mount -o subvol=/nix /dev/disk/by-label/root /mnt/nix
-    # mkdir -p /mnt/persist
-    # mount -o subvol=/persist /dev/disk/by-label/root /mnt/persist
-    # mkdir -p /mnt/state
-    # mount -o subvol=/state /dev/disk/by-label/root /mnt/state
-
-    mkdir -p /mnt/boot
-    mount /dev/disk/by-label/esp /mnt/boot
+2. Run the customized install script from the install media.
     ```
-5. Make parent directories and clone this repository into /mnt/etc/nixos.
+    foosteros-install
     ```
-    mkdir -p /mnt/etc
-    git clone https://github.com/lilyinstarlight/foosteros.git /mnt/etc/nixos
-    ```
-6. Run nixos-install for the target host.
-    ```
-    ## Install SSH key for host (for sops secret decryption on activation).
-    # mkdir -p /mnt/state/etc/ssh
-    # cp ssh_host_{rsa,ed25519}_key{,.pub} /mnt/etc/ssh/
-    # chmod u=rw,go= /mnt/etc/ssh/ssh_host_{rsa,ed25519}_key
-
-    ## Copy repository and SSH key into persistent store if used.
-    # mkdir -p /mnt/state/etc
-    # cp -a /mnt/etc/nixos /mnt/state/etc/
-    # mkdir -p /mnt/state/etc/ssh
-    # cp -a /mnt/etc/ssh/ssh_host_{rsa,ed25519}_key{,.pub} /mnt/state/etc/ssh/
-
-    nixos-install --flake '/mnt/etc/nixos#minimal' --no-channel-copy  # use --no-root-password as well for systems without mutable users
-    ```
-7. Reboot into the new system.
+3. Reboot into the new system.
     ```
     systemctl reboot
     ```
