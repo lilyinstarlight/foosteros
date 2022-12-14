@@ -25,7 +25,6 @@
             name = "root";
             start = "100MiB";
             end = "-2GiB";
-            part-type = "primary";
             content = {
               type = "filesystem";
               format = "btrfs";
@@ -37,7 +36,6 @@
             name = "swap";
             start = "-2GiB";
             end = "100%";
-            part-type = "primary";
             content = {
               type = "swap";
             };

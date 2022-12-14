@@ -1,18 +1,17 @@
-{ config, lib, pkgs, inputs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
-  imports = [
-    inputs.nixos-hardware.nixosModules.framework-12th-gen-intel
-  ];
-
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "sd_mod" "rtsx_pci_sdmmc" ];
+  boot.initrd.kernelModules = [ "dm-snapshot" "i915" ];
   boot.kernelModules = [ "kvm-intel" ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
   boot.extraModprobeConfig = ''
     options kvm_intel nested=1 emulate_invalid_guest_state=0
     options kvm ignore_msrs=1 report_ignored_msrs=0
   '';
 
-  hardware.enableRedistributableFirmware = true;
-  hardware.cpu.intel.updateMicrocode = true;
+  # TODO: use disko for lia
+  boot.initrd.luks.devices."nixos".device = "/dev/disk/by-partlabel/nixos";
 
   boot.initrd.systemd.extraBin = {
     find = "${pkgs.findutils}/bin/find";
@@ -24,8 +23,8 @@
   #   * https://github.com/systemd/systemd/issues/24904#issuecomment-1328607139
   #   * https://github.com/systemd/systemd/issues/3551
   boot.initrd.systemd.targets.initrd-root-device = {
-    requires = [ "dev-mapper-\\x2dnixos-root.device" ];
-    after = [ "dev-mapper-\\x2dnixos-root.device" ];
+    requires = [ "dev-disk-by\\x2dlabel-root.device" ];
+    after = [ "dev-disk-by\\x2dlabel-root.device" ];
   };
   boot.initrd.systemd.targets.initrd-root-fs = {
     after = [ "sysroot.mount" ];
@@ -68,82 +67,6 @@
     '';
   };
 
-  disko = {
-    devices = {
-      disk.sda = {
-        type = "disk";
-        device = "/dev/sda";
-        content = {
-          type = "table";
-          format = "gpt";
-          partitions = [
-            {
-              type = "partition";
-              name = "esp";
-              start = "1MiB";
-              end = "100MiB";
-              content = {
-                type = "filesystem";
-                format = "vfat";
-                mountpoint = "/boot";
-              };
-            }
-            {
-              type = "partition";
-              name = "nixos";
-              start = "100MiB";
-              end = "100%";
-              content = {
-                type = "luks";
-                name = "nixos";
-                content = {
-                  type = "lvm_pv";
-                  vg = "nixos";
-                };
-              };
-            }
-          ];
-        };
-      };
-
-      lvm_vg = {
-        nixos = {
-          type = "lvm_vg";
-          lvs = {
-            root = {
-              type = "lvm_lv";
-              size = "-16GiB";
-              content = {
-                type = "btrfs";
-                mountpoint = "/rootvol";
-                subvolumes = [
-                  "/root"
-                  "/nix"
-                  "/state"
-                  "/persist"
-                ];
-                mountOptions = [ "noauto" ];
-              };
-            };
-            swap = {
-              type = "lvm_lv";
-              name = "swap";
-              size = "100%FREE";
-              content = {
-                type = "luks";
-                name = "swap";
-                keyFile = "/state/etc/ssh/ssh_host_rsa_key";
-                content = {
-                  type = "swap";
-                };
-              };
-            };
-          };
-        };
-      };
-    };
-  };
-
   fileSystems."/" = {
     label = "root";
     fsType = "btrfs";
@@ -177,4 +100,18 @@
     ];
     neededForBoot = true;
   };
+
+  fileSystems."/boot" = {
+    label = "esp";
+    fsType = "vfat";
+  };
+
+  swapDevices = [
+    {
+      label = "swap";
+    }
+  ];
+
+  hardware.enableRedistributableFirmware = true;
+  hardware.cpu.intel.updateMicrocode = true;
 }
