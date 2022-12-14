@@ -60,16 +60,33 @@
     in
   {
     lib = {
-      foosterosSystem = nixpkgs.lib.makeOverridable ({ system ? "x86_64-linux", modules ? [], baseModules ? [] }: nixpkgs.lib.nixosSystem {
-        system = system;
-        specialArgs = {
-          inherit self;
-          inherit (self) inputs;
-        };
-        modules = baseModules ++ [
-          ./config/base.nix
-        ] ++ modules;
-      });
+      foosterosSystem = let
+        selfSystem = nixpkgs.lib.makeOverridable ({ system ? "x86_64-linux", modules ? [], baseModules ? [], installer ? null }: nixpkgs.lib.nixosSystem {
+          system = system;
+          specialArgs = {
+            inherit self;
+            inherit (self) inputs;
+          };
+          modules = baseModules ++ [
+            ./config/base.nix
+          ] ++ modules ++ nixpkgs.lib.optionals (installer != null) [
+            {
+              system.build = let
+                installerConfiguration = selfSystem {
+                  inherit system baseModules;
+                  modules = modules ++ [
+                    ./config/installer.nix
+                    installer
+                  ];
+                };
+              in {
+                installerSystem = installerConfiguration;
+                installer = installerConfiguration.config.system.build.isoImage;
+              };
+            }
+          ];
+        });
+      in selfSystem;
     };
 
     legacyPackages = forAllSystems (system: import ./pkgs {
@@ -124,6 +141,7 @@
         modules = [
           ./hosts/minimal/configuration.nix
         ];
+        installer = ./hosts/minimal/installer.nix;
       };
       bina = self.lib.foosterosSystem {
         system = "x86_64-linux";
