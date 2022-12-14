@@ -68,74 +68,74 @@
     '';
   };
 
-  disko = {
-    devices = {
-      disk.sda = {
-        type = "disk";
-        device = "/dev/sda";
-        content = {
-          type = "table";
-          format = "gpt";
-          partitions = [
-            {
-              type = "partition";
-              name = "esp";
-              start = "1MiB";
-              end = "100MiB";
-              content = {
-                type = "filesystem";
-                format = "vfat";
-                mountpoint = "/boot";
-              };
-            }
-            {
-              type = "partition";
+  disko.devices = {
+    disk.sda = {
+      type = "disk";
+      device = "/dev/sda";
+      content = {
+        type = "table";
+        format = "gpt";
+        partitions = [
+          {
+            type = "partition";
+            name = "esp";
+            start = "1MiB";
+            end = "100MiB";
+            content = {
+              type = "filesystem";
+              format = "vfat";
+              mountpoint = "/boot";
+            };
+          }
+          {
+            type = "partition";
+            name = "nixos";
+            start = "100MiB";
+            end = "100%";
+            content = {
+              type = "luks";
               name = "nixos";
-              start = "100MiB";
-              end = "100%";
               content = {
-                type = "luks";
-                name = "nixos";
-                content = {
-                  type = "lvm_pv";
-                  vg = "nixos";
-                };
-              };
-            }
-          ];
-        };
-      };
-
-      lvm_vg = {
-        nixos = {
-          type = "lvm_vg";
-          lvs = {
-            root = {
-              type = "lvm_lv";
-              size = "-16GiB";
-              content = {
-                type = "btrfs";
-                mountpoint = "/rootvol";
-                subvolumes = [
-                  "/root"
-                  "/nix"
-                  "/state"
-                  "/persist"
-                ];
-                mountOptions = [ "noauto" ];
+                type = "lvm_pv";
+                vg = "nixos";
               };
             };
-            swap = {
-              type = "lvm_lv";
-              name = "swap";
-              size = "100%FREE";
-              content = {
-                type = "luks";
-                name = "swap";
-                keyFile = "/state/etc/ssh/ssh_host_rsa_key";
-                content = {
-                  type = "swap";
+          }
+        ];
+      };
+    };
+
+    lvm_vg = {
+      nixos = {
+        type = "lvm_vg";
+        lvs = {
+          root = {
+            type = "lvm_lv";
+            size = "-16GiB";
+            content = {
+              type = "btrfs";
+              mountpoint = "/rootvol";
+              subvolumes = {
+                "/root" = {
+                  mountpoint = "/";
                 };
+                "/nix" = {};
+                "/state" = {};
+                "/persist" = {};
+              };
+              mountOptions = [ "noauto" ];
+            };
+          };
+          swap = {
+            type = "lvm_lv";
+            name = "swap";
+            size = "100%FREE";
+            content = {
+              type = "luks";
+              name = "swap";
+              keyFile = "/state/etc/ssh/ssh_host_rsa_key";
+              content = {
+                type = "swap";
               };
             };
           };
@@ -144,37 +144,6 @@
     };
   };
 
-  fileSystems."/" = {
-    label = "root";
-    fsType = "btrfs";
-    options = [
-      "subvol=/root"
-    ];
-  };
-
-  fileSystems."/nix" = {
-    label = "root";
-    fsType = "btrfs";
-    options = [
-      "subvol=/nix"
-    ];
-  };
-
-  fileSystems."/state" = {
-    label = "root";
-    fsType = "btrfs";
-    options = [
-      "subvol=/state"
-    ];
-    neededForBoot = true;
-  };
-
-  fileSystems."/persist" = {
-    label = "root";
-    fsType = "btrfs";
-    options = [
-      "subvol=/persist"
-    ];
-    neededForBoot = true;
-  };
+  fileSystems."/state".neededForBoot = true;
+  fileSystems."/persist".neededForBoot = true;
 }
