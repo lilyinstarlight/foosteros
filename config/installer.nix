@@ -28,7 +28,7 @@
 
         mkdir -p /mnt/etc
         git clone https://github.com/lilyinstarlight/foosteros.git /mnt/etc/nixos
-        git -C /mnt/etc/nixos reset --hard ${self.shortRev or "origin/HEAD"}
+        git -C /mnt/etc/nixos reset --hard ${self.rev or "origin/HEAD"}
 
         if nix eval /mnt/etc/nixos#nixosConfigurations."$INSTALL_HOSTNAME".config.environment.persistenence./state >/dev/null; then
           mkdir -p /mnt/etc/ssh
