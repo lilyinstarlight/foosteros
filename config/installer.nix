@@ -1,4 +1,4 @@
-{ config, lib, pkgs, inputs, ... }:
+{ config, lib, pkgs, self, inputs, ... }:
 
 {
   imports = [
@@ -10,14 +10,17 @@
   # TODO: installer does not support systemd initrd yet
   boot.initrd.systemd.enable = lib.mkImageMediaOverride false;
 
-  isoImage.isoName = lib.mkForce "foosteros-${config.system.build.installHostname}.iso";
+  isoImage.isoName = lib.mkImageMediaOverride "foosteros-${config.system.build.installHostname}.iso";
+
+  networking.hostName = lib.mkImageMediaOverride "${config.system.build.installHostname}-installer";
 
   environment.systemPackages = with pkgs; [
     (writeShellApplication {
       name = "foosteros-install";
       runtimeInputs = [ nix openssh git ];
       text = ''
-        export INSTALL_HOSTNAME="${config.system.build.installHostname}"
+        export SYSTEM_CLOSURE='${config.system.build.installClosure}'
+        export INSTALL_HOSTNAME='${config.system.build.installHostname}'
 
         which foosteros-prepare &>/dev/null && foosteros-prepare
 
@@ -25,6 +28,7 @@
 
         mkdir -p /mnt/etc
         git clone https://github.com/lilyinstarlight/foosteros.git /mnt/etc/nixos
+        git -C /mnt/etc/nixos reset --hard ${self.shortRev or "origin/HEAD"}
 
         if nix eval /mnt/etc/nixos#nixosConfigurations."$INSTALL_HOSTNAME".config.environment.persistenence./state >/dev/null; then
           mkdir -p /mnt/etc/ssh

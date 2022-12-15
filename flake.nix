@@ -77,11 +77,14 @@
                 system.build = let
                   installerConfiguration = foosterosSystem {
                     inherit system baseModules;
-                    modules = modules ++ [
+                    modules = [
                       (nixpkgs.lib.optionalAttrs (selfSystem.config.system.build ? disko) {
                         system.build.installHostname = selfSystem.config.networking.hostName;
                         system.build.installDisko = selfSystem.config.system.build.disko;
                       })
+                      {
+                        system.build.installClosure = selfSystem.config.system.build.toplevel;
+                      }
                       ./config/installer.nix
                       installer
                     ];
