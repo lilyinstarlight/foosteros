@@ -1,0 +1,40 @@
+name: Installer
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: cachix/install-nix-action@v18
+        with:
+          extra_nix_config: |
+            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+            system-features = benchmark big-parallel kvm nixos-test
+
+      - uses: cachix/cachix-action@v12
+        with:
+          name: foosteros
+
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - run: nix -vL --show-trace build --file ./installer.nix
+
+      - name: Deploy ISOs to website
+        env:
+          SFTP_HOST: ${{ secrets.SFTP_HOST }}
+          SFTP_USER: ${{ secrets.SFTP_USER }}
+          SFTP_KEY: ${{ secrets.REPO_KEY }}
+          SFTP_PATH: ${{ secrets.SFTP_PATH }}
+        run: |
+          sftp_key="$(mktemp)"
+          printenv SFTP_KEY | base64 -d >"$sftp_key"
+
+          nix run nixpkgs#rclone -- sync --sftp-host "$SFTP_HOST" --sftp-user "$SFTP_USER" --sftp-key-file "$sftp_key" ./result :sftp:"$SFTP_PATH"
