@@ -224,7 +224,7 @@
             hash = "sha256-cOBMLnpimphU3icn4Pl4F1t6TsbPTNl5miI5CGL2+ic=";
           };
 
-          unpackPhase = lib.replaceStrings [ "${attrs.src}" ] [ "${src}" ] attrs.unpackPhase;
+          unpackPhase = ''unpackFile ${src}; echo y | ./${attrs.installerName}.sh; sourceRoot="NDI SDK for Linux";'';
         });
       }) ]);
     })
