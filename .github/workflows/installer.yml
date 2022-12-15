@@ -35,6 +35,6 @@ jobs:
           SFTP_PATH: ${{ secrets.SFTP_PATH }}
         run: |
           sftp_key="$(mktemp)"
-          printenv SFTP_KEY | base64 -d >"$sftp_key"
+          printenv SFTP_KEY >"$sftp_key"
 
           nix run nixpkgs#rclone -- sync --sftp-host "$SFTP_HOST" --sftp-user "$SFTP_USER" --sftp-key-file "$sftp_key" ./result :sftp:"$SFTP_PATH"
