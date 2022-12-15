@@ -13,7 +13,7 @@ let
     baseModules = [
       { nixpkgs.config.allowUnfree = false; }
     ] ++ (args.baseModules or []);
-  })).config.system.build.installer;
+  })).config.system.build.installerSystem.config.system.build.toplevel;
 in
 
 lib.listToAttrs (lib.flatten (
