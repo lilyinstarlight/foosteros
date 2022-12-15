@@ -6,19 +6,28 @@
 
     ../../config/restic.nix
 
+    ../../config/lily.nix
+
     ../../config/adb.nix
     ../../config/alien.nix
     ../../config/bluetooth.nix
     ../../config/fcitx5.nix
     ../../config/fwupd.nix
+    ../../config/gc.nix
+    ../../config/gnupg.nix
+    ../../config/homebins.nix
+    ../../config/hyfetch.nix
     ../../config/intelgfx.nix
     ../../config/libvirt.nix
     ../../config/lsp.nix
+    ../../config/music.nix
+    ../../config/networking.nix
+    ../../config/nullmailer.nix
+    ../../config/pass.nix
     ../../config/pki.nix
     ../../config/podman.nix
     ../../config/sway.nix
-
-    ../../config/lily.nix
+    ../../config/udiskie.nix
   ];
 
   sops = {
@@ -127,14 +136,6 @@
     };
   };
 
-  boot = {
-    extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
-    extraModprobeConfig = ''
-      options v4l2loopback video_nr=63
-    '';
-    kernelModules = [ "v4l2loopback" ];
-  };
-
   networking = {
     hostName = "lia";
     domain = "fooster.network";
@@ -181,49 +182,7 @@
     };
   };
 
-  systemd.network.networks."80-wl" = {
-    name = "wl*";
-    DHCP = "yes";
-
-    dhcpV4Config = {
-      ClientIdentifier = "mac";
-      RouteMetric = 700;
-    };
-    dhcpV6Config = {
-      RouteMetric = 700;
-    };
-    linkConfig = {
-      RequiredForOnline = "no";
-    };
-    networkConfig = {
-      IPv6PrivacyExtensions = "kernel";
-    };
-  };
-
-  systemd.network.networks."80-en" = {
-    name = "en*";
-    DHCP = "yes";
-
-    dhcpV4Config = {
-      ClientIdentifier = "mac";
-      RouteMetric = 200;
-    };
-    dhcpV6Config = {
-      RouteMetric = 200;
-    };
-    linkConfig = {
-      RequiredForOnline = "no";
-    };
-    networkConfig = {
-      IPv6PrivacyExtensions = "kernel";
-    };
-  };
-
-  hardware.bluetooth.settings = {
-    General = {
-      Name = "Lia";
-    };
-  };
+  hardware.bluetooth.settings.General.Name = "Lia";
 
   hardware.playdate.enable = true;
 
@@ -237,12 +196,6 @@
   virtualisation.spiceUSBRedirection.enable = true;
 
   nix = {
-    gc = {
-      automatic = true;
-      options = "--delete-older-than 7d";
-      dates = "weekly";
-      persistent = true;
-    };
     settings = {
       keep-outputs = true;
       max-jobs = "auto";
@@ -251,13 +204,9 @@
 
   environment.systemPackages = with pkgs; [
     firefox ungoogled-chromium
-    udiskie
-    gnupg pass-wayland-otp
-    rofi-pass-wayland rofi-mpd
     pavucontrol
-    ncmpcpp beets
     inkscape gimp-with-plugins krita
-    mupdf qalculate-gtk
+    qalculate-gtk
     element-desktop jitsi-meet-electron teams-for-linux
     helvum qjackctl qsynth vmpk calf
     ardour lmms
@@ -266,19 +215,6 @@
     mpv ffmpeg-full
     retroarchFull
     freecad prusa-slicer
-    (wrapOBS {
-      plugins = with obs-studio-plugins; [ wlrobs obs-gstreamer obs-move-transition ] ++ (lib.optionals config.nixpkgs.config.allowUnfree [ (obs-ndi.override {
-        ndi = ndi.overrideAttrs (attrs: rec {
-          src = fetchurl {
-            name = "${attrs.pname}-${attrs.version}.tar.gz";
-            url = "https://downloads.ndi.tv/SDK/NDI_SDK_Linux/Install_NDI_SDK_v5_Linux.tar.gz";
-            hash = "sha256-cOBMLnpimphU3icn4Pl4F1t6TsbPTNl5miI5CGL2+ic=";
-          };
-
-          unpackPhase = lib.replaceStrings [ "${attrs.src}" ] [ "${src}" ] attrs.unpackPhase;
-        });
-      }) ]);
-    })
     hledger
     virt-manager podman-compose
     fq ripgrep-all
@@ -287,7 +223,6 @@
     (ansible.overrideAttrs (attrs: {
       propagatedBuildInputs = attrs.propagatedBuildInputs ++ (with python3Packages; [ passlib ]);
     })) azure-cli
-    hyfetch
     texlive.combined.scheme-full
     gnumake llvmPackages_latest.clang llvmPackages_latest.lldb
   ] ++ (lib.optionals config.nixpkgs.config.allowUnfree [
@@ -296,29 +231,6 @@
   ]);
 
   environment.etc = {
-    "xdg/mimeapps.list".text = ''
-      [Default Applications]
-      text/html=org.qutebrowser.qutebrowser.desktop
-      text/xml=org.qutebrowser.qutebrowser.desktop
-      application/xhtml+xml=org.qutebrowser.qutebrowser.desktop
-      application/xml=org.qutebrowser.qutebrowser.desktop
-      application/rdf+xml=org.qutebrowser.qutebrowser.desktop
-      x-scheme-handler/http=org.qutebrowser.qutebrowser.desktop
-      x-scheme-handler/https=org.qutebrowser.qutebrowser.desktop
-      image/gif=imv.desktop
-      image/jpeg=imv.desktop
-      image/png=imv.desktop
-      image/bmp=imv.desktop
-      image/tiff=imv.desktop
-      image/heif=imv.desktop
-      application/pdf=mupdf.desktop
-      application/x-pdf=mupdf.desktop
-      application/x-cbz=mupdf.desktop
-      application/oxps=mupdf.desktop
-      application/vnd.ms-xpsdocument=mupdf.desktop
-      application/epub+zip=mupdf.desktop
-    '';
-
     "sway/config.d/lia".text = ''
       ### ouputs
       output eDP-1 resolution 1920x1080 position 0 0 scale 1
@@ -340,13 +252,6 @@
           scroll_method two_finger
           tap enabled
       }
-
-      ### variables
-      set $mod mod4
-      set $pass ${pkgs.rofi-pass-wayland}/bin/rofi-pass
-
-      ### applications
-      bindsym $mod+backslash exec $pass
 
       ### rules
       for_window [title="Qsynth"] floating enable
@@ -468,8 +373,6 @@
     '';
   };
 
-  programs.gnupg.agent.enable = true;
-
   programs.kanshi.extraConfig = ''
     profile internal {
       output eDP-1 enable mode 1920x1080 position 0,0 scale 1
@@ -489,27 +392,14 @@
 
   services.resolved.dnssec = "false";
 
-  services.pipewire.jack.enable = true;
-
-  services.udisks2.enable = true;
+  services.nullmailer.remotesFile = config.sops.secrets.nullmailer-remotes.path;
+  systemd.services.nullmailer.serviceConfig = {
+    SupplementaryGroups = [ config.users.groups.keys.name ];
+  };
 
   services.dnsimple-ddns = {
     enable = true;
     configFile = config.sops.secrets.dnsimple-ddns.path;
-  };
-
-  services.nullmailer = {
-    enable = true;
-    config = {
-      me = config.networking.hostName;
-      defaultdomain = "fooster.network";
-      allmailfrom = "logs@fooster.network";
-      adminaddr = "logs@fooster.network";
-    };
-    remotesFile = config.sops.secrets.nullmailer-remotes.path;
-  };
-  systemd.services.nullmailer.serviceConfig = {
-    SupplementaryGroups = [ config.users.groups.keys.name ];
   };
 
   services.logmail = {
@@ -559,193 +449,8 @@
     };
   };
 
-  home-manager.users.lily = { pkgs, lib, ... }: let cfg = config.home-manager.users.lily; in {
-    services.mopidy = {
-      enable = true;
-      settings = {
-        file.enabled = false;
-        local.media_dir = "${cfg.home.homeDirectory}/music";
-      };
-      extensionPackages = with pkgs; [
-        mopidy-local mopidy-iris mopidy-mpd
-      ] ++ (lib.optionals config.nixpkgs.config.allowUnfree [ /*mopidy-spotify*/ ]);
-      extraConfigFiles = [
-        config.sops.secrets.mopidy-lily-secrets.path
-      ];
-    };
-
-    services.mpdris2 = {
-      enable = true;
-      notifications = true;
-      multimediaKeys = false;
-      cdPrevious = true;
-      mpd.musicDirectory = cfg.services.mopidy.settings.local.media_dir;
-    };
-
-    services.udiskie = {
-      enable = true;
-      automount = false;
-      tray = "never";
-    };
-
-    systemd.user.services.mpdris2 = {
-      # wait for mako since mpdris2 disables notifications if the org.freedesktop.Notifications busname is not available yet
-      Unit.After = [ "mako.service" ];
-      # wait for mpd port to become available to avoid reconnected notification on bootup
-      Service.ExecStartPre = "${pkgs.coreutils}/bin/timeout 60 ${pkgs.bash}/bin/sh -c 'while ! ${pkgs.iproute2}/sbin/ss -tlnH sport = :${toString cfg.services.mpdris2.mpd.port} | ${pkgs.gnugrep}/bin/grep -q \"^LISTEN.*:${toString cfg.services.mpdris2.mpd.port}\"; do ${pkgs.coreutils}/bin/sleep 1; done'";
-    };
-
-    programs.beets = {
-      enable = true;
-      settings = {
-        directory = cfg.services.mopidy.settings.local.media_dir;
-      };
-    };
-
-    programs.hyfetch = {
-      enable = true;
-      settings = {
-        preset = "transfeminine";
-        mode = "rgb";
-        light_dark = "dark";
-        lightness = 0.5;
-        color_align = {
-          mode = "horizontal";
-          custom_colors = [ ];
-          fore_back = null;
-        };
-      };
-    };
-
-    xdg.configFile = {
-      "rofi-pass/config".text = ''
-        typePassOrOtp () {
-          checkIfPass
-
-          case "$password" in
-            'otpauth://'*)
-              typed="OTP token"
-              printf '%s' "$(generateOTP)" | wtype -
-              ;;
-
-            *)
-              typed="password"
-              printf '%s' "$password" | wtype -
-              ;;
-          esac
-
-          if [[ $notify == "true" ]]; then
-              if [[ "''${stuff[notify]}" == "false" ]]; then
-                  :
-              else
-                  notify-send "rofi-pass" "finished typing $typed";
-              fi
-          elif [[ $notify == "false" ]]; then
-              if [[ "''${stuff[notify]}" == "true" ]]; then
-                  notify-send "rofi-pass" "finished typing $typed";
-              else
-                  :
-              fi
-          fi
-
-          clearUp
-        }
-
-        default_do=typePassOrOtp
-        clip=clipboard
-      '';
-    };
-
-    home.file = {
-      "bin/addr" = {
-        text = ''
-          #!/bin/sh
-          exec curl "$@" icanhazip.com
-        '';
-        executable = true;
-      };
-
-      "bin/alert" = {
-        text = ''
-          #!/bin/sh
-          exec curl -s -X POST -d body="$*" https://alert.lily.flowers/ >/dev/null
-        '';
-        executable = true;
-      };
-
-      "bin/genpass" = {
-        text = ''
-          #!/bin/sh
-          grep -E '^\w{4,}$' ${pkgs.google-10000-english}/share/dict/google-10000-english-usa-no-swears.txt | sort -R | head -n4 | paste -sd ""
-        '';
-        executable = true;
-      };
-
-      "bin/neofetch" = {
-        text = ''
-          #!/bin/sh
-          distro="FoosterOS/2 Warp (NixOS ${config.system.nixos.release}) $(${pkgs.coreutils}/bin/uname -m)" exec ${pkgs.hyfetch}/bin/neowofetch --colors 5 4 4 5 4 7 --ascii_distro nixos --ascii_colors 5 4 --separator ' ->' "$@"
-        '';
-        executable = true;
-      };
-
-      "bin/pdflatexmk" = {
-        text = ''
-          #!/bin/sh
-          latexmk -pdf "$@" && latexmk -c "$@"
-        '';
-        executable = true;
-      };
-
-      "bin/ssh" = {
-        text = ''
-          #!/bin/sh
-          if [ "$TERM" = alacritty ]; then
-            export TERM=xterm-256color
-          fi
-          exec "$(which --skip-tilde ssh)" "$@"
-        '';
-        executable = true;
-      };
-
-      "bin/scp-nofp" = {
-        text = ''
-          #!/bin/sh
-          scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$@"
-        '';
-        executable = true;
-      };
-
-      "bin/sftp-nofp" = {
-        text = ''
-          #!/bin/sh
-          sftp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$@"
-        '';
-        executable = true;
-      };
-
-      "bin/ssh-nofp" = {
-        text = ''
-          #!/bin/sh
-          ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$@"
-        '';
-        executable = true;
-      };
-
-      "bin/wf-loopback" = {
-        text = ''
-          #!/bin/sh
-          exec wf-recorder --muxer=v4l2 --codec=rawvideo --pixel-format=yuv420p --file=/dev/video63 "$@"
-        '';
-        executable = true;
-      };
-    };
-
-    home.activation = {
-      linkHomeMnt = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        $DRY_RUN_CMD ln -sTf $VERBOSE_ARG /run/media/"$USER" "$HOME"/mnt
-      '';
-    };
+  home-manager.users.lily = { pkgs, lib, ... }: {
+    services.mopidy.extraConfigFiles = [ config.sops.secrets.mopidy-lily-secrets.path ];
 
     home.stateVersion = "23.05";
   };

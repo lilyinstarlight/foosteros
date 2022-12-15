@@ -241,7 +241,7 @@ in
 
   environment.systemPackages = with pkgs; [
     qutebrowser
-    imv
+    imv mupdf
   ];
 
   fonts.fonts = with pkgs; [
@@ -264,6 +264,12 @@ in
       image/bmp=imv.desktop
       image/tiff=imv.desktop
       image/heif=imv.desktop
+      application/pdf=mupdf.desktop
+      application/x-pdf=mupdf.desktop
+      application/x-cbz=mupdf.desktop
+      application/oxps=mupdf.desktop
+      application/vnd.ms-xpsdocument=mupdf.desktop
+      application/epub+zip=mupdf.desktop
     '';
 
     "xdg/gtk-3.0/settings.ini".text = lib.mkDefault ''

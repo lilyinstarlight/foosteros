@@ -6,19 +6,28 @@
 
     ../../config/restic.nix
 
+    ../../config/lily.nix
+
     ../../config/adb.nix
     ../../config/alien.nix
     ../../config/bluetooth.nix
     ../../config/fcitx5.nix
     ../../config/fwupd.nix
+    ../../config/gc.nix
+    ../../config/gnupg.nix
+    ../../config/homebins.nix
+    ../../config/hyfetch.nix
     ../../config/intelgfx.nix
     ../../config/libvirt.nix
     ../../config/lsp.nix
+    ../../config/music.nix
+    ../../config/networking.nix
+    ../../config/nullmailer.nix
+    ../../config/pass.nix
     ../../config/pki.nix
     ../../config/podman.nix
     ../../config/sway.nix
-
-    ../../config/lily.nix
+    ../../config/udiskie.nix
   ];
 
   sops = {
@@ -127,14 +136,6 @@
     };
   };
 
-  boot = {
-    extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
-    extraModprobeConfig = ''
-      options v4l2loopback video_nr=63
-    '';
-    kernelModules = [ "v4l2loopback" ];
-  };
-
   networking = {
     hostName = "bina";
     domain = "fooster.network";
@@ -181,49 +182,7 @@
     };
   };
 
-  systemd.network.networks."80-wl" = {
-    name = "wl*";
-    DHCP = "yes";
-
-    dhcpV4Config = {
-      ClientIdentifier = "mac";
-      RouteMetric = 700;
-    };
-    dhcpV6Config = {
-      RouteMetric = 700;
-    };
-    linkConfig = {
-      RequiredForOnline = "no";
-    };
-    networkConfig = {
-      IPv6PrivacyExtensions = "kernel";
-    };
-  };
-
-  systemd.network.networks."80-en" = {
-    name = "en*";
-    DHCP = "yes";
-
-    dhcpV4Config = {
-      ClientIdentifier = "mac";
-      RouteMetric = 200;
-    };
-    dhcpV6Config = {
-      RouteMetric = 200;
-    };
-    linkConfig = {
-      RequiredForOnline = "no";
-    };
-    networkConfig = {
-      IPv6PrivacyExtensions = "kernel";
-    };
-  };
-
-  hardware.bluetooth.settings = {
-    General = {
-      Name = "Bina";
-    };
-  };
+  hardware.bluetooth.settings.General.Name = "Bina";
 
   hardware.playdate.enable = true;
 
@@ -237,12 +196,6 @@
   virtualisation.spiceUSBRedirection.enable = true;
 
   nix = {
-    gc = {
-      automatic = true;
-      options = "--delete-older-than 7d";
-      dates = "weekly";
-      persistent = true;
-    };
     settings = {
       keep-outputs = true;
       max-jobs = "auto";
@@ -251,13 +204,9 @@
 
   environment.systemPackages = with pkgs; [
     firefox ungoogled-chromium
-    udiskie
-    gnupg pass-wayland-otp
-    rofi-pass-wayland rofi-mpd
     pavucontrol
-    ncmpcpp beets
     inkscape gimp-with-plugins krita
-    mupdf qalculate-gtk
+    qalculate-gtk
     element-desktop jitsi-meet-electron teams-for-linux
     helvum qjackctl qsynth vmpk calf
     ardour lmms
@@ -287,7 +236,6 @@
     (ansible.overrideAttrs (attrs: {
       propagatedBuildInputs = attrs.propagatedBuildInputs ++ (with python3Packages; [ passlib ]);
     })) azure-cli
-    hyfetch
     texlive.combined.scheme-full
     gnumake llvmPackages_latest.clang llvmPackages_latest.lldb
   ] ++ (lib.optionals config.nixpkgs.config.allowUnfree [
@@ -296,29 +244,6 @@
   ]);
 
   environment.etc = {
-    "xdg/mimeapps.list".text = ''
-      [Default Applications]
-      text/html=org.qutebrowser.qutebrowser.desktop
-      text/xml=org.qutebrowser.qutebrowser.desktop
-      application/xhtml+xml=org.qutebrowser.qutebrowser.desktop
-      application/xml=org.qutebrowser.qutebrowser.desktop
-      application/rdf+xml=org.qutebrowser.qutebrowser.desktop
-      x-scheme-handler/http=org.qutebrowser.qutebrowser.desktop
-      x-scheme-handler/https=org.qutebrowser.qutebrowser.desktop
-      image/gif=imv.desktop
-      image/jpeg=imv.desktop
-      image/png=imv.desktop
-      image/bmp=imv.desktop
-      image/tiff=imv.desktop
-      image/heif=imv.desktop
-      application/pdf=mupdf.desktop
-      application/x-pdf=mupdf.desktop
-      application/x-cbz=mupdf.desktop
-      application/oxps=mupdf.desktop
-      application/vnd.ms-xpsdocument=mupdf.desktop
-      application/epub+zip=mupdf.desktop
-    '';
-
     "sway/config.d/bina".text = ''
       ### ouputs
       output eDP-1 resolution 1920x1080 position 0 0 scale 1
@@ -340,13 +265,6 @@
           scroll_method two_finger
           tap enabled
       }
-
-      ### variables
-      set $mod mod4
-      set $pass ${pkgs.rofi-pass-wayland}/bin/rofi-pass
-
-      ### applications
-      bindsym $mod+backslash exec $pass
 
       ### rules
       for_window [title="Qsynth"] floating enable
@@ -468,8 +386,6 @@
     '';
   };
 
-  programs.gnupg.agent.enable = true;
-
   programs.kanshi.extraConfig = ''
     profile internal {
       output eDP-1 enable mode 1920x1080 position 0,0 scale 1
@@ -489,27 +405,14 @@
 
   services.resolved.dnssec = "false";
 
-  services.pipewire.jack.enable = true;
-
-  services.udisks2.enable = true;
+  services.nullmailer.remotesFile = config.sops.secrets.nullmailer-remotes.path;
+  systemd.services.nullmailer.serviceConfig = {
+    SupplementaryGroups = [ config.users.groups.keys.name ];
+  };
 
   services.dnsimple-ddns = {
     enable = true;
     configFile = config.sops.secrets.dnsimple-ddns.path;
-  };
-
-  services.nullmailer = {
-    enable = true;
-    config = {
-      me = config.networking.hostName;
-      defaultdomain = "fooster.network";
-      allmailfrom = "logs@fooster.network";
-      adminaddr = "logs@fooster.network";
-    };
-    remotesFile = config.sops.secrets.nullmailer-remotes.path;
-  };
-  systemd.services.nullmailer.serviceConfig = {
-    SupplementaryGroups = [ config.users.groups.keys.name ];
   };
 
   services.logmail = {
@@ -520,18 +423,6 @@
       subject="Logs for $(hostname) at $(date +"%F %R")"
     '';
     filter = ''
-      kernel: DMAR: \[Firmware Bug\]: No firmware reserved region can cover this RMRR \[0x00000000cd800000-0x00000000cfffffff\], contact BIOS vendor for fixes
-      kernel: ACPI Error: Needed type \[Reference\], found \[Integer\] [0-9a-f]\{16\} ([0-9]\{8\}/exresop-[0-9]*)
-      kernel: ACPI Error: AE_AML_OPERAND_TYPE, While resolving operands for \[OpcodeName unavailable\] ([0-9]\{8\}/dswexec-[0-9]*)
-      kernel: ACPI Error: Aborting method \\_PR\.CPU0\._PDC due to previous error (AE_AML_OPERAND_TYPE) ([0-9]\{8\}/psparse-[0-9]*)
-      kernel: i915 [0-9]\{4\}:[0-9]\{2\}:[0-9]\{2\}.[0-9]: \[drm\] \*ERROR\* Failed to write source OUI
-      systemd-udevd\[[0-9]*\]: /nix/store/[0-9a-z]\{32\}-systemd-[^/]*/lib/udev/rules\.d/50-udev-default\.rules:[0-9]* Unknown group '[^']*', ignoring
-      kernel: Bluetooth: hci0: unexpected event for opcode 0xfc2f
-      kernel: Bluetooth: hci0: SCO packet for unknown connection handle [0-9]*
-      bluetoothd\[[0-9]*\]: profiles/sap/server\.c:sap_server_register() Sap driver initialization failed\.
-      bluetoothd\[[0-9]*\]: sap-server: Operation not permitted (1)
-      pipewire\[[0-9]*\]: jack-device 0x[0-9a-f]\{12\}: can't open client: Input/output error
-      dbus-broker-launch\[[0-9]*\]: Ignoring duplicate name '[^']*' in service file '[^']*'
     '';
   };
 
@@ -559,193 +450,8 @@
     };
   };
 
-  home-manager.users.lily = { pkgs, lib, ... }: let cfg = config.home-manager.users.lily; in {
-    services.mopidy = {
-      enable = true;
-      settings = {
-        file.enabled = false;
-        local.media_dir = "${cfg.home.homeDirectory}/music";
-      };
-      extensionPackages = with pkgs; [
-        mopidy-local mopidy-iris mopidy-mpd
-      ] ++ (lib.optionals config.nixpkgs.config.allowUnfree [ /*mopidy-spotify*/ ]);
-      extraConfigFiles = [
-        config.sops.secrets.mopidy-lily-secrets.path
-      ];
-    };
-
-    services.mpdris2 = {
-      enable = true;
-      notifications = true;
-      multimediaKeys = false;
-      cdPrevious = true;
-      mpd.musicDirectory = cfg.services.mopidy.settings.local.media_dir;
-    };
-
-    services.udiskie = {
-      enable = true;
-      automount = false;
-      tray = "never";
-    };
-
-    systemd.user.services.mpdris2 = {
-      # wait for mako since mpdris2 disables notifications if the org.freedesktop.Notifications busname is not available yet
-      Unit.After = [ "mako.service" ];
-      # wait for mpd port to become available to avoid reconnected notification on bootup
-      Service.ExecStartPre = "${pkgs.coreutils}/bin/timeout 60 ${pkgs.bash}/bin/sh -c 'while ! ${pkgs.iproute2}/sbin/ss -tlnH sport = :${toString cfg.services.mpdris2.mpd.port} | ${pkgs.gnugrep}/bin/grep -q \"^LISTEN.*:${toString cfg.services.mpdris2.mpd.port}\"; do ${pkgs.coreutils}/bin/sleep 1; done'";
-    };
-
-    programs.beets = {
-      enable = true;
-      settings = {
-        directory = cfg.services.mopidy.settings.local.media_dir;
-      };
-    };
-
-    programs.hyfetch = {
-      enable = true;
-      settings = {
-        preset = "transfeminine";
-        mode = "rgb";
-        light_dark = "dark";
-        lightness = 0.5;
-        color_align = {
-          mode = "horizontal";
-          custom_colors = [ ];
-          fore_back = null;
-        };
-      };
-    };
-
-    xdg.configFile = {
-      "rofi-pass/config".text = ''
-        typePassOrOtp () {
-          checkIfPass
-
-          case "$password" in
-            'otpauth://'*)
-              typed="OTP token"
-              printf '%s' "$(generateOTP)" | wtype -
-              ;;
-
-            *)
-              typed="password"
-              printf '%s' "$password" | wtype -
-              ;;
-          esac
-
-          if [[ $notify == "true" ]]; then
-              if [[ "''${stuff[notify]}" == "false" ]]; then
-                  :
-              else
-                  notify-send "rofi-pass" "finished typing $typed";
-              fi
-          elif [[ $notify == "false" ]]; then
-              if [[ "''${stuff[notify]}" == "true" ]]; then
-                  notify-send "rofi-pass" "finished typing $typed";
-              else
-                  :
-              fi
-          fi
-
-          clearUp
-        }
-
-        default_do=typePassOrOtp
-        clip=clipboard
-      '';
-    };
-
-    home.file = {
-      "bin/addr" = {
-        text = ''
-          #!/bin/sh
-          exec curl "$@" icanhazip.com
-        '';
-        executable = true;
-      };
-
-      "bin/alert" = {
-        text = ''
-          #!/bin/sh
-          exec curl -s -X POST -d body="$*" https://alert.lily.flowers/ >/dev/null
-        '';
-        executable = true;
-      };
-
-      "bin/genpass" = {
-        text = ''
-          #!/bin/sh
-          grep -E '^\w{4,}$' ${pkgs.google-10000-english}/share/dict/google-10000-english-usa-no-swears.txt | sort -R | head -n4 | paste -sd ""
-        '';
-        executable = true;
-      };
-
-      "bin/neofetch" = {
-        text = ''
-          #!/bin/sh
-          distro="FoosterOS/2 Warp (NixOS ${config.system.nixos.release}) $(${pkgs.coreutils}/bin/uname -m)" exec ${pkgs.hyfetch}/bin/neowofetch --colors 5 4 4 5 4 7 --ascii_distro nixos --ascii_colors 5 4 --separator ' ->' "$@"
-        '';
-        executable = true;
-      };
-
-      "bin/pdflatexmk" = {
-        text = ''
-          #!/bin/sh
-          latexmk -pdf "$@" && latexmk -c "$@"
-        '';
-        executable = true;
-      };
-
-      "bin/ssh" = {
-        text = ''
-          #!/bin/sh
-          if [ "$TERM" = alacritty ]; then
-            export TERM=xterm-256color
-          fi
-          exec "$(which --skip-tilde ssh)" "$@"
-        '';
-        executable = true;
-      };
-
-      "bin/scp-nofp" = {
-        text = ''
-          #!/bin/sh
-          scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$@"
-        '';
-        executable = true;
-      };
-
-      "bin/sftp-nofp" = {
-        text = ''
-          #!/bin/sh
-          sftp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$@"
-        '';
-        executable = true;
-      };
-
-      "bin/ssh-nofp" = {
-        text = ''
-          #!/bin/sh
-          ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$@"
-        '';
-        executable = true;
-      };
-
-      "bin/wf-loopback" = {
-        text = ''
-          #!/bin/sh
-          exec wf-recorder --muxer=v4l2 --codec=rawvideo --pixel-format=yuv420p --file=/dev/video63 "$@"
-        '';
-        executable = true;
-      };
-    };
-
-    home.activation = {
-      linkHomeMnt = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        $DRY_RUN_CMD ln -sTf $VERBOSE_ARG /run/media/"$USER" "$HOME"/mnt
-      '';
-    };
+  home-manager.users.lily = { pkgs, lib, ... }: {
+    services.mopidy.extraConfigFiles = [ config.sops.secrets.mopidy-lily-secrets.path ];
 
     home.stateVersion = "23.05";
   };
