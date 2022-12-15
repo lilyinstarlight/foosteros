@@ -270,7 +270,7 @@
       plugins = with obs-studio-plugins; [ wlrobs obs-gstreamer obs-move-transition ] ++ (lib.optionals config.nixpkgs.config.allowUnfree [ (obs-ndi.override {
         ndi = ndi.overrideAttrs (attrs: {
           src = fetchurl {
-            name = "${attrs.name}-source";
+            name = "${attrs.pname}-${attrs.version}.tar.gz";
             url = "https://downloads.ndi.tv/SDK/NDI_SDK_Linux/Install_NDI_SDK_v5_Linux.tar.gz";
             hash = "sha256-cOBMLnpimphU3icn4Pl4F1t6TsbPTNl5miI5CGL2+ic=";
           };
