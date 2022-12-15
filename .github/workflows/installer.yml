@@ -1,14 +1,19 @@
 name: Installer
 
 on:
-  push:
+  workflow_run:
+    workflows:
+      - Nix
     branches:
       - main
+    types:
+      - completed
   workflow_dispatch:
 
 jobs:
   build:
     name: Build
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - uses: cachix/install-nix-action@v18
