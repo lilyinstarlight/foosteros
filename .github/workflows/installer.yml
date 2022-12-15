@@ -37,4 +37,4 @@ jobs:
           sftp_key="$(mktemp)"
           printenv SFTP_KEY >"$sftp_key"
 
-          nix run nixpkgs#rclone -- sync --sftp-host "$SFTP_HOST" --sftp-user "$SFTP_USER" --sftp-key-file "$sftp_key" ./result :sftp:"$SFTP_PATH"
+          nix run nixpkgs#rclone -- sync --sftp-host "$SFTP_HOST" --sftp-user "$SFTP_USER" --sftp-key-file "$sftp_key" --copy-links ./result :sftp:"$SFTP_PATH"
