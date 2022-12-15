@@ -156,12 +156,14 @@
         modules = [
           ./hosts/bina/configuration.nix
         ];
+        installer = ./hosts/bina/installer.nix;
       };
       lia = self.lib.foosterosSystem {
         system = "x86_64-linux";
         modules = [
           ./hosts/lia/configuration.nix
         ];
+        installer = ./hosts/lia/installer.nix;
       };
     };
   };
