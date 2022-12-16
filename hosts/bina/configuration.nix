@@ -47,7 +47,7 @@
         restartUnits = [ "supplicant-wlp166s0.service" ];
       };
       wired-networks = {
-        restartUnits = [ "supplicant-enp0s25.service" ];
+        #restartUnits = [ "supplicant-enp0s25.service" ];
       };
       dnsimple-ddns = {};
       nullmailer-remotes = {
@@ -160,29 +160,31 @@
     };
   };
 
-  networking.supplicant.enp0s25 = {
-    driver = "wired";
-    extraConf = ''
-      ap_scan=0
-    '';
-    configFile.path = config.sops.secrets.wired-networks.path;
-    userControlled.enable = true;
-  };
-  networking.interfaces.enp0s25.useDHCP = true;
-  systemd.network.networks."40-enp0s25" = {
-    dhcpV4Config = {
-      ClientIdentifier = "mac";
-      RouteMetric = 100;
-    };
-    dhcpV6Config = {
-      RouteMetric = 100;
-    };
-    linkConfig = {
-      RequiredForOnline = "no";
-    };
-  };
+  #networking.supplicant.enp0s25 = {
+  #  driver = "wired";
+  #  extraConf = ''
+  #    ap_scan=0
+  #  '';
+  #  configFile.path = config.sops.secrets.wired-networks.path;
+  #  userControlled.enable = true;
+  #};
+  #networking.interfaces.enp0s25.useDHCP = true;
+  #systemd.network.networks."40-enp0s25" = {
+  #  dhcpV4Config = {
+  #    ClientIdentifier = "mac";
+  #    RouteMetric = 100;
+  #  };
+  #  dhcpV6Config = {
+  #    RouteMetric = 100;
+  #  };
+  #  linkConfig = {
+  #    RequiredForOnline = "no";
+  #  };
+  #};
 
   hardware.bluetooth.settings.General.Name = "Bina";
+
+  hardware.video.hidpi.enable = true;
 
   hardware.playdate.enable = true;
 
@@ -246,7 +248,7 @@
   environment.etc = {
     "sway/config.d/bina".text = ''
       ### ouputs
-      output eDP-1 resolution 1920x1080 position 0 0 scale 1
+      output eDP-1 resolution 2256x1504 position 0,0 scale 1.5
 
       ### inputs
       input type:keyboard {
@@ -257,7 +259,7 @@
           xkb_layout us
       }
 
-      input "1739:0:Synaptics_TM3053-003" {
+      input "2362:628:PIXA3854:00_093A:0274_Touchpad" {
           click_method clickfinger
           dwt enabled
           middle_emulation enabled
@@ -289,7 +291,7 @@
       order += "cpu_temperature 0"
       order += "volume master"
       order += "wireless wlp166s0"
-      order += "battery 0"
+      order += "battery 1"
       order += "disk /"
       order += "tztime local"
 
@@ -311,7 +313,7 @@
           format_down = "wlan: off"
       }
 
-      battery 0 {
+      battery 1 {
           integer_battery_capacity = true
           last_full_capacity = true
           low_threshold = 12
@@ -350,7 +352,7 @@
 
       order += "load"
       order += "cpu_temperature 0"
-      order += "battery 0"
+      order += "battery 1"
       order += "disk /"
       order += "tztime local"
 
@@ -362,7 +364,7 @@
           format = "temp: %degrees °C"
       }
 
-      battery 0 {
+      battery 1 {
           integer_battery_capacity = true
           last_full_capacity = true
           low_threshold = 12
@@ -388,11 +390,11 @@
 
   programs.kanshi.extraConfig = ''
     profile internal {
-      output eDP-1 enable mode 1920x1080 position 0,0 scale 1
+      output eDP-1 enable mode 2256x1504 position 0,0 scale 1.5
     }
 
     profile desk {
-      output eDP-1 enable mode 1920x1080 position 1920,0 scale 1
+      output eDP-1 enable mode 2256x1504 position 1920,0 scale 1.5
       output "VIZIO, Inc E390i-A1 0x00000101" enable mode 1920x1080 position 0,0 scale 1
       exec ${pkgs.sway}/bin/swaymsg workspace number 3, move workspace to eDP-1
       exec ${pkgs.sway}/bin/swaymsg workspace number 1, move workspace to '"VIZIO, Inc E390i-A1 0x00000101"'
@@ -438,7 +440,7 @@
 
   programs.swaynag-battery = {
     enable = true;
-    powerSupply = "BAT0";
+    powerSupply = "BAT1";
   };
 
   users = {
