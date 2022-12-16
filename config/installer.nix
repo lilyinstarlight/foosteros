@@ -34,7 +34,7 @@
         git clone https://github.com/lilyinstarlight/foosteros.git /mnt/etc/nixos
         git -C /mnt/etc/nixos reset --hard ${self.rev or "origin/HEAD"}
 
-        if nix eval "/mnt/etc/nixos#nixosConfigurations.$INSTALL_HOSTNAME.config.environment.persistenence./state" >/dev/null; then
+        if nix eval "/mnt/etc/nixos#nixosConfigurations.$INSTALL_HOSTNAME.config.environment.persistence./state" >/dev/null; then
           mkdir -p /mnt/etc/ssh
           echo "Please enter the SSH host key for $INSTALL_HOSTNAME and then press CTRL-D:"
           cat >/mnt/etc/ssh/ssh_host_rsa_key
