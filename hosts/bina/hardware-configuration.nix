@@ -20,17 +20,6 @@
     xargs = "${pkgs.findutils}/bin/xargs";
   };
 
-  # TODO: See both of these for context
-  #   * https://github.com/systemd/systemd/issues/24904#issuecomment-1328607139
-  #   * https://github.com/systemd/systemd/issues/3551
-  boot.initrd.systemd.targets.initrd-root-device = {
-    requires = [ "dev-nixos-root.device" ];
-    after = [ "dev-nixos-root.device" ];
-  };
-  boot.initrd.systemd.targets.initrd-root-fs = {
-    after = [ "sysroot.mount" ];
-  };
-
   boot.initrd.systemd.services.create-root = {
     description = "Rolling over and creating new filesystem root";
 
@@ -81,6 +70,7 @@
             name = "esp";
             start = "1MiB";
             end = "100MiB";
+            bootable = true;
             content = {
               type = "filesystem";
               format = "vfat";

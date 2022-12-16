@@ -1,4 +1,4 @@
-{ config, lib, pkgs, self, inputs, ... }:
+{ config, lib, pkgs, utils, self, inputs, ... }:
 
 let
   issue = pkgs.writeText "issue" ''
@@ -100,7 +100,23 @@ in
     };
   };
 
-  boot.initrd.systemd.enable = true;
+  boot.initrd.systemd = {
+    enable = true;
+
+    # TODO: See both of these for context
+    #   * https://github.com/systemd/systemd/issues/24904#issuecomment-1328607139
+    #   * https://github.com/systemd/systemd/issues/3551
+    targets.initrd-root-device = let
+      unit = utils.escapeSystemdPath (config.fileSystems."/".device or "/dev/disk/by-label/${config.fileSystems."/".label}");
+    in {
+      requires = [ "${unit}.device" ];
+      after = [ "${unit}.device" ];
+    };
+    targets.initrd-root-fs = {
+      after = [ "sysroot.mount" ];
+    };
+  };
+
 
   networking = {
     useDHCP = false;

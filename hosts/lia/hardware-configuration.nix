@@ -19,17 +19,6 @@
     xargs = "${pkgs.findutils}/bin/xargs";
   };
 
-  # TODO: See both of these for context
-  #   * https://github.com/systemd/systemd/issues/24904#issuecomment-1328607139
-  #   * https://github.com/systemd/systemd/issues/3551
-  boot.initrd.systemd.targets.initrd-root-device = {
-    requires = [ "dev-disk-by\\x2dlabel-root.device" ];
-    after = [ "dev-disk-by\\x2dlabel-root.device" ];
-  };
-  boot.initrd.systemd.targets.initrd-root-fs = {
-    after = [ "sysroot.mount" ];
-  };
-
   boot.initrd.systemd.services.create-root = {
     description = "Rolling over and creating new filesystem root";
 
