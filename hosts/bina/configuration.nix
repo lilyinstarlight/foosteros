@@ -44,7 +44,7 @@
       restic-backup-password = {};
       restic-backup-environment = {};
       wireless-networks = {
-        restartUnits = [ "supplicant-wlp4s0.service" ];
+        restartUnits = [ "supplicant-wlp166s0.service" ];
       };
       wired-networks = {
         restartUnits = [ "supplicant-enp0s25.service" ];
@@ -141,7 +141,7 @@
     domain = "fooster.network";
   };
 
-  networking.supplicant.wlp4s0 = {
+  networking.supplicant.wlp166s0 = {
     driver = "nl80211";
     extraConf = ''
       p2p_disabled=1
@@ -149,8 +149,8 @@
     configFile.path = config.sops.secrets.wireless-networks.path;
     userControlled.enable = true;
   };
-  networking.interfaces.wlp4s0.useDHCP = true;
-  systemd.network.networks."40-wlp4s0" = {
+  networking.interfaces.wlp166s0.useDHCP = true;
+  systemd.network.networks."40-wlp166s0" = {
     dhcpV4Config = {
       ClientIdentifier = "mac";
       RouteMetric = 600;
@@ -288,7 +288,7 @@
       order += "load"
       order += "cpu_temperature 0"
       order += "volume master"
-      order += "wireless wlp4s0"
+      order += "wireless wlp166s0"
       order += "battery 0"
       order += "disk /"
       order += "tztime local"
@@ -306,7 +306,7 @@
           format_muted = "vol: mute"
       }
 
-      wireless wlp4s0 {
+      wireless wlp166s0 {
           format_up = "wlan: %essid"
           format_down = "wlan: off"
       }
