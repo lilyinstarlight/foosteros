@@ -69,9 +69,9 @@
   };
 
   disko.devices = {
-    disk.sda = {
+    disk.nvme0n1 = {
       type = "disk";
-      device = "/dev/sda";
+      device = "/dev/nvme0n1";
       content = {
         type = "table";
         format = "gpt";
