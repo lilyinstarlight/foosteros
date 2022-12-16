@@ -5,6 +5,8 @@
     inputs.nixos-hardware.nixosModules.framework-12th-gen-intel
   ];
 
+  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
+
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModprobeConfig = ''
     options kvm_intel nested=1 emulate_invalid_guest_state=0
