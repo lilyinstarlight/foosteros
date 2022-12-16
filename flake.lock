@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1671209280,
-        "narHash": "sha256-/JcW/6NlAgy1CG879aXx4Oxx/PC/lznjmzyl03dcbJQ=",
+        "lastModified": 1671209480,
+        "narHash": "sha256-t3WuPTcDLr6BXCe9j8jjdMtyYcj2SV8jvjmDNYT631I=",
         "owner": "lilyinstarlight",
         "repo": "disko",
-        "rev": "83545109b04345eafba68b37102ea54d19694e2b",
+        "rev": "0f59f9be310755bcb248844c7b72476590deeb1c",
         "type": "github"
       },
       "original": {
