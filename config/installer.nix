@@ -20,6 +20,8 @@
       name = "foosteros-install";
       runtimeInputs = [ nix openssh git ];
       text = ''
+        set -euxo pipefail
+
         export SYSTEM_CLOSURE='${config.system.build.installClosure}'
         export INSTALL_HOSTNAME='${config.system.build.installHostname}'
 
