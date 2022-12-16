@@ -36,10 +36,15 @@
 
         if nix eval "/mnt/etc/nixos#nixosConfigurations.$INSTALL_HOSTNAME.config.environment.persistence./state" >/dev/null; then
           mkdir -p /mnt/etc/ssh
-          echo "Please enter the SSH host key for $INSTALL_HOSTNAME and then press CTRL-D:"
+          echo "Please enter the SSH RSA host key for $INSTALL_HOSTNAME and then press CTRL-D:"
           cat >/mnt/etc/ssh/ssh_host_rsa_key
           chmod u=rw,go= /mnt/etc/ssh/ssh_host_rsa_key
           ssh-keygen -y -f /mnt/etc/ssh/ssh_host_rsa_key >/mnt/etc/ssh/ssh_host_rsa_key.pub
+
+          echo "Please enter the SSH ed25519 host key for $INSTALL_HOSTNAME and then press CTRL-D:"
+          cat >/mnt/etc/ssh/ssh_host_ed25519_key
+          chmod u=rw,go= /mnt/etc/ssh/ssh_host_ed25519_key
+          ssh-keygen -y -f /mnt/etc/ssh/ssh_host_ed25519_key >/mnt/etc/ssh/ssh_host_ed25519_key.pub
 
           mkdir -p /mnt/state/etc
           cp -a /mnt/etc/nixos /mnt/state/etc/
