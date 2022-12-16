@@ -71,7 +71,7 @@
             type = "partition";
             name = "esp";
             start = "1MiB";
-            end = "100MiB";
+            end = "512MiB";
             bootable = true;
             content = {
               type = "filesystem";
@@ -82,7 +82,7 @@
           {
             type = "partition";
             name = "nixos";
-            start = "100MiB";
+            start = "512MiB";
             end = "100%";
             content = {
               type = "luks";
