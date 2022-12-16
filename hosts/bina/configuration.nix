@@ -405,6 +405,8 @@
 
   services.resolved.dnssec = "false";
 
+  services.fprintd.enable = true;
+
   services.nullmailer.remotesFile = config.sops.secrets.nullmailer-remotes.path;
   systemd.services.nullmailer.serviceConfig = {
     SupplementaryGroups = [ config.users.groups.keys.name ];
