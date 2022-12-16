@@ -107,7 +107,11 @@ in
     #   * https://github.com/systemd/systemd/issues/24904#issuecomment-1328607139
     #   * https://github.com/systemd/systemd/issues/3551
     targets.initrd-root-device = let
-      unit = utils.escapeSystemdPath (config.fileSystems."/".device or "/dev/disk/by-label/${config.fileSystems."/".label}");
+      fs = config.fileSystems."/";
+      unit = utils.escapeSystemdPath (
+        if fs.device != null then fs.device
+        else "/dev/disk/by-label/${fs.label}"
+      );
     in {
       requires = [ "${unit}.device" ];
       after = [ "${unit}.device" ];
