@@ -16,12 +16,8 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: easimon/maximize-build-space@v6
-        with:
-          build-mount-path: '/nix'
-          remove-dotnet: 'true'
-          remove-android: 'true'
-          remove-haskell: 'true'
+      - name: Make some space in runner
+        run: sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc
 
       - uses: cachix/install-nix-action@v18
         with:
