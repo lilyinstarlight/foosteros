@@ -131,12 +131,7 @@
             name = "swap";
             size = "16g";
             content = {
-              type = "luks";
-              name = "swap";
-              keyFile = "/state/etc/ssh/ssh_host_rsa_key";
-              content = {
-                type = "swap";
-              };
+              type = "swap";
             };
           };
         };
