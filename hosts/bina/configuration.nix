@@ -70,6 +70,7 @@
       "/etc/nixos"
       "/var/db/sudo"
       "/var/lib/bluetooth"
+      "/var/lib/fprint"
       "/var/lib/libvirt"
       "/var/lib/systemd"
       "/var/log"
