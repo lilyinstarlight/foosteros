@@ -18,6 +18,7 @@ jobs:
     steps:
       - uses: easimon/maximize-build-space@v6
         with:
+          build-mount-path: '/nix'
           remove-dotnet: 'true'
           remove-android: 'true'
           remove-haskell: 'true'
