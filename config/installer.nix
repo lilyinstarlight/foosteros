@@ -38,8 +38,8 @@
           mkdir -p /mnt/etc/ssh
           echo "Please enter the SSH host key for $INSTALL_HOSTNAME and then press CTRL-D:"
           cat >/mnt/etc/ssh/ssh_host_rsa_key
-          ssh-keygen -y -f /mnt/etc/ssh/ssh_host_rsa_key >/mnt/etc/ssh/ssh_host_rsa_key.pub
           chmod u=rw,go= /mnt/etc/ssh/ssh_host_rsa_key
+          ssh-keygen -y -f /mnt/etc/ssh/ssh_host_rsa_key >/mnt/etc/ssh/ssh_host_rsa_key.pub
 
           mkdir -p /mnt/state/etc
           cp -a /mnt/etc/nixos /mnt/state/etc/
