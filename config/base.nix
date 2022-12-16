@@ -68,7 +68,7 @@ in
       ({ pkgs, ... }: {
         xdg.userDirs = {
           enable = true;
-          desktop = "$HOME";
+          desktop = "$HOME/";
           documents = "$HOME/docs";
           download = "$HOME/tmp";
           music = "$HOME/music";
@@ -176,7 +176,7 @@ in
     lsb-release.text = lib.mkOverride 75 (attrsToText lsbReleaseContents);
 
     "xdg/user-dirs.defaults".text = ''
-      XDG_DESKTOP_DIR="$HOME"
+      XDG_DESKTOP_DIR="$HOME/"
       XDG_DOCUMENTS_DIR="$HOME/docs"
       XDG_DOWNLOAD_DIR="$HOME/tmp"
       XDG_MUSIC_DIR="$HOME/music"
