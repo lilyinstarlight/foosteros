@@ -111,7 +111,7 @@
         lvs = {
           root = {
             type = "lvm_lv";
-            size = "100%FREE";
+            size = "450g";
             content = {
               type = "btrfs";
               mountpoint = "/rootvol";
@@ -129,7 +129,7 @@
           swap = {
             type = "lvm_lv";
             name = "swap";
-            size = "16g";
+            size = "100%FREE";
             content = {
               type = "swap";
             };
