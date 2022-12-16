@@ -27,7 +27,7 @@
 
         which foosteros-prepare &>/dev/null && foosteros-prepare
 
-        ${config.system.build.installDisko}
+        ${config.system.build.installDisko or "echo 'No disko config, not partitioning automatically'"}
 
         mkdir -p /mnt/etc
         git clone https://github.com/lilyinstarlight/foosteros.git /mnt/etc/nixos
