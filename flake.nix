@@ -73,7 +73,7 @@
             modules = baseModules ++ [
               ./config/base.nix
             ] ++ modules ++ nixpkgs.lib.optionals (installer != null) [
-              {
+              ({ pkgs, ... }: {
                 system.build = let
                   installerConfiguration = foosterosSystem {
                     inherit system baseModules;
@@ -91,9 +91,12 @@
                   };
                 in {
                   installerSystem = installerConfiguration;
-                  installer = installerConfiguration.config.system.build.isoImage;
+                  installer = let
+                    isoName = installerConfiguration.config.isoImage.isoName;
+                    isoPath = "${installerConfiguration.config.system.build.isoImage}/iso/${isoName}";
+                  in pkgs.runCommandLocal isoName { inherit isoPath; } ''ln -s "$isoPath" $out'';
                 };
-              }
+              })
             ];
           };
         in selfSystem);

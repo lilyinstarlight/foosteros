@@ -11,7 +11,8 @@
   # TODO: installer does not support systemd initrd yet
   boot.initrd.systemd.enable = lib.mkImageMediaOverride false;
 
-  isoImage.isoName = lib.mkImageMediaOverride "foosteros-${config.system.build.installHostname}.iso";
+  isoImage.isoName = lib.mkImageMediaOverride
+    "foosteros-${config.system.build.installHostname}-${config.system.nixos.release}-${self.shortRev or "dirty"}-${pkgs.stdenv.hostPlatform.uname.processor}.iso";
   isoImage.volumeID = "foosteros-${config.system.nixos.release}-${self.shortRev or "dirty"}-${pkgs.stdenv.hostPlatform.uname.processor}";
 
   networking.hostName = lib.mkImageMediaOverride "${config.system.build.installHostname}-installer";

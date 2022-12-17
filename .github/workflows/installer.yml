@@ -11,10 +11,37 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    name: Build
+  populate:
+    name: Populate Build Matrix
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
+    outputs:
+      hosts: ${{ steps.identify.outputs.hosts }}
+    steps:
+      - id: identify
+        name: Identifying hosts capable of being built into an installer
+        run: |
+          hosts=$(nix -vL eval .#nixosConfigurations --apply builtins.attrNames --json | jq -r '.[]')"
+          buildHosts=""
+
+          for host in hosts; do
+            if nix -vL eval .#nixosConfigurations."$host".config.system.build.installer.outPath &>/dev/null \
+                && [ "$(nix -vL eval --raw .#nixosConfigurations."$host".pkgs.stdenv.hostPlatform.uname.processor)" = "$(uname -m)" ]; then
+              buildHosts+="$(printf '%s\n' "$host")"
+            fi
+          done
+
+          echo "hosts=$(echo "$hosts" | jq --null-input --raw-input --compact-output '[inputs | select(length>0)]')" >> $GITHUB_OUTPUT
+
+  build:
+    name: Build installer for ${{ matrix.host }}
+    needs: [populate]
+    runs-on: ubuntu-latest
+    outputs:
+      filename: ${{ steps.build.outputs.filename }}
+    strategy:
+      matrix:
+        host: ${{ fromJSON(needs.populate.outputs.hosts) }}
     steps:
       - run: sudo mkdir /nix
 
@@ -39,9 +66,13 @@ jobs:
         with:
           fetch-depth: 0
 
-      - run: nix -vL --show-trace build --file ./installer.nix
+      - id: build
+        name: Build ISO
+        run: |
+          nix -vL --show-trace build '.#nixosConfigurations.${{ matrix.host }}.config.system.build.installer'
+          echo "filename=$(nix -vL --show-trace eval '.#nixosConfigurations.${{ matrix.host }}.config.system.build.installer.name')" >> $GITHUB_OUTPUT
 
-      - name: Deploy ISOs to website
+      - name: Deploy ISO to website
         env:
           SFTP_HOST: ${{ secrets.SFTP_HOST }}
           SFTP_USER: ${{ secrets.SFTP_USER }}
@@ -51,4 +82,4 @@ jobs:
           sftp_key="$(mktemp)"
           printenv SFTP_KEY >"$sftp_key"
 
-          nix run nixpkgs#rclone -- sync --sftp-host "$SFTP_HOST" --sftp-user "$SFTP_USER" --sftp-key-file "$sftp_key" --copy-links ./result :sftp:"$SFTP_PATH"
+          nix run nixpkgs#rclone -- copyto --sftp-host "$SFTP_HOST" --sftp-user "$SFTP_USER" --sftp-key-file "$sftp_key" --copy-links ./result :sftp:"$SFTP_PATH"'/${{ steps.build.outputs.filename }}'
