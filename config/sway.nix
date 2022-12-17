@@ -608,6 +608,8 @@ in
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
+  boot.plymouth.enable = true;
+
   services.greetd = let
       sway_session = pkgs.writeScript "sway-session" ''
         #!/bin/sh
