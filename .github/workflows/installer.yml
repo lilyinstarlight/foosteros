@@ -40,12 +40,12 @@ jobs:
           buildHosts=""
           buildFilenames=""
 
-          for host in hosts; do
+          for host in $hosts; do
             if nix -vL eval .#nixosConfigurations."$host".config.system.build.installer.outPath &>/dev/null \
                 && [ "$(nix -vL eval --raw .#nixosConfigurations."$host".pkgs.stdenv.hostPlatform.uname.processor)" = "$(uname -m)" ]; then
-              buildHosts="$buildHosts$(printf '%s\n' "$host")"
+              buildHosts="$(printf '%s\n%s\n' "$buildHosts" "$host")"
               filename="$(nix -vL --show-trace eval --raw .#nixosConfigurations."$host".config.system.build.installer.name)"
-              buildFilenames="$buildFilenames$(printf '%s\n' "$filename")"
+              buildFilenames="$(printf '%s\n%s\n' "$buildFilenames" "$filename")"
             fi
           done
 
