@@ -106,7 +106,7 @@ jobs:
 
           nix run nixpkgs#rclone -- copyto --sftp-host "$SFTP_HOST" --sftp-user "$SFTP_USER" --sftp-key-file "$sftp_key" --copy-links ./result :sftp:"$SFTP_PATH"/"$FILENAME"
 
-  build:
+  sync:
     name: 'Sync Deployment'
     needs: [populate, build]
     runs-on: ubuntu-latest
