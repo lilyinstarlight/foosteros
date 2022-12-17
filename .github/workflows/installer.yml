@@ -21,7 +21,7 @@ jobs:
       - id: identify
         name: Identifying hosts capable of being built into an installer
         run: |
-          hosts=$(nix -vL eval .#nixosConfigurations --apply builtins.attrNames --json | jq -r '.[]')"
+          hosts="$(nix -vL eval .#nixosConfigurations --apply builtins.attrNames --json | jq -r '.[]')"
           buildHosts=""
 
           for host in hosts; do
