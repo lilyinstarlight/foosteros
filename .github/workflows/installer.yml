@@ -34,7 +34,7 @@ jobs:
           fetch-depth: 0
 
       - id: identify
-        name: Identifying hosts capable of being built into an installer
+        name: Identify hosts capable of being built into an installer
         run: |
           hosts="$(nix -vL eval .#nixosConfigurations --apply builtins.attrNames --json | jq -r '.[]')"
           buildHosts=""
@@ -43,9 +43,9 @@ jobs:
           for host in hosts; do
             if nix -vL eval .#nixosConfigurations."$host".config.system.build.installer.outPath &>/dev/null \
                 && [ "$(nix -vL eval --raw .#nixosConfigurations."$host".pkgs.stdenv.hostPlatform.uname.processor)" = "$(uname -m)" ]; then
-              buildHosts+="$(printf '%s\n' "$host")"
+              buildHosts="$buildHosts$(printf '%s\n' "$host")"
               filename="$(nix -vL --show-trace eval --raw .#nixosConfigurations."$host".config.system.build.installer.name)"
-              buildFilenames+="$(printf '%s\n' "$filename")"
+              buildFilenames="$buildFilenames$(printf '%s\n' "$filename")"
             fi
           done
 
