@@ -17,6 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       hosts: ${{ steps.identify.outputs.hosts }}
+      filenames: ${{ steps.identify.outputs.filenames }}
     steps:
       - uses: cachix/install-nix-action@v18
         with:
@@ -37,15 +38,19 @@ jobs:
         run: |
           hosts="$(nix -vL eval .#nixosConfigurations --apply builtins.attrNames --json | jq -r '.[]')"
           buildHosts=""
+          buildFilenames=""
 
           for host in hosts; do
             if nix -vL eval .#nixosConfigurations."$host".config.system.build.installer.outPath &>/dev/null \
                 && [ "$(nix -vL eval --raw .#nixosConfigurations."$host".pkgs.stdenv.hostPlatform.uname.processor)" = "$(uname -m)" ]; then
               buildHosts+="$(printf '%s\n' "$host")"
+              filename="$(nix -vL --show-trace eval --raw .#nixosConfigurations."$host".config.system.build.installer.name)"
+              buildFilenames+="$(printf '%s\n' "$filename")"
             fi
           done
 
-          echo "hosts=$(echo "$hosts" | jq --null-input --raw-input --compact-output '[inputs | select(length>0)]')" >> $GITHUB_OUTPUT
+          echo "hosts=$(echo "$buildHosts" | jq --null-input --raw-input --compact-output '[inputs | select(length>0)]')" >> $GITHUB_OUTPUT
+          echo "filenames=$(echo "$buildFilenames" | jq --null-input --raw-input --compact-output '[inputs | select(length>0)]')" >> $GITHUB_OUTPUT
 
   build:
     name: 'Build Installer: ${{ matrix.host }}'
@@ -82,9 +87,11 @@ jobs:
 
       - id: build
         name: Build ISO
+        env:
+          HOST: ${{ matrix.host }}
         run: |
-          nix -vL --show-trace build '.#nixosConfigurations.${{ matrix.host }}.config.system.build.installer'
-          echo "filename=$(nix -vL --show-trace eval '.#nixosConfigurations.${{ matrix.host }}.config.system.build.installer.name')" >> $GITHUB_OUTPUT
+          nix -vL --show-trace build ".#nixosConfigurations.$HOST.config.system.build.installer"
+          echo "filename=$(nix -vL --show-trace eval --raw ".#nixosConfigurations.$HOST.config.system.build.installer.name")" >> $GITHUB_OUTPUT
 
       - name: Deploy ISO to website
         env:
@@ -92,8 +99,36 @@ jobs:
           SFTP_USER: ${{ secrets.SFTP_USER }}
           SFTP_KEY: ${{ secrets.REPO_KEY }}
           SFTP_PATH: ${{ secrets.SFTP_PATH }}
+          FILENAME: ${{ steps.build.outputs.filename }}
         run: |
           sftp_key="$(mktemp)"
           printenv SFTP_KEY >"$sftp_key"
 
-          nix run nixpkgs#rclone -- copyto --sftp-host "$SFTP_HOST" --sftp-user "$SFTP_USER" --sftp-key-file "$sftp_key" --copy-links ./result :sftp:"$SFTP_PATH"'/${{ steps.build.outputs.filename }}'
+          nix run nixpkgs#rclone -- copyto --sftp-host "$SFTP_HOST" --sftp-user "$SFTP_USER" --sftp-key-file "$sftp_key" --copy-links ./result :sftp:"$SFTP_PATH"/"$FILENAME"
+
+  build:
+    name: 'Sync Deployment'
+    needs: [populate, build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: cachix/install-nix-action@v18
+        with:
+          extra_nix_config: |
+            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+            system-features = benchmark big-parallel kvm nixos-test
+
+      - uses: cachix/cachix-action@v12
+        with:
+          name: foosteros
+
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Remove old files
+        env:
+          FILENAMES: ${{ needs.populate.outputs.filenames }}
+        run: |
+          nix run nixpkgs#rclone -- lsf --sftp-host "$SFTP_HOST" --sftp-user "$SFTP_USER" --sftp-key-file "$sftp_key" --max-depth 1 :sftp:"$SFTP_PATH" \
+            | jq --null-input --raw-input --raw-output '([inputs] - (env.FILENAMES | fromjson))[]' \
+            | xargs -I '{}' nix run nixpkgs#rclone -- purge --sftp-host "$SFTP_HOST" --sftp-user "$SFTP_USER" --sftp-key-file "$sftp_key" :sftp:"$SFTP_PATH/{}"
