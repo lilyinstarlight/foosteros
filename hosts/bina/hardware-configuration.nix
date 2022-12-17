@@ -106,7 +106,6 @@
             size = "450g";
             content = {
               type = "btrfs";
-              mountpoint = "/rootvol";
               subvolumes = {
                 "/root" = {
                   mountpoint = "/";
