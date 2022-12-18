@@ -249,17 +249,6 @@ in
   ];
 
   environment.etc = {
-    "greetd/environment".text = let
-      sway_session = pkgs.writeScript "sway-session" ''
-        #!${pkgs.runtimeShell}
-        mkdir -p "$HOME"/.local/share/sway
-        export NIXOS_OZONE_WL=1
-        exec sway -d >"$HOME"/.local/share/sway/sway.log 2>&1
-      '';
-    in lib.mkDefault ''
-      ${sway_session}
-    '';
-
     "xdg/mimeapps.list".text = lib.mkDefault ''
       [Default Applications]
       text/html=org.qutebrowser.qutebrowser.desktop
@@ -620,13 +609,20 @@ in
   };
 
   boot.plymouth.enable = true;
-  services.greetd = let
-  in {
+  services.greetd = {
     enable = true;
     settings = {
-      default_session.command = "${pkgs.cage}/bin/cage -s ${pkgs.greetd.gtkgreet}/bin/gtkgreet";
+      default_session.command = "${pkgs.cage}/bin/cage -ds -- ${pkgs.greetd.gtkgreet}/bin/gtkgreet -c sway-session";
     };
   };
+  systemd.services.greetd.path = let
+    swaysession = pkgs.writeScriptBin "sway-session" ''
+      #!${pkgs.runtimeShell}
+      mkdir -p "$HOME"/.local/share/sway
+      export NIXOS_OZONE_WL=1
+      exec sway -d >"$HOME"/.local/share/sway/sway.log 2>&1
+    '';
+  in [ swaysession ];
 
   services.xserver.gdk-pixbuf.modulePackages = with pkgs; [ librsvg ];
 
