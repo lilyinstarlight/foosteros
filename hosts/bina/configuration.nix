@@ -167,6 +167,7 @@
     configFile.path = config.sops.secrets.wired-networks.path;
     userControlled.enable = true;
   };
+  systemd.services.supplicant-enp0s13f0u2c2.wantedBy = lib.mkForce [ "sys-subsystem-net-devices-enp0s13f0u2c2.device" ];
   networking.interfaces.enp0s13f0u2c2.useDHCP = true;
   systemd.network.networks."40-enp0s13f0u2c2" = {
     dhcpV4Config = {
