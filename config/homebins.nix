@@ -19,7 +19,17 @@
           name = "alert";
           runtimeInputs = with pkgs; [ curl ];
           text = ''
-            exec curl -s -X POST -d body="$*" https://alert.lily.flowers/ "$@" >/dev/null
+            extraArgs=()
+
+            case "$1" in
+              -p)
+                extraArgs+=("-d" "passphrase=$2")
+                shift
+                shift
+                ;;
+            esac
+
+            exec curl -s -X POST -d body="$*" "''${extraArgs[@]}" https://alert.lily.flowers/ >/dev/null
           '';
         });
       };
