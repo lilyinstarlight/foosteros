@@ -10,19 +10,21 @@ Feel free to take any pieces in this repository that you like! Please don't try 
 
 ## Installation
 
-NOTE: I have not tested these new instructions yet but I plan to soon!
+**Note:** I made this install script for myself. You can use it if you really want to, but be aware that it **will** entirely wipe your computer's disk as part of the install process.
 
-1. Build then boot the relevant install media for the given system.
+1. Build or [download](https://file.lily.flowers/foosteros/iso/) then boot the relevant install media for the given system.
     ```
-    nix -vL build --no-link --print-out-paths github:lilyinstarlight/foosteros#nixosConfigurations.minimal.config.system.build.isoImage
+    # NOTE: Only if not downloading
+    nix -vL build --no-link --print-out-paths \
+      github:lilyinstarlight/foosteros#nixosConfigurations.minimal.config.system.build.isoImage
     ```
 2. Run the customized install script from the install media.
     ```
-    foosteros-install
+    sudo foosteros-install
     ```
 3. Reboot into the new system.
     ```
-    systemctl reboot
+    sudo systemctl reboot
     ```
 
 Your FoosterOS/2 Warp system is setup and ready to go!
