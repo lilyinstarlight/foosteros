@@ -1,4 +1,4 @@
-{ stdenvNoCC, lib, fetchzip, sway, findutils, jq, gnugrep, nitrogen, xrandr }:
+{ stdenvNoCC, lib, fetchzip, sway, runtimeShell, findutils, jq, gnugrep, nitrogen, xrandr }:
 
 stdenvNoCC.mkDerivation rec {
   pname = "backgrounds";
@@ -19,7 +19,7 @@ stdenvNoCC.mkDerivation rec {
 
     mkdir -p $out/bin
     cat >$out/bin/setbg <<EOF
-    #!/bin/sh
+    #!${runtimeShell}
     if [ -d "\$HOME"/.backgrounds ]; then
       backgrounds="\$HOME"/.backgrounds
     else

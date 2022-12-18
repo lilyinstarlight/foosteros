@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchurl, makeDesktopItem, copyDesktopItems, makeWrapper, wrapGAppsHook, autoPatchelfHook, libpng, zlib, udev, gtk3, pango, cairo, gdk-pixbuf, glib, libX11, webkitgtk, libglvnd, alsa-lib, libXext, libXcursor, libXinerama, libXi, libXrandr, libXScrnSaver, libXxf86vm, libxkbcommon, wayland, coreutils, gnugrep, gnused }:
+{ lib, stdenv, fetchurl, makeDesktopItem, copyDesktopItems, makeWrapper, wrapGAppsHook, autoPatchelfHook, libpng, zlib, udev, gtk3, pango, cairo, gdk-pixbuf, glib, libX11, webkitgtk, libglvnd, alsa-lib, libXext, libXcursor, libXinerama, libXi, libXrandr, libXScrnSaver, libXxf86vm, libxkbcommon, wayland, runtimeShell, coreutils, gnugrep, gnused }:
 
 let
   simLibDeps = [
@@ -74,7 +74,7 @@ stdenv.mkDerivation rec {
     # Helper scripts
     mkdir -p $out/libexec
     cat >$out/libexec/PlaydateSimulator <<EOF
-    #!/bin/sh
+    #!${runtimeShell}
     echo "Linking SDK and copying virtual disk into \$HOME/.Playdate Simluator/sdk..."
     ${coreutils}/bin/mkdir -p "\$HOME/.Playdate Simulator/sdk"
     for dir in $out/sdk/*; do
