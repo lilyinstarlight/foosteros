@@ -111,6 +111,7 @@
         ".password-store"
         ".Playdate Simulator"
         ".sonic-pi"
+        ".ssh"
       ];
       files = [
         ".android/adbkey"
@@ -118,9 +119,6 @@
         ".config/beets/library.db"
         ".config/beets/state.pickle"
         ".lmmsrc.xml"
-        ".ssh/id_ed25519"
-        ".ssh/id_ed25519.pub"
-        ".ssh/known_hosts"
       ];
     };
   };
