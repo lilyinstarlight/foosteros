@@ -96,6 +96,7 @@ in
 
     systemd-boot = {
       enable = lib.mkDefault true;
+      consoleMode = lib.mkOverride 500 "keep";  # 100 is default prio and 1000 is module default prio
       bootName = "FoosterOS/2 Warp";
     };
   };
