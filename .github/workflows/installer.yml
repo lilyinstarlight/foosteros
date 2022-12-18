@@ -56,6 +56,10 @@ jobs:
       - id: check
         name: Check currently deployed images
         env:
+          SFTP_HOST: ${{ secrets.SFTP_HOST }}
+          SFTP_USER: ${{ secrets.SFTP_USER }}
+          SFTP_KEY: ${{ secrets.REPO_KEY }}
+          SFTP_PATH: ${{ secrets.SFTP_PATH }}
           FILENAMES: ${{ steps.identify.outputs.filenames }}
         run: |
           echo "removables=$(nix run nixpkgs#rclone -- lsf --sftp-host "$SFTP_HOST" --sftp-user "$SFTP_USER" --sftp-key-file "$sftp_key" --max-depth 1 :sftp:"$SFTP_PATH" \
@@ -136,6 +140,10 @@ jobs:
 
       - name: Remove old files
         env:
+          SFTP_HOST: ${{ secrets.SFTP_HOST }}
+          SFTP_USER: ${{ secrets.SFTP_USER }}
+          SFTP_KEY: ${{ secrets.REPO_KEY }}
+          SFTP_PATH: ${{ secrets.SFTP_PATH }}
           REMOVABLES: ${{ needs.populate.outputs.removables }}
         run: |
           jq --null-input --raw-output '(env.REMOVABLES | fromjson)[]' | xargs -I '{}' nix run nixpkgs#rclone -- purge --sftp-host "$SFTP_HOST" --sftp-user "$SFTP_USER" --sftp-key-file "$sftp_key" :sftp:"$SFTP_PATH/{}"
