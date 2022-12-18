@@ -104,7 +104,7 @@ jobs:
           sftp_key="$(mktemp)"
           printenv SFTP_KEY >"$sftp_key"
 
-          nix run nixpkgs#rclone -- copyto --sftp-host "$SFTP_HOST" --sftp-user "$SFTP_USER" --sftp-key-file "$sftp_key" --copy-links ./result :sftp:"$SFTP_PATH"/"$FILENAME"
+          nix run nixpkgs#rclone -- copyto --sftp-host "$SFTP_HOST" --sftp-user "$SFTP_USER" --sftp-key-file "$sftp_key" --sftp-set-modtime=false --copy-links ./result :sftp:"$SFTP_PATH"/"$FILENAME"
 
   sync:
     name: 'Sync Deployment'
