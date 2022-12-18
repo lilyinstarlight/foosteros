@@ -615,14 +615,6 @@ in
       default_session.command = "${pkgs.cage}/bin/cage -ds -- ${pkgs.greetd.gtkgreet}/bin/gtkgreet -c sway-session";
     };
   };
-  systemd.services.greetd.path = let
-    swaysession = pkgs.writeScriptBin "sway-session" ''
-      #!${pkgs.runtimeShell}
-      mkdir -p "$HOME"/.local/share/sway
-      export NIXOS_OZONE_WL=1
-      exec sway -d >"$HOME"/.local/share/sway/sway.log 2>&1
-    '';
-  in [ swaysession ];
 
   services.xserver.gdk-pixbuf.modulePackages = with pkgs; [ librsvg ];
 
@@ -647,6 +639,11 @@ in
       slurp grim wl-clipboard libnotify sway-contrib.grimshot swappy wf-recorder wl-mirror
       xwayland
       xdg-utils
+      (pkgs.writeShellScriptBin "sway-session" ''
+        mkdir -p "$HOME"/.local/share/sway
+        export NIXOS_OZONE_WL=1
+        exec sway -d >"$HOME"/.local/share/sway/sway.log 2>&1
+      '')
     ];
     extraSessionCommands = ''
       export XDG_SESSION_TYPE=wayland
