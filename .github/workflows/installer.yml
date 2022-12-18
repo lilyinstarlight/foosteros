@@ -136,4 +136,7 @@ jobs:
           SFTP_PATH: ${{ secrets.SFTP_PATH }}
           START_TIME: ${{ needs.populate.outputs.start }}
         run: |
+          sftp_key="$(mktemp)"
+          printenv SFTP_KEY >"$sftp_key"
+
           nix run nixpkgs#rclone -- delete --sftp-host "$SFTP_HOST" --sftp-user "$SFTP_USER" --sftp-key-file "$sftp_key" --min-age "$(expr "$(date +%s)" - "$START_TIME")s" :sftp:"$SFTP_PATH/"
