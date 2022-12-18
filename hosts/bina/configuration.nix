@@ -47,7 +47,7 @@
         restartUnits = [ "supplicant-wlp166s0.service" ];
       };
       wired-networks = {
-        #restartUnits = [ "supplicant-enp0s25.service" ];
+        restartUnits = [ "supplicant-enp0s13f0u2c2.service" ];
       };
       dnsimple-ddns = {};
       nullmailer-remotes = {
@@ -159,27 +159,27 @@
     };
   };
 
-  #networking.supplicant.enp0s25 = {
-  #  driver = "wired";
-  #  extraConf = ''
-  #    ap_scan=0
-  #  '';
-  #  configFile.path = config.sops.secrets.wired-networks.path;
-  #  userControlled.enable = true;
-  #};
-  #networking.interfaces.enp0s25.useDHCP = true;
-  #systemd.network.networks."40-enp0s25" = {
-  #  dhcpV4Config = {
-  #    ClientIdentifier = "mac";
-  #    RouteMetric = 100;
-  #  };
-  #  dhcpV6Config = {
-  #    RouteMetric = 100;
-  #  };
-  #  linkConfig = {
-  #    RequiredForOnline = "no";
-  #  };
-  #};
+  networking.supplicant.enp0s13f0u2c2 = {
+    driver = "wired";
+    extraConf = ''
+      ap_scan=0
+    '';
+    configFile.path = config.sops.secrets.wired-networks.path;
+    userControlled.enable = true;
+  };
+  networking.interfaces.enp0s13f0u2c2.useDHCP = true;
+  systemd.network.networks."40-enp0s13f0u2c2" = {
+    dhcpV4Config = {
+      ClientIdentifier = "mac";
+      RouteMetric = 100;
+    };
+    dhcpV6Config = {
+      RouteMetric = 100;
+    };
+    linkConfig = {
+      RequiredForOnline = "no";
+    };
+  };
 
   hardware.bluetooth.settings.General.Name = "Bina";
 
@@ -192,7 +192,7 @@
     environmentFile = config.sops.secrets.restic-backup-environment.path;
   };
 
-  systemd.services.restic-backups-bina.serviceConfig.ExecCondition = "${config.systemd.package}/lib/systemd/systemd-networkd-wait-online --interface=enp0s25:routable --timeout=5";
+  systemd.services.restic-backups-bina.serviceConfig.ExecCondition = "${config.systemd.package}/lib/systemd/systemd-networkd-wait-online --interface=enp0s13f0u2c2:routable --timeout=5";
 
   virtualisation.spiceUSBRedirection.enable = true;
 
