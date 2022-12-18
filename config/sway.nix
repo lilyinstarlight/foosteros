@@ -249,6 +249,17 @@ in
   ];
 
   environment.etc = {
+    "greetd/environment".text = let
+      sway_session = pkgs.writeScript "sway-session" ''
+        #!${pkgs.runtimeShell}
+        mkdir -p "$HOME"/.local/share/sway
+        export NIXOS_OZONE_WL=1
+        exec sway -d >"$HOME"/.local/share/sway/sway.log 2>&1
+      '';
+    in lib.mkDefault ''
+      ${sway_session}
+    '';
+
     "xdg/mimeapps.list".text = lib.mkDefault ''
       [Default Applications]
       text/html=org.qutebrowser.qutebrowser.desktop
@@ -608,17 +619,12 @@ in
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
+  boot.plymouth.enable = true;
   services.greetd = let
-      sway_session = pkgs.writeScript "sway-session" ''
-        #!/bin/sh
-        mkdir -p "$HOME"/.local/share/sway
-        export NIXOS_OZONE_WL=1
-        exec sway -d >"$HOME"/.local/share/sway/sway.log 2>&1
-      '';
   in {
     enable = true;
     settings = {
-      default_session.command = "${pkgs.greetd.tuigreet}/bin/tuigreet --greeting 'Welcome to FoosterOS/2 Warp' --time --time-format '%Y-%m-%d %H:%M' --cmd ${sway_session}";
+      default_session.command = "${pkgs.cage}/bin/cage -s ${pkgs.greetd.gtkgreet}/bin/gtkgreet";
     };
   };
 
