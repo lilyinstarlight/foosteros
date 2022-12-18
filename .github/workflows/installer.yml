@@ -18,7 +18,7 @@ jobs:
     outputs:
       hosts: ${{ steps.identify.outputs.hosts }}
       filenames: ${{ steps.identify.outputs.filenames }}
-      removables: ${{ steps.check.outputs.removables }}
+      start: ${{ steps.identify.outputs.start }}
     steps:
       - uses: cachix/install-nix-action@v18
         with:
@@ -53,17 +53,7 @@ jobs:
           echo "hosts=$(echo "$buildHosts" | jq --null-input --raw-input --compact-output '[inputs | select(length>0)]')" >> $GITHUB_OUTPUT
           echo "filenames=$(echo "$buildFilenames" | jq --null-input --raw-input --compact-output '[inputs | select(length>0)]')" >> $GITHUB_OUTPUT
 
-      - id: check
-        name: Check currently deployed images
-        env:
-          SFTP_HOST: ${{ secrets.SFTP_HOST }}
-          SFTP_USER: ${{ secrets.SFTP_USER }}
-          SFTP_KEY: ${{ secrets.REPO_KEY }}
-          SFTP_PATH: ${{ secrets.SFTP_PATH }}
-          FILENAMES: ${{ steps.identify.outputs.filenames }}
-        run: |
-          echo "removables=$(nix run nixpkgs#rclone -- lsf --sftp-host "$SFTP_HOST" --sftp-user "$SFTP_USER" --sftp-key-file "$sftp_key" --max-depth 1 :sftp:"$SFTP_PATH" \
-            | jq --null-input --raw-input --compact-output '[inputs]')" >> $GITHUB_OUTPUT
+          echo "start=$(date +%s)" >> $GITHUB_OUTPUT
 
   build:
     name: 'Build Installer: ${{ matrix.host }}'
@@ -144,6 +134,6 @@ jobs:
           SFTP_USER: ${{ secrets.SFTP_USER }}
           SFTP_KEY: ${{ secrets.REPO_KEY }}
           SFTP_PATH: ${{ secrets.SFTP_PATH }}
-          REMOVABLES: ${{ needs.populate.outputs.removables }}
+          START_TIME: ${{ needs.populate.outputs.start }}
         run: |
-          jq --null-input --raw-output '(env.REMOVABLES | fromjson)[]' | xargs -I '{}' nix run nixpkgs#rclone -- purge --sftp-host "$SFTP_HOST" --sftp-user "$SFTP_USER" --sftp-key-file "$sftp_key" :sftp:"$SFTP_PATH/{}"
+          nixpkgs#rclone -- delete --sftp-host "$SFTP_HOST" --sftp-user "$SFTP_USER" --sftp-key-file "$sftp_key" --min-age "$(expr "$(date +%s)" - "$START_TIME")s" :sftp:"$SFTP_PATH/"
