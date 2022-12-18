@@ -427,6 +427,7 @@
       subject="Logs for $(hostname) at $(date +"%F %R")"
     '';
     filter = ''
+      dbus-broker-launch\[[0-9]*\]: Ignoring duplicate name '[^']*' in service file '[^']*'
     '';
   };
 
