@@ -612,7 +612,7 @@ in
   services.greetd = {
     enable = true;
     settings = {
-      default_session.command = "${pkgs.cage}/bin/cage -ds -- ${pkgs.greetd.gtkgreet}/bin/gtkgreet -c sway-session";
+      default_session.command = "${pkgs.greetd.tuigreet}/bin/tuigreet --greeting 'Welcome to FoosterOS/2 Warp' --time --time-format '%Y-%m-%d %H:%M' --cmd sway-session";
     };
   };
 
