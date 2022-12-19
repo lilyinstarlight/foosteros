@@ -10,6 +10,7 @@
 
     ../../config/adb.nix
     ../../config/alien.nix
+    ../../config/azure.nix
     ../../config/bluetooth.nix
     ../../config/fcitx5.nix
     ../../config/fwupd.nix
@@ -29,6 +30,7 @@
     ../../config/podman.nix
     ../../config/sway.nix
     ../../config/udiskie.nix
+    ../../config/workstation.nix
   ];
 
   sops = {
@@ -198,32 +200,6 @@
       max-jobs = "auto";
     };
   };
-
-  environment.systemPackages = with pkgs; [
-    firefox ungoogled-chromium
-    pavucontrol
-    inkscape gimp-with-plugins krita
-    qalculate-gtk
-    element-desktop jitsi-meet-electron teams-for-linux
-    helvum qjackctl qsynth vmpk calf
-    ardour lmms
-    sonic-pi sonic-pi-tool open-stage-control
-    lilypond
-    mpv ffmpeg-full
-    freecad prusa-slicer
-    hledger
-    virt-manager podman-compose
-    fq ripgrep-all
-    mkusb mkwin
-    aria2 openssl wireshark dogdns picocom
-    (ansible.overrideAttrs (attrs: {
-      propagatedBuildInputs = attrs.propagatedBuildInputs ++ (with python3Packages; [ passlib ]);
-    })) azure-cli
-    gnumake llvmPackages_latest.clang llvmPackages_latest.lldb
-  ] ++ (lib.optionals config.nixpkgs.config.allowUnfree [
-    pridecat
-    discord slack
-  ]);
 
   environment.etc = {
     "sway/config.d/lia".text = ''

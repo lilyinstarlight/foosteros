@@ -10,7 +10,9 @@
 
     ../../config/adb.nix
     ../../config/alien.nix
+    ../../config/azure.nix
     ../../config/bluetooth.nix
+    ../../config/cad.nix
     ../../config/fcitx5.nix
     ../../config/fwupd.nix
     ../../config/gc.nix
@@ -27,9 +29,11 @@
     ../../config/pki.nix
     ../../config/playdate.nix
     ../../config/podman.nix
+    ../../config/production.nix
     ../../config/sway.nix
     ../../config/tex.nix
     ../../config/udiskie.nix
+    ../../config/workstation.nix
   ];
 
   sops = {
@@ -203,46 +207,6 @@
       max-jobs = "auto";
     };
   };
-
-  environment.systemPackages = with pkgs; [
-    firefox ungoogled-chromium
-    pavucontrol
-    inkscape gimp-with-plugins krita
-    qalculate-gtk
-    element-desktop jitsi-meet-electron teams-for-linux
-    helvum qjackctl qsynth vmpk calf
-    ardour lmms
-    sonic-pi sonic-pi-tool open-stage-control
-    lilypond
-    mpv ffmpeg-full
-    retroarchFull
-    freecad prusa-slicer
-    (wrapOBS {
-      plugins = with obs-studio-plugins; [ wlrobs obs-gstreamer obs-move-transition ] ++ (lib.optionals config.nixpkgs.config.allowUnfree [ (obs-ndi.override {
-        ndi = ndi.overrideAttrs (attrs: rec {
-          src = fetchurl {
-            name = "${attrs.pname}-${attrs.version}.tar.gz";
-            url = "https://downloads.ndi.tv/SDK/NDI_SDK_Linux/Install_NDI_SDK_v5_Linux.tar.gz";
-            hash = "sha256-cOBMLnpimphU3icn4Pl4F1t6TsbPTNl5miI5CGL2+ic=";
-          };
-
-          unpackPhase = ''unpackFile ${src}; echo y | ./${attrs.installerName}.sh; sourceRoot="NDI SDK for Linux";'';
-        });
-      }) ]);
-    })
-    hledger
-    virt-manager podman-compose
-    fq ripgrep-all
-    mkusb mkwin
-    aria2 openssl wireshark dogdns picocom
-    (ansible.overrideAttrs (attrs: {
-      propagatedBuildInputs = attrs.propagatedBuildInputs ++ (with python3Packages; [ passlib ]);
-    })) azure-cli
-    gnumake llvmPackages_latest.clang llvmPackages_latest.lldb
-  ] ++ (lib.optionals config.nixpkgs.config.allowUnfree [
-    pridecat
-    discord slack
-  ]);
 
   environment.etc = {
     "sway/config.d/bina".text = ''
