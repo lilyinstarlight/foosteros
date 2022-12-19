@@ -12,10 +12,7 @@
     aria2 openssl wireshark dogdns picocom
     gnumake llvmPackages_latest.clang llvmPackages_latest.lldb
   ] ++ (lib.optionals config.nixpkgs.config.allowUnfree [
-    # misc utils
     pridecat
-
-    # chat
-    discord slack
+    discord-ptb slack
   ]);
 }
