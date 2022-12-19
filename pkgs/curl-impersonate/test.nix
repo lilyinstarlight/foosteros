@@ -82,8 +82,7 @@ makeTestPython ({ pkgs, lib, ... }: let
       mkdir -p $out/bin
       $CC -Wall -Werror -o $out/bin/minicurl ${pkgs.curl-impersonate.src}/tests/minicurl.c `curl-config --libs`
     '';
-  in pkgs.writeScript "curl-impersonate-test" ''
-    #!${pkgs.runtimeShell}
+  in pkgs.writeShellScript "curl-impersonate-test" ''
     set -euxo pipefail
 
     # Test driver requirements
