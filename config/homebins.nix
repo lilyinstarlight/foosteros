@@ -44,16 +44,6 @@
         });
       };
 
-      "bin/pdflatexmk" = {
-        source = lib.getExe (pkgs.writeShellApplication {
-          name = "pdflatexmk";
-          runtimeInputs = with pkgs; [ texlive.combined.scheme-full ];
-          text = ''
-            latexmk -pdf "$@" && latexmk -c "$@"
-          '';
-        });
-      };
-
       "bin/ssh" = {
         source = lib.getExe (pkgs.writeShellApplication {
           name = "ssh";

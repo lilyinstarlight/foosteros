@@ -27,6 +27,7 @@
     ../../config/pki.nix
     ../../config/podman.nix
     ../../config/sway.nix
+    ../../config/tex.nix
     ../../config/udiskie.nix
   ];
 
@@ -238,7 +239,6 @@
     (ansible.overrideAttrs (attrs: {
       propagatedBuildInputs = attrs.propagatedBuildInputs ++ (with python3Packages; [ passlib ]);
     })) azure-cli
-    texlive.combined.scheme-full
     gnumake llvmPackages_latest.clang llvmPackages_latest.lldb
   ] ++ (lib.optionals config.nixpkgs.config.allowUnfree [
     pridecat

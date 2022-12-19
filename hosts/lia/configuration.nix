@@ -211,7 +211,6 @@
     sonic-pi sonic-pi-tool open-stage-control
     lilypond
     mpv ffmpeg-full
-    retroarchFull
     freecad prusa-slicer
     hledger
     virt-manager podman-compose
@@ -221,7 +220,6 @@
     (ansible.overrideAttrs (attrs: {
       propagatedBuildInputs = attrs.propagatedBuildInputs ++ (with python3Packages; [ passlib ]);
     })) azure-cli
-    texlive.combined.scheme-full
     gnumake llvmPackages_latest.clang llvmPackages_latest.lldb
   ] ++ (lib.optionals config.nixpkgs.config.allowUnfree [
     pridecat
