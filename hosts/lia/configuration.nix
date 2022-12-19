@@ -25,6 +25,7 @@
     ../../config/nullmailer.nix
     ../../config/pass.nix
     ../../config/pki.nix
+    ../../config/playdate.nix
     ../../config/podman.nix
     ../../config/sway.nix
     ../../config/udiskie.nix
@@ -181,8 +182,6 @@
   };
 
   hardware.bluetooth.settings.General.Name = "Lia";
-
-  hardware.playdate.enable = true;
 
   services.restic.backups.lia = {
     passwordFile = config.sops.secrets.restic-backup-password.path;
