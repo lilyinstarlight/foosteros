@@ -24,7 +24,7 @@ in
 
         The service must be manually started for each user with
         `systemctl --user start swaywsr` or globally through
-        {option}`services.swaywsr.enable`.
+        {option}`programs.swaywsr.enable`.
       '';
     };
 
