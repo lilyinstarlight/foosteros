@@ -728,7 +728,6 @@ in
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
-  boot.plymouth.enable = true;
   services.greetd = {
     enable = true;
     settings = {
