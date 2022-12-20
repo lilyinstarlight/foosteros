@@ -141,6 +141,7 @@ in
       substituters = [ "https://foosteros.cachix.org/" ];
       trusted-public-keys = [ "foosteros.cachix.org-1:rrDalTfOT1YohJXiMv8upgN+mFLKZp7eWW1+OGbPRww=" ];
       experimental-features = [ "nix-command" "flakes" "repl-flake" ];
+      flake-registry = "${inputs.flake-registry}/flake-registry.json";
     };
 
     registry = (lib.mapAttrs (name: value: { flake = value; }) (lib.filterAttrs (name: value: value ? outputs) inputs)) // { foosteros = { flake = self; }; };

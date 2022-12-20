@@ -48,6 +48,11 @@
 
     flake-utils.url = "github:numtide/flake-utils";
 
+    flake-registry = {
+      url = "github:NixOS/flake-registry";
+      flake = false;
+    };
+
     flake-compat = {
       url = "github:edolstra/flake-compat";
       flake = false;
