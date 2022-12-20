@@ -361,6 +361,8 @@
     }
   '';
 
+  services.logind.lidSwitch = "ignore";
+
   services.resolved.dnssec = "false";
 
   services.nullmailer.remotesFile = config.sops.secrets.nullmailer-remotes.path;
