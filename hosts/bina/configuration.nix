@@ -100,7 +100,7 @@
         ".azure"
         ".backgrounds"
         ".config/dconf"
-        ".config/discord"
+        ".config/discordptb"
         ".config/Element"
         ".config/obs-studio"
         ".config/pipewire"
