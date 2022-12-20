@@ -48,10 +48,6 @@ in with outpkgs;
   mpdris2 = callPackage ./mpdris2 {
     inherit (pkgs) mpdris2;
   };
-  # TODO: remove after NixOS/nixpkgs#205270 is merged
-  prusa-slicer = callPackage ./prusa-slicer {
-    inherit (pkgs) prusa-slicer;
-  };
 
   monofur-nerdfont = nerdfonts.override {
     fonts = [ "Monofur" ];
