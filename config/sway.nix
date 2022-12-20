@@ -239,14 +239,18 @@ in
     })
   ];
 
+  fonts.fonts = with pkgs; [
+    monofur-nerdfont
+  ];
+
   environment.systemPackages = with pkgs; [
     qutebrowser
     imv mupdf mpv
   ];
 
-  fonts.fonts = with pkgs; [
-    monofur-nerdfont
-  ];
+  environment.variables = {
+    NIXOS_OZONE_WL = "1";
+  };
 
   environment.etc = {
     "xdg/mimeapps.list".text = lib.mkDefault ''
@@ -760,7 +764,6 @@ in
       xdg-utils
       (pkgs.writeShellScriptBin "sway-session" ''
         mkdir -p "$HOME"/.local/share/sway
-        export NIXOS_OZONE_WL=1
         exec sway -d >"$HOME"/.local/share/sway/sway.log 2>&1
       '')
     ];
