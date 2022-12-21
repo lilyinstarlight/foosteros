@@ -114,7 +114,6 @@
                 "/state" = {};
                 "/persist" = {};
               };
-              mountOptions = [ "noauto" ];
             };
           };
           swap = {
