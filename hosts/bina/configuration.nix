@@ -251,7 +251,7 @@
       }
 
       order += "load"
-      order += "cpu_temperature 0"
+      order += "cpu_temperature 7"
       order += "volume master"
       order += "wireless wlp166s0"
       order += "battery 1"
@@ -262,7 +262,7 @@
           format = "cpu: %1min"
       }
 
-      cpu_temperature 0 {
+      cpu_temperature 7 {
           format = "temp: %degrees °C"
       }
 
@@ -314,7 +314,7 @@
       }
 
       order += "load"
-      order += "cpu_temperature 0"
+      order += "cpu_temperature 7"
       order += "battery 1"
       order += "disk /"
       order += "tztime local"
@@ -323,7 +323,7 @@
           format = "cpu: %1min"
       }
 
-      cpu_temperature 0 {
+      cpu_temperature 7 {
           format = "temp: %degrees °C"
       }
 
