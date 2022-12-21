@@ -3,6 +3,7 @@
 {
   boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "sd_mod" "rtsx_pci_sdmmc" ];
   boot.initrd.kernelModules = [ "dm-snapshot" "i915" ];
+
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
   boot.extraModprobeConfig = ''
@@ -10,8 +11,8 @@
     options kvm ignore_msrs=1 report_ignored_msrs=0
   '';
 
-  # TODO: use disko for lia
-  boot.initrd.luks.devices."nixos".device = "/dev/disk/by-partlabel/nixos";
+  hardware.enableRedistributableFirmware = true;
+  hardware.cpu.intel.updateMicrocode = true;
 
   boot.initrd.systemd.extraBin = {
     find = "${pkgs.findutils}/bin/find";
@@ -56,51 +57,76 @@
     '';
   };
 
-  fileSystems."/" = {
-    label = "root";
-    fsType = "btrfs";
-    options = [
-      "subvol=/root"
-    ];
+  disko.devices = {
+    disk.sda = {
+      type = "disk";
+      device = "/dev/sda";
+      content = {
+        type = "table";
+        format = "gpt";
+        partitions = [
+          {
+            type = "partition";
+            name = "esp";
+            start = "1MiB";
+            end = "512MiB";
+            bootable = true;
+            content = {
+              type = "filesystem";
+              format = "vfat";
+              mountpoint = "/boot";
+            };
+          }
+          {
+            type = "partition";
+            name = "nixos";
+            start = "512MiB";
+            end = "100%";
+            content = {
+              type = "luks";
+              name = "nixos";
+              content = {
+                type = "lvm_pv";
+                vg = "nixos";
+              };
+            };
+          }
+        ];
+      };
+    };
+
+    lvm_vg = {
+      nixos = {
+        type = "lvm_vg";
+        lvs = {
+          root = {
+            type = "lvm_lv";
+            size = "468g";
+            content = {
+              type = "btrfs";
+              subvolumes = {
+                "/root" = {
+                  mountpoint = "/";
+                };
+                "/nix" = {};
+                "/state" = {};
+                "/persist" = {};
+              };
+            };
+          };
+          swap = {
+            type = "lvm_lv";
+            name = "swap";
+            size = "100%FREE";
+            content = {
+              type = "swap";
+            };
+          };
+        };
+      };
+    };
   };
 
-  fileSystems."/nix" = {
-    label = "root";
-    fsType = "btrfs";
-    options = [
-      "subvol=/nix"
-    ];
-  };
-
-  fileSystems."/state" = {
-    label = "root";
-    fsType = "btrfs";
-    options = [
-      "subvol=/state"
-    ];
-    neededForBoot = true;
-  };
-
-  fileSystems."/persist" = {
-    label = "root";
-    fsType = "btrfs";
-    options = [
-      "subvol=/persist"
-    ];
-    neededForBoot = true;
-  };
-
-  fileSystems."/boot" = {
-    label = "esp";
-    fsType = "vfat";
-  };
-
-  swapDevices = [
-    {
-      label = "swap";
-    }
-  ];
-
-  hardware.enableRedistributableFirmware = true;
-  hardware.cpu.intel.updateMicrocode = true;
+  fileSystems."/state".neededForBoot = true;
+  fileSystems."/persist".neededForBoot = true;
 }
