@@ -16,7 +16,7 @@ Feel free to take any pieces in this repository that you like! Please don't try 
     ```
     # NOTE: Only if not downloading
     nix -vL build --no-link --print-out-paths \
-      github:lilyinstarlight/foosteros#nixosConfigurations.minimal.config.system.build.isoImage
+      github:lilyinstarlight/foosteros#nixosConfigurations.minimal.config.system.build.installer
     ```
 2. Run the customized install script from the install media.
     ```
