@@ -18,9 +18,7 @@
     impermanence.url = "github:nix-community/impermanence";
 
     disko = {
-      # TODO: temporarily use personal fork
-      #url = "github:nix-community/disko";
-      url = "github:lilyinstarlight/disko";
+      url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
