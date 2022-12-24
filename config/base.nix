@@ -163,8 +163,6 @@ in
   environment.variables = {
     EDITOR = "vi";
     VISUAL = "vi";
-
-    NIX_LD = "$(cat ${pkgs.stdenv.cc}/nix-support/dynamic-linker)";
   };
 
   environment.homeBinInPath = true;
