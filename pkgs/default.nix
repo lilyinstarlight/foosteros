@@ -42,6 +42,8 @@ in with outpkgs;
 
   # TODO: remove after NixOS/nixpkgs#194310 is merged
   curl-impersonate = callPackage ./curl-impersonate {};
+  # TODO: remove after NixOS/nixpkgs#xxxxxx is merged
+  mopidy-notify = callPackage ./mopidy-notify {};
 
   # overridden packages
   # TODO: remove when there is a new release
