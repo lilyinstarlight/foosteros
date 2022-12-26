@@ -56,6 +56,9 @@ in
     ./tmux.nix
   ];
 
+  # TODO: deal with disko default value (should be unnecessary)
+  disko.devices = {};
+
   home-manager = {
     useUserPackages = true;
     useGlobalPkgs = true;
