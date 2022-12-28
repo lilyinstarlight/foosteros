@@ -104,7 +104,7 @@ in
   boot.initrd.systemd = {
     enable = true;
 
-    # TODO: See both of these for context
+    # TODO: see both of these for context
     #   * https://github.com/systemd/systemd/issues/24904#issuecomment-1328607139
     #   * https://github.com/systemd/systemd/issues/3551
     targets.initrd-root-device = let
