@@ -12,8 +12,8 @@ let
     '';
   };
 
-  sway-dconf-db = pkgs.runCommand "sway-dconf-db" { preferLocalBuild = true; } ''
-    ${pkgs.dconf}/bin/dconf compile $out ${sway-dconf-settings}/dconf
+  sway-dconf-db = pkgs.runCommand "sway-dconf-db" { preferLocalBuild = true; nativeBuildInputs = with pkgs; [ dconf ]; } ''
+    dconf compile $out ${sway-dconf-settings}/dconf
   '';
 
   sway-dconf-profile = pkgs.writeText "sway-dconf-profile" ''
