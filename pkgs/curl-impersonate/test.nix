@@ -57,7 +57,9 @@ makeTestPython ({ pkgs, lib, ... }: let
       [alt_names]
       ${lib.concatStringsSep "\n" (lib.imap0 (idx: domain: "DNS.${toString idx} = ${domain}") domains)}
     '';
-  in pkgs.runCommand "curl-impersonate-test-certs" { buildInputs = [ pkgs.openssl ]; } ''
+  in pkgs.runCommand "curl-impersonate-test-certs" {
+    nativeBuildInputs = [ pkgs.openssl ];
+  } ''
     # create CA certificate and key
     openssl req -newkey rsa:4096 -keyout ca-key.pem -out ca-csr.pem -nodes -subj '/CN=curl-impersonate-ca.nixos.test'
     openssl x509 -req -sha512 -in ca-csr.pem -key ca-key.pem -out ca.pem -extfile ${ca-cert-conf} -days 36500
@@ -77,7 +79,7 @@ makeTestPython ({ pkgs, lib, ... }: let
   curl-impersonate-test = let
     # Build miniature libcurl client used by test driver
     minicurl = pkgs.runCommandCC "minicurl" {
-      buildInputs = with pkgs; [ curl ];
+      buildInputs = [ pkgs.curl ];
     } ''
       mkdir -p $out/bin
       $CC -Wall -Werror -o $out/bin/minicurl ${pkgs.curl-impersonate.src}/tests/minicurl.c `curl-config --libs`
