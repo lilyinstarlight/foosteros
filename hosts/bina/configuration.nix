@@ -53,7 +53,7 @@
         restartUnits = [ "supplicant-wlp166s0.service" ];
       };
       wired-networks = {
-        restartUnits = [ "supplicant-enp0s13f0u2c2.service" ];
+        restartUnits = [ "supplicant-enp0s20f0u3c2.service" ];
       };
       dnsimple-ddns = {};
       nullmailer-remotes = {
@@ -165,7 +165,7 @@
     };
   };
 
-  networking.supplicant.enp0s13f0u2c2 = {
+  networking.supplicant.enp0s20f0u3c2 = {
     driver = "wired";
     extraConf = ''
       ap_scan=0
@@ -173,9 +173,9 @@
     configFile.path = config.sops.secrets.wired-networks.path;
     userControlled.enable = true;
   };
-  systemd.services.supplicant-enp0s13f0u2c2.wantedBy = lib.mkForce [ "sys-subsystem-net-devices-enp0s13f0u2c2.device" ];
-  networking.interfaces.enp0s13f0u2c2.useDHCP = true;
-  systemd.network.networks."40-enp0s13f0u2c2" = {
+  systemd.services.supplicant-enp0s20f0u3c2.wantedBy = lib.mkForce [ "sys-subsystem-net-devices-enp0s20f0u3c2.device" ];
+  networking.interfaces.enp0s20f0u3c2.useDHCP = true;
+  systemd.network.networks."40-enp0s20f0u3c2" = {
     dhcpV4Config = {
       ClientIdentifier = "mac";
       RouteMetric = 100;
@@ -197,7 +197,7 @@
     environmentFile = config.sops.secrets.restic-backup-environment.path;
   };
 
-  systemd.services.restic-backups-bina.serviceConfig.ExecCondition = "${config.systemd.package}/lib/systemd/systemd-networkd-wait-online --interface=enp0s13f0u2c2:routable --timeout=5";
+  systemd.services.restic-backups-bina.serviceConfig.ExecCondition = "${config.systemd.package}/lib/systemd/systemd-networkd-wait-online --interface=enp0s20f0u3c2:routable --timeout=5";
 
   virtualisation.spiceUSBRedirection.enable = true;
 
