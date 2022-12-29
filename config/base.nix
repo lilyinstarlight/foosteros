@@ -131,6 +131,7 @@ in
   i18n.defaultLocale = "en_US.UTF-8";
   console = {
     font = "${pkgs.terminus_font}/share/consolefonts/ter-v${if config.hardware.video.hidpi.enable then "32" else "16"}n.psf.gz";
+    earlySetup = true;
     useXkbConfig = true;
   };
 
