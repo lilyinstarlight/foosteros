@@ -152,7 +152,10 @@ in
     overlays = lib.attrValues (removeAttrs self.overlays [ "default" ]);
   };
 
-  system.nixos.label = lib.concatStringsSep "-" ((lib.sort (x: y: x < y) config.system.nixos.tags) ++ [ config.system.nixos.version ] ++ [ "foosteros" (self.shortRev or "dirty") ]);
+  system = {
+    configurationRevision = self.rev or null;
+    nixos.label = lib.concatStringsSep "-" ((lib.sort (x: y: x < y) config.system.nixos.tags) ++ [ config.system.nixos.version ] ++ [ "foosteros" (self.shortRev or "dirty") ]);
+  };
 
   boot.initrd.systemd.contents = {
     "/etc/os-release".source = lib.mkOverride 75 initrdRelease;  # 50 is force prio and 100 is default prio
