@@ -3,7 +3,6 @@
 {
   imports = [
     "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
-    ./networking.nix
   ];
 
   boot.kernelParams = lib.mkAfter [ "noquiet" ];

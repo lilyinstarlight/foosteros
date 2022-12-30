@@ -23,7 +23,7 @@
     ../../config/libvirt.nix
     ../../config/lsp.nix
     ../../config/music.nix
-    ../../config/networking.nix
+    ../../config/networkmanager.nix
     ../../config/nullmailer.nix
     ../../config/pass.nix
     ../../config/pki.nix
@@ -146,50 +146,6 @@
     domain = "fooster.network";
   };
 
-  networking.supplicant.wlp166s0 = {
-    driver = "nl80211";
-    extraCmdArgs = "-u";
-    configFile.path = config.sops.secrets.wireless-networks.path;
-    userControlled.enable = true;
-  };
-  networking.interfaces.wlp166s0.useDHCP = true;
-  systemd.services.supplicant-wlp166s0.serviceConfig = {
-    Type = "dbus";
-    BusName = "fi.w1.wpa_supplicant1";
-  };
-  systemd.network.networks."40-wlp166s0" = {
-    dhcpV4Config = {
-      ClientIdentifier = "mac";
-      RouteMetric = 600;
-    };
-    dhcpV6Config = {
-      RouteMetric = 600;
-    };
-  };
-
-  networking.supplicant.enp0s20f0u3c2 = {
-    driver = "wired";
-    extraConf = ''
-      ap_scan=0
-    '';
-    configFile.path = config.sops.secrets.wired-networks.path;
-    userControlled.enable = true;
-  };
-  systemd.services.supplicant-enp0s20f0u3c2.wantedBy = lib.mkForce [ "sys-subsystem-net-devices-enp0s20f0u3c2.device" ];
-  networking.interfaces.enp0s20f0u3c2.useDHCP = true;
-  systemd.network.networks."40-enp0s20f0u3c2" = {
-    dhcpV4Config = {
-      ClientIdentifier = "mac";
-      RouteMetric = 100;
-    };
-    dhcpV6Config = {
-      RouteMetric = 100;
-    };
-    linkConfig = {
-      RequiredForOnline = "no";
-    };
-  };
-
   hardware.bluetooth.settings.General.Name = "Bina";
 
   hardware.video.hidpi.enable = true;
@@ -211,6 +167,9 @@
   };
 
   environment.etc = {
+    "NetworkManager/conf.d/bina-wireless-networks.conf".source = config.sops.secrets.wireless-networks.path;
+    "NetworkManager/conf.d/bina-wired-networks.conf".source = config.sops.secrets.wired-networks.path;
+
     "sway/config.d/bina".text = ''
       ### ouputs
       output eDP-1 resolution 2256x1504 position 0,0 scale 1.5
@@ -415,7 +374,7 @@
       root.passwordFile = config.sops.secrets.root-password.path;
       lily = {
         passwordFile = config.sops.secrets.lily-password.path;
-        extraGroups = with config.users.groups; [ keys.name libvirtd.name adbusers.name ];
+        extraGroups = with config.users.groups; map (grp: grp.name) [ networkmanager libvirtd keys adbusers ];
       };
     };
   };

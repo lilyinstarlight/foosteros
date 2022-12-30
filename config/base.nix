@@ -54,6 +54,7 @@ in
     ./fish.nix
     ./neovim.nix
     ./tmux.nix
+    ./networkd.nix
   ];
 
   home-manager = {
@@ -122,7 +123,7 @@ in
 
   networking = {
     useDHCP = false;
-    useNetworkd = true;
+    useNetworkd = lib.mkDefault true;
   };
 
   i18n.defaultLocale = "en_US.UTF-8";

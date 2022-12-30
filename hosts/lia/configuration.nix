@@ -22,7 +22,6 @@
     ../../config/libvirt.nix
     ../../config/lsp.nix
     ../../config/music.nix
-    ../../config/networking.nix
     ../../config/nullmailer.nix
     ../../config/pass.nix
     ../../config/pki.nix
@@ -417,7 +416,7 @@
       root.passwordFile = config.sops.secrets.root-password.path;
       lily = {
         passwordFile = config.sops.secrets.lily-password.path;
-        extraGroups = with config.users.groups; [ keys.name libvirtd.name adbusers.name ];
+        extraGroups = with config.users.groups; map (grp: grp.name) [ libvirtd keys adbusers ];
       };
     };
   };
