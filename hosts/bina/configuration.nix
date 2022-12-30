@@ -148,9 +148,6 @@
 
   networking.supplicant.wlp166s0 = {
     driver = "nl80211";
-    extraConf = ''
-      p2p_disabled=1
-    '';
     configFile.path = config.sops.secrets.wireless-networks.path;
     userControlled.enable = true;
   };
