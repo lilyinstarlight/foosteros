@@ -148,10 +148,15 @@
 
   networking.supplicant.wlp166s0 = {
     driver = "nl80211";
+    extraCmdArgs = "-u";
     configFile.path = config.sops.secrets.wireless-networks.path;
     userControlled.enable = true;
   };
   networking.interfaces.wlp166s0.useDHCP = true;
+  systemd.services.supplicant-wlp166s0.serviceConfig = {
+    Type = "dbus";
+    BusName = "fi.w1.wpa_supplicant1";
+  };
   systemd.network.networks."40-wlp166s0" = {
     dhcpV4Config = {
       ClientIdentifier = "mac";
