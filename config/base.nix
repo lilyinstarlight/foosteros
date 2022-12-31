@@ -232,6 +232,8 @@ in
 
   services.dbus.implementation = "broker";
 
+  services.resolved.enable = lib.mkDefault true;
+
   services.journald.extraConfig = lib.mkDefault ''
     SystemMaxUse=256M
   '';
