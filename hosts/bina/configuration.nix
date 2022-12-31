@@ -148,9 +148,7 @@
   networking = {
     hostName = "bina";
     domain = "fooster.network";
-  };
-  systemd.services.NetworkManager.serviceConfig = {
-    SupplementaryGroups = [ config.users.groups.keys.name ];
+    firewall.trustedInterfaces = [ "p2p-wlp166s-+" ];
   };
 
   hardware.bluetooth.settings.General.Name = "Bina";
