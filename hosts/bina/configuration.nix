@@ -22,6 +22,7 @@
     ../../config/intelgfx.nix
     ../../config/libvirt.nix
     ../../config/lsp.nix
+    ../../config/miracast.nix
     ../../config/music.nix
     ../../config/networkmanager.nix
     ../../config/nullmailer.nix
@@ -148,7 +149,6 @@
   networking = {
     hostName = "bina";
     domain = "fooster.network";
-    firewall.trustedInterfaces = [ "p2p-wlp166s-+" ];
   };
 
   hardware.bluetooth.settings.General.Name = "Bina";
