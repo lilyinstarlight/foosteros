@@ -49,12 +49,6 @@
       };
       restic-backup-password = {};
       restic-backup-environment = {};
-      wireless-networks = {
-        restartUnits = [ "supplicant-wlp166s0.service" ];
-      };
-      wired-networks = {
-        restartUnits = [ "supplicant-enp0s20f0u3c2.service" ];
-      };
       dnsimple-ddns = {};
       nullmailer-remotes = {
         mode = "0440";
@@ -67,7 +61,17 @@
         group = config.users.users.lily.group;
         restartUnits = [ "mopidy.service" ];
       };
-    };
+    } // (let
+      mkNmSecret = name: lib.nameValuePair "networks/${name}" {
+        restartUnits = [ "NetworkManager.service" ];
+      };
+    in lib.listToAttrs (map mkNmSecret [
+      "home"
+      "admin"
+      "mobile"
+      "wired"
+      "wired-admin"
+    ]));
   };
 
   environment.persistence."/state" = {
@@ -145,6 +149,9 @@
     hostName = "bina";
     domain = "fooster.network";
   };
+  systemd.services.NetworkManager.serviceConfig = {
+    SupplementaryGroups = [ config.users.groups.keys.name ];
+  };
 
   hardware.bluetooth.settings.General.Name = "Bina";
 
@@ -167,9 +174,6 @@
   };
 
   environment.etc = {
-    "NetworkManager/conf.d/bina-wireless-networks.conf".source = config.sops.secrets.wireless-networks.path;
-    "NetworkManager/conf.d/bina-wired-networks.conf".source = config.sops.secrets.wired-networks.path;
-
     "sway/config.d/bina".text = ''
       ### ouputs
       output eDP-1 resolution 2256x1504 position 0,0 scale 1.5
@@ -310,7 +314,11 @@
           format = "%H:%M"
       }
     '';
-  };
+  } // (lib.mapAttrs'
+    (name: value: lib.nameValuePair "NetworkManager/system-connections/${lib.removePrefix "networks/" name}" { source = value.path; })
+    (lib.filterAttrs (name: value: lib.hasPrefix "networks/" name) config.sops.secrets)
+  );
+
 
   programs.kanshi.extraConfig = ''
     profile internal {
