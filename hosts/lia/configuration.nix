@@ -28,7 +28,6 @@
     ../../config/nullmailer.nix
     ../../config/pass.nix
     ../../config/pki.nix
-    ../../config/playdate.nix
     ../../config/podman.nix
     ../../config/sway.nix
     ../../config/udiskie.nix
