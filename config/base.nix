@@ -137,6 +137,7 @@ in
 
   nix = {
     settings = {
+      auto-allocate-uids = true;
       substituters = [ "https://foosteros.cachix.org/" ];
       trusted-public-keys = [ "foosteros.cachix.org-1:rrDalTfOT1YohJXiMv8upgN+mFLKZp7eWW1+OGbPRww=" ];
       experimental-features = [ "nix-command" "flakes" "repl-flake" ];
