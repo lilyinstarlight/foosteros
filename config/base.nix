@@ -88,6 +88,11 @@ in
 
   boot.consoleLogLevel = 3;
   boot.kernelParams = [ "quiet" ];
+  # TODO: need to make systemd-initrd auto-magic the device like stage-1-initrd does
+  boot.resumeDevice = let
+      eligibleSwaps = (map (swap: if swap ? device then swap.device else "/dev/disk/by-label/${swap.label}")
+        (lib.filter (swap: lib.hasPrefix "/dev/" swap.device && !swap.randomEncryption.enable && !(lib.hasPrefix "/dev/zram" swap.device)) config.swapDevices));
+    in lib.mkIf ((lib.length eligibleSwaps) > 0) (lib.mkDefault (lib.head eligibleSwaps));
 
   boot.loader = {
     efi.canTouchEfiVariables = true;
