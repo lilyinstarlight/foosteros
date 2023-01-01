@@ -21,7 +21,9 @@
     ../../config/intelgfx.nix
     ../../config/libvirt.nix
     ../../config/lsp.nix
+    ../../config/miracast.nix
     ../../config/music.nix
+    ../../config/networkmanager.nix
     ../../config/nullmailer.nix
     ../../config/pass.nix
     ../../config/pki.nix
@@ -45,12 +47,6 @@
       };
       restic-backup-password = {};
       restic-backup-environment = {};
-      wireless-networks = {
-        restartUnits = [ "supplicant-wlp4s0.service" ];
-      };
-      wired-networks = {
-        restartUnits = [ "supplicant-enp0s25.service" ];
-      };
       dnsimple-ddns = {};
       nullmailer-remotes = {
         mode = "0440";
@@ -63,7 +59,17 @@
         group = config.users.users.lily.group;
         restartUnits = [ "mopidy.service" ];
       };
-    };
+    } // (let
+      mkNmSecret = name: lib.nameValuePair "networks/${name}" {
+        restartUnits = [ "NetworkManager.service" ];
+      };
+    in lib.listToAttrs (map mkNmSecret [
+      "home"
+      "admin"
+      "mobile"
+      "wired"
+      "wired-admin"
+    ]));
   };
 
   environment.persistence."/state" = {
@@ -139,47 +145,6 @@
   networking = {
     hostName = "lia";
     domain = "fooster.network";
-  };
-
-  networking.supplicant.wlp4s0 = {
-    driver = "nl80211";
-    extraConf = ''
-      p2p_disabled=1
-    '';
-    configFile.path = config.sops.secrets.wireless-networks.path;
-    userControlled.enable = true;
-  };
-  networking.interfaces.wlp4s0.useDHCP = true;
-  systemd.network.networks."40-wlp4s0" = {
-    dhcpV4Config = {
-      ClientIdentifier = "mac";
-      RouteMetric = 600;
-    };
-    dhcpV6Config = {
-      RouteMetric = 600;
-    };
-  };
-
-  networking.supplicant.enp0s25 = {
-    driver = "wired";
-    extraConf = ''
-      ap_scan=0
-    '';
-    configFile.path = config.sops.secrets.wired-networks.path;
-    userControlled.enable = true;
-  };
-  networking.interfaces.enp0s25.useDHCP = true;
-  systemd.network.networks."40-enp0s25" = {
-    dhcpV4Config = {
-      ClientIdentifier = "mac";
-      RouteMetric = 100;
-    };
-    dhcpV6Config = {
-      RouteMetric = 100;
-    };
-    linkConfig = {
-      RequiredForOnline = "no";
-    };
   };
 
   hardware.bluetooth.settings.General.Name = "Lia";
@@ -341,7 +306,10 @@
           format = "%H:%M"
       }
     '';
-  };
+  } // (lib.mapAttrs'
+    (name: value: lib.nameValuePair "NetworkManager/system-connections/${lib.removePrefix "networks/" name}" { source = value.path; })
+    (lib.filterAttrs (name: value: lib.hasPrefix "networks/" name) config.sops.secrets)
+  );
 
   programs.kanshi.extraConfig = ''
     profile internal {
