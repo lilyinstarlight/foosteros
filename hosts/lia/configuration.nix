@@ -16,6 +16,7 @@
     ../../config/fwupd.nix
     ../../config/gc.nix
     ../../config/gnupg.nix
+    ../../config/hibernate.nix
     ../../config/homebins.nix
     ../../config/hyfetch.nix
     ../../config/intelgfx.nix
