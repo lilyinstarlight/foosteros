@@ -46,11 +46,6 @@ in with outpkgs;
   mopidy-notify = callPackage ./mopidy-notify {};
 
   # overridden packages
-  # TODO: remove when there is a new release
-  mpdris2 = callPackage ./mpdris2 {
-    inherit (pkgs) mpdris2;
-  };
-
   monofur-nerdfont = nerdfonts.override {
     fonts = [ "Monofur" ];
   };
