@@ -40,7 +40,7 @@
 
     script = ''
       mkdir -p /run/rootvol
-      mount -t btrfs -o rw,subvol=/ /dev/disk/by-label/root /run/rootvol
+      mount -t btrfs -o rw,subvol=/ /dev/nixos/root /run/rootvol
 
       num="$(printf '%s\n' "$(find /run/rootvol -mindepth 1 -maxdepth 1 -type d -name 'root-*')" | sed -e 's#^\s*$#0#' -e 's#^/run/rootvol/root-\(.*\)$#\1#' | sort -n | tail -n 1 | xargs -I '{}' expr 1 + '{}')"
 
