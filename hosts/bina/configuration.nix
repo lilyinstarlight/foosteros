@@ -33,6 +33,7 @@
     ../../config/podman.nix
     ../../config/production.nix
     ../../config/sway.nix
+    ../../config/sysrq.nix
     ../../config/tex.nix
     ../../config/udiskie.nix
     ../../config/workstation.nix
