@@ -50,6 +50,7 @@ in
     inputs.sops-nix.nixosModules.sops
     inputs.impermanence.nixosModules.impermanence
     inputs.disko.nixosModules.disko
+    inputs.nix-index-database.nixosModules.nix-index
     self.nixosModules.foosteros
     ./fish.nix
     ./neovim.nix
@@ -75,9 +76,6 @@ in
           templates = "$HOME/.templates";
           videos = "$HOME/vids";
         };
-      })
-      ({ pkgs, ... }: {
-        home.file.".cache/nix-index/files".source = inputs.nix-index-db.packages.${pkgs.stdenv.hostPlatform.system}.default;
       })
     ];
   };
@@ -208,7 +206,7 @@ in
     cachix fpaste ftmp furi
     git gitAndTools.delta fd ripgrep
     shellcheck progress libqalculate
-    nix-index comma
+    comma
   ];
 
   environment.shellAliases = {

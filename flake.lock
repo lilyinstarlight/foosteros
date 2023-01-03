@@ -192,24 +192,23 @@
         "type": "github"
       }
     },
-    "nix-index-db": {
+    "nix-index-database": {
       "inputs": {
         "nixpkgs": [
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1672275488,
-        "narHash": "sha256-MfV6FR7dhcnTV4oqdz6e4MUxnOw1dGyzhvWwmkcDyhI=",
-        "owner": "usertam",
-        "repo": "nix-index-db",
-        "rev": "318fabc5b2186e940a05ee639f3f59f9dd7e5274",
+        "lastModified": 1672543420,
+        "narHash": "sha256-n6hatHjbTmylU4w8ZMrPZQTOrgUgCWthGUFC3BMBvuw=",
+        "owner": "Mic92",
+        "repo": "nix-index-database",
+        "rev": "83976f98374a2cbf02de1b4a3f93fdc359e457cb",
         "type": "github"
       },
       "original": {
-        "owner": "usertam",
-        "ref": "standalone/nixpkgs-unstable",
-        "repo": "nix-index-db",
+        "owner": "Mic92",
+        "repo": "nix-index-database",
         "type": "github"
       }
     },
@@ -272,7 +271,7 @@
         "home-manager": "home-manager",
         "impermanence": "impermanence",
         "nix-alien": "nix-alien",
-        "nix-index-db": "nix-index-db",
+        "nix-index-database": "nix-index-database",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "sops-nix": "sops-nix"

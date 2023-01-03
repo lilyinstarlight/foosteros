@@ -22,8 +22,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-index-db = {
-      url = "github:usertam/nix-index-db/standalone/nixpkgs-unstable";
+    nix-index-database = {
+      url = "github:Mic92/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -62,7 +62,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, sops-nix, impermanence, nix-index-db, nix-alien, envfs, fenix, ... }:
+  outputs = { self, nixpkgs, home-manager, sops-nix, impermanence, nix-index-database, nix-alien, envfs, fenix, ... }:
     let
       supportedSystems = with nixpkgs.lib; intersectLists (platforms.x86_64 ++ platforms.aarch64) (platforms.linux ++ platforms.darwin);
 
