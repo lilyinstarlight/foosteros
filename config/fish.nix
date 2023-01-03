@@ -23,5 +23,8 @@
       set fish_color_redirection brblue
       set fish_color_user magenta
     '';
+    interactiveShellInit = ''
+      ${pkgs.any-nix-shell}/bin/any-nix-shell fish --info-right | source
+    '';
   };
 }
