@@ -57,11 +57,6 @@
       inputs.flake-parts.follows = "flake-parts";
     };
 
-    fenix = {
-      url = "github:nix-community/fenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
 
     ## transitive inputs
 
@@ -108,7 +103,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, sops-nix, impermanence, nix-index-database, nix-alien, envfs, fenix, ... }:
+  outputs = { self, nixpkgs, home-manager, sops-nix, impermanence, nix-index-database, nix-alien, envfs, ... }:
     let
       supportedSystems = with nixpkgs.lib; intersectLists (platforms.x86_64 ++ platforms.aarch64) (platforms.linux ++ platforms.darwin);
 
@@ -156,10 +151,7 @@
         in selfSystem);
       in foosterosSystem;
 
-      packagesFor = (pkgs: import ./pkgs {
-        inherit pkgs;
-        fenix = fenix.packages.${pkgs.stdenv.hostPlatform.system};
-      });
+      packagesFor = (pkgs: import ./pkgs { inherit pkgs; });
     };
 
     legacyPackages = forAllSystems (system: self.lib.packagesFor nixpkgs.legacyPackages.${system});
@@ -172,7 +164,6 @@
     overlays.foosteros = (final: prev: import ./pkgs {
       pkgs = prev;
       outpkgs = final;
-      fenix = fenix.packages.${final.stdenv.hostPlatform.system};
     });
     overlays.default = self.overlays.foosteros;
 

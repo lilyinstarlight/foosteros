@@ -1,4 +1,4 @@
-{ lib, stdenv, rustPlatform, fetchFromGitHub, makeWrapper, rustNightlyToolchain, gcc-arm-embedded, playdate-sdk, xdg-utils, writeScript, unstableGitUpdater }:
+{ lib, stdenv, runCommand, lndir, rustc, rustPlatform, fetchFromGitHub, makeWrapper, cargo, gcc-arm-embedded, playdate-sdk, xdg-utils, writeScript, unstableGitUpdater }:
 
 rustPlatform.buildRustPackage rec {
   pname = "crank";
@@ -20,9 +20,17 @@ rustPlatform.buildRustPackage rec {
 
   nativeBuildInputs = [ makeWrapper ];
 
-  postInstall = ''
+  postInstall = let
+    # TODO: find better way to override sysroot for rust src
+    rustLibSrc = runCommand "rust-lib-src" {} ''
+      mkdir -p $out
+      cp -r ${rustPlatform.rustcSrc}/{Cargo.lock,library} $out/
+    '';
+  in ''
     wrapProgram $out/bin/crank \
-      --prefix PATH : '${lib.makeBinPath [ rustNightlyToolchain gcc-arm-embedded playdate-sdk xdg-utils ]}' \
+      --prefix PATH : '${lib.makeBinPath [ cargo gcc-arm-embedded playdate-sdk xdg-utils ]}' \
+      --set RUSTC_BOOTSTRAP 1 \
+      --set __CARGO_TESTS_ONLY_SRC_ROOT '${rustLibSrc}' \
       --set PLAYDATE_SDK_PATH '${playdate-sdk}/sdk'
   '';
 

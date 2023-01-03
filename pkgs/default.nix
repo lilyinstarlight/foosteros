@@ -1,4 +1,4 @@
-{ pkgs ? import <nixpkgs> {}, fenix ? import <fenix> {}, ... } @ args:
+{ pkgs ? import <nixpkgs> {}, ... } @ args:
 
 let mypkgs = let
   outpkgs = if (args ? outpkgs) then args.outpkgs else pkgs.lib.recursiveUpdate pkgs mypkgs;
@@ -65,13 +65,7 @@ in with outpkgs;
   });
 
   # dependents of unfree packages
-  crank = callPackage ./crank {
-    rustNightlyToolchain = fenix.complete.withComponents [
-      "rustc"
-      "cargo"
-      "rust-src"
-    ];
-  };
+  crank = callPackage ./crank {};
 
   # unfree packages
   playdate-sdk = callPackage ./playdate-sdk {};
