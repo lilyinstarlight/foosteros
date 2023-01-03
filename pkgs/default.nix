@@ -46,6 +46,10 @@ in with outpkgs;
   mopidy-notify = callPackage ./mopidy-notify {};
 
   # overridden packages
+  # TODO: remove after nix-community/comma#xx is merged
+  comma = import ./comma {
+    inherit (pkgs) comma;
+  };
   monofur-nerdfont = nerdfonts.override {
     fonts = [ "Monofur" ];
   };
