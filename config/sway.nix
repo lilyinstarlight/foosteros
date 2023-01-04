@@ -1,6 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
+  # TODO: replace theme stuff with catppuccin
   sway-dconf-settings = pkgs.writeTextFile {
     name = "sway-dconf-settings";
     destination = "/dconf/sway-custom";

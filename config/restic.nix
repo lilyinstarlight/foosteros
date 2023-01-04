@@ -1,6 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
+  # TODO: perform fs snapshot if we can
   services.restic.backups.${config.networking.hostName} = {
     initialize = true;
     repository = "b2:${lib.replaceStrings ["."] ["-"] config.networking.fqdn}-backup";
