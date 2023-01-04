@@ -1,6 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
+  # TODO: maybe give nushell a try?
   environment.systemPackages = with pkgs; [
     fishPlugins.done
   ];
