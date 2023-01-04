@@ -181,6 +181,7 @@
           vim-eunuch
           vim-expand-region
           vim-fugitive
+          vim-ledger
           vim-multiple-cursors
           vim-nix
           vim-peekaboo
