@@ -6,7 +6,6 @@
     pavucontrol qalculate-gtk
     element-desktop jitsi-meet-electron teams-for-linux
     ffmpeg-full
-    hledger
     fq ripgrep-all
     mkusb mkwin
     aria2 openssl wireshark dogdns picocom

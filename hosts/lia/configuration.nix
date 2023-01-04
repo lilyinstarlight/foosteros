@@ -20,6 +20,7 @@
     ../../config/homebins.nix
     ../../config/hyfetch.nix
     ../../config/intelgfx.nix
+    ../../config/ledger.nix
     ../../config/libvirt.nix
     ../../config/lsp.nix
     ../../config/miracast.nix
