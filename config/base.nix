@@ -100,9 +100,7 @@ in
   boot.initrd.systemd = {
     enable = true;
 
-    # TODO: see both of these for context
-    #   * https://github.com/systemd/systemd/issues/24904#issuecomment-1328607139
-    #   * https://github.com/systemd/systemd/issues/3551
+    # TODO: can be removed when systemd/systemd#3551 is fixed and a subsequent release hits nixos-unstable
     targets.initrd-root-device = let
       fs = config.fileSystems."/";
       unit = utils.escapeSystemdPath (
