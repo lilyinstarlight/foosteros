@@ -1,3 +1,4 @@
+# TODO: maybe make this workflow singleton by having it first kill existing-running workflows?
 name: Installer
 
 on:
