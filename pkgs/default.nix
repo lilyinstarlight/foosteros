@@ -46,7 +46,7 @@ in with outpkgs;
   mopidy-notify = callPackage ./mopidy-notify {};
 
   # overridden packages
-  # TODO: remove after nix-community/comma#xx is merged
+  # TODO: remove after nix-community/comma#44 is merged
   comma = import ./comma {
     inherit (pkgs) comma;
   };
