@@ -206,10 +206,6 @@ in
     cachix fpaste ftmp furi
     git gitAndTools.delta fd ripgrep
     shellcheck progress libqalculate
-    (comma.override {
-      # TODO: remove after NixOS/nixpkgs#xxxxxx is merged
-      nix-index-unwrapped = config.programs.nix-index.package;
-    })
   ];
 
   environment.shellAliases = {
@@ -222,6 +218,7 @@ in
   };
 
   programs.command-not-found.enable = false;
+  programs.comma.enable = true;
 
   programs.htop = {
     enable = true;

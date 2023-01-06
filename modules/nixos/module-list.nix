@@ -1,6 +1,7 @@
 [
   ./boot/systemd-boot.nix
   ./hardware/playdate.nix
+  ./programs/comma.nix
   ./programs/kanshi.nix
   ./programs/mako.nix
   ./programs/sway.nix
