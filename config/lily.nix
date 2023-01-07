@@ -27,6 +27,7 @@
       extraConfig = {
         init.defaultBranch = "main";
         pull.ff = "only";
+        push.autoSetupRemote = true;
       };
       aliases = {
         kill = "!sh -c 'git reset HEAD --hard && git clean -xdf'";
