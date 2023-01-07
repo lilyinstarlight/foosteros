@@ -48,7 +48,7 @@ in with outpkgs;
   # overridden packages
   # TODO: remove after nix-community/comma#44 is merged
   comma = import ./comma {
-    inherit (pkgs) comma;
+    inherit (pkgs) comma fetchpatch;
   };
   monofur-nerdfont = nerdfonts.override {
     fonts = [ "Monofur" ];
