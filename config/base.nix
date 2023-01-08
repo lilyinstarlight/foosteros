@@ -20,6 +20,8 @@ let
     DOCUMENTATION_URL = "https://nixos.org/learn.html";
     SUPPORT_URL = "https://nixos.org/community.html";
     BUG_REPORT_URL = "https://github.com/NixOS/nixpkgs/issues";
+  } // lib.optionalAttrs (config.system.nixos.variant_id != null) {
+    VARIANT_ID = config.system.nixos.variant_id;
   };
 
   initrdReleaseContents = osReleaseContents // {
