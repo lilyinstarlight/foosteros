@@ -127,6 +127,7 @@ in
   i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
   console = {
     font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-v${if config.hardware.video.hidpi.enable then "32" else "16"}n.psf.gz";
+    # TODO: this seems to race in initrd?
     earlySetup = true;
     useXkbConfig = true;
   };
