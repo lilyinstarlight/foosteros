@@ -32,5 +32,6 @@
   systemd.services."restic-backups-${config.networking.hostName}" = {
     wants = [ "network-online.target" ];
     after = [ "network-online.target" ];
+    path = [ pkgs.btrfs-progs ];
   };
 }
