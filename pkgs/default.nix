@@ -52,7 +52,7 @@ in with outpkgs;
   };
   # TODO: remove after NixOS/nixpkgs#205790 is merged
   teams-for-linux = import ./teams-for-linux {
-    inherit (pkgs) teams-for-linux electron_21 libpulseaudio pipewire;
+    inherit (pkgs) lib teams-for-linux electron_21 libpulseaudio pipewire;
   };
   monofur-nerdfont = nerdfonts.override {
     fonts = [ "Monofur" ];
