@@ -47,8 +47,12 @@ in with outpkgs;
 
   # overridden packages
   # TODO: remove after nix-community/comma#44 is merged
-  comma = import ./comma {
-    inherit (pkgs) comma fetchpatch;
+  comma = callPackage ./comma {
+    inherit (pkgs) comma;
+  };
+  # TODO: remove after NixOS/nixpkgs#205790 is merged
+  teams-for-linux = callPackage ./teams-for-linux {
+    inherit (pkgs) teams-for-linux;
   };
   monofur-nerdfont = nerdfonts.override {
     fonts = [ "Monofur" ];
