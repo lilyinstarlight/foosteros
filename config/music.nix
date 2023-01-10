@@ -7,22 +7,22 @@
   ];
 
   # only for user lily
-  home-manager.users.lily = { pkgs, lib, ... }: let cfg = config.home-manager.users.lily; in {
+  home-manager.users.lily = { config, lib, pkgs, nixosConfig, ... }: {
     services.mopidy = {
       enable = true;
       settings = {
         file.enabled = false;
-        local.media_dir = "${cfg.home.homeDirectory}/music";
+        local.media_dir = "${config.home.homeDirectory}/music";
       };
       extensionPackages = with pkgs; [
         mopidy-local mopidy-iris mopidy-mpris mopidy-notify mopidy-mpd
-      ] ++ (lib.optionals config.nixpkgs.config.allowUnfree [ /*mopidy-spotify*/ ]);
+      ] ++ (lib.optionals nixosConfig.nixpkgs.config.allowUnfree [ /*mopidy-spotify*/ ]);
     };
 
     programs.beets = {
       enable = true;
       settings = {
-        directory = cfg.services.mopidy.settings.local.media_dir;
+        directory = config.services.mopidy.settings.local.media_dir;
       };
     };
   };

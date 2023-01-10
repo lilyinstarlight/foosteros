@@ -5,11 +5,7 @@
     hledger
   ];
 
-  home-manager.users.lily = { lib, ... }: {
-    home.activation = {
-      linkHomeLedger = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        $DRY_RUN_CMD ln -sTf $VERBOSE_ARG "$HOME"/docs/ledger/2023.journal "$HOME"/.hledger.journal
-      '';
-    };
+  home-manager.users.lily = { config, lib, ... }: {
+    home.file.".hledger.journal".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/docs/ledger/2023.journal";
   };
 }
