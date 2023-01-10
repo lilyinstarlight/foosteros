@@ -720,7 +720,7 @@ in
     '';
   };
 
-  qt5 = {
+  qt = {
     enable = true;
     style = "adwaita-dark";
     platformTheme = "gnome";
