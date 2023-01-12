@@ -22,7 +22,9 @@ in
   config = mkMerge [
     (mkIf config.boot.bootspec.enable {
       system.extraSystemBuilderCmds = ''
-        sed -i -e 's#"label": "NixOS #"label": "'${escape ["#"] (escapeShellArg cfg.bootName)}' #' $out/boot.json
+        substituteInPlace $out/boot.json --replace \
+            '"label": "NixOS '${escapeShellArg cfg.codeName}' ' \
+            '"label": "'${escapeShellArg cfg.bootName}' ('${escapeShellArg cfg.codeName}') '
       '';
     })
     (mkIf config.boot.loader.systemd-boot.enable {
