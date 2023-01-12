@@ -5,9 +5,10 @@
     sbctl
   ];
 
+  boot.loader.systemd-boot.enable = false;
+
   boot.lanzaboote = {
     enable = true;
-    enrollKeys = true;
     pkiBundle = "/etc/secureboot";
   };
 }
