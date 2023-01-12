@@ -132,7 +132,7 @@ in
     earlySetup = true;
     useXkbConfig = true;
   };
-  # TODO: fixes console.earlySetup race, but a more permanent solution should be upstreamed to nixpkgs
+  # TODO: might fix console.earlySetup race, but a more permanent solution should be upstreamed to nixpkgs
   boot.initrd.systemd.services.systemd-vconsole-setup.after = [ "systemd-modules-load.service" ];
 
   time.timeZone = lib.mkDefault "America/New_York";
