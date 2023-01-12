@@ -33,6 +33,7 @@
     ../../config/playdate.nix
     ../../config/podman.nix
     ../../config/production.nix
+    ../../config/secureboot.nix
     ../../config/sway.nix
     ../../config/sysrq.nix
     ../../config/tex.nix
