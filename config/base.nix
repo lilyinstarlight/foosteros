@@ -51,6 +51,7 @@ in
     inputs.home-manager.nixosModules.home-manager
     inputs.sops-nix.nixosModules.sops
     inputs.impermanence.nixosModules.impermanence
+    inputs.lanzaboote.nixosModules.lanzaboote
     inputs.disko.nixosModules.disko
     inputs.nix-index-database.nixosModules.nix-index
     self.nixosModules.foosteros
@@ -89,6 +90,8 @@ in
   boot.consoleLogLevel = 3;
   boot.kernelParams = [ "quiet" ];
 
+  boot.bootspec.enable = true;
+
   boot.loader = {
     efi.canTouchEfiVariables = true;
 
@@ -117,7 +120,6 @@ in
       after = [ "sysroot.mount" ];
     };
   };
-
 
   networking = {
     useDHCP = false;
