@@ -1,5 +1,5 @@
 [
-  ./boot/systemd-boot.nix
+  ./boot/boot-name.nix
   ./hardware/playdate.nix
   ./programs/comma.nix
   ./programs/kanshi.nix

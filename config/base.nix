@@ -98,7 +98,6 @@ in
     systemd-boot = {
       enable = lib.mkDefault true;
       consoleMode = lib.mkOverride 500 "keep";  # 100 is default prio and 1000 is module default prio
-      bootName = "FoosterOS/2 Warp";
     };
   };
 
@@ -160,7 +159,10 @@ in
 
   system = {
     configurationRevision = self.rev or null;
-    nixos.label = lib.concatStringsSep "-" ((lib.sort (x: y: x < y) config.system.nixos.tags) ++ [ config.system.nixos.version ] ++ [ "foosteros" (self.shortRev or "dirty") ]);
+    nixos = {
+      bootName = "FoosterOS/2 Warp";
+      label = lib.concatStringsSep "-" ((lib.sort (x: y: x < y) config.system.nixos.tags) ++ [ config.system.nixos.version ] ++ [ "foosteros" (self.shortRev or "dirty") ]);
+    };
   };
 
   boot.initrd.systemd.contents = {
