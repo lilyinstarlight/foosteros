@@ -82,6 +82,7 @@
     hideMounts = true;
     directories = [
       "/etc/nixos"
+      "/etc/secureboot"
       "/var/db/sudo"
       "/var/lib/bluetooth"
       "/var/lib/fprint"
