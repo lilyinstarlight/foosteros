@@ -12,6 +12,7 @@
     gnumake llvmPackages_latest.clang llvmPackages_latest.lldb
   ] ++ (lib.optionals config.nixpkgs.config.allowUnfree [
     pridecat
+    # TODO: maybe webcord?
     discord-ptb slack
   ]);
 }
