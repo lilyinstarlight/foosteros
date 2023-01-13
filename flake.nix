@@ -155,12 +155,14 @@
           };
         in selfSystem);
       in foosterosSystem;
+
+      packagesFor = (pkgs: import ./pkgs {
+        inherit pkgs;
+        fenix = fenix.packages.${pkgs.stdenv.hostPlatform.system};
+      });
     };
 
-    legacyPackages = forAllSystems (system: import ./pkgs {
-      pkgs = nixpkgs.legacyPackages.${system};
-      fenix = fenix.packages.${system};
-    });
+    legacyPackages = forAllSystems (system: self.lib.packagesFor nixpkgs.legacyPackages.${system});
 
     packages = forAllSystems (system: {
       default = nixpkgs.legacyPackages.${system}.linkFarmFromDrvs "foosteros-pkgs"
@@ -175,12 +177,12 @@
     overlays.default = self.overlays.foosteros;
 
     nixosModules.foosteros = { pkgs, ... } @ args: import ./modules/nixos (args // {
-      fpkgs = self.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+      fpkgs = self.lib.packagesFor pkgs;
     });
     nixosModules.default = self.nixosModules.foosteros;
 
     homeManagerModules.foosteros = { pkgs, ... } @ args: import ./modules/home-manager (args // {
-      fpkgs = self.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+      fpkgs = self.lib.packagesFor pkgs;
     });
     homeManagerModules.default = self.homeManagerModules.foosteros;
 
