@@ -104,6 +104,11 @@ in
   boot.initrd.systemd = {
     enable = true;
 
+    contents = {
+      "/etc/os-release".source = lib.mkOverride 75 initrdRelease;  # 50 is force prio and 100 is default prio
+      "/etc/initrd-release".source = lib.mkOverride 75 initrdRelease;
+    };
+
     # TODO: can be removed when systemd/systemd#3551 is fixed and a subsequent release hits nixos-unstable
     targets.initrd-root-device = let
       fs = config.fileSystems."/";
@@ -132,7 +137,7 @@ in
     useXkbConfig = true;
   };
   # TODO: might fix console.earlySetup race, but a more permanent solution should be upstreamed to nixpkgs/systemd
-  boot.initrd.services.udev.rules = ''
+  boot.initrd.services.udev.rules = lib.mkIf (config.boot.initrd.systemd.enable && config.console.earlySetup) ''
     ACTION=="change", SUBSYSTEM=="vtconsole", KERNEL=="vtcon*", RUN+="${pkgs.systemdStage1}/lib/systemd/systemd-vconsole-setup"
   '';
 
@@ -162,11 +167,6 @@ in
       bootName = "FoosterOS/2 Warp";
       label = lib.concatStringsSep "-" ((lib.sort (x: y: x < y) config.system.nixos.tags) ++ [ config.system.nixos.version ] ++ [ "foosteros" (self.shortRev or "dirty") ]);
     };
-  };
-
-  boot.initrd.systemd.contents = {
-    "/etc/os-release".source = lib.mkOverride 75 initrdRelease;  # 50 is force prio and 100 is default prio
-    "/etc/initrd-release".source = lib.mkOverride 75 initrdRelease;
   };
 
   environment.variables = {
