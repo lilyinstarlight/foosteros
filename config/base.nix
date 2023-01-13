@@ -131,11 +131,10 @@ in
     earlySetup = true;
     useXkbConfig = true;
   };
-  # TODO: might fix console.earlySetup race, but a more permanent solution should be upstreamed to nixpkgs
-  boot.initrd.systemd.services.systemd-vconsole-setup = {
-    after = [ "systemd-modules-load.service" ];
-    overrideStrategy = "asDropin";
-  };
+  # TODO: might fix console.earlySetup race, but a more permanent solution should be upstreamed to nixpkgs/systemd
+  boot.initrd.services.udev.rules = ''
+    ACTION=="change", SUBSYSTEM=="vtconsole", KERNEL=="vtcon*", RUN+="${pkgs.systemdStage1}/lib/systemd/systemd-vconsole-setup"
+  '';
 
   time.timeZone = lib.mkDefault "America/New_York";
 
