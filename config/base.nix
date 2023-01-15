@@ -164,7 +164,7 @@ in
   system = {
     configurationRevision = self.rev or null;
     nixos = {
-      bootName = "FoosterOS/2 Warp";
+      distroName = "FoosterOS/2 Warp";
       label = lib.concatStringsSep "-" ((lib.sort (x: y: x < y) config.system.nixos.tags) ++ [ config.system.nixos.version ] ++ [ "foosteros" (self.shortRev or "dirty") ]);
     };
   };
