@@ -29,7 +29,6 @@ in with outpkgs;
   # normal packages
   dnsimple-ddns = callPackage ./dnsimple-ddns {};
   fooster-backgrounds = callPackage ./backgrounds {};
-  fooster-materia-theme = callPackage ./materia-theme {};
   fpaste = python3Packages.callPackage ./fpaste {};
   ftmp = python3Packages.callPackage ./ftmp {};
   furi = python3Packages.callPackage ./furi {};
