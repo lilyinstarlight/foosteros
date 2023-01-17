@@ -137,10 +137,9 @@ in
     useXkbConfig = true;
   };
   # TODO: might fix console.earlySetup race, but a more permanent solution should be upstreamed to nixpkgs/systemd
-  boot.initrd.systemd.additionalUpstreamUnits = lib.mkIf config.console.earlySetup [ "systemd-vconsole-setup.service" ];
-  #boot.initrd.services.udev.rules = lib.mkIf (config.boot.initrd.systemd.enable && config.console.earlySetup) ''
-  #  ACTION=="change", SUBSYSTEM=="vtconsole", KERNEL=="vtcon*", RUN+="${pkgs.systemdStage1}/lib/systemd/systemd-vconsole-setup"
-  #'';
+  boot.initrd.services.udev.rules = lib.mkIf (config.boot.initrd.systemd.enable && config.console.earlySetup) ''
+    ACTION=="change", SUBSYSTEM=="vtconsole", KERNEL=="vtcon*", RUN+="${pkgs.systemdStage1}/lib/systemd/systemd-vconsole-setup"
+  '';
 
   time.timeZone = lib.mkDefault "America/New_York";
 
