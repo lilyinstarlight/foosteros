@@ -50,14 +50,6 @@ in with outpkgs;
   comma = import ./comma {
     inherit (pkgs) comma fetchpatch;
   };
-  dogdns = pkgs.dogdns.overrideAttrs (attrs: {
-    patches = (attrs.patches or []) ++ [
-      (fetchpatch {
-        url = "https://raw.githubusercontent.com/NixOS/nixpkgs/c766d9dd8dad7f7913dc91afd3b020cc569dc61f/pkgs/tools/networking/dogdns/remove-date-info.patch";
-        hash = "sha256-BTMiKq3DB6JNX5fPnjo4rNENrfpHispfjkqD/E/nyL4=";
-      })
-    ];
-  });
   monofur-nerdfont = nerdfonts.override {
     fonts = [ "Monofur" ];
   };
