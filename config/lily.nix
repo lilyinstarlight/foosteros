@@ -26,6 +26,7 @@
       };
       extraConfig = {
         init.defaultBranch = "main";
+        checkout.defaultRemote = "origin";
         pull.ff = "only";
         push.autoSetupRemote = true;
       };
