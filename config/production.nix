@@ -3,9 +3,7 @@
 {
   environment.systemPackages = with pkgs; [
     inkscape gimp-with-plugins krita
-    # TODO: re-add helvum after it's fixed upstream
-    #helvum qjackctl qsynth vmpk calf
-    qjackctl qsynth vmpk calf
+    helvum qjackctl qsynth vmpk calf
     ardour lmms
     sonic-pi sonic-pi-tool open-stage-control
     lilypond
