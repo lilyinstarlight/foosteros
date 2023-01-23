@@ -1,21 +1,6 @@
-{ config, lib, pkgs, inputs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
-  imports = [
-    inputs.nixos-hardware.nixosModules.framework-12th-gen-intel
-  ];
-
-  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
-
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModprobeConfig = ''
-    options kvm_intel nested=1 emulate_invalid_guest_state=0
-    options kvm ignore_msrs=1 report_ignored_msrs=0
-  '';
-
-  hardware.enableRedistributableFirmware = true;
-  hardware.cpu.intel.updateMicrocode = true;
-
   boot.initrd.systemd.extraBin = {
     find = "${pkgs.findutils}/bin/find";
     sed = "${pkgs.busybox}/bin/sed";
@@ -60,9 +45,9 @@
   };
 
   disko.devices = {
-    disk.nvme0n1 = {
+    disk.${lib.removePrefix "/dev/" config.system.devices.rootDisk} = {
       type = "disk";
-      device = "/dev/nvme0n1";
+      device = "${config.system.devices.rootDisk}";
       content = {
         type = "table";
         format = "gpt";

@@ -635,8 +635,16 @@ in
       }
 
       order += "load"
-      order += "cpu_temperature 0"
+      ${lib.optionalString (config.system.devices.coreThermalZone != null) ''
+        order += "cpu_temperature ${toString config.system.devices.coreThermalZone}"
+      ''}
       order += "volume master"
+      ${lib.optionalString (config.system.devices.wirelessAdapter != null) ''
+        order += "wireless ${config.system.devices.wirelessAdapter}"
+      ''}
+      ${lib.optionalString (config.system.devices.batteryId != null) ''
+        order += "battery ${toString config.system.devices.batteryId}"
+      ''}
       order += "disk /"
       order += "tztime local"
 
@@ -644,14 +652,39 @@ in
           format = "cpu: %1min"
       }
 
-      cpu_temperature 0 {
-          format = "temp: %degrees °C"
-      }
+      ${lib.optionalString (config.system.devices.coreThermalZone != null) ''
+        cpu_temperature ${toString config.system.devices.coreThermalZone} {
+            format = "temp: %degrees °C"
+        }
+      ''}
 
       volume master {
           format = "vol: %volume"
           format_muted = "vol: mute"
       }
+
+      ${lib.optionalString (config.system.devices.wirelessAdapter != null) ''
+        wireless ${config.system.devices.wirelessAdapter} {
+            format_up = "wlan: %essid"
+            format_down = "wlan: off"
+        }
+      ''}
+
+      ${lib.optionalString (config.system.devices.batteryId != null) ''
+        battery ${toString config.system.devices.batteryId} {
+            integer_battery_capacity = true
+            last_full_capacity = true
+            low_threshold = 12
+
+            status_chr = "^"
+            status_bat = ""
+            status_unk = "?"
+            status_full = ""
+
+            format = "batt: %status%percentage"
+            format_down = "batt: none"
+        }
+      ''}
 
       disk / {
           format = "disk: %avail"
@@ -677,7 +710,12 @@ in
       }
 
       order += "load"
-      order += "cpu_temperature 0"
+      ${lib.optionalString (config.system.devices.coreThermalZone != null) ''
+        order += "cpu_temperature ${toString config.system.devices.coreThermalZone}"
+      ''}
+      ${lib.optionalString (config.system.devices.batteryId != null) ''
+        order += "battery ${toString config.system.devices.batteryId}"
+      ''}
       order += "disk /"
       order += "tztime local"
 
@@ -685,9 +723,27 @@ in
           format = "cpu: %1min"
       }
 
-      cpu_temperature 0 {
-          format = "temp: %degrees °C"
-      }
+      ${lib.optionalString (config.system.devices.coreThermalZone != null) ''
+        cpu_temperature ${toString config.system.devices.coreThermalZone} {
+            format = "temp: %degrees °C"
+        }
+      ''}
+
+      ${lib.optionalString (config.system.devices.batteryId != null) ''
+        battery ${toString config.system.devices.batteryId} {
+            integer_battery_capacity = true
+            last_full_capacity = true
+            low_threshold = 12
+
+            status_chr = "^"
+            status_bat = ""
+            status_unk = "?"
+            status_full = ""
+
+            format = "batt: %status%percentage"
+            format_down = "batt: none"
+        }
+      ''}
 
       disk / {
           format = "disk: %avail"
@@ -821,5 +877,10 @@ in
       [options]
       remove_duplicates = true
     '';
+  };
+
+  programs.swaynag-battery = lib.mkIf (config.system.devices.batteryId != null) {
+    enable = true;
+    powerSupply = "BAT${toString config.system.devices.batteryId}";
   };
 }

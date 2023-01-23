@@ -2,7 +2,8 @@
 
 {
   imports = [
-    ./hardware-configuration.nix
+    ./disks.nix
+    ./hardware.nix
 
     ../../config/restic.nix
 
@@ -37,6 +38,7 @@
     ../../config/sway.nix
     ../../config/sysrq.nix
     ../../config/tex.nix
+    ../../config/tlp.nix
     ../../config/udiskie.nix
     ../../config/workstation.nix
   ];
@@ -156,16 +158,12 @@
     domain = "fooster.network";
   };
 
-  hardware.bluetooth.settings.General.Name = "Bina";
-
   hardware.video.hidpi.enable = true;
 
   services.restic.backups.bina = {
     passwordFile = config.sops.secrets.restic-backup-password.path;
     environmentFile = config.sops.secrets.restic-backup-environment.path;
   };
-
-  systemd.services.restic-backups-bina.serviceConfig.ExecCondition = "${pkgs.networkmanager}/bin/nmcli device connect enp0s13f0u2c2";
 
   virtualisation.spiceUSBRedirection.enable = true;
 
@@ -203,119 +201,6 @@
       for_window [title="Qsynth"] floating enable
       for_window [title=".* — QjackCtl"] floating enable
       for_window [title="Virtual MIDI Piano Keyboard"] floating enable
-    '';
-
-    "xdg/i3status/config".text = ''
-      general {
-          colors = true
-
-          color_good = "#dadada"
-          color_degraded = "#aa4444"
-          color_bad = "#aa4444"
-
-          interval = 1
-
-          output_format = "i3bar"
-      }
-
-      order += "load"
-      order += "cpu_temperature 7"
-      order += "volume master"
-      order += "wireless wlp166s0"
-      order += "battery 1"
-      order += "disk /"
-      order += "tztime local"
-
-      load {
-          format = "cpu: %1min"
-      }
-
-      cpu_temperature 7 {
-          format = "temp: %degrees °C"
-      }
-
-      volume master {
-          format = "vol: %volume"
-          format_muted = "vol: mute"
-      }
-
-      wireless wlp166s0 {
-          format_up = "wlan: %essid"
-          format_down = "wlan: off"
-      }
-
-      battery 1 {
-          integer_battery_capacity = true
-          last_full_capacity = true
-          low_threshold = 12
-
-          status_chr = "^"
-          status_bat = ""
-          status_unk = "?"
-          status_full = ""
-
-          format = "batt: %status%percentage"
-          format_down = "batt: none"
-      }
-
-      disk / {
-          format = "disk: %avail"
-      }
-
-      tztime local {
-          format = "%H:%M"
-      }
-    '';
-
-    "xdg/i3status/tmux".text = ''
-      general {
-          colors = true
-
-          color_good = "#dadada"
-          color_degraded = "#aa4444"
-          color_bad = "#aa4444"
-
-          interval = 1
-
-          output_format = "none"
-          separator = " • "
-      }
-
-      order += "load"
-      order += "cpu_temperature 7"
-      order += "battery 1"
-      order += "disk /"
-      order += "tztime local"
-
-      load {
-          format = "cpu: %1min"
-      }
-
-      cpu_temperature 7 {
-          format = "temp: %degrees °C"
-      }
-
-      battery 1 {
-          integer_battery_capacity = true
-          last_full_capacity = true
-          low_threshold = 12
-
-          status_chr = "^"
-          status_bat = ""
-          status_unk = "?"
-          status_full = ""
-
-          format = "batt: %status%percentage"
-          format_down = "batt: none"
-      }
-
-      disk / {
-          format = "disk: %avail"
-      }
-
-      tztime local {
-          format = "%H:%M"
-      }
     '';
   } // (lib.mapAttrs'
     (name: value: lib.nameValuePair "NetworkManager/system-connections/${lib.removePrefix "networks/" name}" { source = value.path; })
@@ -377,19 +262,6 @@
       systemd-udevd\[[0-9]*\]: /nix/store/[0-9a-z]\{32\}-systemd-[^/]*/lib/udev/rules\.d/50-udev-default\.rules:[0-9]* Unknown group '[^']*', ignoring
       dbus-broker-launch\[[0-9]*\]: Ignoring duplicate name '[^']*' in service file '[^']*'
     '';
-  };
-
-  services.tlp = {
-    enable = true;
-    settings = {
-      CPU_SCALING_GOVERNOR_ON_AC = "performance";
-      CPU_SCALING_GOVERNOR_ON_BAT = "schedutil";
-    };
-  };
-
-  programs.swaynag-battery = {
-    enable = true;
-    powerSupply = "BAT1";
   };
 
   users = {

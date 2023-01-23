@@ -2,7 +2,8 @@
 
 {
   imports = [
-    ./hardware-configuration.nix
+    ./disks.nix
+    ./hardware.nix
 
     ../../config/restic.nix
 
@@ -31,6 +32,7 @@
     ../../config/pki.nix
     ../../config/podman.nix
     ../../config/sway.nix
+    ../../config/tlp.nix
     ../../config/udiskie.nix
     ../../config/workstation.nix
   ];
@@ -148,14 +150,10 @@
     domain = "fooster.network";
   };
 
-  hardware.bluetooth.settings.General.Name = "Lia";
-
   services.restic.backups.lia = {
     passwordFile = config.sops.secrets.restic-backup-password.path;
     environmentFile = config.sops.secrets.restic-backup-environment.path;
   };
-
-  systemd.services.restic-backups-lia.serviceConfig.ExecCondition = "${config.systemd.package}/lib/systemd/systemd-networkd-wait-online --interface=enp0s25:routable --timeout=5";
 
   virtualisation.spiceUSBRedirection.enable = true;
 
@@ -193,119 +191,6 @@
       for_window [title="Qsynth"] floating enable
       for_window [title=".* — QjackCtl"] floating enable
       for_window [title="Virtual MIDI Piano Keyboard"] floating enable
-    '';
-
-    "xdg/i3status/config".text = ''
-      general {
-          colors = true
-
-          color_good = "#dadada"
-          color_degraded = "#aa4444"
-          color_bad = "#aa4444"
-
-          interval = 1
-
-          output_format = "i3bar"
-      }
-
-      order += "load"
-      order += "cpu_temperature 0"
-      order += "volume master"
-      order += "wireless wlp4s0"
-      order += "battery 0"
-      order += "disk /"
-      order += "tztime local"
-
-      load {
-          format = "cpu: %1min"
-      }
-
-      cpu_temperature 0 {
-          format = "temp: %degrees °C"
-      }
-
-      volume master {
-          format = "vol: %volume"
-          format_muted = "vol: mute"
-      }
-
-      wireless wlp4s0 {
-          format_up = "wlan: %essid"
-          format_down = "wlan: off"
-      }
-
-      battery 0 {
-          integer_battery_capacity = true
-          last_full_capacity = true
-          low_threshold = 12
-
-          status_chr = "^"
-          status_bat = ""
-          status_unk = "?"
-          status_full = ""
-
-          format = "batt: %status%percentage"
-          format_down = "batt: none"
-      }
-
-      disk / {
-          format = "disk: %avail"
-      }
-
-      tztime local {
-          format = "%H:%M"
-      }
-    '';
-
-    "xdg/i3status/tmux".text = ''
-      general {
-          colors = true
-
-          color_good = "#dadada"
-          color_degraded = "#aa4444"
-          color_bad = "#aa4444"
-
-          interval = 1
-
-          output_format = "none"
-          separator = " • "
-      }
-
-      order += "load"
-      order += "cpu_temperature 0"
-      order += "battery 0"
-      order += "disk /"
-      order += "tztime local"
-
-      load {
-          format = "cpu: %1min"
-      }
-
-      cpu_temperature 0 {
-          format = "temp: %degrees °C"
-      }
-
-      battery 0 {
-          integer_battery_capacity = true
-          last_full_capacity = true
-          low_threshold = 12
-
-          status_chr = "^"
-          status_bat = ""
-          status_unk = "?"
-          status_full = ""
-
-          format = "batt: %status%percentage"
-          format_down = "batt: none"
-      }
-
-      disk / {
-          format = "disk: %avail"
-      }
-
-      tztime local {
-          format = "%H:%M"
-      }
     '';
   } // (lib.mapAttrs'
     (name: value: lib.nameValuePair "NetworkManager/system-connections/${lib.removePrefix "networks/" name}" { source = value.path; })
@@ -364,19 +249,6 @@
       pipewire\[[0-9]*\]: jack-device 0x[0-9a-f]\{12\}: can't open client: Input/output error
       dbus-broker-launch\[[0-9]*\]: Ignoring duplicate name '[^']*' in service file '[^']*'
     '';
-  };
-
-  services.tlp = {
-    enable = true;
-    settings = {
-      CPU_SCALING_GOVERNOR_ON_AC = "performance";
-      CPU_SCALING_GOVERNOR_ON_BAT = "schedutil";
-    };
-  };
-
-  programs.swaynag-battery = {
-    enable = true;
-    powerSupply = "BAT0";
   };
 
   users = {

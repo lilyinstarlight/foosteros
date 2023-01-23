@@ -29,9 +29,17 @@
     })
   ];
 
-  systemd.services."restic-backups-${config.networking.hostName}" = {
-    wants = [ "network-online.target" ];
-    after = [ "network-online.target" ];
-    path = [ pkgs.btrfs-progs ];
-  };
+  systemd.services."restic-backups-${config.networking.hostName}" = lib.mkMerge [
+    {
+      wants = [ "network-online.target" ];
+      after = [ "network-online.target" ];
+      path = [ pkgs.btrfs-progs ];
+    }
+    (lib.mkIf (config.system.devices.backupAdapter != null && config.networking.networkmanager.enable) {
+      serviceConfig.ExecCondition = "${pkgs.networkmanager}/bin/nmcli device connect ${config.system.devices.backupAdapter}";
+    })
+    (lib.mkIf (config.system.devices.backupAdapter != null && config.networking.useNetworkd) {
+      serviceConfig.ExecCondition = "${config.systemd.package}/lib/systemd/systemd-networkd-wait-online --interface=${config.system.devices.backupAdapter}:routable --timeout=5";
+    })
+  ];
 }
