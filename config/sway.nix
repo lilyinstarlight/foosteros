@@ -801,7 +801,7 @@ in
     extraConfig = ''
       [icons]
       "org.qutebrowser.qutebrowser" = "#"
-      "Firefox" = "#"
+      "firefox" = "#"
       "Chromium-browser" = "#"
       "Alacritty" = ">"
       "Element" = "@"
@@ -809,7 +809,6 @@ in
 
       [aliases]
       "org.qutebrowser.qutebrowser" = "web"
-      "Firefox" = "firefox"
       "Chromium-browser" = "chromium"
       "Alacritty" = "term"
       "Element" = "chat"
