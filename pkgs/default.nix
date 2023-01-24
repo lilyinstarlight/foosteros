@@ -39,6 +39,7 @@ in with outpkgs;
   sonic-pi-tool = python3Packages.callPackage ./sonic-pi-tool {
     sonic-pi = sonic-pi_3;
   };
+  swaylock-fprintd = callPackage ./swaylock-fprintd {};
 
   # TODO: remove after NixOS/nixpkgs#194310 is merged
   curl-impersonate = callPackage ./curl-impersonate {};
@@ -58,6 +59,7 @@ in with outpkgs;
       })
     ];
   });
+
   monofur-nerdfont = nerdfonts.override {
     fonts = [ "Monofur" ];
   };
