@@ -1,10 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
 {
-  imports = [
-    inputs.envfs.nixosModules.envfs
-  ];
-
   system.activationScripts.envfsfallback = ''
     mkdir -p /run/bindroot
     mount --bind --make-unbindable / /run/bindroot
@@ -17,6 +13,7 @@
   '';
 
   programs.nix-ld.enable = true;
+  services.envfs.enable = true;
 
   # TODO: remove override when checks are fixed
   environment.systemPackages = with inputs.nix-alien.packages.${pkgs.stdenv.hostPlatform.system}; [ (nix-alien.overrideAttrs (old: { doInstallCheck = false; })) ];

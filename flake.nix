@@ -51,12 +51,6 @@
       inputs.flake-utils.follows = "flake-utils";
     };
 
-    envfs = {
-      url = "github:Mic92/envfs";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-parts.follows = "flake-parts";
-    };
-
 
     ## transitive inputs
 
@@ -103,7 +97,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, sops-nix, impermanence, nix-index-database, nix-alien, envfs, ... }:
+  outputs = { self, nixpkgs, home-manager, sops-nix, impermanence, nix-index-database, nix-alien, ... }:
     let
       supportedSystems = with nixpkgs.lib; intersectLists (platforms.x86_64 ++ platforms.aarch64) (platforms.linux ++ platforms.darwin);
 
