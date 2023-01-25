@@ -59,6 +59,12 @@ stdenv.mkDerivation rec {
     substituteInPlace fingerprint/meson.build --replace \
       '/usr/share/dbus-1/interfaces/net.reactivated.Fprint' \
       '${fprintd}/share/dbus-1/interfaces/net.reactivated.Fprint'
+
+    # TODO: PR to upstream swaylock and pull as a patch
+    substituteInPlace main.c --replace \
+      'getopt_long(argc, argv, "d", long_options, &opt_idx)' \
+      'getopt_long(argc, argv, "-:d", long_options, &opt_idx)'
+    cat main.c
   '';
 
   passthru.updateScript = unstableGitUpdater {};
