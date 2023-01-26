@@ -1,6 +1,7 @@
 { lib
 , stdenv
 , fetchFromGitHub
+, fetchpatch
 , meson
 , ninja
 , pkg-config
@@ -28,6 +29,14 @@ stdenv.mkDerivation rec {
     rev = "96124a516c8e50162d56ff7fbc1f4bd04dbc2433";
     hash = "sha256-S8aBh8zKSrcyPkMiHhy237W0Y7G2WBHDHA+Z2e3aPKY=";
   };
+
+  patches = [
+    (fetchpatch {
+      name = "swaylock-fix-option-parsing.patch";
+      url = "https://github.com/swaywm/swaylock/commit/2c4bafc57f278fbd2a564c357da410173be28bc6.patch";
+      hash = "sha256-iuuindZ1zu2U+tpai1Pic29tKae+VMC2YQwLaTXwlkY=";
+    })
+  ];
 
   strictDeps = true;
 
@@ -59,12 +68,6 @@ stdenv.mkDerivation rec {
     substituteInPlace fingerprint/meson.build --replace \
       '/usr/share/dbus-1/interfaces/net.reactivated.Fprint' \
       '${fprintd}/share/dbus-1/interfaces/net.reactivated.Fprint'
-
-    # TODO: PR to upstream swaylock and pull as a patch
-    substituteInPlace main.c --replace \
-      'getopt_long(argc, argv, "d", long_options, &opt_idx)' \
-      'getopt_long(argc, argv, "-:d", long_options, &opt_idx)'
-    cat main.c
   '';
 
   passthru.updateScript = unstableGitUpdater {};
