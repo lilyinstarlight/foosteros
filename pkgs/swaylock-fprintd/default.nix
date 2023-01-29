@@ -21,13 +21,13 @@
 
 stdenv.mkDerivation rec {
   pname = "swaylock-fprintd";
-  version = "unstable-2023-01-25";
+  version = "unstable-2023-01-28";
 
   src = fetchFromGitHub {
     owner = "SL-RU";
     repo = "swaylock-fprintd";
-    rev = "96124a516c8e50162d56ff7fbc1f4bd04dbc2433";
-    hash = "sha256-S8aBh8zKSrcyPkMiHhy237W0Y7G2WBHDHA+Z2e3aPKY=";
+    rev = "b7911c21f280aeec9c6934fb39bf1906307424e4";
+    hash = "sha256-XPAOkbrpNZSxlXUNYA8QxvD0aS6ehu5BH8qjd44bU6c=";
   };
 
   patches = [
