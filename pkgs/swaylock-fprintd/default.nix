@@ -1,7 +1,6 @@
 { lib
 , stdenv
 , fetchFromGitHub
-, fetchpatch
 , meson
 , ninja
 , pkg-config
@@ -21,22 +20,14 @@
 
 stdenv.mkDerivation rec {
   pname = "swaylock-fprintd";
-  version = "unstable-2023-01-28";
+  version = "unstable-2023-01-30";
 
   src = fetchFromGitHub {
     owner = "SL-RU";
     repo = "swaylock-fprintd";
-    rev = "b7911c21f280aeec9c6934fb39bf1906307424e4";
-    hash = "sha256-XPAOkbrpNZSxlXUNYA8QxvD0aS6ehu5BH8qjd44bU6c=";
+    rev = "236a6974f5c49787a8ae127670319eacdbb1b40b";
+    hash = "sha256-UYidVUn/LRPOQy2bRkYruNGTt9fM8WDiXyiEaJp4Eq4=";
   };
-
-  patches = [
-    (fetchpatch {
-      name = "swaylock-fix-option-parsing.patch";
-      url = "https://github.com/swaywm/swaylock/commit/2c4bafc57f278fbd2a564c357da410173be28bc6.patch";
-      hash = "sha256-iuuindZ1zu2U+tpai1Pic29tKae+VMC2YQwLaTXwlkY=";
-    })
-  ];
 
   strictDeps = true;
 
