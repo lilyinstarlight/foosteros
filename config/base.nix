@@ -206,7 +206,7 @@ in
 
   environment.systemPackages = with pkgs; [
     man-pages man-pages-posix
-    file python3 tree unzip xxd
+    file python3 tree unzip xxd dbus
     cachix fpaste ftmp furi
     git gitAndTools.delta fd ripgrep
     shellcheck progress libqalculate
