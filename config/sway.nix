@@ -824,6 +824,7 @@ in
     ];
     extraSessionCommands = ''
       export XDG_SESSION_TYPE=wayland
+      export XDG_SESSION_DESKTOP=sway
       export DCONF_PROFILE=sway
     '';
   };
