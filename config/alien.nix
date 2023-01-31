@@ -16,5 +16,5 @@
   services.envfs.enable = true;
 
   # TODO: remove override when checks are fixed
-  environment.systemPackages = with inputs.nix-alien.packages.${pkgs.stdenv.hostPlatform.system}; [ (nix-alien.overrideAttrs (old: { doInstallCheck = false; })) ];
+  environment.systemPackages = with inputs.nix-alien.packages.${pkgs.stdenv.hostPlatform.system}; [ nix-alien ];
 }
