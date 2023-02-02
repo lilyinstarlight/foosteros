@@ -20,7 +20,7 @@
 , unzip
 , go
 , p11-kit
-, makeTestPython
+, nixosTest
 }:
 
 let
@@ -185,7 +185,7 @@ symlinkJoin rec {
 
     tests = lib.optionalAttrs stdenv.isLinux {
       # TODO: this fails in GHA due to RAM exhaustion
-      #curl-impersonate = import ./test.nix { inherit makeTestPython; };
+      #curl-impersonate = nixosTest ./test.nix;
     };
   };
 }

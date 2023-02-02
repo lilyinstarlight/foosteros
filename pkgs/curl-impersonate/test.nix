@@ -21,9 +21,7 @@
       hostnames in /etc/hosts.
 */
 
-{ makeTestPython }:
-
-makeTestPython ({ pkgs, lib, ... }: let
+{ pkgs, lib, ... }: let
   # Update with domains in TestImpersonate.TEST_URLS if needed from:
   # https://github.com/lwthiker/curl-impersonate/blob/main/tests/test_impersonate.py
   domains = [
@@ -157,4 +155,4 @@ in {
     with subtest("Run curl-impersonate tests"):
         curl.succeed("${curl-impersonate-test}")
   '';
-})
+}

@@ -18,8 +18,13 @@ in with outpkgs;
 {
   # non-packages
   outPath = (toString ../.);
-  makeTestPythonFor = pkgs: config: (import "${pkgs.path}/nixos/tests/make-test-python.nix" config { inherit pkgs; inherit (pkg.stdenv.hostPlatform) system; }).test;
-  makeTestPython = makeTestPythonFor outpkgs;
+  nixosTestFor = pkgs: config:
+    (import "${pkgs.path}/nixos/tests/make-test-python.nix"
+      (if lib.isPath config then import config else config) {
+        inherit pkgs;
+        inherit (pkgs.stdenv.hostPlatform) system;
+      }).test;
+  nixosTest = nixosTestFor outpkgs;
 
   # normal packages
   dnsimple-ddns = callPackage ./dnsimple-ddns {};
