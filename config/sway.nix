@@ -787,6 +787,8 @@ in
     xdgOpenUsePortal = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
+  # TODO: upstream to nixpkgs portal pkg or module
+  systemd.user.services.xdg-desktop-portal.path = lib.mkAfter [ "/run/current-system/sw" ];
 
   services.greetd = {
     enable = true;
