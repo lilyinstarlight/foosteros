@@ -17,7 +17,7 @@
           src = fetchurl {
             name = "${attrs.pname}-${attrs.version}.tar.gz";
             url = "https://downloads.ndi.tv/SDK/NDI_SDK_Linux/Install_NDI_SDK_v5_Linux.tar.gz";
-            hash = "sha256-cOBMLnpimphU3icn4Pl4F1t6TsbPTNl5miI5CGL2+ic=";
+            hash = "sha256-ANC+3Cxyc22CiD/A/WvBpUTnlYx+Rtt58yZjPUThUVM=";
           };
 
           unpackPhase = ''unpackFile ${src}; echo y | ./${attrs.installerName}.sh; sourceRoot="NDI SDK for Linux";'';
