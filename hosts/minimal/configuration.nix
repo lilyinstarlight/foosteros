@@ -2,7 +2,8 @@
 
 {
   imports = [
-    ./hardware-configuration.nix
+    ./disks.nix
+    ./hardware.nix
 
     ../../config/lily.nix
   ];
