@@ -5,7 +5,9 @@
     # TODO: add back gimp plugins once NixOS/nixpkgs#211600 is merged
     #inkscape gimp-with-plugins krita
     inkscape gimp krita
-    helvum qjackctl qsynth vmpk calf
+    # TODO: add back helvum once NixOS/nixpkgs#211610
+    #helvum qjackctl qsynth vmpk calf
+    qjackctl qsynth vmpk calf
     ardour lmms
     sonic-pi sonic-pi-tool open-stage-control
     lilypond
