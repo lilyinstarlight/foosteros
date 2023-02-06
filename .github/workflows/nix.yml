@@ -12,7 +12,7 @@ jobs:
     name: Stable Flake Build
     runs-on: ubuntu-latest
     steps:
-      - uses: cachix/install-nix-action@v18
+      - uses: cachix/install-nix-action@v19
         with:
           extra_nix_config: |
             system-features = benchmark big-parallel kvm nixos-test
@@ -34,7 +34,7 @@ jobs:
     name: Stable Impure Build
     runs-on: ubuntu-latest
     steps:
-      - uses: cachix/install-nix-action@v18
+      - uses: cachix/install-nix-action@v19
         with:
           extra_nix_config: |
             system-features = benchmark big-parallel kvm nixos-test
@@ -56,7 +56,7 @@ jobs:
     name: Unstable Flake Build
     runs-on: ubuntu-latest
     steps:
-      - uses: cachix/install-nix-action@v18
+      - uses: cachix/install-nix-action@v19
         with:
           install_url: https://github.com/nix-community/nix-unstable-installer/releases/latest/download/install
           extra_nix_config: |
