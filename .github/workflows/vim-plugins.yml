@@ -10,7 +10,7 @@ jobs:
     name: Update
     runs-on: ubuntu-latest
     steps:
-      - uses: cachix/install-nix-action@v18
+      - uses: cachix/install-nix-action@v19
         with:
           extra_nix_config: |
             system-features = benchmark big-parallel kvm nixos-test
