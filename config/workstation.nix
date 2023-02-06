@@ -4,7 +4,7 @@
   environment.systemPackages = with pkgs; [
     firefox ungoogled-chromium
     pavucontrol qalculate-gtk
-    element-desktop jitsi-meet-electron teams-for-linux
+    element-desktop jitsi-meet-electron teams-for-linux webcord
     ffmpeg-full
     fq ripgrep-all
     mkusb mkwin
@@ -12,7 +12,6 @@
     gnumake llvmPackages_latest.clang llvmPackages_latest.lldb
   ] ++ (lib.optionals config.nixpkgs.config.allowUnfree [
     pridecat
-    # TODO: maybe webcord?
-    discord-ptb slack
+    slack
   ]);
 }
