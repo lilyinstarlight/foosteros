@@ -10,6 +10,16 @@ jobs:
     name: Update
     runs-on: ubuntu-latest
     steps:
+      - run: sudo mkdir /nix
+
+      - uses: easimon/maximize-build-space@v6
+        with:
+          build-mount-path: '/nix'
+          root-reserve-mb: 4096
+          remove-dotnet: 'true'
+          remove-android: 'true'
+          remove-haskell: 'true'
+
       - uses: cachix/install-nix-action@v19
         with:
           extra_nix_config: |
