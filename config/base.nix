@@ -204,9 +204,11 @@ in
     '';
   };
 
+  environment.defaultPackages = lib.mkDefault [];
+
   environment.systemPackages = with pkgs; [
     man-pages man-pages-posix
-    file python3 tree unzip xxd dbus
+    dbus file python3 rsync strace tree unzip xxd
     cachix fpaste ftmp furi
     git gitAndTools.delta fd ripgrep
     shellcheck progress libqalculate
