@@ -24,6 +24,7 @@
       set fish_color_redirection brblue
       set fish_color_user magenta
     '';
+    # TODO: maybe try nix-your-shell?
     interactiveShellInit = ''
       ${pkgs.any-nix-shell}/bin/any-nix-shell fish --info-right | source
     '';
