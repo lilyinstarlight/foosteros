@@ -2,12 +2,10 @@
 
 {
   environment.systemPackages = with pkgs; [
-    # TODO: add back gimp plugins once NixOS/nixpkgs#211600 is merged
+    # TODO: add back gimp plugins once NixOS/nixpkgs#212563 is fixed
     #inkscape gimp-with-plugins krita
     inkscape gimp krita
-    # TODO: add back helvum once NixOS/nixpkgs#211610 is fixed
-    #helvum qjackctl qsynth vmpk calf
-    qjackctl qsynth vmpk calf
+    helvum qjackctl qsynth vmpk calf
     ardour lmms
     sonic-pi sonic-pi-tool open-stage-control
     lilypond
