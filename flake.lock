@@ -313,16 +313,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1676300157,
-        "narHash": "sha256-1HjRzfp6LOLfcj/HJHdVKWAkX9QRAouoh6AjzJiIerU=",
-        "owner": "NixOS",
+        "lastModified": 1676426084,
+        "narHash": "sha256-rsQE3e6it7XAIrYirIgiws5iLdumCn5tRc8qs2WVsj0=",
+        "owner": "lilyinstarlight",
         "repo": "nixpkgs",
-        "rev": "545c7a31e5dedea4a6d372712a18e00ce097d462",
+        "rev": "1b968fec42ebf15fc21fc9eb96a4ae0b89a89b19",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
-        "ref": "nixos-unstable",
+        "owner": "lilyinstarlight",
+        "ref": "tmp/systemd-initrd-fsck",
         "repo": "nixpkgs",
         "type": "github"
       }
