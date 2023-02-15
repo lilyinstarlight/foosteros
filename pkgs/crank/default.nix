@@ -1,4 +1,4 @@
-{ lib, stdenv, runCommand, lndir, rustc, rustPlatform, fetchFromGitHub, makeWrapper, cargo, gcc-arm-embedded, playdate-sdk, xdg-utils, writeScript, unstableGitUpdater }:
+{ lib, stdenv, runCommand, rustPlatform, fetchFromGitHub, makeWrapper, cargo, gcc-arm-embedded, playdate-sdk, xdg-utils, writeScript, unstableGitUpdater }:
 
 rustPlatform.buildRustPackage rec {
   pname = "crank";
