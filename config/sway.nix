@@ -1,15 +1,14 @@
 { config, lib, pkgs, ... }:
 
 let
-  # TODO: replace theme stuff with catppuccin
   sway-dconf-settings = pkgs.writeTextFile {
     name = "sway-dconf-settings";
     destination = "/dconf/sway-custom";
     text = ''
       [org/gnome/desktop/interface]
-      gtk-theme='Materia-Fooster'
+      gtk-theme='Catppuccin-Mocha-Standard-Pink-Dark'
       icon-theme='Papirus-Dark'
-      cursor-theme='Bibata-Modern-Classic'
+      cursor-theme='Catppuccin-Mocha-Dark-Cursors'
     '';
   };
 
@@ -27,7 +26,7 @@ let
     destination = "/share/icons/default/index.theme";
     text = ''
       [icon theme]
-      Inherits=Papirus-Dark;Bibata-Modern-Classic
+      Inherits=Papirus-Dark;Catppuccin-Mocha-Dark-Cursors
     '';
   };
 
@@ -35,6 +34,13 @@ let
     mkdir -p $out/etc/xdg/autostart/
     sed -e 's/^OnlyShowIn=.*$/OnlyShowIn=sway;/' ${pkgs.polkit_gnome}/etc/xdg/autostart/polkit-gnome-authentication-agent-1.desktop >$out/etc/xdg/autostart/polkit-sway-authentication-agent-1.desktop
   '';
+
+  catppuccin-gtk-sway = pkgs.catppuccin-gtk.override {
+    variant = "mocha";
+    accents = [ "pink" ];
+  };
+
+  catppuccin-cursors-sway = pkgs.catppuccin-cursors.mochaDark;
 in
 
 {
@@ -397,21 +403,31 @@ in
       audio/m3u=mpv.desktop
     '';
 
-    "xdg/gtk-3.0/settings.ini".text = lib.mkDefault ''
+    "xdg/gtk-4.0/settings.ini".text = lib.mkDefault ''
       [Settings]
-      gtk-theme-name=Materia-Fooster
+      gtk-theme-name=Catppuccin-Mocha-Standard-Pink-Dark
       gtk-icon-theme-name=Papirus-Dark
       gtk-font-name=Monofur Nerd Font 12
-      gtk-cursor-theme-name=Bibata-Modern-Classic
+      gtk-cursor-theme-name=Catppuccin-Mocha-Dark-Cursors
+      gtk-application-prefer-dark-theme=true
+    '';
+    "gtk-4.0/settings.ini".source = config.environment.etc."xdg/gtk-3.0/settings.ini".source;
+
+    "xdg/gtk-3.0/settings.ini".text = lib.mkDefault ''
+      [Settings]
+      gtk-theme-name=Catppuccin-Mocha-Standard-Pink-Dark
+      gtk-icon-theme-name=Papirus-Dark
+      gtk-font-name=Monofur Nerd Font 12
+      gtk-cursor-theme-name=Catppuccin-Mocha-Dark-Cursors
       gtk-application-prefer-dark-theme=true
     '';
     "gtk-3.0/settings.ini".source = config.environment.etc."xdg/gtk-3.0/settings.ini".source;
 
     "xdg/gtk-2.0/gtkrc".text = lib.mkDefault ''
-      gtk-theme-name="Materia-Fooster"
+      gtk-theme-name="Catppuccin-Mocha-Standard-Pink-Dark"
       gtk-icon-theme-name="Papirus-Dark"
       gtk-font-name="Monofur Nerd Font 12"
-      gtk-cursor-theme-name="Bibata-Modern-Classic"
+      gtk-cursor-theme-name="Catppuccin-Mocha-Dark-Cursors"
     '';
     "gtk-2.0/gtkrc".source = config.environment.etc."xdg/gtk-2.0/gtkrc".source;
 
@@ -618,7 +634,7 @@ in
       exec_always ${pkgs.fooster-backgrounds}/bin/setbg
 
       ### desktop environment
-      seat seat0 xcursor_theme "Bibata-Modern-Classic"
+      seat seat0 xcursor_theme "Catppuccin-Mocha-Dark-Cursors"
     '';
 
     "xdg/i3status/config".text = lib.mkDefault ''
@@ -776,10 +792,11 @@ in
     '';
   };
 
+  # TODO: use qt5ct theme with lightly style
   qt = {
     enable = true;
-    style = "adwaita-dark";
     platformTheme = "gnome";
+    style = "adwaita-dark";
   };
 
   xdg.portal = {
@@ -816,7 +833,7 @@ in
       swaybg swaylock-fprintd swayidle
       kanshi i3status swaywsr mako rofi-wayland alacritty
       polkit-sway
-      fooster-backgrounds fooster-materia-theme bibata-cursors papirus-icon-theme sway-default-icon-theme
+      fooster-backgrounds catppuccin-gtk-sway catppuccin-cursors-sway papirus-icon-theme sway-default-icon-theme
       slurp grim wl-clipboard libnotify sway-contrib.grimshot swappy wf-recorder wl-mirror
       xwayland
       xdg-utils
