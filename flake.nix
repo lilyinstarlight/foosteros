@@ -122,6 +122,7 @@
                   installerConfiguration = foosterosSystem {
                     inherit baseModules;
                     modules = [
+                      { nixpkgs.hostPlatform = selfSystem.config.nixpkgs.hostPlatform; }
                       (nixpkgs.lib.optionalAttrs (selfSystem.config.system.build ? disko) {
                         system.build.installDisko = selfSystem.config.system.build.disko;
                       })
