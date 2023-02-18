@@ -116,7 +116,7 @@ in
         if fs.device != null then fs.device
         else "/dev/disk/by-label/${fs.label}"
       );
-    in {
+    in lib.mkIf (lib.hasPrefix "dev-" unit) {
       requires = [ "${unit}.device" ];
       after = [ "${unit}.device" ];
     };
