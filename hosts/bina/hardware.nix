@@ -17,6 +17,8 @@
   hardware.enableRedistributableFirmware = true;
   hardware.cpu.intel.updateMicrocode = true;
 
+  nixpkgs.hostPlatform = "x86_64-linux";
+
   system.devices = {
     rootDisk = "/dev/nvme0n1";
     coreThermalZone = 7;

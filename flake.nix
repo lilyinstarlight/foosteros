@@ -108,9 +108,8 @@
   {
     lib = {
       foosterosSystem = let
-        foosterosSystem = nixpkgs.lib.makeOverridable ({ system ? "x86_64-linux", modules ? [], baseModules ? [], installer ? null }: let
+        foosterosSystem = nixpkgs.lib.makeOverridable ({ modules ? [], baseModules ? [], installer ? null }: let
           selfSystem = nixpkgs.lib.nixosSystem {
-            system = system;
             specialArgs = {
               inherit self;
               inherit (self) inputs;
@@ -121,7 +120,7 @@
               ({ pkgs, ... }: {
                 system.build = let
                   installerConfiguration = foosterosSystem {
-                    inherit system baseModules;
+                    inherit baseModules;
                     modules = [
                       (nixpkgs.lib.optionalAttrs (selfSystem.config.system.build ? disko) {
                         system.build.installDisko = selfSystem.config.system.build.disko;
@@ -194,21 +193,18 @@
 
     nixosConfigurations = {
       minimal = self.lib.foosterosSystem {
-        system = "x86_64-linux";
         modules = [
           ./hosts/minimal/configuration.nix
         ];
         installer = ./hosts/minimal/installer.nix;
       };
       bina = self.lib.foosterosSystem {
-        system = "x86_64-linux";
         modules = [
           ./hosts/bina/configuration.nix
         ];
         installer = ./hosts/bina/installer.nix;
       };
       lia = self.lib.foosterosSystem {
-        system = "x86_64-linux";
         modules = [
           ./hosts/lia/configuration.nix
         ];
