@@ -271,7 +271,7 @@
       root.passwordFile = config.sops.secrets.root-password.path;
       lily = {
         passwordFile = config.sops.secrets.lily-password.path;
-        extraGroups = with config.users.groups; map (grp: grp.name) [ keys adbusers ];
+        extraGroups = with config.users.groups; map (grp: grp.name) [ networkmanager keys adbusers ];
       };
     };
   };
