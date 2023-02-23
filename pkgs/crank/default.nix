@@ -16,7 +16,7 @@ rustPlatform.buildRustPackage rec {
     ./crank-fix-lock.patch
   ];
 
-  cargoHash = "sha256-k5GEyvsp0iNQoEQ91jhDjowJc0bufAGJQTN1YHtlH7M=";
+  cargoHash = "sha256-7TknZ69j9dROMX2UQyYGWIuP8uKD6PD2WgfEr0e9MCs=";
 
   nativeBuildInputs = [ makeWrapper ];
 
