@@ -10,6 +10,7 @@
     configure = {
       customRC = ''
         " settings
+        set autochdir
         set autoindent
         set autoread
         set autowrite
