@@ -7,7 +7,7 @@ index 2276245..b392da2 100644
  [[package]]
  name = "crankstart-cli"
 -version = "0.2.5"
-+version = "0.2.6"
++version = "0.2.7"
  dependencies = [
   "Inflector",
   "anyhow",
