@@ -26,13 +26,13 @@
 let
   makeCurlImpersonate = { name, target }: stdenv.mkDerivation rec {
     pname = "curl-impersonate-${name}";
-    version = "0.5.3";
+    version = "0.5.4";
 
     src = fetchFromGitHub {
       owner = "lwthiker";
       repo = "curl-impersonate";
       rev = "v${version}";
-      hash = "sha256-5aRC9Ip86y4mw6WMve/e0ZWV23KxSBvwKkpaRQsUsOI=";
+      hash = "sha256-LBGWFal2szqgURIBCLB84kHWpdpt5quvBBZu6buGj2A=";
     };
 
     patches = [

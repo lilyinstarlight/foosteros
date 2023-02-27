@@ -12,9 +12,9 @@
     hash = "sha256-+ejYHQQFumbRgVKa9CozVPg4yTkJX/mZMNpqqc32/kY=";
   };
 
-  "nss-3.77.tar.gz" = fetchurl {
-    url = "https://ftp.mozilla.org/pub/security/nss/releases/NSS_3_77_RTM/src/nss-3.77-with-nspr-4.32.tar.gz";
-    hash = "sha256-j6UEIeWcTk5x0Z8j3WV3uK+xwT4vm38OyxpVrjd1KV8=";
+  "nss-3.87.tar.gz" = fetchurl {
+    url = "https://ftp.mozilla.org/pub/security/nss/releases/NSS_3_87_RTM/src/nss-3.87-with-nspr-4.35.tar.gz";
+    hash = "sha256-63DqC1jc5pqkkOnp/s0TKn1kTh2j1jHhYzdqDcwRoCI=";
   };
 
   "boringssl.zip" = fetchurl {
