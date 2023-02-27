@@ -2,7 +2,7 @@
 
 {
   environment.systemPackages = with pkgs; [
-    # TODO: add back gimp plugins once NixOS/nixpkgs#212563 is fixed
+    # TODO: add back gimp plugins once NixOS/nixpkgs#218074 is merged
     #inkscape gimp-with-plugins krita
     inkscape gimp krita
     helvum qjackctl qsynth vmpk calf

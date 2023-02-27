@@ -109,7 +109,7 @@ in
       "/etc/initrd-release".source = lib.mkOverride 75 initrdRelease;
     };
 
-    # TODO: can be removed when systemd/systemd#3551 is fixed and a subsequent release hits nixos-unstable
+    # TODO: can be removed when systemd/systemd#26038 is merged and a subsequent release hits nixos-unstable
     targets.initrd-root-device = let
       fs = config.fileSystems."/";
       unit = utils.escapeSystemdPath (
