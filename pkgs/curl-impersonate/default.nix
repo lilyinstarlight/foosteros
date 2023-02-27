@@ -39,13 +39,6 @@ let
       # Fix shebangs in the NSS build script
       # (can't just patchShebangs since makefile unpacks it)
       ./curl-impersonate-0.5.2-fix-shebangs.patch
-      # Fixes issue with "--disable-static" on the configure script
-      # lwthiker/curl-impersonate#117
-      (fetchpatch {
-        name = "curl-impersonate-fix-disable-static.patch";
-        url = "https://github.com/lwthiker/curl-impersonate/commit/4a9c4027b8ad5e81b1be88a0f7c149eb754165eb.patch";
-        hash = "sha256-OjaSgzoklzakCjzzXnnjk5a5WOvgWRajc43FDztcg4s=";
-      })
     ];
 
     strictDeps = true;
