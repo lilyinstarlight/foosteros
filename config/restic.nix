@@ -15,7 +15,7 @@
         "--keep-yearly 2"
       ];
       timerConfig = {
-        OnCalendar = "daily";
+        OnCalendar = lib.mkDefault "daily";
         Persistent = true;
       };
     }
