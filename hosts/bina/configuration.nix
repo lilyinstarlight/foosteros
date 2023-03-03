@@ -78,6 +78,7 @@
       "mobile"
       "wired"
       "wired-admin"
+      "carolina"
     ]));
   };
 
