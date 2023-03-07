@@ -9,6 +9,9 @@ jobs:
   update:
     name: Update
     runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.commit.outputs.changed }}
+      head: ${{ steps.commit.outputs.head }}
     steps:
       - name: Free up runner space
         run: sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc
@@ -25,7 +28,6 @@ jobs:
 
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0
           ssh-key: ${{ secrets.REPO_KEY }}
 
       - name: Configure git
@@ -36,18 +38,90 @@ jobs:
       - run: nix -vL --show-trace flake update
 
       - id: commit
-        name: Commit changes
+        name: Commit and stage changes
         run: |
           if ! git diff --exit-code --quiet flake.lock; then
-            git commit -m "flake: update inputs" flake.lock
-            echo "changed=true" >> $GITHUB_OUTPUT
+            git commit -m 'flake: update inputs' flake.lock
+            git push origin 'ci/flake/${{ github.sha }}'
+
+            echo 'changed=true' >> $GITHUB_OUTPUT
+            echo 'head=ci/flake/${{ github.sha }}' >> $GITHUB_OUTPUT
           fi
 
-      - run: nix -vL --show-trace flake check
+      - run: nix -vL --show-trace flake check --no-build
         if: steps.commit.outputs.changed == 'true'
 
-      - name: Push changes
-        if: steps.commit.outputs.changed == 'true'
+  populate:
+    name: Populate Checks Matrix
+    needs: [update]
+    if: needs.update.outputs.changed == 'true'
+    outputs:
+      checks: ${{ steps.identify.outputs.checks }}
+      cached: ${{ steps.query.outputs.cached }}
+    steps:
+      - uses: cachix/install-nix-action@v20
+        with:
+          extra_nix_config: |
+            system-features = benchmark big-parallel kvm nixos-test
+
+      - uses: actions/checkout@v3
+        with:
+          ref: '${{ needs.update.outputs.head }}'
+
+      - id: identify
+        name: Identify all system-compatible checks
         run: |
-          git pull --rebase
+          echo "checks=$(nix -vL eval ".#checks.$(nix show-config --json | jq -r .system.value)" --apply builtins.attrNames --json)" >> $GITHUB_OUTPUT
+
+  check:
+    name: 'Check: ${{ matrix.check }}'
+    needs: [update, populate]
+    if: needs.update.outputs.changed == 'true'
+    strategy:
+      matrix:
+        check: ${{ fromJSON(needs.populate.outputs.checks) }}
+    steps:
+      - uses: cachix/install-nix-action@v20
+        with:
+          extra_nix_config: |
+            system-features = benchmark big-parallel kvm nixos-test
+
+      - uses: cachix/cachix-action@v12
+        with:
+          name: foosteros
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+
+      - uses: actions/checkout@v3
+
+      - id: query
+        name: 'Check cache for checks.${{ matrix.check }}'
+        env:
+          CHECK: ${{ matrix.check }}
+        run: |
+          narhash="$(nix -vL --show-trace eval --raw ".#checks.$(nix show-config --json | jq -r .system.value).$CHECK" --apply 'builtins.substring 11 32')"
+          if curl -sfo /dev/null "https://foosteros.cachix.org/$narhash.narinfo"; then
+            echo 'cached=true' >> $GITHUB_OUTPUT
+          fi
+
+      - id: build
+        name: 'Build checks.${{ matrix.check }}'
+        if: steps.query.outputs.cached != 'true'
+        env:
+          CHECK: ${{ matrix.check }}
+        run: |
+          nix -vL --show-trace build ".#checks.$(nix show-config --json | jq -r .system.value).$CHECK"
+
+  push:
+    name: Push
+    needs: [update, populate, check]
+    if: needs.update.outputs.changed == 'true'
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ssh-key: ${{ secrets.REPO_KEY }}
+
+      - name: Push changes
+        run: |
+          git pull --rebase . '${{ needs.update.outputs.head }}'
           git push
+          git push origin -d '${{ needs.update.outputs.head }}'
