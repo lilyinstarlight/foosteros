@@ -157,6 +157,10 @@
     packages = forAllSystems (system: {
       default = nixpkgs.legacyPackages.${system}.linkFarmFromDrvs "foosteros-pkgs"
         (nixpkgs.lib.unique (nixpkgs.lib.filter (drv: !drv.meta.unsupported && !drv.meta.unfree && (drv.meta ? dependsUnfree -> !drv.meta.dependsUnfree)) (nixpkgs.lib.collect (drv: nixpkgs.lib.isDerivation drv) self.legacyPackages.${system})));
+
+      deploy = nixpkgs.legacyPackages.${system}.writeText "cachix-deploy.json" (builtins.toJSON
+        (nixpkgs.lib.mapAttrs (host: cfg: cfg.config.system.build.toplevel) (nixpkgs.lib.filterAttrs (host: cfg:
+          cfg ? config && cfg.config ? system && cfg.config.system ? build && cfg.config.system.build ? toplevel && cfg.pkgs.stdenv.hostPlatform.system == system && cfg.config.services.cachix-agent.enable) self.nixosConfigurations)));
     });
 
     overlays.foosteros = (final: prev: import ./pkgs {
