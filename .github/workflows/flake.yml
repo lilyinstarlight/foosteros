@@ -51,7 +51,7 @@ jobs:
       # TODO: remove whenever Nix (or crane) fixes this
       - name: 'TODO: Nix pls'
         run: |
-          nix -vL build --no-link --impure --expr '(builtins.getFlake (toString ./.)).inputs.crane.packages.x86_64-linux.crate-utils'
+          nix -vL build --no-link "github:ipetkov/crane/$(nix -vL eval --impure --raw --expr '(builtins.getFlake (toString ./.)).inputs.crane.rev')#crate-utils"
         if: steps.commit.outputs.changed == 'true'
 
       - run: nix -vL --show-trace flake check --no-build
