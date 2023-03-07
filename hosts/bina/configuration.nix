@@ -56,6 +56,7 @@
       };
       restic-backup-password = {};
       restic-backup-environment = {};
+      cachix-agent = {};
       dnsimple-ddns = {};
       nullmailer-remotes = {
         mode = "0440";
@@ -166,6 +167,8 @@
     environmentFile = config.sops.secrets.restic-backup-environment.path;
   };
 
+  services.cachix-agent.enable = true;
+
   virtualisation.spiceUSBRedirection.enable = true;
 
   nix = {
@@ -203,6 +206,8 @@
       for_window [title=".* — QjackCtl"] floating enable
       for_window [title="Virtual MIDI Piano Keyboard"] floating enable
     '';
+
+    "cachix-agent.token".source = config.sops.secrets.cachix-agent.path;
   } // (lib.mapAttrs'
     (name: value: lib.nameValuePair "NetworkManager/system-connections/${lib.removePrefix "networks/" name}" { source = value.path; })
     (lib.filterAttrs (name: value: lib.hasPrefix "networks/" name) config.sops.secrets)
