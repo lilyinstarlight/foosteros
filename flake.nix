@@ -63,7 +63,9 @@
     };
 
     crane = {
-      url = "github:ipetkov/crane";
+      # TODO: remove when fixed upstream
+      #url = "github:ipetkov/crane";
+      url = "github:ipetkov/crane/105e27adb70a9890986b6d543a67761cbc1964a2";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.rust-overlay.follows = "rust-overlay";
       inputs.flake-utils.follows = "flake-utils";
