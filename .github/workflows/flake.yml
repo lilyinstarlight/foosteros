@@ -42,7 +42,7 @@ jobs:
         run: |
           if ! git diff --exit-code --quiet flake.lock; then
             git commit -m 'flake: update inputs' flake.lock
-            git push origin 'ci/flake/${{ github.sha }}'
+            git push origin 'HEAD:ci/flake/${{ github.sha }}'
 
             echo 'changed=true' >> $GITHUB_OUTPUT
             echo 'head=ci/flake/${{ github.sha }}' >> $GITHUB_OUTPUT
