@@ -1,0 +1,55 @@
+name: Deploy
+
+on:
+  workflow_run:
+    workflows:
+      - Nix
+    branches:
+      - main
+    types:
+      - completed
+  workflow_dispatch:
+
+concurrency: deploy
+
+jobs:
+  deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - run: sudo mkdir /nix
+
+      - uses: easimon/maximize-build-space@v6
+        with:
+          build-mount-path: '/nix'
+          remove-dotnet: 'true'
+          remove-android: 'true'
+          remove-haskell: 'true'
+
+      - uses: cachix/install-nix-action@v20
+        with:
+          extra_nix_config: |
+            system-features = benchmark big-parallel kvm nixos-test
+
+      - uses: cachix/cachix-action@v12
+        with:
+          name: foosteros
+
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - id: build
+        name: Build hosts
+        run: |
+          nix -vL --show-trace build .#deploy
+          echo "spec=$(nix -vL --show-trace eval --raw .#deploy)" >> $GITHUB_OUTPUT
+
+      - name: Deploy hosts
+        env:
+          CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
+          CACHIX_ACTIVATE_TOKEN: ${{ secrets.CACHIX_ACTIVATE_TOKEN }}
+          SPEC: ${{ steps.build.outputs.spec }}
+        run: |
+          cachix push foosteros "$SPEC"
+          cachix deploy activate "$SPEC"
