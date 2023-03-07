@@ -108,6 +108,7 @@ jobs:
         run: |
           narhash="$(nix -vL --show-trace eval --raw ".#checks.$(nix show-config --json | jq -r .system.value).$CHECK" --apply 'builtins.substring 11 32')"
           if curl -sfo /dev/null "https://foosteros.cachix.org/$narhash.narinfo"; then
+            echo 'Found $narhash in cache'
             echo 'cached=true' >> $GITHUB_OUTPUT
           fi
 
