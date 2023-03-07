@@ -53,6 +53,7 @@ in
     ({ config, lib, pkgs, ... }: {
       programs.qutebrowser = {
         enable = true;
+        package = pkgs.qutebrowser-qt6;
         loadAutoconfig = true;
         settings = {
           colors.webpage.preferred_color_scheme = "dark";
@@ -251,7 +252,7 @@ in
   ];
 
   environment.systemPackages = with pkgs; [
-    qutebrowser
+    qutebrowser-qt6
     imv mupdf mpv
   ];
 
@@ -437,7 +438,7 @@ in
       set $term ${pkgs.alacritty}/bin/alacritty
       set $run ${pkgs.rofi-wayland}/bin/rofi -show drun
       set $lock ${pkgs.systemd}/bin/loginctl lock-session
-      set $browser ${pkgs.qutebrowser}/bin/qutebrowser
+      set $browser ${pkgs.qutebrowser-qt6}/bin/qutebrowser
 
       ### global settings
       font Monofur Nerd Font 12
