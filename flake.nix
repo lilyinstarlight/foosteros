@@ -203,19 +203,19 @@
         modules = [
           ./hosts/minimal/configuration.nix
         ];
-        installer = ./hosts/minimal/installer.nix;
+        installer = {};
       };
       bina = self.lib.foosterosSystem {
         modules = [
           ./hosts/bina/configuration.nix
         ];
-        installer = ./hosts/bina/installer.nix;
+        installer = {};
       };
       lia = self.lib.foosterosSystem {
         modules = [
           ./hosts/lia/configuration.nix
         ];
-        installer = ./hosts/lia/installer.nix;
+        installer = {};
       };
     };
   };
