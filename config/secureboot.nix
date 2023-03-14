@@ -1,5 +1,14 @@
 { config, lib, pkgs, ... }:
 
+# TODO: remove when nix-community/lanzaboote#131 is merged
+let
+  cfg = config.boot.lanzaboote;
+
+  # This is the fwupd-efi package. We need to get it this way because a user might override services.fwupd.package,
+  # which may cause pkgs.fwupd-efi to be a different package than what the fwupd package has as dependency.
+  fwupd-efi = builtins.head (builtins.filter (x: (x.pname or "") == "fwupd-efi") config.services.fwupd.package.buildInputs);
+in
+
 {
   environment.systemPackages = with pkgs; [
     sbctl
@@ -10,5 +19,20 @@
   boot.lanzaboote = {
     enable = true;
     pkiBundle = "/etc/secureboot";
+  };
+
+  # TODO: remove when nix-community/lanzaboote#131 is merged
+  systemd.services.fwupd = lib.mkIf config.services.fwupd.enable {
+    # Tell fwupd to load its efi files from /run
+    environment.FWUPD_EFIAPPDIR = "/run/fwupd-efi";
+    serviceConfig.RuntimeDirectory = "fwupd-efi";
+    # Place the fwupd efi files in /run and sign them
+    preStart = ''
+      cp ${fwupd-efi}/libexec/fwupd/efi/fwupd*.efi /run/fwupd-efi/
+      ${pkgs.sbsigntool}/bin/sbsign --key '${cfg.privateKeyFile}' --cert '${cfg.publicKeyFile}' /run/fwupd-efi/fwupd*.efi
+    '';
+  };
+  services.fwupd.uefiCapsuleSettings = lib.mkIf config.services.fwupd.enable {
+    DisableShimForSecureBoot = true;
   };
 }
