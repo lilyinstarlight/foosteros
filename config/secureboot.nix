@@ -3,10 +3,6 @@
 # TODO: remove when nix-community/lanzaboote#131 is merged
 let
   cfg = config.boot.lanzaboote;
-
-  # This is the fwupd-efi package. We need to get it this way because a user might override services.fwupd.package,
-  # which may cause pkgs.fwupd-efi to be a different package than what the fwupd package has as dependency.
-  fwupd-efi = builtins.head (builtins.filter (x: (x.pname or "") == "fwupd-efi") config.services.fwupd.package.buildInputs);
 in
 
 {
@@ -28,7 +24,7 @@ in
     serviceConfig.RuntimeDirectory = "fwupd-efi";
     # Place the fwupd efi files in /run and sign them
     preStart = ''
-      cp ${fwupd-efi}/libexec/fwupd/efi/fwupd*.efi /run/fwupd-efi/
+      cp ${config.services.fwupd.package.fwupd-efi}/libexec/fwupd/efi/fwupd*.efi /run/fwupd-efi/
       ${pkgs.sbsigntool}/bin/sbsign --key '${cfg.privateKeyFile}' --cert '${cfg.publicKeyFile}' /run/fwupd-efi/fwupd*.efi
     '';
   };
