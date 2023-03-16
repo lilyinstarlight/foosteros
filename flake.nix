@@ -2,9 +2,7 @@
   inputs = {
     ## nixpkgs inputs
 
-    # TODO: remove when NixOS/nixpkgs#208269 is merged
-    #nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs.url = "github:lilyinstarlight/nixpkgs/tmp/systemd-initrd-fsck";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-22.11";
 
 
