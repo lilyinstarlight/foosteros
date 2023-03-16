@@ -1,12 +1,12 @@
 diff --git a/src/main.rs b/src/main.rs
-index 797d1d3..7e92cb8 100644
+index aac57ae..b3e6d41 100644
 --- a/src/main.rs
 +++ b/src/main.rs
-@@ -482,7 +482,7 @@ impl Build {
+@@ -610,7 +610,7 @@ impl Build {
          let current_dir = std::env::current_dir()?;
          let manifest_path_str;
          let mut args = if self.device {
--            vec!["+nightly", "build", "-Z", "build-std"]
+-            vec!["+nightly", "build"]
 +            vec!["build", "-Z", "build-std"]
          } else {
              vec!["build"]

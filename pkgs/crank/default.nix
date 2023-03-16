@@ -1,14 +1,14 @@
-{ lib, stdenv, runCommand, rustPlatform, fetchFromGitHub, makeWrapper, cargo, gcc-arm-embedded, playdate-sdk, xdg-utils, writeScript, unstableGitUpdater }:
+{ lib, runCommand, rustPlatform, fetchFromGitHub, makeWrapper, cargo, gcc-arm-embedded, playdate-sdk, xdg-utils, writeScript, unstableGitUpdater }:
 
 rustPlatform.buildRustPackage rec {
   pname = "crank";
-  version = "unstable-2023-03-15";
+  version = "unstable-2023-03-16";
 
   src = fetchFromGitHub {
     owner = "pd-rs";
     repo = pname;
-    rev = "7bea34b5f328a6fae77ad9c6e344b6ec5b3b7fef";
-    hash = "sha256-iTxJGmLNYpH3McxCuoKYCpeWuWfyc5wF/fIqbtQNG/E=";
+    rev = "d597d77874672021b4f9e145d2e223b295d7fadc";
+    hash = "sha256-yBsXRpgU5EdTyRJX8DrQ+4lqruvWTthWUtIPjieYrgU=";
   };
 
   cargoPatches = [
@@ -16,7 +16,7 @@ rustPlatform.buildRustPackage rec {
     ./crank-fix-lock.patch
   ];
 
-  cargoHash = "sha256-HiTmYEe0aSBvOLA+koPAeC2YKXOcJURsZuAC9z4P23M=";
+  cargoHash = "sha256-Es6S02lKda5NDcs+7vu9rKB5OHwK64n8zGNqE6fwSE4=";
 
   nativeBuildInputs = [ makeWrapper ];
 
