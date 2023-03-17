@@ -218,15 +218,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1678921032,
-        "narHash": "sha256-Oci5TiT65gansterWuixO1tkkUYyR0T2Qi6hPJyYPvs=",
-        "owner": "nix-community",
+        "lastModified": 1679013153,
+        "narHash": "sha256-Nlj8SryMmWwzpkprgEHGkYDgtOn7PUTZk+ifdhU8koU=",
+        "owner": "lilyinstarlight",
         "repo": "lanzaboote",
-        "rev": "73fca9b923f8419a717046f321d0fa26d3677f79",
+        "rev": "5ab3d53e67adcb51fbd77633ca35c14b34f2f4d0",
         "type": "github"
       },
       "original": {
-        "owner": "nix-community",
+        "owner": "lilyinstarlight",
+        "ref": "feature/fwupd",
         "repo": "lanzaboote",
         "type": "github"
       }
@@ -346,16 +347,16 @@
     },
     "nixpkgs-test": {
       "locked": {
-        "lastModified": 1671812130,
-        "narHash": "sha256-GALBK+qB9rhnB+lVnxdgtMoXCySXughZZ3+qGO1Ke/k=",
-        "owner": "RaitoBezarius",
+        "lastModified": 1679009563,
+        "narHash": "sha256-jizICiQOqUcYFNHRNNOo69bfyNo36iyuRAHem5z68LQ=",
+        "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "e51bf8cc8e2c75192e930ad83ed272938729e7be",
+        "rev": "371d3778c4f9cee7d5cf014e6ce400d57366570f",
         "type": "github"
       },
       "original": {
-        "owner": "RaitoBezarius",
-        "ref": "simplified-qemu-boot-disks",
+        "owner": "NixOS",
+        "ref": "qemu-boot-disk-using-make-disk-image",
         "repo": "nixpkgs",
         "type": "github"
       }

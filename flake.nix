@@ -25,7 +25,9 @@
     impermanence.url = "github:nix-community/impermanence";
 
     lanzaboote = {
-      url = "github:nix-community/lanzaboote";
+      # TODO: remove when nix-community/lanzaboote#131 is merged
+      #url = "github:nix-community/lanzaboote";
+      url = "github:lilyinstarlight/lanzaboote/feature/fwupd";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.rust-overlay.follows = "rust-overlay";
       inputs.crane.follows = "crane";
