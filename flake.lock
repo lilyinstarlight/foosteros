@@ -218,11 +218,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1679013153,
-        "narHash": "sha256-Nlj8SryMmWwzpkprgEHGkYDgtOn7PUTZk+ifdhU8koU=",
+        "lastModified": 1679014672,
+        "narHash": "sha256-zCvSMaGT14pjG5BXcCM/ZdyeJo5nwzvitKtXqeQcHHk=",
         "owner": "lilyinstarlight",
         "repo": "lanzaboote",
-        "rev": "5ab3d53e67adcb51fbd77633ca35c14b34f2f4d0",
+        "rev": "d95b9d2f22cc62cea618ac58f542d75f511a0153",
         "type": "github"
       },
       "original": {
