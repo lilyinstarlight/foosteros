@@ -57,6 +57,14 @@ in with outpkgs;
       rev = "v${version}";
       hash = "sha256-5QMBJw6H9TmyoSMkG5rniq1BdVYuEtQsQF1GGBkxqMI=";
     };
+    npmDeps = fetchNpmDeps {
+      inherit src;
+      name = "${attrs.pname}-${version}-npm-deps";
+      hash = "sha256-M+6+zrxy8VpJQS0dG/xORMbflKEq8wO2DEOjGrA6OUw=";
+    };
+    passthru = attrs.passthru // {
+      inherit npmDeps;
+    };
   });
 
   # overridden packages
