@@ -49,10 +49,14 @@ in with outpkgs;
   curl-impersonate = callPackage ./curl-impersonate {};
 
   # TODO: remove after NixOS/nixpkgs#222179 is merged
-  open-stage-control = pkgs.open-stage-control.overrideAttrs (attrs: {
-    src = attrs.src.overrideAttrs (srcAttrs: {
-      outputHash = "sha256-5QMBJw6H9TmyoSMkG5rniq1BdVYuEtQsQF1GGBkxqMI=";
-    });
+  open-stage-control = pkgs.open-stage-control.overrideAttrs (attrs: rec {
+    version = "1.23.0";
+    src = fetchFromGitHub {
+      owner = "jean-emmanuel";
+      repo = "open-stage-control";
+      rev = "v${version}";
+      hash = "sha256-5QMBJw6H9TmyoSMkG5rniq1BdVYuEtQsQF1GGBkxqMI=";
+    };
   });
 
   # overridden packages
