@@ -13,8 +13,12 @@ rustPlatform.buildRustPackage rec {
 
   cargoPatches = [
     ./crank-fix-no-rustup.patch
-    ./crank-fix-lock.patch
   ];
+
+  # TODO: bug upstream to actually make sure version numbers in Cargo.lock get updated when bumping Cargo.toml
+  postUnpack = ''
+    sed -i '$!N;s/^\(name = "crankstart-cli"\nversion =\) "[^"]*"$/\1 "'"$(sed -n '/^version\s*=/ s/^version = "\([^"]*\)"$/\1/p' source/Cargo.toml)"'"/;P;D' source/Cargo.lock
+  '';
 
   cargoHash = "sha256-Ib/yWZPVGwa4ORDWozpEyxzlqzaIdaucN1mlNj0VR2g=";
 
