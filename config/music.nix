@@ -15,8 +15,8 @@
         local.media_dir = "${config.home.homeDirectory}/music";
       };
       extensionPackages = with pkgs; [
-        mopidy-local mopidy-iris mopidy-mpris mopidy-notify mopidy-mpd
-      ] ++ (lib.optionals nixosConfig.nixpkgs.config.allowUnfree [ /*mopidy-spotify*/ ]);
+        mopidy-local mopidy-iris mopidy-mpris mopidy-notify mopidy-mpd mopidy-spotify
+      ];
     };
 
     programs.beets = {
