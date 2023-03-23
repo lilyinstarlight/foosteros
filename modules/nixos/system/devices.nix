@@ -44,6 +44,14 @@ with lib;
       '';
     };
 
+    monitorFontSize = mkOption {
+      type = types.ints.positive;
+      default = 16;
+      description = mdDoc ''
+        What font size is appropriate for the monitor, such as for console fonts or desktop environment config.
+      '';
+    };
+
     auxiliary = mkOption {
       type = types.submoduleWith {
         modules = [{
