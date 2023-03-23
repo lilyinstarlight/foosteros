@@ -66,7 +66,6 @@
         mode = "0400";
         owner = config.users.users.lily.name;
         group = config.users.users.lily.group;
-        restartUnits = [ "mopidy.service" ];
       };
     } // (let
       mkNmSecret = name: lib.nameValuePair "networks/${name}" {
