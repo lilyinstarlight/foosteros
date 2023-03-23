@@ -13,6 +13,7 @@
     ../../config/alien.nix
     ../../config/azure.nix
     ../../config/bluetooth.nix
+    ../../config/builders.nix
     ../../config/cad.nix
     ../../config/fcitx5.nix
     ../../config/fwupd.nix
