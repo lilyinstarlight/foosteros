@@ -32,8 +32,14 @@
         ${config.system.build.installDisko or "echo 'No disko config, not partitioning automatically'"}
 
         mkdir -p /mnt/etc
-        git clone https://github.com/lilyinstarlight/foosteros.git /mnt/etc/nixos
-        git -C /mnt/etc/nixos reset --hard ${self.rev or "origin/HEAD"}
+        cp -rT ${self} /mnt/etc/nixos
+        git -C /mnt/etc/nixos init
+        git -C /mnt/etc/nixos remote add origin https://github.com/lilyinstarlight/foosteros.git
+        (
+          git -C /mnt/etc/nixos fetch && \
+          git -C /mnt/etc/nixos reset ${self.rev or "origin/HEAD"} && \
+          git -C /mnt/etc/nixos branch --set-upstream-to=origin/main main
+        ) || true
 
         if nix eval "/mnt/etc/nixos#nixosConfigurations.$INSTALL_HOSTNAME.config.environment.persistence./state" >/dev/null; then
           mkdir -p /mnt/etc/ssh
