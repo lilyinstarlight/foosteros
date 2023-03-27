@@ -18,12 +18,10 @@ in with outpkgs;
 {
   # non-packages
   outPath = (toString ../.);
-  nixosTestFor = pkgs: config:
-    (import "${pkgs.path}/nixos/tests/make-test-python.nix"
-      (if lib.isPath config then import config else config) {
-        inherit pkgs;
-        inherit (pkgs.stdenv.buildPlatform) system;
-      }).test;
+  nixosTestFor = pkgs: config: (import "${pkgs.path}/nixos/lib" {}).runTest {
+    imports = [ config ];
+    hostPkgs = pkgs;
+  };
   nixosTest = nixosTestFor outpkgs;
 
   # normal packages
