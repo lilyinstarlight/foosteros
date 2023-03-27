@@ -314,16 +314,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1679602713,
-        "narHash": "sha256-vGiyfsnv1MG18H/LkHog2w0DThPIsW6W/sFlyad3cfQ=",
-        "owner": "lilyinstarlight",
+        "lastModified": 1679797994,
+        "narHash": "sha256-Kr/O/UlfqAtoFmkZeAaphsxogeaN8a/IugBApFzPfpk=",
+        "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "6c42b4ef61fdf00d889867c5d3f561e7eac227b1",
+        "rev": "5f9d1bb572e08ec432ae46c78581919d837a90f6",
         "type": "github"
       },
       "original": {
-        "owner": "lilyinstarlight",
-        "ref": "tmp/pkg/mopidy-spotify",
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
