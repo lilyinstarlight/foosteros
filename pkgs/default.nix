@@ -48,25 +48,6 @@ in with outpkgs;
   # TODO: remove after NixOS/nixpkgs#194310 is merged
   curl-impersonate = callPackage ./curl-impersonate {};
 
-  # TODO: remove after NixOS/nixpkgs#222179 is merged
-  open-stage-control = pkgs.open-stage-control.overrideAttrs (attrs: rec {
-    version = "1.23.0";
-    src = fetchFromGitHub {
-      owner = "jean-emmanuel";
-      repo = "open-stage-control";
-      rev = "v${version}";
-      hash = "sha256-5QMBJw6H9TmyoSMkG5rniq1BdVYuEtQsQF1GGBkxqMI=";
-    };
-    npmDeps = fetchNpmDeps {
-      inherit src;
-      name = "${attrs.pname}-${version}-npm-deps";
-      hash = "sha256-M+6+zrxy8VpJQS0dG/xORMbflKEq8wO2DEOjGrA6OUw=";
-    };
-    passthru = attrs.passthru // {
-      inherit npmDeps;
-    };
-  });
-
   # overridden packages
   monofur-nerdfont = nerdfonts.override {
     fonts = [ "Monofur" ];
