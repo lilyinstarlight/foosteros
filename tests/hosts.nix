@@ -19,7 +19,7 @@ in
 lib.listToAttrs (lib.flatten (
   map (cfg: [ { name = "host-test-" + cfg.config.networking.hostName; value = testSystem cfg; } ] ++
     lib.optionals (cfg.config.system.build ? installer) [ { name = "installer-test-" + cfg.config.networking.hostName; value = testInstaller cfg; } ])
-  (lib.unique (lib.filter (cfg: cfg.pkgs.stdenv.hostPlatform.system == pkgs.stdenv.hostPlatform.system) (lib.collect
+  (lib.unique (lib.filter (cfg: cfg.pkgs.stdenv.buildPlatform.system == pkgs.stdenv.buildPlatform.system) (lib.collect
     (cfg: cfg ? config && cfg.config ? system && cfg.config.system ? build && cfg.config.system.build ? toplevel)
     self.nixosConfigurations
   )))

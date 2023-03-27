@@ -22,7 +22,7 @@ in with outpkgs;
     (import "${pkgs.path}/nixos/tests/make-test-python.nix"
       (if lib.isPath config then import config else config) {
         inherit pkgs;
-        inherit (pkgs.stdenv.hostPlatform) system;
+        inherit (pkgs.stdenv.buildPlatform) system;
       }).test;
   nixosTest = nixosTestFor outpkgs;
 

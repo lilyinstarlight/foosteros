@@ -122,7 +122,10 @@
                   installerConfiguration = foosterosSystem {
                     inherit baseModules;
                     modules = [
-                      { nixpkgs.hostPlatform = selfSystem.config.nixpkgs.hostPlatform; }
+                      {
+                        nixpkgs.hostPlatform = selfSystem.config.nixpkgs.hostPlatform;
+                        nixpkgs.buildPlatform = selfSystem.config.nixpkgs.buildPlatform;
+                      }
                       (nixpkgs.lib.optionalAttrs (selfSystem.config.system.build ? disko) {
                         system.build.installDisko = selfSystem.config.system.build.disko;
                       })
@@ -158,7 +161,7 @@
 
       deploy = nixpkgs.legacyPackages.${system}.writeText "cachix-deploy.json" (builtins.toJSON {
         agents = (nixpkgs.lib.mapAttrs (host: cfg: cfg.config.system.build.toplevel) (nixpkgs.lib.filterAttrs (host: cfg:
-          cfg ? config && cfg.config ? system && cfg.config.system ? build && cfg.config.system.build ? toplevel && cfg.pkgs.stdenv.hostPlatform.system == system && cfg.config.services.cachix-agent.enable) self.nixosConfigurations));
+          cfg ? config && cfg.config ? system && cfg.config.system ? build && cfg.config.system.build ? toplevel && cfg.pkgs.stdenv.buildPlatform.system == system && cfg.config.services.cachix-agent.enable) self.nixosConfigurations));
       });
     });
 
