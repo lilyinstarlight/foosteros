@@ -258,6 +258,7 @@
       kernel: tpm tpm0: \[Firmware Bug\]: TPM interrupt not working, polling instead
       kernel: cros-usbpd-charger cros-usbpd-charger\.2\.auto: Unexpected number of charge port count
       kernel: cros_ec_lpcs cros_ec_lpcs\.0: bad packet checksum [0-9a-f]\{2\}
+      kernel: cros_ec_lpcs cros_ec_lpcs\.0: packet too long ([0-9]* bytes, expected [0-9]*)
       systemd-udevd\[[0-9]*\]: /nix/store/[0-9a-z]\{32\}-systemd-[^/]*/lib/udev/rules\.d/50-udev-default\.rules:[0-9]* Unknown group '[^']*', ignoring
       systemd-udevd\[[0-9]*\]: event_source: Failed to get device name: No such file or directory
       dbus-broker-launch\[[0-9]*\]: Ignoring duplicate name '[^']*' in service file '[^']*'
