@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 
-{
+lib.mkIf config.foosteros.profiles.networkd {
+  networking.useNetworkd = lib.mkDefault true;
+
   systemd.network.networks = lib.mkIf config.networking.useNetworkd {
     "80-wl" = {
       name = "wl*";

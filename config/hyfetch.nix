@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-{
+lib.mkIf config.foosteros.profiles.hyfetch {
   environment.systemPackages = with pkgs; [
     hyfetch
 

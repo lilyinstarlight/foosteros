@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-{
+lib.mkIf config.foosteros.profiles.lily {
   users.users.lily = {
     description = "Lily Foster";
     isNormalUser = true;

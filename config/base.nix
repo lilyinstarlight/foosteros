@@ -19,12 +19,12 @@ let
     HOME_URL = "https://nixos.org/";
     DOCUMENTATION_URL = "https://nixos.org/learn.html";
     SUPPORT_URL = "https://nixos.org/community.html";
-    BUG_REPORT_URL = "https://github.com/NixOS/nixpkgs/issues";
+    BUG_REPORT_URL = "https://github.com/lilyinstarlight/foosteros/issues";
   } // lib.optionalAttrs (config.system.nixos.variant_id != null) {
     VARIANT_ID = config.system.nixos.variant_id;
   };
 
-  initrdReleaseContents = osReleaseContents // {
+  initrdReleaseContents = (removeAttrs osReleaseContents [ "BUILD_ID" ]) // {
     PRETTY_NAME = "${osReleaseContents.PRETTY_NAME} (Initrd)";
   };
 
@@ -46,27 +46,14 @@ let
   initrdRelease = pkgs.writeText "initrd-release" (attrsToText initrdReleaseContents);
 in
 
-{
-  imports = [
-    inputs.home-manager.nixosModules.home-manager
-    inputs.sops-nix.nixosModules.sops
-    inputs.impermanence.nixosModules.impermanence
-    inputs.lanzaboote.nixosModules.lanzaboote
-    inputs.disko.nixosModules.disko
-    inputs.nix-index-database.nixosModules.nix-index
-    self.nixosModules.foosteros
-    ./fish.nix
-    ./neovim.nix
-    ./tmux.nix
-    ./networkd.nix
-  ];
-
+lib.mkIf config.foosteros.profiles.base {
   home-manager = {
     useUserPackages = true;
     useGlobalPkgs = true;
     sharedModules = [
-      inputs.impermanence.nixosModules.home-manager.impermanence
-      self.homeManagerModules.foosteros
+      {
+        home.stateVersion = config.system.stateVersion;
+      }
       ({ pkgs, ... }: {
         xdg.userDirs = {
           enable = true;
@@ -125,10 +112,7 @@ in
     };
   };
 
-  networking = {
-    useDHCP = false;
-    useNetworkd = lib.mkDefault true;
-  };
+  networking.useDHCP = false;
 
   i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
   console = {

@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-{
+lib.mkIf config.foosteros.profiles.builders {
   nix = {
     settings = {
       builders-use-substitutes = true;

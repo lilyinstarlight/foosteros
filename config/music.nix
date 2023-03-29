@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-{
+lib.mkIf config.foosteros.profiles.music {
   environment.systemPackages = with pkgs; [
     ncmpcpp beets
     rofi-mpd

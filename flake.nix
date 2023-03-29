@@ -115,7 +115,7 @@
               inherit (self) inputs;
             };
             modules = baseModules ++ [
-              ./config/base.nix
+              self.nixosModules.config
             ] ++ modules ++ nixpkgs.lib.optionals (installer != null) [
               ({ pkgs, ... }: {
                 system.build = let
@@ -133,7 +133,7 @@
                         system.build.installHostname = selfSystem.config.networking.hostName;
                         system.build.installClosure = selfSystem.config.system.build.toplevel;
                       }
-                      ./config/installer.nix
+                      self.nixosModules.installer
                       installer
                     ];
                   };
@@ -165,21 +165,33 @@
       });
     });
 
-    overlays.foosteros = (final: prev: import ./pkgs {
-      pkgs = prev;
-      outpkgs = final;
-    });
-    overlays.default = self.overlays.foosteros;
+    overlays = {
+      foosteros = (final: prev: import ./pkgs {
+        pkgs = prev;
+        outpkgs = final;
+      });
 
-    nixosModules.foosteros = { pkgs, ... } @ args: import ./modules/nixos (args // {
-      fpkgs = self.lib.packagesFor pkgs;
-    });
-    nixosModules.default = self.nixosModules.foosteros;
+      default = self.overlays.foosteros;
+    };
 
-    homeManagerModules.foosteros = { pkgs, ... } @ args: import ./modules/home-manager (args // {
-      fpkgs = self.lib.packagesFor pkgs;
-    });
-    homeManagerModules.default = self.homeManagerModules.foosteros;
+    nixosModules = {
+      foosteros = { pkgs, ... } @ args: import ./modules/nixos (args // {
+        fpkgs = self.lib.packagesFor pkgs;
+      });
+
+      config = import ./config;
+      installer = import ./installer;
+
+      default = self.nixosModules.foosteros;
+    };
+
+    homeManagerModules = {
+      foosteros = { pkgs, ... } @ args: import ./modules/home-manager (args // {
+        fpkgs = self.lib.packagesFor pkgs;
+      });
+
+      default = self.homeManagerModules.foosteros;
+    };
 
     checks = forAllSystems (system: import ./tests {
       pkgs = nixpkgs.legacyPackages.${system};

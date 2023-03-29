@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-{
+lib.mkIf config.foosteros.profiles.udiskie {
   environment.systemPackages = with pkgs; [
     udiskie
   ];

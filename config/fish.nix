@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-{
+lib.mkIf config.foosteros.profiles.fish {
   # TODO: maybe give nushell a try?
   environment.systemPackages = with pkgs; [
     fishPlugins.done

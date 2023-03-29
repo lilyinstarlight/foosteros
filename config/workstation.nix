@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-{
+lib.mkIf config.foosteros.profiles.workstation {
   environment.systemPackages = with pkgs; [
     firefox ungoogled-chromium
     pavucontrol qalculate-gtk

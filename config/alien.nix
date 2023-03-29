@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-{
+lib.mkIf config.foosteros.profiles.alien {
   system.activationScripts.envfsfallback = ''
     mkdir -p /run/bindroot
     mount --bind --make-unbindable / /run/bindroot

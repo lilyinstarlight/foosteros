@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-{
+lib.mkIf config.foosteros.profiles.nullmailer {
   services.nullmailer = {
     enable = true;
     config = {

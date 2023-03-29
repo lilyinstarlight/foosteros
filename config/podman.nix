@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-{
+lib.mkIf config.foosteros.profiles.podman {
   virtualisation.podman = {
     enable = true;
     defaultNetwork.settings.dns_enabled = true;

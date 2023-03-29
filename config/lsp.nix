@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-{
+lib.mkIf config.foosteros.profiles.lsp {
   environment.systemPackages = with pkgs; let
     pylsp-env = python3.withPackages (ps: with ps; [ python-lsp-server pylsp-mypy ]);
     pylsp-with-plugins = runCommand "pylsp" {} ''

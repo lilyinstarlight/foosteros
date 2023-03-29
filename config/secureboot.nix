@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-{
+lib.mkIf config.foosteros.profiles.secureboot {
   environment.systemPackages = with pkgs; [
     sbctl
   ];

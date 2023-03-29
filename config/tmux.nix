@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-{
+lib.mkIf config.foosteros.profiles.tmux {
   environment.systemPackages = with pkgs; [
     tmuxPlugins.sensible tmuxPlugins.yank tmuxPlugins.logging
   ];

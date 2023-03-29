@@ -1,15 +1,11 @@
 { config, lib, pkgs, ... }:
 
-{
-  networking = {
-    useNetworkd = false;
-
-    networkmanager = {
-      enable = true;
-      wifi.powersave = true;
-      unmanaged = [
-        "interface-name:vir*"
-      ];
-    };
+lib.mkIf config.foosteros.profiles.networkmanager {
+  networking.networkmanager = {
+    enable = true;
+    wifi.powersave = true;
+    unmanaged = [
+      "interface-name:vir*"
+    ];
   };
 }

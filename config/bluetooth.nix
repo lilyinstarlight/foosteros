@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-{
+lib.mkIf config.foosteros.profiles.bluetooth {
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = false;

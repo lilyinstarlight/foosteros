@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-{
+lib.mkIf config.foosteros.profiles.tex {
   environment.systemPackages = with pkgs; [
     texlive.combined.scheme-full
     (pkgs.writeShellApplication {

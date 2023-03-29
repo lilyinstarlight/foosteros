@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-{
+lib.mkIf config.foosteros.profiles.pass {
   environment.systemPackages = with pkgs; lib.mkMerge [
     [ gnupg ]
     (lib.mkIf (config.programs.sway.enable) [

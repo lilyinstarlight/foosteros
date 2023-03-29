@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-{
+lib.mkIf config.foosteros.profiles.tlp {
   services.tlp = {
     enable = true;
     settings = {

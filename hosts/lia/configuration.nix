@@ -4,38 +4,40 @@
   imports = [
     ./disks.nix
     ./hardware.nix
-
-    ../../config/restic.nix
-
-    ../../config/lily.nix
-
-    ../../config/adb.nix
-    ../../config/alien.nix
-    ../../config/azure.nix
-    ../../config/bluetooth.nix
-    ../../config/fcitx5.nix
-    ../../config/fwupd.nix
-    ../../config/gc.nix
-    ../../config/gnupg.nix
-    ../../config/hibernate.nix
-    ../../config/homebins.nix
-    ../../config/hyfetch.nix
-    ../../config/intelgfx.nix
-    ../../config/ledger.nix
-    ../../config/libvirt.nix
-    ../../config/lsp.nix
-    ../../config/miracast.nix
-    ../../config/music.nix
-    ../../config/networkmanager.nix
-    ../../config/nullmailer.nix
-    ../../config/pass.nix
-    ../../config/pki.nix
-    ../../config/podman.nix
-    ../../config/sway.nix
-    ../../config/tlp.nix
-    ../../config/udiskie.nix
-    ../../config/workstation.nix
   ];
+
+  foosteros.profiles = {
+    lily = true;
+
+    restic = true;
+
+    adb = true;
+    alien = true;
+    azure = true;
+    bluetooth = true;
+    fcitx5 = true;
+    fwupd = true;
+    gc = true;
+    gnupg = true;
+    hibernate = true;
+    homebins = true;
+    hyfetch = true;
+    intelgfx = true;
+    ledger = true;
+    libvirt = true;
+    lsp = true;
+    miracast = true;
+    music = true;
+    networkmanager = true;
+    nullmailer = true;
+    pass = true;
+    pki = true;
+    podman = true;
+    sway = true;
+    tlp = true;
+    udiskie = true;
+    workstation = true;
+  };
 
   sops = {
     defaultSopsFile = ./secrets.yaml;
@@ -263,8 +265,6 @@
 
   home-manager.users.lily = { pkgs, lib, ... }: {
     services.mopidy.extraConfigFiles = [ config.sops.secrets.mopidy-lily-secrets.path ];
-
-    home.stateVersion = "23.05";
   };
 
   system.stateVersion = "23.05";

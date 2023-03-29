@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-{
+lib.mkIf config.foosteros.profiles.ledger {
   environment.systemPackages = with pkgs; [
     hledger
   ];

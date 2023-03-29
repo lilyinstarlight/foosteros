@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-{
+lib.mkIf config.foosteros.profiles.homebins {
   # only for user lily
   home-manager.users.lily = { pkgs, lib, ... }: {
     home.file = {

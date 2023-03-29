@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-{
+lib.mkIf config.foosteros.profiles.pipewire {
   security.rtkit.enable = true;
 
   services.pipewire = {

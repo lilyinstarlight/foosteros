@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-{
+lib.mkIf config.foosteros.profiles.neovim {
   programs.neovim = {
     enable = true;
     defaultEditor = true;

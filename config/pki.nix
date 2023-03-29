@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-{
+lib.mkIf config.foosteros.profiles.pki {
   security.pki.certificates = [
     ''
       -----BEGIN CERTIFICATE-----

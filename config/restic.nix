@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-{
+lib.mkIf config.foosteros.profiles.restic {
   services.restic.backups.${config.networking.hostName} = lib.mkMerge [
     {
       initialize = true;

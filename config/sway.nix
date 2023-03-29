@@ -43,11 +43,11 @@ let
   catppuccin-cursors-sway = pkgs.catppuccin-cursors.mochaDark;
 in
 
-{
-  imports = [
-    ./fonts.nix
-    ./pipewire.nix
-  ];
+lib.mkIf config.foosteros.profiles.sway {
+  foosteros.profiles = {
+    fonts = lib.mkDefault true;
+    pipewire = lib.mkDefault true;
+  };
 
   home-manager.sharedModules = [
     ({ config, lib, pkgs, ... }: {
