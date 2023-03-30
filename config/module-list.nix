@@ -12,6 +12,7 @@
   ./fwupd.nix
   ./gc.nix
   ./gnupg.nix
+  ./grub.nix
   ./hibernate.nix
   ./homebins.nix
   ./hyfetch.nix
@@ -33,6 +34,7 @@
   ./podman.nix
   ./production.nix
   ./restic.nix
+  ./sd-boot.nix
   ./secureboot.nix
   ./sway.nix
   ./sysrq.nix

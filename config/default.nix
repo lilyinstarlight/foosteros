@@ -45,6 +45,8 @@
 
       gnupg = lib.mkEnableOption (lib.mdDoc "gnupg profile");
 
+      grub = lib.mkEnableOption (lib.mdDoc "grub profile");
+
       hibernate = lib.mkEnableOption (lib.mdDoc "hibernate profile");
 
       homebins = lib.mkEnableOption (lib.mdDoc "homebins profile");
@@ -91,6 +93,11 @@
       production = lib.mkEnableOption (lib.mdDoc "production profile");
 
       restic = lib.mkEnableOption (lib.mdDoc "restic profile");
+
+      sd-boot = lib.mkEnableOption (lib.mdDoc "sd-boot profile") // {
+        default = !config.foosteros.profiles.grub;
+        defaultText = "!config.foosteros.profiles.grub";
+      };
 
       secureboot = lib.mkEnableOption (lib.mdDoc "secureboot profile");
 

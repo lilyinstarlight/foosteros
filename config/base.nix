@@ -79,14 +79,7 @@ lib.mkIf config.foosteros.profiles.base {
 
   boot.bootspec.enable = true;
 
-  boot.loader = {
-    efi.canTouchEfiVariables = true;
-
-    systemd-boot = {
-      enable = lib.mkDefault true;
-      consoleMode = lib.mkOverride 500 "keep";  # 100 is default prio and 1000 is module default prio
-    };
-  };
+  boot.loader.efi.canTouchEfiVariables = true;
 
   boot.initrd.systemd = {
     enable = true;
