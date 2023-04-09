@@ -19,11 +19,11 @@ lib.mkIf config.foosteros.profiles.builders {
       }
       {
         protocol = "ssh-ng";
-        hostName = "eu.nixbuild.net";
+        hostName = "aarch64.nixos.community";
         maxJobs = 4;
-        systems = [ "aarch64-linux" ];
-        supportedFeatures = [ "benchmark" "big-parallel" ];
-        publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSVBJUUNaYzU0cG9KOHZxYXdkOFRyYU5yeVFlSm52SDFlTHBJRGdiaXF5bU0=";
+        systems = [ "aarch64-linux" "armv7l-linux" ];
+        supportedFeatures = [ "big-parallel" ];
+        publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSU1VVHo1aTl1NUgyRkhOQW1aSnlvSmZJR3lVbS9IZkdoZnduYzE0MkwzZHM=";
         sshUser = "lily";
         sshKey = "/home/lily/.ssh/id_ed25519";
       }
