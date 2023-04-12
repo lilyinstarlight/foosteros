@@ -52,11 +52,15 @@
           cat >/mnt/etc/ssh/ssh_host_ed25519_key
           chmod u=rw,go= /mnt/etc/ssh/ssh_host_ed25519_key
           ssh-keygen -y -f /mnt/etc/ssh/ssh_host_ed25519_key >/mnt/etc/ssh/ssh_host_ed25519_key.pub
+        fi
 
+        if nix eval "/mnt/etc/nixos#nixosConfigurations.$INSTALL_HOSTNAME.config.sops.secrets" >/dev/null; then
           mkdir -p /mnt/state/etc
           cp -a /mnt/etc/nixos /mnt/state/etc/
-          mkdir -p /mnt/state/etc/ssh
-          cp -a /mnt/etc/ssh/ssh_host_rsa_key{,.pub} /mnt/state/etc/ssh/
+          if [ -e /mnt/etc/ssh ]; then
+            mkdir -p /mnt/state/etc/ssh
+            cp -a /mnt/etc/ssh/ssh_host_{rsa,ed25519}_key{,.pub} /mnt/state/etc/ssh/
+          fi
         fi
 
         installArgs=(--no-channel-copy)
