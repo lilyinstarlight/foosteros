@@ -46,14 +46,12 @@
 
   disko.devices = {
     disk.${lib.removePrefix "/dev/" config.system.devices.rootDisk} = {
-      type = "disk";
       device = "${config.system.devices.rootDisk}";
       content = {
         type = "table";
         format = "gpt";
         partitions = [
           {
-            type = "partition";
             name = "esp";
             start = "1MiB";
             end = "512MiB";
@@ -65,7 +63,6 @@
             };
           }
           {
-            type = "partition";
             name = "nixos";
             start = "512MiB";
             end = "100%";
@@ -84,10 +81,8 @@
 
     lvm_vg = {
       nixos = {
-        type = "lvm_vg";
         lvs = {
           root = {
-            type = "lvm_lv";
             size = "450g";
             content = {
               type = "btrfs";
@@ -102,7 +97,6 @@
             };
           };
           swap = {
-            type = "lvm_lv";
             name = "swap";
             size = "100%FREE";
             content = {
