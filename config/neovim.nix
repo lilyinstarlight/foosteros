@@ -33,7 +33,6 @@ lib.mkIf config.foosteros.profiles.neovim {
         set noshowmode
         set noruler
         set number
-        set printoptions=number:y,paper:letter
         set shada='20,<500,h
         set showmatch
         set smartcase
