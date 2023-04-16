@@ -81,6 +81,7 @@
 
     lvm_vg = {
       nixos = {
+        type = "lvm_vg";
         lvs = {
           root = {
             size = "450g";
