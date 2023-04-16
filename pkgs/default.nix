@@ -46,6 +46,9 @@ in with outpkgs;
   # TODO: remove after NixOS/nixpkgs#194310 is merged
   curl-impersonate = callPackage ./curl-impersonate {};
 
+  # TODO: remove after NixOS/nixpkgs#226543 is merged
+  teams-for-linux = callPackage ./teams-for-linux {};
+
   # overridden packages
   monofur-nerdfont = nerdfonts.override {
     fonts = [ "Monofur" ];
