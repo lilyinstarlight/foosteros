@@ -3,14 +3,12 @@
 {
   disko.devices = {
     disk.sda = {
-      type = "disk";
       device = "/dev/sda";
       content = {
         type = "table";
         format = "gpt";
         partitions = [
           {
-            type = "partition";
             name = "esp";
             start = "1MiB";
             end = "100MiB";
@@ -21,7 +19,6 @@
             };
           }
           {
-            type = "partition";
             name = "root";
             start = "100MiB";
             end = "-2GiB";
@@ -32,7 +29,6 @@
             };
           }
           {
-            type = "partition";
             name = "swap";
             start = "-2GiB";
             end = "100%";
