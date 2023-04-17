@@ -152,7 +152,7 @@ lib.mkIf config.foosteros.profiles.base {
   environment.etc = {
     "nix/nixpkgs-config.nix".text = lib.mkDefault ''
       {
-        allowUnfree = ${lib.boolToString config.nixpkgs.config.allowUnfree};
+        allowUnfree = ${lib.boolToString (config.nixpkgs.config.allowUnfree or false)};
       }
     '';
 

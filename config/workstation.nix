@@ -10,7 +10,7 @@ lib.mkIf config.foosteros.profiles.workstation {
     mkusb mkwin
     aria2 openssl wireshark dogdns picocom
     gnumake llvmPackages_latest.clang llvmPackages_latest.lldb
-  ] ++ (lib.optionals config.nixpkgs.config.allowUnfree [
+  ] ++ (lib.optionals pkgs.config.allowUnfree [
     pridecat
     slack
   ]);

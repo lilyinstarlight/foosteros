@@ -8,7 +8,7 @@ lib.mkIf config.foosteros.profiles.production {
     sonic-pi sonic-pi-tool open-stage-control
     lilypond
     (wrapOBS {
-      plugins = with obs-studio-plugins; [ wlrobs obs-gstreamer obs-move-transition ] ++ (lib.optionals config.nixpkgs.config.allowUnfree [ (obs-ndi.override {
+      plugins = with obs-studio-plugins; [ wlrobs obs-gstreamer obs-move-transition ] ++ (lib.optionals pkgs.config.allowUnfree [ (obs-ndi.override {
         ndi = ndi.overrideAttrs (attrs: rec {
           src = fetchurl {
             name = "${attrs.pname}-${attrs.version}.tar.gz";

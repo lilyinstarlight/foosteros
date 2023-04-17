@@ -3,7 +3,7 @@
 lib.mkIf config.foosteros.profiles.playdate {
   hardware.playdate.enable = true;
 
-  environment.systemPackages = with pkgs; lib.optionals config.nixpkgs.config.allowUnfree [
+  environment.systemPackages = with pkgs; lib.optionals pkgs.config.allowUnfree  [
     playdate-sdk crank
   ];
 }
