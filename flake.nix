@@ -156,7 +156,7 @@
 
     packages = forAllSystems (system: {
       default = nixpkgs.legacyPackages.${system}.linkFarmFromDrvs "foosteros-pkgs"
-        (nixpkgs.lib.unique (nixpkgs.lib.filter (drv: !drv.meta.unsupported && !drv.meta.unfree && (drv.meta ? dependsUnfree -> !drv.meta.dependsUnfree)) (nixpkgs.lib.collect (drv: nixpkgs.lib.isDerivation drv) self.legacyPackages.${system})));
+        (nixpkgs.lib.unique (nixpkgs.lib.filter (drv: !drv.meta.unsupported && !drv.meta.broken && !drv.meta.unfree && (drv.meta ? dependsUnfree -> !drv.meta.dependsUnfree)) (nixpkgs.lib.collect (drv: nixpkgs.lib.isDerivation drv) self.legacyPackages.${system})));
 
       deploy = nixpkgs.legacyPackages.${system}.writeText "cachix-deploy.json" (builtins.toJSON {
         agents = (nixpkgs.lib.mapAttrs (host: cfg: cfg.config.system.build.toplevel) (nixpkgs.lib.filterAttrs (host: cfg:
