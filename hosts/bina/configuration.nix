@@ -17,6 +17,7 @@
     bluetooth = true;
     builders = true;
     cad = true;
+    ephemeral = true;
     fcitx5 = true;
     fwupd = true;
     gc = true;

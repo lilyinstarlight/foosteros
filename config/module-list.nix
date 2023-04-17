@@ -6,6 +6,7 @@
   ./bluetooth.nix
   ./builders.nix
   ./cad.nix
+  ./ephemeral.nix
   ./fcitx5.nix
   ./fish.nix
   ./fonts.nix

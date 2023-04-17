@@ -31,6 +31,8 @@
 
       cad = lib.mkEnableOption (lib.mdDoc "cad profile");
 
+      ephemeral = lib.mkEnableOption (lib.mdDoc "ephemeral root profile");
+
       fcitx5 = lib.mkEnableOption (lib.mdDoc "fcitx5 profile");
 
       fish = lib.mkEnableOption (lib.mdDoc "fish profile") // {

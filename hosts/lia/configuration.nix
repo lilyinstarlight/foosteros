@@ -15,6 +15,7 @@
     alien = true;
     azure = true;
     bluetooth = true;
+    ephemeral = true;
     fcitx5 = true;
     fwupd = true;
     gc = true;
