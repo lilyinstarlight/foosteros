@@ -11,7 +11,7 @@ lib.mkIf config.foosteros.profiles.ephemeral {
     description = "Rolling over and creating new filesystem root";
 
     requires = [ "initrd-root-device.target" ];
-    after = [ "initrd-root-device.target" ];
+    after = [ "local-fs-pre.target" "initrd-root-device.target" ];
     requiredBy = [ "initrd-root-fs.target" ];
     before = [ "sysroot.mount" ];
 
