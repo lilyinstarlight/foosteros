@@ -15,5 +15,5 @@ lib.mkIf config.foosteros.profiles.alien {
   programs.nix-ld.enable = true;
   services.envfs.enable = true;
 
-  environment.systemPackages = with inputs.nix-alien.packages.${pkgs.stdenv.buildPlatform.system}; [ nix-alien ];
+  environment.systemPackages = with inputs.nix-alien.packages.${pkgs.stdenv.hostPlatform.system}; [ nix-alien ];
 }
