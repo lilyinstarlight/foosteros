@@ -126,7 +126,7 @@ lib.mkIf config.foosteros.profiles.base {
     };
 
     registry = (lib.mapAttrs (name: value: { flake = value; }) (lib.filterAttrs (name: value: value ? outputs) inputs)) // { foosteros = { flake = self; }; };
-    nixPath = (lib.mapAttrsToList (name: value: name + "=" + value) inputs) ++ [ ("foosteros=" + ../.) ("nixpkgs-overlays=" + ../. + "/overlays.nix") ];
+    nixPath = map (name: "${name}=/etc/nix/path/${name}") (lib.attrNames inputs ++ [ "foosteros" "nixpkgs-overlays" ]);
   };
 
   nixpkgs = {
@@ -179,7 +179,10 @@ lib.mkIf config.foosteros.profiles.base {
       [interactive]
       	diffFilter = "${pkgs.gitAndTools.delta}/bin/delta --dark --color-only"
     '';
-  };
+  } // lib.mapAttrs' (name: value: lib.nameValuePair "nix/path/${name}" { source = value; }) (inputs // {
+    foosteros = ../.;
+    nixpkgs-overlays = ../. + "/overlays.nix";
+  });
 
   environment.defaultPackages = lib.mkDefault [];
 
