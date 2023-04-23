@@ -859,6 +859,7 @@ lib.mkIf config.foosteros.profiles.sway {
     ];
   };
 
+  # TODO: try way-displays?
   programs.kanshi.enable = true;
 
   programs.mako = {
