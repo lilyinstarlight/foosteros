@@ -179,7 +179,7 @@ lib.mkIf config.foosteros.profiles.base {
       [interactive]
       	diffFilter = "${pkgs.gitAndTools.delta}/bin/delta --dark --color-only"
     '';
-  } // lib.mapAttrs' (name: value: lib.nameValuePair "nix/path/${name}" { source = value; }) (inputs // {
+  } // lib.mapAttrs' (name: value: lib.nameValuePair "nix/path/${name}" { source = builtins.toString value; }) (inputs // {
     foosteros = ../.;
     nixpkgs-overlays = ../. + "/overlays.nix";
   });
