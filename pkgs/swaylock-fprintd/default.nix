@@ -25,8 +25,8 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "SL-RU";
     repo = "swaylock-fprintd";
-    rev = "236a6974f5c49787a8ae127670319eacdbb1b40b";
-    hash = "sha256-UYidVUn/LRPOQy2bRkYruNGTt9fM8WDiXyiEaJp4Eq4=";
+    rev = "ffd639a785df0b9f39e9a4d77b7c0d7ba0b8ef79";
+    hash = "sha256-2VklrbolUV00djPt+ngUyU+YMnJLAHhD+CLZD1wH4ww=";
   };
 
   strictDeps = true;
