@@ -2,9 +2,7 @@
   inputs = {
     ## nixpkgs inputs
 
-    # TODO: remove when NixOS/nixpkgs#xxxxxx is merged
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    #nixpkgs.url = "github:lilyinstarlight/nixpkgs/tmp/pkg/mopidy-spotify";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-22.11";
 
 
