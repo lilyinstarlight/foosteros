@@ -8,6 +8,26 @@ on:
         type: string
 
 jobs:
+  evaluate:
+    name: Evaluate Flake
+    runs-on: ubuntu-latest
+    steps:
+      - uses: cachix/install-nix-action@v20
+        with:
+          extra_nix_config: |
+            system-features = benchmark big-parallel kvm nixos-test
+
+      - uses: actions/checkout@v3
+        with:
+          ref: '${{ inputs.REF_HEAD }}'
+
+      # TODO: remove whenever Nix (or crane) fixes this
+      - name: 'TODO: Nix pls'
+        run: |
+          nix -vL build --no-link .#nixosConfigurations.bina.config.system.build.installBootLoader
+
+      - run: nix -vL --show-trace flake check --no-build
+
   populate:
     name: Populate Checks Matrix
     runs-on: ubuntu-latest

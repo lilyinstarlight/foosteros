@@ -25,8 +25,6 @@ jobs:
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
 
       - uses: actions/checkout@v3
-        with:
-          ssh-key: ${{ secrets.REPO_KEY }}
 
       - name: Configure git
         run: |
@@ -45,15 +43,6 @@ jobs:
             echo 'changed=true' >> $GITHUB_OUTPUT
             echo 'head=ci/flake/${{ github.sha }}' >> $GITHUB_OUTPUT
           fi
-
-      # TODO: remove whenever Nix (or crane) fixes this
-      - name: 'TODO: Nix pls'
-        run: |
-          nix -vL build --no-link .#nixosConfigurations.bina.config.system.build.installBootLoader
-        if: steps.commit.outputs.changed == 'true'
-
-      - run: nix -vL --show-trace flake check --no-build
-        if: steps.commit.outputs.changed == 'true'
 
   check:
     name: Run Flake Checks
