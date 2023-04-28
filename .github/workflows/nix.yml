@@ -1,3 +1,4 @@
+# TODO: use parallel checks
 name: Nix
 
 on:
