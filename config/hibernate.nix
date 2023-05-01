@@ -11,10 +11,4 @@ lib.mkIf config.foosteros.profiles.hibernate {
   systemd.sleep.extraConfig = ''
     HibernateDelaySec=30m
   '';
-
-  # TODO: can be removed when systemd/systemd#26348 is merged and a subsequent release hits nixos-unstable
-  boot.initrd.systemd.services."systemd-hibernate-resume@".before = [
-    "systemd-fsck-root.service"
-    "sysroot.mount"
-  ];
 }
