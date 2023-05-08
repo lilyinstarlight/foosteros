@@ -778,15 +778,15 @@ lib.mkIf config.foosteros.profiles.sway {
           style: Regular
 
         bold:
-          family: Monofurbold Nerd Font
+          family: Monofur Nerd Font
           style: Bold
 
         italic:
-          family: Monofuritalic Nerd Font
+          family: Monofur Nerd Font
           style: Italic
 
         bold_italic:
-          family: Monofurbold Nerd Font
+          family: Monofur Nerd Font
           style: Bold Italic
 
         size: 13
