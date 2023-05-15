@@ -18,11 +18,11 @@ in
 
 stdenv.mkDerivation rec {
   pname = "playdate-sdk";
-  version = "1.13.5";
+  version = "1.13.7";
 
   src = fetchurl {
     url = "https://download.panic.com/playdate_sdk/Linux/PlaydateSDK-${version}.tar.gz";
-    hash = "sha256-eCC2zTcgABObfgHsSVnw42enyaPz5kfwQ2NdLGWqYOg=";
+    hash = "sha256-NUHfdXYBRM76ZFYLd4sOZ/evv889dB8fbOsMuRpPSqg=";
   };
 
   strictDeps = true;
