@@ -231,4 +231,10 @@ lib.mkIf config.foosteros.profiles.base {
 
     libinput.enable = true;
   };
+
+  systemd.oomd = {
+    enableSystemSlice = lib.mkDefault true;
+    enableRootSlice = lib.mkDefault true;
+    enableUserServices = lib.mkDefault true;
+  };
 }
