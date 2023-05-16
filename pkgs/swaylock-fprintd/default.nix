@@ -31,12 +31,15 @@ stdenv.mkDerivation rec {
 
   strictDeps = true;
 
+  depsBuildBuild = [
+    pkg-config
+  ];
+
   nativeBuildInputs = [
     pkg-config
     glib
     meson
     ninja
-    pkg-config
     scdoc
     wayland-scanner
   ];
