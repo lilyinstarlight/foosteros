@@ -4,7 +4,7 @@ on:
   workflow_call:
     inputs:
       ref_head:
-        default: '${{ github.ref }}'
+        default: ${{ github.ref }}
         required: false
         type: string
       impure:
@@ -23,13 +23,13 @@ jobs:
     steps:
       - uses: cachix/install-nix-action@v20
         with:
-          install_url: '${{ inputs.nix_installer }}'
+          install_url: ${{ inputs.nix_installer }}
           extra_nix_config: |
             system-features = benchmark big-parallel kvm nixos-test
 
       - uses: actions/checkout@v3
         with:
-          ref: '${{ inputs.ref_head }}'
+          ref: ${{ inputs.ref_head }}
 
       # TODO: remove whenever Nix (or crane) fixes this
       - name: 'TODO: Nix pls'
@@ -47,13 +47,13 @@ jobs:
     steps:
       - uses: cachix/install-nix-action@v20
         with:
-          install_url: '${{ inputs.nix_installer }}'
+          install_url: ${{ inputs.nix_installer }}
           extra_nix_config: |
             system-features = benchmark big-parallel kvm nixos-test
 
       - uses: actions/checkout@v3
         with:
-          ref: '${{ inputs.ref_head }}'
+          ref: ${{ inputs.ref_head }}
 
       - id: identify
         name: Identify all system-compatible checks
@@ -73,25 +73,30 @@ jobs:
 
       - uses: cachix/install-nix-action@v20
         with:
-          install_url: '${{ inputs.nix_installer }}'
+          install_url: ${{ inputs.nix_installer }}
           extra_nix_config: |
             system-features = benchmark big-parallel kvm nixos-test
 
       - uses: cachix/cachix-action@v12
         with:
           name: foosteros
-          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
 
       - uses: actions/checkout@v3
         with:
-          ref: '${{ inputs.ref_head }}'
+          ref: ${{ inputs.ref_head }}
 
       - id: query
         name: 'Check cache for checks.${{ matrix.check }}'
         env:
+          IMPURE: ${{ inputs.impure }}
           CHECK: ${{ matrix.check }}
         run: |
-          narhash="$(nix -vL --show-trace eval --raw ".#checks.$(nix show-config --json | jq -r .system.value).$CHECK" --apply 'builtins.substring 11 32')"
+          if ! [ "$IMPURE" = true ]; then
+            narhash="$(nix -vL --show-trace eval --raw ".#checks.$(nix show-config --json | jq -r .system.value).$CHECK" --apply 'builtins.substring 11 32')"
+          else
+            narhash="$(nix-instantiate -v --show-trace --eval --expr '{ attr }: (import ./test.nix {}).${attr}.outPath' --argstr attr "$CHECK" --json | jq -r '.[11:43]')"
+          fi
           for cache in foosteros.cachix.org cache.nixos.org; do
             if curl -sfo /dev/null "https://$cache/$narhash.narinfo"; then
               echo "Found $narhash in $cache"
@@ -102,8 +107,8 @@ jobs:
       - name: 'Build checks.${{ matrix.check }}'
         if: steps.query.outputs.cached != 'true'
         env:
-          IMPURE: '${{ inputs.impure }}'
-          CHECK: '${{ matrix.check }}'
+          IMPURE: ${{ inputs.impure }}
+          CHECK: ${{ matrix.check }}
         run: |
           if ! [ "$IMPURE" = true ]; then
             nix -vL --show-trace build ".#checks.$(nix show-config --json | jq -r .system.value).$CHECK"

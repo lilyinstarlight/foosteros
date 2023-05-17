@@ -46,7 +46,7 @@ jobs:
     if: needs.update.outputs.changed == 'true'
     uses: ./.github/workflows/checks.yml
     with:
-      ref_head: '${{ needs.update.outputs.head }}'
+      ref_head: ${{ needs.update.outputs.head }}
 
   push:
     name: Push
@@ -58,7 +58,7 @@ jobs:
         with:
           ssh-key: ${{ secrets.REPO_KEY }}
           fetch-depth: 2
-          ref: '${{ needs.update.outputs.head }}'
+          ref: ${{ needs.update.outputs.head }}
 
       - name: Configure git
         run: |
