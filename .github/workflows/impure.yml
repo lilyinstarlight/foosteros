@@ -1,4 +1,4 @@
-name: Nix Impure
+name: Impure Nix
 
 on:
   pull_request:

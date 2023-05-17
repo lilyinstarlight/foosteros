@@ -1,4 +1,4 @@
-name: Nix Unstable
+name: Unstable Nix
 
 on:
   pull_request:
