@@ -13,3 +13,12 @@ jobs:
     uses: ./.github/workflows/checks.yml
     with:
       impure: true
+
+  success:
+    name: Success
+    runs-on: ubuntu-latest
+    needs: [check]
+    steps:
+      - name: Check for success
+        run: |
+          echo 'All checks successfully completed!'

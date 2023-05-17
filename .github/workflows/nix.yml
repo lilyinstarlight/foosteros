@@ -11,3 +11,12 @@ jobs:
   check:
     name: Run Checks
     uses: ./.github/workflows/checks.yml
+
+  success:
+    name: Success
+    runs-on: ubuntu-latest
+    needs: [check]
+    steps:
+      - name: Check for success
+        run: |
+          echo 'All checks successfully completed!'
