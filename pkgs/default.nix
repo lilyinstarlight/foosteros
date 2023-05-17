@@ -18,7 +18,7 @@ in with outpkgs;
 {
   # non-packages
   outPath = (toString ../.);
-  nixosTestFor = pkgs: config: (import "${pkgs.path}/nixos/lib" {}).runTest {
+  nixosTestFor = pkgs: config: (import "${toString pkgs.path}/nixos/lib" {}).runTest {
     imports = [ config ];
     hostPkgs = pkgs;
   };
