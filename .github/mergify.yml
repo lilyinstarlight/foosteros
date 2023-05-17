@@ -2,9 +2,9 @@ pull_request_rules:
   - name: Auto-merge for Dependabot pull requests
     conditions:
       - author=dependabot[bot]
-      - check-success=Stable Flake Build
-      - check-success=Stable Impure Build
-      - check-success=Unstable Flake Build
+      - check-success=Nix / Run Checks
+      - check-success=Nix Unstable / Run Checks
+      - check-success=Nix Impure / Run Checks
     actions:
       merge:
         method: squash

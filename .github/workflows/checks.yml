@@ -3,8 +3,17 @@ name: Checks
 on:
   workflow_call:
     inputs:
-      REF_HEAD:
-        required: true
+      ref_head:
+        default: '${{ github.ref }}'
+        required: false
+        type: string
+      impure:
+        default: false
+        required: false
+        type: boolean
+      nix_installer:
+        default: 'https://nixos.org/nix/install'
+        required: false
         type: string
 
 jobs:
@@ -14,12 +23,13 @@ jobs:
     steps:
       - uses: cachix/install-nix-action@v20
         with:
+          install_url: '${{ inputs.nix_installer }}'
           extra_nix_config: |
             system-features = benchmark big-parallel kvm nixos-test
 
       - uses: actions/checkout@v3
         with:
-          ref: '${{ inputs.REF_HEAD }}'
+          ref: '${{ inputs.ref_head }}'
 
       # TODO: remove whenever Nix (or crane) fixes this
       - name: 'TODO: Nix pls'
@@ -37,12 +47,13 @@ jobs:
     steps:
       - uses: cachix/install-nix-action@v20
         with:
+          install_url: '${{ inputs.nix_installer }}'
           extra_nix_config: |
             system-features = benchmark big-parallel kvm nixos-test
 
       - uses: actions/checkout@v3
         with:
-          ref: '${{ inputs.REF_HEAD }}'
+          ref: '${{ inputs.ref_head }}'
 
       - id: identify
         name: Identify all system-compatible checks
@@ -62,6 +73,7 @@ jobs:
 
       - uses: cachix/install-nix-action@v20
         with:
+          install_url: '${{ inputs.nix_installer }}'
           extra_nix_config: |
             system-features = benchmark big-parallel kvm nixos-test
 
@@ -72,7 +84,7 @@ jobs:
 
       - uses: actions/checkout@v3
         with:
-          ref: '${{ inputs.REF_HEAD }}'
+          ref: '${{ inputs.ref_head }}'
 
       - id: query
         name: 'Check cache for checks.${{ matrix.check }}'
@@ -80,15 +92,21 @@ jobs:
           CHECK: ${{ matrix.check }}
         run: |
           narhash="$(nix -vL --show-trace eval --raw ".#checks.$(nix show-config --json | jq -r .system.value).$CHECK" --apply 'builtins.substring 11 32')"
-          if curl -sfo /dev/null "https://foosteros.cachix.org/$narhash.narinfo"; then
-            echo 'Found $narhash in cache'
-            echo 'cached=true' >> $GITHUB_OUTPUT
-          fi
+          for cache in foosteros.cachix.org cache.nixos.org; do
+            if curl -sfo /dev/null "https://$cache/$narhash.narinfo"; then
+              echo "Found $narhash in $cache"
+              echo 'cached=true' >> $GITHUB_OUTPUT
+            fi
+          done
 
-      - id: build
-        name: 'Build checks.${{ matrix.check }}'
+      - name: 'Build checks.${{ matrix.check }}'
         if: steps.query.outputs.cached != 'true'
         env:
-          CHECK: ${{ matrix.check }}
+          IMPURE: '${{ inputs.impure }}'
+          CHECK: '${{ matrix.check }}'
         run: |
-          nix -vL --show-trace build ".#checks.$(nix show-config --json | jq -r .system.value).$CHECK"
+          if ! [ "$IMPURE" = true ]; then
+            nix -vL --show-trace build ".#checks.$(nix show-config --json | jq -r .system.value).$CHECK"
+          else
+            nix-build -v --show-trace test.nix -A "$CHECK"
+          fi

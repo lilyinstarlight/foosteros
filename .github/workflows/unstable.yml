@@ -1,4 +1,4 @@
-name: Nix
+name: Nix Unstable
 
 on:
   pull_request:
@@ -11,3 +11,5 @@ jobs:
   check:
     name: Run Checks
     uses: ./.github/workflows/checks.yml
+    with:
+      nix_installer: https://github.com/nix-community/nix-unstable-installer/releases/latest/download/install

@@ -46,7 +46,7 @@ jobs:
     if: needs.update.outputs.changed == 'true'
     uses: ./.github/workflows/checks.yml
     with:
-      REF_HEAD: '${{ needs.update.outputs.head }}'
+      ref_head: '${{ needs.update.outputs.head }}'
 
   push:
     name: Push

@@ -1,4 +1,4 @@
-name: Nix
+name: Nix Impure
 
 on:
   pull_request:
@@ -11,3 +11,5 @@ jobs:
   check:
     name: Run Checks
     uses: ./.github/workflows/checks.yml
+    with:
+      impure: true
