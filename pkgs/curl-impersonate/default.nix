@@ -1,7 +1,6 @@
 { lib
 , stdenv
 , fetchFromGitHub
-, fetchpatch
 , callPackage
 , buildGoModule
 , installShellFiles
@@ -177,8 +176,7 @@ symlinkJoin rec {
     inherit (passthru.curl-impersonate-ff) src;
 
     tests = lib.optionalAttrs stdenv.isLinux {
-      # TODO: this fails in GHA due to RAM exhaustion
-      #curl-impersonate = nixosTest ./test.nix;
+      curl-impersonate = nixosTest ./test.nix;
     };
   };
 }
