@@ -808,6 +808,7 @@ lib.mkIf config.foosteros.profiles.sway {
   # TODO: upstream to nixpkgs portal pkg or module
   systemd.user.services.xdg-desktop-portal.path = lib.mkAfter [ "/run/current-system/sw" ];
 
+  # TODO: try regreet
   services.greetd = {
     enable = true;
     settings = {
