@@ -13,6 +13,8 @@ jobs:
     uses: ./.github/workflows/checks.yml
     with:
       nix_installer: https://github.com/nix-community/nix-unstable-installer/releases/latest/download/install
+    secrets:
+      cachix_auth_token: ${{ secrets.CACHIX_AUTH_TOKEN }}
 
   success:
     name: Success

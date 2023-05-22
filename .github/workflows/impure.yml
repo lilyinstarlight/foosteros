@@ -13,6 +13,8 @@ jobs:
     uses: ./.github/workflows/checks.yml
     with:
       impure: true
+    secrets:
+      cachix_auth_token: ${{ secrets.CACHIX_AUTH_TOKEN }}
 
   success:
     name: Success

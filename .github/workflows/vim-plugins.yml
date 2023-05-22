@@ -55,6 +55,8 @@ jobs:
     uses: ./.github/workflows/checks.yml
     with:
       ref_head: ${{ needs.update.outputs.head }}
+    secrets:
+      cachix_auth_token: ${{ secrets.CACHIX_AUTH_TOKEN }}
 
   push:
     name: Push

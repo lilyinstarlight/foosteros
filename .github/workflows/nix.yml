@@ -11,6 +11,8 @@ jobs:
   check:
     name: Run Checks
     uses: ./.github/workflows/checks.yml
+    secrets:
+      cachix_auth_token: ${{ secrets.CACHIX_AUTH_TOKEN }}
 
   success:
     name: Success
