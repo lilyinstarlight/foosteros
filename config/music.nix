@@ -15,9 +15,7 @@ lib.mkIf config.foosteros.profiles.music {
         local.media_dir = "${config.home.homeDirectory}/music";
       };
       extensionPackages = with pkgs; [
-        # TODO: remove when mopidy-spotify is available again
-        #mopidy-local mopidy-iris mopidy-mpris mopidy-notify mopidy-mpd mopidy-spotify
-        mopidy-local mopidy-iris mopidy-mpris mopidy-notify mopidy-mpd
+        mopidy-local mopidy-iris mopidy-mpris mopidy-notify mopidy-mpd mopidy-spotify
       ];
     };
 
