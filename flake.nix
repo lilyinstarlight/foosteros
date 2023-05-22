@@ -125,8 +125,8 @@
                         nixpkgs.hostPlatform = selfSystem.config.nixpkgs.hostPlatform;
                         nixpkgs.buildPlatform = selfSystem.config.nixpkgs.buildPlatform;
                       }
-                      (nixpkgs.lib.optionalAttrs (selfSystem.config.system.build ? disko) {
-                        system.build.installDisko = selfSystem.config.system.build.disko;
+                      (nixpkgs.lib.optionalAttrs (selfSystem.config.system.build ? diskoScript) {
+                        system.build.installDiskoScript = selfSystem.config.system.build.diskoScript;
                       })
                       {
                         system.build.installHostname = selfSystem.config.networking.hostName;

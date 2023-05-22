@@ -29,7 +29,7 @@
 
         which foosteros-prepare &>/dev/null && foosteros-prepare
 
-        ${config.system.build.installDisko or "echo 'No disko config, not partitioning automatically'"}
+        ${config.system.build.installDiskoScript or "echo 'No disko config, not partitioning automatically'"}
 
         mkdir -p /mnt/etc
         cp -rT ${self} /mnt/etc/nixos
