@@ -125,8 +125,7 @@ stdenv.mkDerivation rec {
     })
   ];
 
-  # TODO: currently broken due to soapbox url being broken
-  #passthru.updateScript = ./update.sh;
+  passthru.updateScript = ./update.sh;
 
   meta = with lib; {
     homepage = "https://play.date/dev/";
