@@ -258,6 +258,7 @@
       bluetoothd\[[0-9]*\]: profiles/sap/server\.c:sap_server_register() Sap driver initialization failed\.
       bluetoothd\[[0-9]*\]: sap-server: Operation not permitted (1)
       bluetoothd\[[0-9]*\]: src/profile\.c:record_cb() Unable to get Hands-Free Voice gateway SDP record: Host is down
+      bluetoothd\[[0-9]*\]: src/device\.c:set_wake_allowed_complete() Set device flags return status: Invalid Parameters
       kernel: tpm tpm0: \[Firmware Bug\]: TPM interrupt not working, polling instead
       kernel: cros-usbpd-charger cros-usbpd-charger\.2\.auto: Unexpected number of charge port count
       kernel: cros_ec_lpcs cros_ec_lpcs\.0: bad packet checksum [0-9a-f]\{2\}
