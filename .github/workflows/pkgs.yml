@@ -13,7 +13,7 @@ jobs:
       changed: ${{ steps.update.outputs.changed }}
       head: ${{ steps.stage.outputs.head }}
     steps:
-      - uses: cachix/install-nix-action@v20
+      - uses: cachix/install-nix-action@v21
         with:
           extra_nix_config: |
             system-features = benchmark big-parallel kvm nixos-test

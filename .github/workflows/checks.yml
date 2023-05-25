@@ -25,7 +25,7 @@ jobs:
     name: Evaluate Flake
     runs-on: ubuntu-latest
     steps:
-      - uses: cachix/install-nix-action@v20
+      - uses: cachix/install-nix-action@v21
         with:
           install_url: ${{ inputs.nix_installer }}
           extra_nix_config: |
@@ -49,7 +49,7 @@ jobs:
       checks: ${{ steps.identify.outputs.checks }}
       cached: ${{ steps.query.outputs.cached }}
     steps:
-      - uses: cachix/install-nix-action@v20
+      - uses: cachix/install-nix-action@v21
         with:
           install_url: ${{ inputs.nix_installer }}
           extra_nix_config: |
@@ -75,7 +75,7 @@ jobs:
       - name: Free up runner space
         run: sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc
 
-      - uses: cachix/install-nix-action@v20
+      - uses: cachix/install-nix-action@v21
         with:
           install_url: ${{ inputs.nix_installer }}
           extra_nix_config: |

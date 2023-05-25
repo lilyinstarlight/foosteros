@@ -26,7 +26,7 @@ jobs:
           remove-android: 'true'
           remove-haskell: 'true'
 
-      - uses: cachix/install-nix-action@v20
+      - uses: cachix/install-nix-action@v21
         with:
           extra_nix_config: |
             system-features = benchmark big-parallel kvm nixos-test
