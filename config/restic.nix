@@ -35,10 +35,17 @@ lib.mkIf config.foosteros.profiles.restic {
       after = [ "network-online.target" ];
       path = [ pkgs.btrfs-progs ];
     }
-    (lib.mkIf (config.system.devices.backupAdapter != null && config.networking.networkmanager.enable) {
+    (lib.mkIf (config.networking.networkmanager.enable && config.system.devices.backupAdapter == null) {
+      path = [ pkgs.jq ];
+      serviceConfig.ExecCondition = pkgs.writeShellScript "networkmanager-metered-check" ''
+        busctl -j get-property org.freedesktop.NetworkManager /org/freedesktop/NetworkManager org.freedesktop.NetworkManager Metered \
+          | jq -e '.data != 1 and .data != 3' >/dev/null
+      '';
+    })
+    (lib.mkIf (config.networking.networkmanager.enable && config.system.devices.backupAdapter != null) {
       serviceConfig.ExecCondition = "${pkgs.networkmanager}/bin/nmcli device connect ${config.system.devices.backupAdapter}";
     })
-    (lib.mkIf (config.system.devices.backupAdapter != null && config.networking.useNetworkd) {
+    (lib.mkIf (config.networking.useNetworkd && config.system.devices.backupAdapter != null) {
       serviceConfig.ExecCondition = "${config.systemd.package}/lib/systemd/systemd-networkd-wait-online --interface=${config.system.devices.backupAdapter}:routable --timeout=5";
     })
   ];
