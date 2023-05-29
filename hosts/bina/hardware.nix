@@ -24,7 +24,6 @@
     coreThermalZone = 7;
     batteryId = 1;
     wirelessAdapter = "wlp166s0";
-    backupAdapter = "enp0s13f0u2c2";
     monitorFontSize = 32;
   };
 }
