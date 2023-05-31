@@ -38,6 +38,9 @@ lib.mkIf config.foosteros.profiles.restic {
     (lib.mkIf (config.networking.networkmanager.enable && config.system.devices.backupAdapter == null) {
       path = [ pkgs.jq ];
       serviceConfig.ExecCondition = pkgs.writeShellScript "networkmanager-metered-check" ''
+        set -euo pipefail
+        busctl -j get-property org.freedesktop.NetworkManager /org/freedesktop/NetworkManager org.freedesktop.NetworkManager Connectivity \
+          | jq -e '.data != 4' >/dev/null
         busctl -j get-property org.freedesktop.NetworkManager /org/freedesktop/NetworkManager org.freedesktop.NetworkManager Metered \
           | jq -e '.data != 1 and .data != 3' >/dev/null
       '';
