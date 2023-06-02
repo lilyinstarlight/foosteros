@@ -47,7 +47,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       checks: ${{ steps.identify.outputs.checks }}
-      cached: ${{ steps.query.outputs.cached }}
+      dependencies: ${{ steps.identify.outputs.dependencies }}
     steps:
       - uses: cachix/install-nix-action@v21
         with:
@@ -73,6 +73,8 @@ jobs:
     strategy:
       matrix:
         check: ${{ fromJSON(needs.populate.outputs.checks) }}
+    outputs:
+      cached: ${{ steps.query.outputs.cached }}
     steps:
       - name: Free up runner space
         run: sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc
@@ -94,9 +96,9 @@ jobs:
 
       - name: 'Waiting for dependencies to be built'
         env:
-          JOBS: ${{ fromJSON(needs.populate.outputs.dependencies) }}
+          DEPENDENCIES: ${{ fromJSON(needs.populate.outputs.dependencies) }}
         run: |
-          for job in $(jq --null-input --raw-input --compact-output --argjson jobs "$JOBS" '$jobs.${{ matrix.check }}'); do
+          for job in $(jq --null-input --raw-input --compact-output --argjson dependencies "$DEPENDENCIES" '$dependencies.${{ matrix.check }}'); do
             while curl -sf 'https://api.github.com/repos/lilyinstarlight/foosteros/actions/runs/${{ github.run_id }}/jobs' | jq --arg job "$job" -e '(.jobs[] | select(.name | endswith("Check: " + $job))).status != "completed"' >/dev/null; do
               echo "Waiting on checks.$job..."
               sleep 10
