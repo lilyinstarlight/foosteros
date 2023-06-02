@@ -62,7 +62,9 @@ jobs:
       - id: identify
         name: Identify all system-compatible checks
         run: |
-          echo "checks=$(nix -vL eval ".#checks.$(nix show-config --json | jq -r .system.value)" --apply builtins.attrNames --json)" >> $GITHUB_OUTPUT
+          checks="$(nix -vL eval ".#checks.$(nix show-config --json | jq -r .system.value)" --apply 'builtins.mapAttrs (_: drv: drv.drvPath)' --json)"
+          echo "checks=$(jq --null-input --raw-input --compact-output --argjson checks "$checks" '$checks | keys')" >> $GITHUB_OUTPUT
+          echo "dependencies=$(jq --null-input --raw-input --compact-output --argjson checks "$checks" -r '$checks[]' | xargs -I'{}' sh -c 'nix path-info --derivation -r {} | jq --raw-input --slurp '"'"'split("\n") | map(select(. != "")) as $drvs | {"path": $drvs[-1], "references": $drvs[:-1]}'"'" | jq --argjson checks "$checks" --slurp 'map({"name": (.path as $drv | $checks | with_entries(select(.value == $drv)) | keys | first | select(. != null)), "value": (.references | map(. as $drv | $checks | with_entries(select(.value == $drv)) | keys | first | select(. != null)))}) | from_entries')" >> $GITHUB_OUTPUT
 
   check:
     name: 'Check: ${{ matrix.check }}'
@@ -89,6 +91,17 @@ jobs:
       - uses: actions/checkout@v3
         with:
           ref: ${{ inputs.ref_head }}
+
+      - name: 'Waiting for dependencies to be built'
+        env:
+          JOBS: ${{ fromJSON(needs.populate.outputs.dependencies) }}
+        run: |
+          for job in $(jq --null-input --raw-input --compact-output --argjson jobs "$JOBS" '$jobs.${{ matrix.check }}'); do
+            while curl -sf 'https://api.github.com/repos/lilyinstarlight/foosteros/actions/runs/${{ github.run_id }}/jobs' | jq --arg job "$job" -e '(.jobs[] | select(.name | endswith("Check: " + $job))).status != "completed"' >/dev/null; do
+              echo "Waiting on checks.$job..."
+              sleep 10
+            done
+          done
 
       - id: query
         name: 'Check cache for checks.${{ matrix.check }}'
