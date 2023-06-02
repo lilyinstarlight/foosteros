@@ -96,7 +96,7 @@ jobs:
 
       - name: 'Waiting for dependencies to be built'
         env:
-          DEPENDENCIES: ${{ fromJSON(needs.populate.outputs.dependencies) }}
+          DEPENDENCIES: ${{ needs.populate.outputs.dependencies }}
         run: |
           for job in $(jq --null-input --raw-input --compact-output --argjson dependencies "$DEPENDENCIES" '$dependencies.${{ matrix.check }}'); do
             while curl -sf 'https://api.github.com/repos/lilyinstarlight/foosteros/actions/runs/${{ github.run_id }}/jobs' | jq --arg job "$job" -e '(.jobs[] | select(.name | endswith("Check: " + $job))).status != "completed"' >/dev/null; do
