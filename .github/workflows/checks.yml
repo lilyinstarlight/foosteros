@@ -100,7 +100,7 @@ jobs:
           DEPENDENCIES: ${{ needs.populate.outputs.dependencies }}
         run: |
           for job in $(jq --null-input --raw-input --compact-output --argjson dependencies "$DEPENDENCIES" -r '$dependencies."${{ matrix.check }}"[]'); do
-        while (echo -n 'Authorization: Bearer ' && printenv GITHUB_TOKEN) | curl -H @/dev/stdin -sf 'https://api.github.com/repos/lilyinstarlight/foosteros/actions/runs/${{ github.run_id }}/jobs' | jq --arg job "$job" -e '(.jobs[] | select(.name | endswith("Check: " + $job))).status != "completed"' >/dev/null; do
+            while (echo -n 'Authorization: Bearer ' && printenv GITHUB_TOKEN) | curl -H @/dev/stdin -sf 'https://api.github.com/repos/lilyinstarlight/foosteros/actions/runs/${{ github.run_id }}/jobs' | jq --arg job "$job" -e '(.jobs[] | select(.name | endswith("Check: " + $job))).status != "completed"' >/dev/null; do
               echo "Waiting on checks.$job..."
               sleep 10
             done
