@@ -35,11 +35,6 @@ jobs:
         with:
           ref: ${{ inputs.ref_head }}
 
-      # TODO: remove whenever Nix (or crane) fixes this
-      - name: 'TODO: Nix pls'
-        run: |
-          nix -vL build --no-link .#nixosConfigurations.bina.config.system.build.installBootLoader
-
       - run: nix -vL --show-trace flake check --no-build
 
   populate:
