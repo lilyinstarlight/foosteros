@@ -14,4 +14,13 @@ lib.mkIf config.foosteros.profiles.workstation {
     pridecat
     slack
   ]);
+
+  home-manager.sharedModules = [
+    {
+      programs.direnv = {
+        enable = true;
+        nix-direnv.enable = true;
+      };
+    }
+  ];
 }
