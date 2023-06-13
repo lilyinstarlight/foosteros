@@ -130,7 +130,10 @@ lib.mkIf config.foosteros.profiles.base {
   };
 
   nixpkgs = {
-    config.allowUnfree = true;
+    config = {
+      allowAliases = false;
+      allowUnfree = true;
+    };
     overlays = lib.attrValues (removeAttrs self.overlays [ "default" ]);
   };
 
@@ -174,10 +177,10 @@ lib.mkIf config.foosteros.profiles.base {
 
     gitconfig.text = lib.mkDefault ''
       [core]
-      	pager = "${pkgs.gitAndTools.delta}/bin/delta --dark"
+      	pager = "${pkgs.delta}/bin/delta --dark"
 
       [interactive]
-      	diffFilter = "${pkgs.gitAndTools.delta}/bin/delta --dark --color-only"
+      	diffFilter = "${pkgs.delta}/bin/delta --dark --color-only"
     '';
   } // lib.mapAttrs' (name: value: lib.nameValuePair "nix/path/${name}" { source = builtins.toString value; }) (inputs // {
     foosteros = ../.;
@@ -190,7 +193,7 @@ lib.mkIf config.foosteros.profiles.base {
     man-pages man-pages-posix
     dbus file python3 rsync strace tree unzip xxd
     cachix fpaste ftmp furi
-    git gitAndTools.delta fd ripgrep
+    git delta fd ripgrep
     shellcheck progress libqalculate
   ];
 

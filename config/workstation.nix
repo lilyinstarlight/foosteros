@@ -9,7 +9,7 @@ lib.mkIf config.foosteros.profiles.workstation {
     fq ripgrep-all
     mkusb mkwin
     aria2 openssl wireshark dogdns picocom
-    gnumake llvmPackages_latest.clang llvmPackages_latest.lldb
+    gnumake llvmPackages_16.clang llvmPackages_16.lldb
   ] ++ (lib.optionals pkgs.config.allowUnfree [
     pridecat
     slack
