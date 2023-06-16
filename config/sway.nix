@@ -793,7 +793,15 @@ lib.mkIf config.foosteros.profiles.sway {
     '';
   };
 
-  # TODO: use qt5ct theme with lightly style
+  boot.loader.timeout = 0;
+
+  boot.plymouth = {
+    enable = true;
+    theme = "nixos-bgrt";
+    themePackages = [ pkgs.nixos-bgrt-plymouth ];
+  };
+
+  # TODO: use qt5ct/qt6ct theme with lightly style once Luwx/Lightly#200 is finished
   qt = {
     enable = true;
     platformTheme = "gnome";
@@ -805,16 +813,33 @@ lib.mkIf config.foosteros.profiles.sway {
     xdgOpenUsePortal = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
-  # TODO: upstream to nixpkgs portal pkg or module
-  systemd.user.services.xdg-desktop-portal.path = lib.mkAfter [ "/run/current-system/sw" ];
 
-  # TODO: try regreet
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session.command = "${pkgs.greetd.tuigreet}/bin/tuigreet --greeting 'Welcome to FoosterOS/2 Warp' --time --time-format '%Y-%m-%d %H:%M' --cmd sway-session";
-    };
-  };
+  services.xserver.displayManager.sessionPackages = [
+      (lib.hiPrio (pkgs.runCommand "sway-session.desktop" {
+        desktopItem = pkgs.makeDesktopItem {
+          name = "sway";
+          desktopName = "Sway";
+          comment = "An i3-compatible Wayland compositor";
+          exec = "sway-session";
+        };
+      } ''
+        install -Dt $out/share/wayland-sessions $desktopItem/share/applications/*
+      '') // {
+        providedSessions = [ "sway" ];
+      })
+    ];
+
+  programs.regreet.enable = true;
+  services.greetd.settings.default_session.command = let
+    greetdSwayConfig = pkgs.writeText "greetd-sway-config" ''
+      font Monofur Nerd Font 12
+      output * background #111111 solid_color
+      seat seat0 xcursor_theme "Catppuccin-Mocha-Dark-Cursors"
+      xwayland disable
+      exec "command -v dbus-update-activation-environment >/dev/null 2>&1 && dbus-update-activation-environment --systemd PATH XDG_SESSION_CLASS XDG_CONFIG_DIRS XDG_DATA_DIRS XDG_SESSION_DESKTOP XDG_CURRENT_DESKTOP XDG_SESSION_TYPE DCONF_PROFILE XDG_DESKTOP_PORTAL_DIR DISPLAY WAYLAND_DISPLAY SWAYSOCK XMODIFIERS XCURSOR_SIZE XCURSOR_THEME GDK_PIXBUF_MODULE_FILE GIO_EXTRA_MODULES GTK_IM_MODULE QT_PLUGIN_PATH QT_QPA_PLATFORMTHEME QT_STYLE_OVERRIDE QT_IM_MODULE NIXOS_OZONE_WL || systemctl --user import-environment PATH XDG_SESSION_CLASS XDG_CONFIG_DIRS XDG_DATA_DIRS XDG_SESSION_DESKTOP XDG_CURRENT_DESKTOP XDG_SESSION_TYPE DCONF_PROFILE XDG_DESKTOP_PORTAL_DIR DISPLAY WAYLAND_DISPLAY SWAYSOCK XMODIFIERS XCURSOR_SIZE XCURSOR_THEME GDK_PIXBUF_MODULE_FILE GIO_EXTRA_MODULES GTK_IM_MODULE QT_PLUGIN_PATH QT_QPA_PLATFORMTHEME QT_STYLE_OVERRIDE QT_IM_MODULE NIXOS_OZONE_WL"
+      exec "${lib.getExe config.programs.regreet.package}; swaymsg exit"
+    '';
+  in "${config.programs.sway.package}/bin/sway --config ${greetdSwayConfig}";
 
   services.xserver.gdk-pixbuf.modulePackages = with pkgs; [ librsvg ];
 
