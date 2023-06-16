@@ -840,6 +840,14 @@ lib.mkIf config.foosteros.profiles.sway {
       exec "${lib.getExe config.programs.regreet.package}; swaymsg exit"
     '';
   in "${config.programs.sway.package}/bin/sway --config ${greetdSwayConfig}";
+  systemd.tmpfiles.rules = let
+    regreetUsers = lib.concatMap (user: lib.optional user.isNormalUser user.name) (lib.attrValues config.users.users);
+    regreetCache = pkgs.writeText "regreet-cache.toml" (''
+      last_user = "${lib.head regreetUsers}"
+
+      [user_to_last_sess]
+    '' + lib.concatMapStrings (user: "${user} = \"Sway\"\n") regreetUsers);
+  in lib.optionals (regreetUsers != []) [ "L+ /var/cache/regreet/cache.toml - - - - ${regreetCache}" ];
 
   services.xserver.gdk-pixbuf.modulePackages = with pkgs; [ librsvg ];
 
