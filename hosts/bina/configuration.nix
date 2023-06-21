@@ -37,6 +37,7 @@
     pki = true;
     playdate = true;
     podman = true;
+    printing = true;
     production = true;
     secureboot = true;
     sway = true;
@@ -208,7 +209,6 @@
     (name: value: lib.nameValuePair "NetworkManager/system-connections/${lib.removePrefix "networks/" name}" { source = value.path; })
     (lib.filterAttrs (name: value: lib.hasPrefix "networks/" name) config.sops.secrets)
   );
-
 
   programs.kanshi.extraConfig = ''
     profile internal {
