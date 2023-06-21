@@ -33,6 +33,7 @@
   ./pki.nix
   ./playdate.nix
   ./podman.nix
+  ./printing.nix
   ./production.nix
   ./restic.nix
   ./sd-boot.nix

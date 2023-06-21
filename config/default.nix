@@ -92,6 +92,8 @@
 
       podman = lib.mkEnableOption (lib.mdDoc "podman profile");
 
+      printing = lib.mkEnableOption (lib.mdDoc "printing profile");
+
       production = lib.mkEnableOption (lib.mdDoc "production profile");
 
       restic = lib.mkEnableOption (lib.mdDoc "restic profile");
