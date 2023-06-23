@@ -822,11 +822,10 @@ lib.mkIf config.foosteros.profiles.sway {
           comment = "An i3-compatible Wayland compositor";
           exec = "sway-session";
         };
+        passthru.providedSessions = [ "sway" ];
       } ''
         install -Dt $out/share/wayland-sessions $desktopItem/share/applications/*
-      '') // {
-        providedSessions = [ "sway" ];
-      })
+      ''))
     ];
 
   programs.regreet.enable = true;
