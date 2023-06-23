@@ -137,12 +137,12 @@ final: prev:
 
   vimwiki-dev = buildVimPluginFrom2Nix {
     pname = "vimwiki-dev";
-    version = "2023-06-16";
+    version = "2023-06-22";
     src = fetchFromGitHub {
       owner = "vimwiki";
       repo = "vimwiki";
-      rev = "88620a2be0d47e74639b15c71f7e170bb3b2d432";
-      sha256 = "1hw19wkrv98qvynak6ag79dffxafiv574bg52886wglrrimhl1y1";
+      rev = "942da42b96251b5b9bef4e54bb79884ebf86c1f4";
+      sha256 = "1kmjr26wyn1na9g7m6607vjk4g5yhdapsmlcv62myb9g58r0knpl";
     };
     meta.homepage = "https://github.com/vimwiki/vimwiki/";
   };
