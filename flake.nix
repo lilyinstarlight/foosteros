@@ -2,6 +2,7 @@
   inputs = {
     ## nixpkgs inputs
 
+    # TODO: switch back after NixOS/nixpkgs#237908 is merged
     #nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs.url = "github:lilyinstarlight/nixpkgs/tmp/upd/plymouth";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-22.11";
@@ -9,7 +10,9 @@
 
     ## foosteros inputs
 
-    nixos-hardware.url = "github:NixOS/nixos-hardware";
+    # TODO: switch back after NixOS/nixos-hardware#xxx is merged
+    #nixos-hardware.url = "github:NixOS/nixos-hardware";
+    nixos-hardware.url = "github:lilyinstarlight/nixos-hardware/fix/intel-gpu-no-aliases";
 
     home-manager = {
       url = "github:nix-community/home-manager";
