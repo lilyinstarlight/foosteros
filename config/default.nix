@@ -57,8 +57,6 @@
 
       installer = lib.mkEnableOption (lib.mdDoc "installer profile");
 
-      intelgfx = lib.mkEnableOption (lib.mdDoc "intelgfx profile");
-
       ledger = lib.mkEnableOption (lib.mdDoc "ledger profile");
 
       libvirt = lib.mkEnableOption (lib.mdDoc "libvirt profile");

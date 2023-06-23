@@ -17,7 +17,6 @@
   ./hibernate.nix
   ./homebins.nix
   ./hyfetch.nix
-  ./intelgfx.nix
   ./ledger.nix
   ./libvirt.nix
   ./lily.nix

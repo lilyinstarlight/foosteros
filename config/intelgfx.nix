@@ -2,7 +2,7 @@
 
 lib.mkIf config.foosteros.profiles.intelgfx {
   hardware.opengl.extraPackages = with pkgs; [
-    vaapiIntel
+    intel-vaapi-driver
     vaapiVdpau
     libvdpau-va-gl
     intel-media-driver

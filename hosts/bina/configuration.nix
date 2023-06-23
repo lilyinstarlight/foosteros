@@ -25,7 +25,6 @@
     hibernate = true;
     homebins = true;
     hyfetch = true;
-    intelgfx = true;
     ledger = true;
     libvirt = true;
     lsp = true;
