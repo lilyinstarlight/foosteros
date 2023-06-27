@@ -22,7 +22,7 @@ lib.mkIf config.foosteros.profiles.builders {
         hostName = "aarch64.nixos.community";
         maxJobs = 4;
         systems = [ "aarch64-linux" "armv7l-linux" ];
-        supportedFeatures = [ "big-parallel" ];
+        supportedFeatures = [ "big-parallel" "kvm" "nixos-test" ];
         publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSU1VVHo1aTl1NUgyRkhOQW1aSnlvSmZJR3lVbS9IZkdoZnduYzE0MkwzZHM=";
         sshUser = "lily";
         sshKey = "/home/lily/.ssh/id_ed25519";
