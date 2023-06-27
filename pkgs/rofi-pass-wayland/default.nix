@@ -1,4 +1,21 @@
-{ lib, fetchFromGitHub, rofi-pass, rofi-wayland, pass-wayland, coreutils, util-linux, gnugrep, libnotify, pwgen, findutils, gawk, gnused, wl-clipboard, wtype, unstableGitUpdater }:
+{ lib
+, fetchFromGitHub
+, fetchpatch
+, rofi-pass
+, rofi-wayland
+, pass-wayland
+, coreutils
+, util-linux
+, gnugrep
+, libnotify
+, pwgen
+, findutils
+, gawk
+, gnused
+, wl-clipboard
+, wtype
+, unstableGitUpdater
+}:
 
 rofi-pass.overrideAttrs (attrs: rec {
   version = "unstable-2021-04-05";
@@ -10,12 +27,13 @@ rofi-pass.overrideAttrs (attrs: rec {
     hash = "sha256-P0ESwjQEvJXFfoi3rjF/99dUbxiAhq+4HxXTMQapSW4=";
   };
 
-  patches = [
-    # fix error with latest rofi
-    ./rofi-pass-dump-xresources-fix.patch
-    # allow using wayland tools
-    ./rofi-pass-wayland-tools.patch
-  ] ++ (if attrs ? patches then attrs.patches else []);
+  patches = (attrs.patches or []) ++ [
+    (fetchpatch {
+      name = "rofi-pass-add-native-wayland-support.patch";
+      url = "https://github.com/carnager/rofi-pass/commit/73adaaa9d4fa84a4f4adb8d4a21619f0d6826a38.diff";
+      hash = "sha256-nWx4REDM/L6syiGE5HyjgkJQ7l0j/u54dRo5KBMeTfc=";
+    })
+  ];
 
   wrapperPath = with lib; makeBinPath [
     coreutils
@@ -49,7 +67,7 @@ rofi-pass.overrideAttrs (attrs: rec {
 
   meta = with lib; attrs.meta // {
     inherit (attrs.meta) description;
-    maintainers = with maintainers; [ lilyinstarlight ] ++ (if attrs.meta ? maintainers then attrs.meta.maintainers else []);
+    maintainers = with maintainers; [ lilyinstarlight ] ++ (attrs.meta.maintainers or []);
     platforms = platforms.linux;
   };
 })
