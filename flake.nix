@@ -5,7 +5,7 @@
     # TODO: switch back after NixOS/nixpkgs#237908 is merged
     #nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs.url = "github:lilyinstarlight/nixpkgs/tmp/upd/plymouth";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-22.11";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-23.05";
 
 
     ## foosteros inputs
