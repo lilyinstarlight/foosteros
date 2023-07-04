@@ -1,6 +1,5 @@
 { lib
 , fetchFromGitHub
-, fetchpatch
 , rofi-pass
 , rofi-wayland
 , pass-wayland
@@ -18,22 +17,14 @@
 }:
 
 rofi-pass.overrideAttrs (attrs: rec {
-  version = "unstable-2021-04-05";
+  version = "unstable-2023-07-04";
 
   src = fetchFromGitHub {
     owner = "carnager";
     repo = "rofi-pass";
-    rev = "629ad8d73a72d90f531ab6ebbdf78db710e25f2f";
-    hash = "sha256-P0ESwjQEvJXFfoi3rjF/99dUbxiAhq+4HxXTMQapSW4=";
+    rev = "fa16c0211d898d337e76397d22de4f92e2405ede";
+    hash = "sha256-GGa8ZNHZZD/sU+oL5ekHXxAe3bpX/42x6zO2LJuypNw=";
   };
-
-  patches = (attrs.patches or []) ++ [
-    (fetchpatch {
-      name = "rofi-pass-add-native-wayland-support.patch";
-      url = "https://github.com/carnager/rofi-pass/commit/73adaaa9d4fa84a4f4adb8d4a21619f0d6826a38.diff";
-      hash = "sha256-nWx4REDM/L6syiGE5HyjgkJQ7l0j/u54dRo5KBMeTfc=";
-    })
-  ];
 
   wrapperPath = with lib; makeBinPath [
     coreutils
