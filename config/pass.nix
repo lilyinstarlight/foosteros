@@ -26,7 +26,39 @@ lib.mkIf config.foosteros.profiles.pass {
     ({ pkgs, lib, ... }: {
       xdg.configFile = {
         "rofi-pass/config".text = ''
-          default_do=typePass
+          typePassOrOtp () {
+            checkIfPass
+
+            case "$password" in
+              'otpauth://'*)
+                typed="OTP token"
+                printf '%s' "$(generateOTP)" | ''${do_type}
+                ;;
+
+              *)
+                typed="password"
+                printf '%s' "$password" | ''${do_type}
+                ;;
+            esac
+
+            if [[ $notify == "true" ]]; then
+                if [[ "''${stuff[notify]}" == "false" ]]; then
+                    :
+                else
+                    notify-send "rofi-pass" "finished typing $typed";
+                fi
+            elif [[ $notify == "false" ]]; then
+                if [[ "''${stuff[notify]}" == "true" ]]; then
+                    notify-send "rofi-pass" "finished typing $typed";
+                else
+                    :
+                fi
+            fi
+
+            clearUp
+          }
+
+          default_do=typePassOrOtp
           clip=clipboard
         '';
       };
