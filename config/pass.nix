@@ -26,47 +26,7 @@ lib.mkIf config.foosteros.profiles.pass {
     ({ pkgs, lib, ... }: {
       xdg.configFile = {
         "rofi-pass/config".text = ''
-          _do_custom_type() {
-            if [ -n "$WAYLAND_DISPLAY" ] && which wtype; then
-              wtype -
-            else
-              xdotool type --delay $xdotool_delay --clearmodifiers --file -
-            fi
-          }
-
-          typePassOrOtp () {
-            checkIfPass
-
-            case "$password" in
-              'otpauth://'*)
-                typed="OTP token"
-                printf '%s' "$(generateOTP)" | _do_custom_type
-                ;;
-
-              *)
-                typed="password"
-                printf '%s' "$password" | _do_custom_type
-                ;;
-            esac
-
-            if [[ $notify == "true" ]]; then
-                if [[ "''${stuff[notify]}" == "false" ]]; then
-                    :
-                else
-                    notify-send "rofi-pass" "finished typing $typed";
-                fi
-            elif [[ $notify == "false" ]]; then
-                if [[ "''${stuff[notify]}" == "true" ]]; then
-                    notify-send "rofi-pass" "finished typing $typed";
-                else
-                    :
-                fi
-            fi
-
-            clearUp
-          }
-
-          default_do=typePassOrOtp
+          default_do=typePass
           clip=clipboard
         '';
       };
