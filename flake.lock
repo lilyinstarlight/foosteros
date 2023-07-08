@@ -229,16 +229,15 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1687520293,
-        "narHash": "sha256-AH2dgVTFCLF0/R+ChXJ+kcmYxr5s/dbkv7rd4e2jB/Q=",
-        "owner": "lilyinstarlight",
+        "lastModified": 1688798314,
+        "narHash": "sha256-MFG5rx7L756rtrPHsL662m64AZ4sKqUcApaiYgSKfNM=",
+        "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "1d0b3cf27b8b57a6ccc758f111b863d87bab7851",
+        "rev": "47dca15d86fdd2eabcf434d7cc0b5baa8d1a463c",
         "type": "github"
       },
       "original": {
-        "owner": "lilyinstarlight",
-        "ref": "fix/intel-gpu-no-aliases",
+        "owner": "NixOS",
         "repo": "nixos-hardware",
         "type": "github"
       }

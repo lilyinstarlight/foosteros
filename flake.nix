@@ -10,9 +10,7 @@
 
     ## foosteros inputs
 
-    # TODO: switch back after NixOS/nixos-hardware#xxx is merged
-    #nixos-hardware.url = "github:NixOS/nixos-hardware";
-    nixos-hardware.url = "github:lilyinstarlight/nixos-hardware/fix/intel-gpu-no-aliases";
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
 
     home-manager = {
       url = "github:nix-community/home-manager";
