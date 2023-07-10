@@ -2,9 +2,7 @@
   inputs = {
     ## nixpkgs inputs
 
-    # TODO: switch back after NixOS/nixpkgs#237908 is merged
-    #nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs.url = "github:lilyinstarlight/nixpkgs/tmp/upd/plymouth";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-23.05";
 
 
