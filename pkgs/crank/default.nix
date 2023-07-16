@@ -2,13 +2,13 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "crank";
-  version = "unstable-2023-03-29";
+  version = "unstable-2023-07-15";
 
   src = fetchFromGitHub {
     owner = "pd-rs";
     repo = pname;
-    rev = "edc94af45c38ce0bcc1273929432acd81c583feb";
-    hash = "sha256-xK9+5yJRVdtsXAqkCqzOYdzia/slBsLeJ94R5prw2R4=";
+    rev = "3472baf142e2f4eea782af7a93a945da6abfe25c";
+    hash = "sha256-cUgx8ER/KjZFvfHFOQ/V89i711QZTPkKBUqRTQrtM7M=";
   };
 
   cargoPatches = [
@@ -20,7 +20,7 @@ rustPlatform.buildRustPackage rec {
     sed -i '$!N;s/^\(name = "crankstart-cli"\nversion =\) "[^"]*"$/\1 "'"$(sed -n '/^version\s*=/ s/^version = "\([^"]*\)"$/\1/p' source/Cargo.toml)"'"/;P;D' source/Cargo.lock
   '';
 
-  cargoHash = "sha256-ie0rbBVUzHHAZ3+MtylTlIjGEvQpXRf7KgWEZoJCVGc=";
+  cargoHash = "sha256-RDcB5fJScpoEsQW+QN1IfPiiNBxhzEFI+QUUbswrIgU=";
 
   nativeBuildInputs = [ makeWrapper ];
 
