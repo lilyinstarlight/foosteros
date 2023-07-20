@@ -45,12 +45,18 @@
             content = {
               type = "btrfs";
               subvolumes = {
-                "/root" = {
+                "root" = {
                   mountpoint = "/";
                 };
-                "/nix" = {};
-                "/state" = {};
-                "/persist" = {};
+                "nix" = {
+                  mountpoint = "/nix";
+                };
+                "state" = {
+                  mountpoint = "/state";
+                };
+                "persist" = {
+                  mountpoint = "/persist";
+                };
               };
             };
           };
