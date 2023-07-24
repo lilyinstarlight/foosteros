@@ -43,9 +43,6 @@ in with outpkgs;
   };
   swaylock-fprintd = callPackage ./swaylock-fprintd {};
 
-  # TODO: remove after NixOS/nixpkgs#194310 is merged
-  curl-impersonate = callPackage ./curl-impersonate {};
-
   # overridden packages
   monofur-nerdfont = nerdfonts.override {
     fonts = [ "Monofur" ];
