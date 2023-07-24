@@ -15,6 +15,10 @@ on:
         default: 'https://nixos.org/nix/install'
         required: false
         type: string
+      cache_name:
+        default: 'foosteros'
+        required: false
+        type: string
     secrets:
       cachix_auth_token:
         description: 'Token for uploading artifacts to Cachix'
@@ -82,7 +86,7 @@ jobs:
 
       - uses: cachix/cachix-action@v12
         with:
-          name: foosteros
+          name: ${{ inputs.cache_name }}
           authToken: ${{ secrets.cachix_auth_token }}
 
       - uses: actions/checkout@v3
@@ -95,7 +99,7 @@ jobs:
           DEPENDENCIES: ${{ needs.populate.outputs.dependencies }}
         run: |
           for job in $(jq --null-input --raw-input --compact-output --argjson dependencies "$DEPENDENCIES" -r '$dependencies."${{ matrix.check }}"[]'); do
-            while (echo -n 'Authorization: Bearer ' && printenv GITHUB_TOKEN) | curl -H @/dev/stdin -sf 'https://api.github.com/repos/lilyinstarlight/foosteros/actions/runs/${{ github.run_id }}/jobs' | jq --arg job "$job" -e '(.jobs[] | select(.name | endswith("Check: " + $job))).status != "completed"' >/dev/null; do
+            while (echo -n 'Authorization: Bearer ' && printenv GITHUB_TOKEN) | curl -H @/dev/stdin -sf 'https://${{ github.api_url }}/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs' | jq --arg job "$job" -e '(.jobs[] | select(.name | endswith("Check: " + $job))).status != "completed"' >/dev/null; do
               echo "Waiting on checks.$job..."
               sleep 10
             done
@@ -112,7 +116,7 @@ jobs:
           else
             narhash="$(nix-instantiate -v --show-trace --eval --expr '{ attr }: (import ./test.nix {}).${attr}.outPath' --argstr attr "$CHECK" --json | jq -r '.[11:43]')"
           fi
-          for cache in foosteros.cachix.org cache.nixos.org; do
+          for cache in '${{ inputs.cache_name }}'.cachix.org cache.nixos.org; do
             if curl -sfo /dev/null "https://$cache/$narhash.narinfo"; then
               echo "Found $narhash in $cache"
               echo 'cached=true' >> $GITHUB_OUTPUT
