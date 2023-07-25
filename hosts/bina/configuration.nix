@@ -82,6 +82,7 @@
       "wired"
       "wired-admin"
       "carolina"
+      "cynthia"
     ]));
   };
 
