@@ -76,7 +76,8 @@ jobs:
       cached: ${{ steps.query.outputs.cached }}
     steps:
       - name: Free up runner space
-        run: sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
 
       - uses: cachix/install-nix-action@v22
         with:
