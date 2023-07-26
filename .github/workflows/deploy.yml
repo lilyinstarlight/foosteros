@@ -19,12 +19,15 @@ jobs:
     steps:
       - run: sudo mkdir /nix
 
-      - uses: easimon/maximize-build-space@v7
+      # TODO: restore once easimon/maximize-build-space#20 is merged
+      #- uses: easimon/maximize-build-space@v7
+      - uses: thiagokokada/maximize-build-space@remove-large-packages
         with:
           build-mount-path: '/nix'
           remove-dotnet: 'true'
           remove-android: 'true'
           remove-haskell: 'true'
+          remove-large-packages: 'true'
 
       - uses: cachix/install-nix-action@v22
         with:
