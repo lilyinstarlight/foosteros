@@ -19,6 +19,18 @@ lib.mkIf config.foosteros.profiles.builders {
         sshKey = "/home/lily/.ssh/id_ed25519";
       }
       */
+      /*
+      {
+        protocol = "ssh-ng";
+        hostName = "build01.nix-community.org";
+        maxJobs = 4;
+        systems = [ "x86_64-linux" ];
+        supportedFeatures = [ "kvm" "nixos-test" ];
+        publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUVsSVE1NHFBeTdEaDYzckJ1ZFlLZGJ6SkhycmJyck1YTFlsN1BrbWs4OEg=";
+        sshUser = "lily";
+        sshKey = "/home/lily/.ssh/id_ed25519";
+      }
+      */
       {
         protocol = "ssh-ng";
         hostName = "aarch64.nixos.community";
