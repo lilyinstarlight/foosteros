@@ -247,7 +247,7 @@ lib.mkIf config.foosteros.profiles.sway {
     })
   ];
 
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     monofur-nerdfont
   ];
 
