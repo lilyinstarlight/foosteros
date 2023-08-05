@@ -90,18 +90,20 @@ lib.mkIf config.foosteros.profiles.base {
     };
 
     # TODO: can be removed when systemd/systemd#26038 is merged and a subsequent release hits nixos-unstable
-    targets.initrd-root-device = let
-      fs = config.fileSystems."/";
-      unit = utils.escapeSystemdPath (
-        if fs.device != null then fs.device
-        else "/dev/disk/by-label/${fs.label}"
-      );
-    in lib.mkIf (lib.hasPrefix "dev-" unit) {
-      requires = [ "${unit}.device" ];
-      after = [ "${unit}.device" ];
-    };
-    targets.initrd-root-fs = {
-      after = [ "sysroot.mount" ];
+    targets = lib.mkIf (lib.versionOlder (lib.getVersion config.boot.initrd.systemd.package) "254") {
+      initrd-root-device = let
+        fs = config.fileSystems."/";
+        unit = utils.escapeSystemdPath (
+          if fs.device != null then fs.device
+          else "/dev/disk/by-label/${fs.label}"
+        );
+      in lib.mkIf (lib.hasPrefix "dev-" unit) {
+        requires = [ "${unit}.device" ];
+        after = [ "${unit}.device" ];
+      };
+      initrd-root-fs = {
+        after = [ "sysroot.mount" ];
+      };
     };
   };
 
