@@ -13,13 +13,13 @@
 
 buildDotnetModule rec {
   pname = "OpenUtau";
-  version = "0.1.158";
+  version = "0.1.194";
 
   src = fetchFromGitHub {
     owner = "stakira";
     repo = "OpenUtau";
     rev = "build/${version}";
-    hash = "sha256-/+hlL2sj/juzWrDcb5dELp8Zdg688XK8OnjKz20rx/M=";
+    hash = "sha256-0miQ2v5vijgIdbpaaiWJOJaXMwtqhKHBruefbHcb2AI=";
   };
 
   dotnet-sdk = dotnetCorePackages.sdk_7_0;
