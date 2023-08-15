@@ -41,7 +41,8 @@ buildDotnetModule rec {
 
   dotnetInstallFlags = [ "-p:PublishReadyToRun=false" ];
 
-  doCheck = true;
+  # socket cannot bind to localhost on darwin for tests
+  doCheck = !stdenv.isDarwin;
 
   # needed until upstream bumps to dotnet 7
   postPatch = ''
