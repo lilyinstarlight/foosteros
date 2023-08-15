@@ -70,10 +70,15 @@ buildDotnetModule rec {
       fromSource
       # deps
       binaryBytecode
-      # deps and worldline resampler
+      # some deps and worldline resampler
       binaryNativeCode
     ];
-    license = licenses.mit;
+    license = [
+      # dotnet code
+      licenses.mit
+      # worldline resampler
+      licenses.unfree
+    ];
     maintainers = with lib.maintainers; [ lilyinstarlight ];
     platforms = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
   };
