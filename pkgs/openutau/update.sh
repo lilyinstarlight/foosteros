@@ -1,5 +1,5 @@
 #!/usr/bin/env nix-shell
-#!nix-shell -i bash -p nix jq common-updater-scripts
+#!nix-shell -i bash -p bash curl nix jq common-updater-scripts
 
 set -euo pipefail
 
