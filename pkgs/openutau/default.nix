@@ -56,8 +56,8 @@ buildDotnetModule rec {
     runtime = if (stdenv.isLinux && stdenv.isx86_64) then "linux-x64"
          else if (stdenv.isLinux && stdenv.isAarch64) then "linux-arm64"
          else if stdenv.isDarwin then "osx"
-         else throw "Unsupported platform";
-  in ''
+         else null;
+  in lib.optionalString (runtime != null) ''
     cp runtimes/${runtime}/native/libworldline${stdenv.hostPlatform.extensions.sharedLibrary} $out/lib/OpenUtau/
   '';
 
