@@ -13,13 +13,13 @@
 
 buildDotnetModule rec {
   pname = "OpenUtau";
-  version = "0.1.194";
+  version = "0.1.158";
 
   src = fetchFromGitHub {
     owner = "stakira";
     repo = "OpenUtau";
     rev = "build/${version}";
-    hash = "sha256-0miQ2v5vijgIdbpaaiWJOJaXMwtqhKHBruefbHcb2AI=";
+    hash = "sha256-/+hlL2sj/juzWrDcb5dELp8Zdg688XK8OnjKz20rx/M=";
   };
 
   dotnet-sdk = dotnetCorePackages.sdk_7_0;
@@ -73,13 +73,13 @@ buildDotnetModule rec {
       # some deps and worldline resampler
       binaryNativeCode
     ];
-    license = [
+    license = with licenses; [
       # dotnet code
-      licenses.mit
+      mit
       # worldline resampler
-      licenses.unfree
+      unfree
     ];
-    maintainers = with lib.maintainers; [ lilyinstarlight ];
+    maintainers = with maintainers; [ lilyinstarlight ];
     platforms = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
   };
 }

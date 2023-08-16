@@ -29,7 +29,7 @@ findpath() {
 }
 
 attr="${UPDATE_NIX_ATTR_PATH:-openutau}"
-version="$(cd "$nixpkgs" && list-git-tags --pname="$(nixeval "$attr".pname)" --attr-path="$attr" | grep '^build/' | sed -e 's|^build/||' | sort -V | tail -n1)"
+version="$(curl -sSL "https://api.github.com/repos/stakira/OpenUtau/releases/latest" | jq -r .tag_name | sed -e 's|^build/||')"
 
 pkgpath="$(findpath "$attr")"
 
