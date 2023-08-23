@@ -53,7 +53,7 @@ lib.mkIf config.foosteros.profiles.sway {
     ({ config, lib, pkgs, ... }: {
       programs.qutebrowser = {
         enable = true;
-        package = pkgs.qutebrowser-qt6;
+        package = pkgs.qutebrowser;
         loadAutoconfig = true;
         settings = {
           colors.webpage.preferred_color_scheme = "dark";
@@ -252,7 +252,7 @@ lib.mkIf config.foosteros.profiles.sway {
   ];
 
   environment.systemPackages = with pkgs; [
-    qutebrowser-qt6
+    qutebrowser
     imv mupdf mpv
   ];
 
@@ -438,7 +438,7 @@ lib.mkIf config.foosteros.profiles.sway {
       set $term ${pkgs.alacritty}/bin/alacritty
       set $run ${pkgs.rofi-wayland}/bin/rofi -show drun
       set $lock ${pkgs.systemd}/bin/loginctl lock-session
-      set $browser ${pkgs.qutebrowser-qt6}/bin/qutebrowser
+      set $browser ${pkgs.qutebrowser}/bin/qutebrowser
 
       ### global settings
       font Monofur Nerd Font 12
