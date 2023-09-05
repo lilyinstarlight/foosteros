@@ -39,6 +39,11 @@ jobs:
         with:
           ref: ${{ inputs.ref_head }}
 
+      # TODO: devise better system to detect and deal with IFD (e.g. maybe we just evaluate all attrs ourselves and then call `nix flake check` again?)
+      - name: 'TODO: Perform temporary IFD kludge'
+        run: |
+          nix -vL build --no-link .#nixosConfigurations.bina.config.system.build.installBootLoader
+
       - run: nix -vL --show-trace flake check --no-build --no-allow-import-from-derivation --all-systems
 
   populate:
