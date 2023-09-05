@@ -40,7 +40,7 @@ jobs:
         with:
           name: foosteros
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - id: build
         name: Build hosts

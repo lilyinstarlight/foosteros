@@ -31,7 +31,7 @@ jobs:
         with:
           name: foosteros
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - id: identify
         name: Identify hosts capable of being built into an installer
@@ -87,7 +87,7 @@ jobs:
         with:
           name: foosteros
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - id: build
         name: Build ISO
@@ -124,7 +124,7 @@ jobs:
         with:
           name: foosteros
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Remove old files
         env:

@@ -39,7 +39,7 @@ jobs:
         with:
           name: ${{ inputs.cachix_cache_name }}
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: ${{ inputs.ref_head }}
 
@@ -63,7 +63,7 @@ jobs:
           extra_nix_config: |
             system-features = benchmark big-parallel kvm nixos-test
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: ${{ inputs.ref_head }}
 
@@ -99,7 +99,7 @@ jobs:
           name: ${{ inputs.cachix_cache_name }}
           authToken: ${{ secrets.cachix_auth_token }}
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: ${{ inputs.ref_head }}
 
