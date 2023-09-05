@@ -36,7 +36,6 @@ in with outpkgs;
     syslinux = if stdenv.isx86_64 then syslinux else pkgsCross.gnu64.syslinux;
   };
   mkwin = callPackage ./mkwin {};
-  rofi-pass-wayland = callPackage ./rofi-pass-wayland {};
   sonic-pi_3 = libsForQt5.callPackage ./sonic-pi/v3.nix {};
   sonic-pi-tool = python3Packages.callPackage ./sonic-pi-tool {
     sonic-pi = sonic-pi_3;
