@@ -18,7 +18,7 @@ jobs:
           extra_nix_config: |
             system-features = benchmark big-parallel kvm nixos-test
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ssh-key: ${{ secrets.REPO_KEY }}
           fetch-depth: 0
@@ -65,7 +65,7 @@ jobs:
     needs: [update, check]
     if: needs.update.outputs.changed == 'true'
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ssh-key: ${{ secrets.REPO_KEY }}
           fetch-depth: 0
