@@ -31,7 +31,7 @@ jobs:
           remove-docker-images: 'true'
           remove-large-packages: 'true'
 
-      - uses: cachix/install-nix-action@v22
+      - uses: cachix/install-nix-action@v23
         with:
           extra_nix_config: |
             system-features = benchmark big-parallel kvm nixos-test
