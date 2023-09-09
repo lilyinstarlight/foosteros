@@ -135,17 +135,5 @@ final: prev:
     meta.homepage = "https://github.com/zeek/vim-zeek/";
   };
 
-  vimwiki-dev = buildVimPluginFrom2Nix {
-    pname = "vimwiki-dev";
-    version = "2023-07-31";
-    src = fetchFromGitHub {
-      owner = "vimwiki";
-      repo = "vimwiki";
-      rev = "f0fe154ede6b11e3db9b058b930005a056a3d1c6";
-      sha256 = "1bkhlvr9y22wdl3cgwcfw591d4d0n7hsmfp2y7az4qjnxbk9pkf4";
-    };
-    meta.homepage = "https://github.com/vimwiki/vimwiki/";
-  };
-
 
 }
