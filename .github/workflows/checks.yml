@@ -43,16 +43,11 @@ jobs:
         with:
           ref: ${{ inputs.ref_head }}
 
-      # TODO: devise better system to detect and deal with IFD (e.g. maybe we just evaluate all attrs ourselves and then call `nix flake check` again?)
-      - name: 'TODO: Perform temporary IFD kludge'
+      - name: 'Pre-evaluate all derivation-type outputs'
         run: |
-          nix -vL build --no-link .#nixosConfigurations.bina.config.system.build.installBootLoader
+          nix flake show --legacy --all-systems --json | jq --compact-output -r '. as $outputs | paths | select(.[-1] == "type") | . as $path | $outputs | getpath($path) as $type | if ($type == "derivation") then ($path[:-1] | join(".")) elif ($type == "nixos-configuration") then ($path[:-1] + ["config", "system", "build", "toplevel"] | join(".")) else empty end' | xargs -I'{}' nix -vL eval --json '.#{}' | jq -r
 
-      # TODO: fix system kludge that currently avoids OOMs when evaluating in GHA
-      - run: nix -vL --show-trace flake check --no-build --no-allow-import-from-derivation --system x86_64-linux
-      - run: nix -vL --show-trace flake check --no-build --no-allow-import-from-derivation --system aarch64-linux
-      - run: nix -vL --show-trace flake check --no-build --no-allow-import-from-derivation --system x86_64-darwin
-      - run: nix -vL --show-trace flake check --no-build --no-allow-import-from-derivation --system aarch64-darwin
+      - run: nix -vL --show-trace flake check --no-build --all-systems
 
   populate:
     name: Populate Checks Matrix
@@ -76,7 +71,7 @@ jobs:
         run: |
           checks="$(nix -vL eval ".#checks.$(nix show-config --json | jq -r .system.value)" --apply 'builtins.mapAttrs (_: drv: drv.drvPath)' --json)"
           echo "checks=$(jq --null-input --raw-input --compact-output --argjson checks "$checks" '$checks | keys')" >> $GITHUB_OUTPUT
-          echo "dependencies=$(jq --null-input --raw-input --compact-output --argjson checks "$checks" -r '$checks[]' | xargs -I'{}' sh -c 'nix path-info --derivation -r {}"^*" | jq --raw-input --slurp '"'"'split("\n") | map(select(. != "")) as $drvs | {"path": $drvs[-1], "references": $drvs[:-1]}'"'" | jq --compact-output --argjson checks "$checks" --slurp 'map({"name": (.path as $drv | $checks | with_entries(select(.value == $drv)) | keys | first | select(. != null)), "value": (.references | map(. as $drv | $checks | with_entries(select(.value == $drv)) | keys | first | select(. != null)))}) | from_entries')" >> $GITHUB_OUTPUT
+          echo "dependencies=$(jq --null-input --raw-input --compact-output --argjson checks "$checks" -r '$checks[]' | xargs -I'{}' sh -c 'nix path-info --derivation -r '"'{}'"'"^*" | jq --raw-input --slurp '"'"'split("\n") | map(select(. != "")) as $drvs | {"path": $drvs[-1], "references": $drvs[:-1]}'"'" | jq --compact-output --argjson checks "$checks" --slurp 'map({"name": (.path as $drv | $checks | with_entries(select(.value == $drv)) | keys | first | select(. != null)), "value": (.references | map(. as $drv | $checks | with_entries(select(.value == $drv)) | keys | first | select(. != null)))}) | from_entries')" >> $GITHUB_OUTPUT
 
   check:
     name: 'Check: ${{ matrix.check }}'
