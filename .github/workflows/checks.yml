@@ -47,7 +47,11 @@ jobs:
         run: |
           nix flake show --legacy --all-systems --json | jq --compact-output -r '. as $outputs | paths | select(.[-1] == "type") | . as $path | $outputs | getpath($path) as $type | if ($type == "derivation") then ($path[:-1] | join(".")) elif ($type == "nixos-configuration") then ($path[:-1] + ["config", "system", "build", "toplevel"] | join(".")) else empty end' | xargs -I'{}' nix -vL eval --json '.#{}' | jq -r
 
-      - run: nix -vL --show-trace flake check --no-build --all-systems
+      # TODO: fix OOMs from using `--all-systems`
+      - run: nix -vL --show-trace flake check --no-build --system x86_64-linux
+      - run: nix -vL --show-trace flake check --no-build --system aarch64-linux
+      - run: nix -vL --show-trace flake check --no-build --system x86_64-darwin
+      - run: nix -vL --show-trace flake check --no-build --system aarch64-darwin
 
   populate:
     name: Populate Checks Matrix
