@@ -61,7 +61,7 @@ lib.mkIf config.foosteros.profiles.sway {
           downloads.location.prompt = false;
           editor.command = ["${pkgs.alacritty}/bin/alacritty" "-e" "vi" "{}"];
           fonts = {
-            default_family = "Monofur Nerd Font";
+            default_family = "monospace";
             default_size = "12pt";
           };
           tabs = {
@@ -231,7 +231,7 @@ lib.mkIf config.foosteros.profiles.sway {
         extraConfig = {
           modi = "drun,run";
         };
-        font = "Monofur Nerd Font 12";
+        font = "monospace 12";
       };
 
       services.playerctld.enable = true;
@@ -249,6 +249,11 @@ lib.mkIf config.foosteros.profiles.sway {
 
   fonts.packages = with pkgs; [
     monofur-nerdfont
+  ];
+
+  fonts.fontconfig.defaultFonts.monospace = [
+    "Monofur Nerd Font"
+    "Noto Color Emoji"
   ];
 
   environment.systemPackages = with pkgs; [
@@ -408,7 +413,7 @@ lib.mkIf config.foosteros.profiles.sway {
       [Settings]
       gtk-theme-name=Catppuccin-Mocha-Standard-Pink-dark
       gtk-icon-theme-name=Papirus-Dark
-      gtk-font-name=Monofur Nerd Font 12
+      gtk-font-name=monospace 12
       gtk-cursor-theme-name=Catppuccin-Mocha-Dark-Cursors
       gtk-application-prefer-dark-theme=true
     '';
@@ -418,7 +423,7 @@ lib.mkIf config.foosteros.profiles.sway {
       [Settings]
       gtk-theme-name=Catppuccin-Mocha-Standard-Pink-dark
       gtk-icon-theme-name=Papirus-Dark
-      gtk-font-name=Monofur Nerd Font 12
+      gtk-font-name=monospace 12
       gtk-cursor-theme-name=Catppuccin-Mocha-Dark-Cursors
       gtk-application-prefer-dark-theme=true
     '';
@@ -427,7 +432,7 @@ lib.mkIf config.foosteros.profiles.sway {
     "xdg/gtk-2.0/gtkrc".text = lib.mkDefault ''
       gtk-theme-name="Catppuccin-Mocha-Standard-Pink-dark"
       gtk-icon-theme-name="Papirus-Dark"
-      gtk-font-name="Monofur Nerd Font 12"
+      gtk-font-name="monospace 12"
       gtk-cursor-theme-name="Catppuccin-Mocha-Dark-Cursors"
     '';
     "gtk-2.0/gtkrc".source = config.environment.etc."xdg/gtk-2.0/gtkrc".source;
@@ -441,7 +446,7 @@ lib.mkIf config.foosteros.profiles.sway {
       set $browser ${pkgs.qutebrowser}/bin/qutebrowser
 
       ### global settings
-      font Monofur Nerd Font 12
+      font monospace 12
       focus_follows_mouse yes
       mouse_warping output
 
@@ -614,7 +619,7 @@ lib.mkIf config.foosteros.profiles.sway {
 
           icon_theme Papirus-Dark
 
-          font Monofur Nerd Font 12
+          font monospace 12
           colors {
               background #222222
               statusline #dadada
@@ -774,19 +779,19 @@ lib.mkIf config.foosteros.profiles.sway {
     "xdg/alacritty/alacritty.yml".text = ''
       font:
         normal:
-          family: Monofur Nerd Font
+          family: monospace
           style: Regular
 
         bold:
-          family: Monofur Nerd Font
+          family: monospace
           style: Bold
 
         italic:
-          family: Monofur Nerd Font
+          family: monospace
           style: Italic
 
         bold_italic:
-          family: Monofur Nerd Font
+          family: monospace
           style: Bold Italic
 
         size: 13
@@ -831,7 +836,7 @@ lib.mkIf config.foosteros.profiles.sway {
   programs.regreet.enable = true;
   services.greetd.settings.default_session.command = let
     greetdSwayConfig = pkgs.writeText "greetd-sway-config" ''
-      font Monofur Nerd Font 12
+      font monospace 12
       output * background #111111 solid_color
       seat seat0 xcursor_theme "Catppuccin-Mocha-Dark-Cursors"
       xwayland disable
@@ -887,7 +892,7 @@ lib.mkIf config.foosteros.profiles.sway {
     enable = true;
     events = [
       { event = "before-sleep"; command = "${pkgs.systemd}/bin/loginctl lock-session"; }
-      { event = "lock"; command = "${pkgs.swaylock-fprintd}/bin/swaylock -p -f -c 000000 --bs-hl-color 333333 --caps-lock-bs-hl-color 333333 --caps-lock-key-hl-color 333333 --font 'Monofur Nerd Font' --font-size ${toString config.system.devices.monitorFontSize} --inside-color 222222 --inside-clear-color 222222 --inside-caps-lock-color 222222 --inside-ver-color 333333 --inside-wrong-color 222222 --key-hl-color f29bd4 --line-color 222222 --ring-color 222222 --ring-clear-color 333333 --ring-caps-lock-color 222222 --ring-ver-color 333333 --ring-wrong-color aa4444 --separator-color 222222 --text-color f29bd4 --text-clear-color f29bd4 --text-caps-lock-color f29bd4 --text-ver-color f29bd4 --text-wrong-color f29bd4"; }
+      { event = "lock"; command = "${pkgs.swaylock-fprintd}/bin/swaylock -p -f -c 000000 --bs-hl-color 333333 --caps-lock-bs-hl-color 333333 --caps-lock-key-hl-color 333333 --font 'monospace' --font-size ${toString config.system.devices.monitorFontSize} --inside-color 222222 --inside-clear-color 222222 --inside-caps-lock-color 222222 --inside-ver-color 333333 --inside-wrong-color 222222 --key-hl-color f29bd4 --line-color 222222 --ring-color 222222 --ring-clear-color 333333 --ring-caps-lock-color 222222 --ring-ver-color 333333 --ring-wrong-color aa4444 --separator-color 222222 --text-color f29bd4 --text-clear-color f29bd4 --text-caps-lock-color f29bd4 --text-ver-color f29bd4 --text-wrong-color f29bd4"; }
       { event = "unlock"; command = "${pkgs.procps}/bin/pkill --session \"$XDG_SESSION_ID\" -USR1 swaylock"; }
     ];
   };
@@ -900,7 +905,7 @@ lib.mkIf config.foosteros.profiles.sway {
     extraConfig = ''
       background-color=#222222
       border-size=0
-      font=Monofur Nerd Font 12
+      font=monospace 12
       icon-path=${pkgs.papirus-icon-theme}/share/icons/Papirus-Dark
       margin=12
       progress-color=over #333333
