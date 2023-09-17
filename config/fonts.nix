@@ -23,8 +23,8 @@ lib.mkIf config.foosteros.profiles.fonts {
         <edit name="charset" mode="assign" binding="same">
           <minus>
             <name>charset</name>
+            <!-- Generated from Unicode 15.1 UTS#51 dataset and U+2764 -->
             <charset>
-              <!-- Generated from Unicode 15.1 UTS#51 dataset -->
               <range>
                 <int>0x231a</int>
                 <int>0x231b</int>
@@ -85,6 +85,7 @@ lib.mkIf config.foosteros.profiles.fonts {
                 <int>0x2755</int>
               </range>
               <int>0x2757</int>
+              <int>0x2764</int>
               <range>
                 <int>0x2795</int>
                 <int>0x2797</int>
