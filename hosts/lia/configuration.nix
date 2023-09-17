@@ -13,7 +13,8 @@
 
     adb = true;
     alien = true;
-    azure = true;
+    # TODO: re-enable when NixOS/nixpkgs#255668 and NixOS/nixpkgs#255669 are merged
+    #azure = true;
     bluetooth = true;
     ephemeral = true;
     fcitx5 = true;
@@ -255,9 +256,9 @@
   users = {
     mutableUsers = false;
     users = {
-      root.passwordFile = config.sops.secrets.root-password.path;
+      root.hashedPasswordFile = config.sops.secrets.root-password.path;
       lily = {
-        passwordFile = config.sops.secrets.lily-password.path;
+        hashedPasswordFile = config.sops.secrets.lily-password.path;
         extraGroups = with config.users.groups; map (grp: grp.name) [ networkmanager keys adbusers ];
       };
     };
@@ -267,5 +268,5 @@
     services.mopidy.extraConfigFiles = [ config.sops.secrets.mopidy-lily-secrets.path ];
   };
 
-  system.stateVersion = "23.05";
+  system.stateVersion = "23.11";
 }
