@@ -13,8 +13,7 @@
 
     adb = true;
     alien = true;
-    # TODO: re-enable when NixOS/nixpkgs#255668 and NixOS/nixpkgs#255669 are merged
-    #azure = true;
+    azure = true;
     bluetooth = true;
     ephemeral = true;
     fcitx5 = true;
