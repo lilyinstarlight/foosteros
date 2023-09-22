@@ -205,8 +205,6 @@
       for_window [title="Qsynth"] floating enable
       for_window [title=".* — QjackCtl"] floating enable
       for_window [title="Virtual MIDI Piano Keyboard"] floating enable
-      # TODO: fix element crashing :(
-      for_window [title="Element"] floating enable
     '';
   } // (lib.mapAttrs'
     (name: value: lib.nameValuePair "NetworkManager/system-connections/${lib.removePrefix "networks/" name}" { source = value.path; })
