@@ -8,7 +8,9 @@ let
       [org/gnome/desktop/interface]
       gtk-theme='Catppuccin-Mocha-Standard-Pink-dark'
       icon-theme='Papirus-Dark'
+      font-name='monospace 12'
       cursor-theme='Catppuccin-Mocha-Dark-Cursors'
+      color-scheme='prefer-dark'
     '';
   };
 
