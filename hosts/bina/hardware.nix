@@ -5,11 +5,6 @@
     inputs.nixos-hardware.nixosModules.framework-12th-gen-intel
   ];
 
-  # TODO: remove when NixOS/nixpkgs#243242 is merged
-  systemd.package = inputs.systemd-254.legacyPackages.${pkgs.stdenv.hostPlatform.system}.systemd;
-  boot.initrd.systemd.package = inputs.systemd-254.legacyPackages.${pkgs.stdenv.hostPlatform.system}.systemdStage1;
-  boot.initrd.systemd.suppressedUnits = [ "systemd-hibernate-resume@.service" ];
-
   boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
 
   boot.kernelModules = [ "kvm-intel" ];

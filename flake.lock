@@ -355,8 +355,7 @@
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",
         "pre-commit-hooks-nix": "pre-commit-hooks-nix",
-        "sops-nix": "sops-nix",
-        "systemd-254": "systemd-254"
+        "sops-nix": "sops-nix"
       }
     },
     "rust-overlay": {
@@ -404,22 +403,6 @@
       "original": {
         "owner": "Mic92",
         "repo": "sops-nix",
-        "type": "github"
-      }
-    },
-    "systemd-254": {
-      "locked": {
-        "lastModified": 1695607005,
-        "narHash": "sha256-yukJUXMaBgN5Vx2efJKipmee9zR9uuW47aWqXlcsnAk=",
-        "owner": "ElvishJerricco",
-        "repo": "nixpkgs",
-        "rev": "0a306c96fdd77a922fc11acd1a7750a8a18b90ab",
-        "type": "github"
-      },
-      "original": {
-        "owner": "ElvishJerricco",
-        "ref": "nixos-elvishjerricco",
-        "repo": "nixpkgs",
         "type": "github"
       }
     },

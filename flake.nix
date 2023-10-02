@@ -4,8 +4,6 @@
 
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-23.05";
-    # TODO: remove when NixOS/nixpkgs#243242 is merged
-    systemd-254.url = "github:ElvishJerricco/nixpkgs/nixos-elvishjerricco";
 
 
     ## foosteros inputs
