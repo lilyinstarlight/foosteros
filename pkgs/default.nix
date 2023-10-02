@@ -25,6 +25,7 @@ in with outpkgs;
   nixosTest = nixosTestFor outpkgs;
 
   # normal packages
+  awf-extended = callPackage ./awf-extended {};
   dnsimple-ddns = callPackage ./dnsimple-ddns {};
   fooster-backgrounds = callPackage ./backgrounds {};
   fpaste = python3Packages.callPackage ./fpaste {};
