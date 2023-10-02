@@ -6,7 +6,7 @@ let
     destination = "/dconf/sway-custom";
     text = ''
       [org/gnome/desktop/interface]
-      gtk-theme='Catppuccin-Mocha-Standard-Pink-dark'
+      gtk-theme='Catppuccin-Mocha-Standard-Pink-Dark'
       icon-theme='Papirus-Dark'
       font-name='monospace 12'
       cursor-theme='Catppuccin-Mocha-Dark-Cursors'
@@ -413,7 +413,7 @@ lib.mkIf config.foosteros.profiles.sway {
 
     "xdg/gtk-4.0/settings.ini".text = lib.mkDefault ''
       [Settings]
-      gtk-theme-name=Catppuccin-Mocha-Standard-Pink-dark
+      gtk-theme-name=Catppuccin-Mocha-Standard-Pink-Dark
       gtk-icon-theme-name=Papirus-Dark
       gtk-font-name=monospace 12
       gtk-cursor-theme-name=Catppuccin-Mocha-Dark-Cursors
@@ -423,7 +423,7 @@ lib.mkIf config.foosteros.profiles.sway {
 
     "xdg/gtk-3.0/settings.ini".text = lib.mkDefault ''
       [Settings]
-      gtk-theme-name=Catppuccin-Mocha-Standard-Pink-dark
+      gtk-theme-name=Catppuccin-Mocha-Standard-Pink-Dark
       gtk-icon-theme-name=Papirus-Dark
       gtk-font-name=monospace 12
       gtk-cursor-theme-name=Catppuccin-Mocha-Dark-Cursors
@@ -432,7 +432,7 @@ lib.mkIf config.foosteros.profiles.sway {
     "gtk-3.0/settings.ini".source = config.environment.etc."xdg/gtk-3.0/settings.ini".source;
 
     "xdg/gtk-2.0/gtkrc".text = lib.mkDefault ''
-      gtk-theme-name="Catppuccin-Mocha-Standard-Pink-dark"
+      gtk-theme-name="Catppuccin-Mocha-Standard-Pink-Dark"
       gtk-icon-theme-name="Papirus-Dark"
       gtk-font-name="monospace 12"
       gtk-cursor-theme-name="Catppuccin-Mocha-Dark-Cursors"
