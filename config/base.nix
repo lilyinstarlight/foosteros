@@ -88,23 +88,6 @@ lib.mkIf config.foosteros.profiles.base {
       "/etc/os-release".source = lib.mkOverride 75 initrdRelease;  # 50 is force prio and 100 is default prio
       "/etc/initrd-release".source = lib.mkOverride 75 initrdRelease;
     };
-
-    # TODO: can be removed when systemd/systemd#26038 is merged and a subsequent release hits nixos-unstable
-    targets = lib.mkIf (lib.versionOlder (lib.getVersion config.boot.initrd.systemd.package) "254") {
-      initrd-root-device = let
-        fs = config.fileSystems."/";
-        unit = utils.escapeSystemdPath (
-          if fs.device != null then fs.device
-          else "/dev/disk/by-label/${fs.label}"
-        );
-      in lib.mkIf (lib.hasPrefix "dev-" unit) {
-        requires = [ "${unit}.device" ];
-        after = [ "${unit}.device" ];
-      };
-      initrd-root-fs = {
-        after = [ "sysroot.mount" ];
-      };
-    };
   };
 
   networking.useDHCP = false;
