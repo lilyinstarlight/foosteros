@@ -921,17 +921,17 @@ lib.mkIf config.foosteros.profiles.sway {
       [icons]
       "org.qutebrowser.qutebrowser" = "#"
       "firefox" = "#"
-      "Chromium-browser" = "#"
+      "chromium-browser" = "#"
       "Alacritty" = ">"
       "Element" = "@"
-      "discord" = "@"
+      "WebCord" = "@"
 
       [aliases]
       "org.qutebrowser.qutebrowser" = "web"
-      "Chromium-browser" = "chromium"
+      "chromium-browser" = "chromium"
       "Alacritty" = "term"
       "Element" = "chat"
-      "discord" = "discord"
+      "WebCord" = "discord"
 
       [general]
       default_icon = "*"
