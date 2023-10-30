@@ -22,7 +22,7 @@ lib.mkIf config.foosteros.profiles.builders {
       /*
       {
         protocol = "ssh-ng";
-        hostName = "build01.nix-community.org";
+        hostName = "build-box.nix-community.org";
         maxJobs = 4;
         systems = [ "x86_64-linux" ];
         supportedFeatures = [ "kvm" "nixos-test" ];
@@ -43,7 +43,7 @@ lib.mkIf config.foosteros.profiles.builders {
       }
       {
         protocol = "ssh-ng";
-        hostName = "darwin-build-box.winter.cafe";
+        hostName = "darwin-build-box.nix-community.org";
         maxJobs = 4;
         systems = [ "aarch64-darwin" "x86_64-darwin" ];
         supportedFeatures = [];
