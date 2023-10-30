@@ -43,5 +43,6 @@
   ./tlp.nix
   ./tmux.nix
   ./udiskie.nix
+  ./vps.nix
   ./workstation.nix
 ]

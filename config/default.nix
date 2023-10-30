@@ -117,6 +117,8 @@
 
       udiskie = lib.mkEnableOption (lib.mdDoc "udiskie profile");
 
+      vps = lib.mkEnableOption (lib.mdDoc "vps profile");
+
       workstation = lib.mkEnableOption (lib.mdDoc "workstation profile");
     };
   };
