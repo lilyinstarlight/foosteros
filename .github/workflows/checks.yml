@@ -43,13 +43,16 @@ jobs:
         with:
           ref: ${{ inputs.ref_head }}
 
-      # TODO: fix OOMs from using `--all-systems`
+      # TODO: fix OOMs from using `--all-systems` (maybe just detect what systems have outputs and run commands in sequence like this automatically?)
       - name: 'Pre-evaluate all derivation-type outputs'
         run: |
           outputs="$(for system in x86_64-linux aarch64-linux x86_64-darwin aarch64-darwin; do nix -vL flake show --legacy --system "$system" --json | jq --compact-output -r '. as $outputs | paths | select(.[-1] == "type") | . as $path | $outputs | getpath($path) as $type | if ($type == "derivation") then ($path[:-1] | join(".")) elif ($type == "nixos-configuration") then ($path[:-1] + ["config", "system", "build", "toplevel"] | join(".")) else empty end'; done | jq --raw-input --slurp --compact-output -r 'split("\n") | map(select(. != ""))')"
           jq --null-input --raw-input --compact-output --argjson outputs "$outputs" -r '$outputs[]' | xargs -I'{}' nix -vL eval --json '.#{}.drvPath' | jq -r
 
-      - run: nix -vL --show-trace flake check --no-build --all-systems
+      - run: nix -vL --show-trace flake check --no-build --system x86_64-linux
+      - run: nix -vL --show-trace flake check --no-build --system aarch64-linux
+      - run: nix -vL --show-trace flake check --no-build --system x86_64-darwin
+      - run: nix -vL --show-trace flake check --no-build --system aarch64-darwin
 
   populate:
     name: Populate Checks Matrix
