@@ -808,6 +808,10 @@ lib.mkIf config.foosteros.profiles.sway {
     themePackages = [ pkgs.nixos-bgrt-plymouth ];
   };
 
+  security.pam.loginLimits = [
+    { domain = "@users"; item = "rtprio"; type = "-"; value = 1; }
+  ];
+
   # TODO: use qt5ct/qt6ct theme with lightly style once Luwx/Lightly#200 is finished
   qt = {
     enable = true;
