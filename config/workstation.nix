@@ -5,7 +5,7 @@ lib.mkIf config.foosteros.profiles.workstation {
     firefox ungoogled-chromium
     pavucontrol qalculate-gtk
     element-desktop jitsi-meet-electron teams-for-linux webcord
-    ffmpeg-full (lib.hiPrio (wrapMpv (mpv-unwrapped.override { ffmpeg_5 = ffmpeg_5-full; }) {}))
+    ffmpeg-full (lib.hiPrio (wrapMpv (mpv-unwrapped.override { ffmpeg = ffmpeg-full; }) {}))
     # TODO: re-add ripgrep-all when the 1.0.0 release is made and makes it into nixpkgs
     fq #ripgrep-all
     mkusb mkwin
