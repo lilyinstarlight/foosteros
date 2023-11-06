@@ -84,7 +84,7 @@ jobs:
           if ! [ "$IMPURE" = true ]; then
             checks="$(nix -vL eval ".#checks.$(nix show-config --json | jq -r .system.value)" --apply 'builtins.mapAttrs (_: drv: drv.drvPath)' --json)"
           else
-            checks="$(nix-instantiate -v --eval --strict --expr 'builtins.mapAttrs (_: drv: drv.drvPath) (import ./test.nix {})' --json)"
+            checks="$(nix-instantiate -v --eval --strict --read-write-mode --expr 'builtins.mapAttrs (_: drv: drv.drvPath) (import ./test.nix {})' --json)"
           fi
           echo "checks=$(jq --null-input --raw-input --compact-output --argjson checks "$checks" '$checks | keys')" >> $GITHUB_OUTPUT
           echo "dependencies=$(jq --null-input --raw-input --compact-output --argjson checks "$checks" -r '$checks[]' | xargs -I'{}' sh -c 'if ! [ "$IMPURE" = true ]; then nix path-info --derivation -r '"'{}'"'"^*"; else nix-store --query --requisites'"'{}'"'"^*"; fi | jq --raw-input --slurp '"'"'split("\n") | map(select(. != "")) as $drvs | {"path": $drvs[-1], "references": $drvs[:-1]}'"'" | jq --compact-output --argjson checks "$checks" --slurp 'map({"name": (.path as $drv | $checks | with_entries(select(.value == $drv)) | keys | first | select(. != null)), "value": (.references | map(. as $drv | $checks | with_entries(select(.value == $drv)) | keys | first | select(. != null)))}) | from_entries')" >> $GITHUB_OUTPUT
