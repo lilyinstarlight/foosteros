@@ -45,14 +45,19 @@ jobs:
 
       # TODO: fix OOMs from using `--all-systems` (maybe just detect what systems have outputs and run commands in sequence like this automatically?)
       - name: 'Pre-evaluate all derivation-type outputs'
+        if: inputs.impure != 'true'
         run: |
           outputs="$(for system in x86_64-linux aarch64-linux x86_64-darwin aarch64-darwin; do nix -vL flake show --legacy --system "$system" --json | jq --compact-output -r '. as $outputs | paths | select(.[-1] == "type") | . as $path | $outputs | getpath($path) as $type | if ($type == "derivation") then ($path[:-1] | join(".")) elif ($type == "nixos-configuration") then ($path[:-1] + ["config", "system", "build", "toplevel"] | join(".")) else empty end'; done | jq --raw-input --slurp --compact-output -r 'split("\n") | map(select(. != ""))')"
           jq --null-input --raw-input --compact-output --argjson outputs "$outputs" -r '$outputs[]' | xargs -I'{}' nix -vL eval --json '.#{}.drvPath' | jq -r
 
-      - run: nix -vL --show-trace flake check --no-build --system x86_64-linux
-      - run: nix -vL --show-trace flake check --no-build --system aarch64-linux
-      - run: nix -vL --show-trace flake check --no-build --system x86_64-darwin
-      - run: nix -vL --show-trace flake check --no-build --system aarch64-darwin
+      - if: inputs.impure != 'true'
+        run: nix -vL --show-trace flake check --no-build --system x86_64-linux
+      - if: inputs.impure != 'true'
+        run: nix -vL --show-trace flake check --no-build --system aarch64-linux
+      - if: inputs.impure != 'true'
+        run: nix -vL --show-trace flake check --no-build --system x86_64-darwin
+      - if: inputs.impure != 'true'
+        run: nix -vL --show-trace flake check --no-build --system aarch64-darwin
 
   populate:
     name: Populate Checks Matrix
@@ -73,10 +78,16 @@ jobs:
 
       - id: identify
         name: Identify all system-compatible checks
+        env:
+          IMPURE: ${{ inputs.impure }}
         run: |
-          checks="$(nix -vL eval ".#checks.$(nix show-config --json | jq -r .system.value)" --apply 'builtins.mapAttrs (_: drv: drv.drvPath)' --json)"
+          if ! [ "$IMPURE" = true ]; then
+            checks="$(nix -vL eval ".#checks.$(nix show-config --json | jq -r .system.value)" --apply 'builtins.mapAttrs (_: drv: drv.drvPath)' --json)"
+          else
+            checks="$(nix-instantiate -v --eval --strict --expr 'builtins.mapAttrs (_: drv: drv.drvPath) (import ./test.nix {})' --json)"
+          fi
           echo "checks=$(jq --null-input --raw-input --compact-output --argjson checks "$checks" '$checks | keys')" >> $GITHUB_OUTPUT
-          echo "dependencies=$(jq --null-input --raw-input --compact-output --argjson checks "$checks" -r '$checks[]' | xargs -I'{}' sh -c 'nix path-info --derivation -r '"'{}'"'"^*" | jq --raw-input --slurp '"'"'split("\n") | map(select(. != "")) as $drvs | {"path": $drvs[-1], "references": $drvs[:-1]}'"'" | jq --compact-output --argjson checks "$checks" --slurp 'map({"name": (.path as $drv | $checks | with_entries(select(.value == $drv)) | keys | first | select(. != null)), "value": (.references | map(. as $drv | $checks | with_entries(select(.value == $drv)) | keys | first | select(. != null)))}) | from_entries')" >> $GITHUB_OUTPUT
+          echo "dependencies=$(jq --null-input --raw-input --compact-output --argjson checks "$checks" -r '$checks[]' | xargs -I'{}' sh -c 'if ! [ "$IMPURE" = true ]; then nix path-info --derivation -r '"'{}'"'"^*"; else nix-store --query --requisites'"'{}'"'"^*"; fi | jq --raw-input --slurp '"'"'split("\n") | map(select(. != "")) as $drvs | {"path": $drvs[-1], "references": $drvs[:-1]}'"'" | jq --compact-output --argjson checks "$checks" --slurp 'map({"name": (.path as $drv | $checks | with_entries(select(.value == $drv)) | keys | first | select(. != null)), "value": (.references | map(. as $drv | $checks | with_entries(select(.value == $drv)) | keys | first | select(. != null)))}) | from_entries')" >> $GITHUB_OUTPUT
 
   check:
     name: 'Check: ${{ matrix.check }}'
