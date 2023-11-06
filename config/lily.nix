@@ -25,8 +25,9 @@ lib.mkIf config.foosteros.profiles.lily {
         signByDefault = true;
       };
       extraConfig = {
-        init.defaultBranch = "main";
         checkout.defaultRemote = "origin";
+        init.defaultBranch = "main";
+        merge.conflictStyle = "diff3";
         pull.ff = "only";
         push.autoSetupRemote = true;
       };
