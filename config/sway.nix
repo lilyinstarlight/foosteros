@@ -447,7 +447,8 @@ lib.mkIf config.foosteros.profiles.sway {
       set $term ${pkgs.alacritty}/bin/alacritty
       set $run ${pkgs.rofi-wayland}/bin/rofi -show drun
       set $lock ${pkgs.systemd}/bin/loginctl lock-session
-      set $browser ${pkgs.qutebrowser}/bin/qutebrowser
+      # TODO: update below line when NixOS/nixpkgs#264668 is fixed
+      set $browser ${pkgs.qutebrowser.override { enableVulkan = false; }}/bin/qutebrowser
 
       ### global settings
       font monospace 12
