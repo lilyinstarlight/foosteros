@@ -55,7 +55,8 @@ lib.mkIf config.foosteros.profiles.sway {
     ({ config, lib, pkgs, ... }: {
       programs.qutebrowser = {
         enable = true;
-        package = pkgs.qutebrowser;
+        # TODO: remove below line when NixOS/nixpkgs#264668 is fixed
+        package = pkgs.qutebrowser.override { enableVulkan = false; };
         loadAutoconfig = true;
         settings = {
           colors.webpage.preferred_color_scheme = "dark";
@@ -259,7 +260,8 @@ lib.mkIf config.foosteros.profiles.sway {
   ];
 
   environment.systemPackages = with pkgs; [
-    qutebrowser
+    # TODO: update below line when NixOS/nixpkgs#264668 is fixed
+    (qutebrowser.override { enableVulkan = false; })
     imv mupdf mpv
   ];
 
