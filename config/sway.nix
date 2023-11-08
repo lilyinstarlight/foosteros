@@ -444,11 +444,11 @@ lib.mkIf config.foosteros.profiles.sway {
     "sway/config.d/fooster".text = lib.mkDefault ''
       ### variables
       set $mod mod4
-      set $term ${pkgs.alacritty}/bin/alacritty
-      set $run ${pkgs.rofi-wayland}/bin/rofi -show drun
+      set $term bash -c "exec ${pkgs.systemd}/bin/systemd-run --user --scope --unit='app-alacritty-$RANDOM' -p CollectMode=inactive-or-failed ${pkgs.alacritty}/bin/alacritty"
+      set $run ${pkgs.rofi-wayland}/bin/rofi -show drun -run-command "${pkgs.systemd}/bin/systemd-run --user --scope --unit='app-{cmd}-$RANDOM' -p CollectMode=inactive-or-failed {cmd}"
       set $lock ${pkgs.systemd}/bin/loginctl lock-session
       # TODO: update below line when NixOS/nixpkgs#264668 is fixed
-      set $browser ${pkgs.qutebrowser.override { enableVulkan = false; }}/bin/qutebrowser
+      set $browser bash -c "exec ${pkgs.systemd}/bin/systemd-run --user --scope --unit='app-qutebrowser-$RANDOM' -p CollectMode=inactive-or-failed ${pkgs.qutebrowser.override { enableVulkan = false; }}/bin/qutebrowser"
 
       ### global settings
       font monospace 12
