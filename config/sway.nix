@@ -55,7 +55,7 @@ lib.mkIf config.foosteros.profiles.sway {
     ({ config, lib, pkgs, ... }: {
       programs.qutebrowser = {
         enable = true;
-        # TODO: remove below line when NixOS/nixpkgs#264668 is fixed
+        # TODO: remove below line when NixOS/nixpkgs#264839 is merged
         package = pkgs.qutebrowser.override { enableVulkan = false; };
         loadAutoconfig = true;
         settings = {
@@ -260,7 +260,7 @@ lib.mkIf config.foosteros.profiles.sway {
   ];
 
   environment.systemPackages = with pkgs; [
-    # TODO: update below line when NixOS/nixpkgs#264668 is fixed
+    # TODO: update below line when NixOS/nixpkgs#264839 is merged
     (qutebrowser.override { enableVulkan = false; })
     imv mupdf mpv
   ];
@@ -447,7 +447,7 @@ lib.mkIf config.foosteros.profiles.sway {
       set $term bash -c "exec ${pkgs.systemd}/bin/systemd-run --user --scope --unit='app-alacritty-$RANDOM' -p CollectMode=inactive-or-failed ${pkgs.alacritty}/bin/alacritty"
       set $run ${pkgs.rofi-wayland}/bin/rofi -show drun -run-command "${pkgs.systemd}/bin/systemd-run --user --scope --unit='app-{cmd}-$RANDOM' -p CollectMode=inactive-or-failed {cmd}"
       set $lock ${pkgs.systemd}/bin/loginctl lock-session
-      # TODO: update below line when NixOS/nixpkgs#264668 is fixed
+      # TODO: update below line when NixOS/nixpkgs#264839 is merged
       set $browser bash -c "exec ${pkgs.systemd}/bin/systemd-run --user --scope --unit='app-qutebrowser-$RANDOM' -p CollectMode=inactive-or-failed ${pkgs.qutebrowser.override { enableVulkan = false; }}/bin/qutebrowser"
 
       ### global settings
