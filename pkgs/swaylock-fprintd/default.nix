@@ -20,13 +20,13 @@
 
 stdenv.mkDerivation rec {
   pname = "swaylock-fprintd";
-  version = "unstable-2023-01-30";
+  version = "unstable-2023-11-09";
 
   src = fetchFromGitHub {
-    owner = "SL-RU";
-    repo = "swaylock-fprintd";
-    rev = "ffd639a785df0b9f39e9a4d77b7c0d7ba0b8ef79";
-    hash = "sha256-2VklrbolUV00djPt+ngUyU+YMnJLAHhD+CLZD1wH4ww=";
+    owner = "lilyinstarlight";
+    repo = "swaylock";
+    rev = "ee1f9a1f6740dd65b22063b0e03d446a16733d18";
+    hash = "sha256-axNkBgJVo5EIqy0iKQEcQ9fAQAy+PKg7hnndNO4pmyw=";
   };
 
   strictDeps = true;
@@ -55,7 +55,7 @@ stdenv.mkDerivation rec {
   ];
 
   mesonFlags = [
-    "-Dpam=enabled" "-Dgdk-pixbuf=enabled" "-Dman-pages=enabled"
+    "-Dpam=enabled" "-Dfingerprint=enabled" "-Dgdk-pixbuf=enabled" "-Dman-pages=enabled"
   ];
 
   postPatch = ''
@@ -76,5 +76,6 @@ stdenv.mkDerivation rec {
     license = licenses.mit;
     platforms = platforms.linux;
     maintainers = with maintainers; [ lilyinstarlight ];
+    mainProgram = "swaylock";
   };
 }
