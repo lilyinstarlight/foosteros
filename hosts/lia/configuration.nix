@@ -211,6 +211,7 @@
     }
 
     profile deskonly {
+      output eDP-1 disable
       output "VIZIO, Inc E390i-A1 0x00000101" enable mode 1920x1080 position 0,0 scale 1
     }
   '';
