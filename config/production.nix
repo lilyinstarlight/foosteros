@@ -9,6 +9,7 @@ lib.mkIf config.foosteros.profiles.production {
     lilypond
     (wrapOBS {
       plugins = with obs-studio-plugins; [ wlrobs obs-gstreamer obs-move-transition obs-backgroundremoval ] ++ (lib.optionals pkgs.config.allowUnfree [ (obs-ndi.override {
+        # TODO: remove override when NixOS/nixpkgs#247094 is merged
         ndi = ndi.overrideAttrs (attrs: rec {
           version = "5.6.0";
 
