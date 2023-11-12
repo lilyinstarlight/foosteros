@@ -73,7 +73,7 @@
 
       networkd = lib.mkEnableOption (lib.mdDoc "networkd profile") // {
         default = !config.foosteros.profiles.networkmanager;
-        defaultText = "!config.foosteros.profiles.networkmanager";
+        defaultText = lib.literalExpression "!config.foosteros.profiles.networkmanager";
       };
 
       networkmanager = lib.mkEnableOption (lib.mdDoc "networkmanager profile");
@@ -98,7 +98,7 @@
 
       sd-boot = lib.mkEnableOption (lib.mdDoc "sd-boot profile") // {
         default = !config.foosteros.profiles.grub;
-        defaultText = "!config.foosteros.profiles.grub";
+        defaultText = lib.literalExpression "!config.foosteros.profiles.grub";
       };
 
       secureboot = lib.mkEnableOption (lib.mdDoc "secureboot profile");
