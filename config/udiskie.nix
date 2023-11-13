@@ -15,7 +15,11 @@ lib.mkIf config.foosteros.profiles.udiskie {
         tray = "never";
       };
 
-      home.file."mnt".source = config.lib.file.mkOutOfStoreSymlink "/run/media/${config.home.username}";
+      home.activation = {
+        linkHomeMnt = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+          $DRY_RUN_CMD ln -sTf $VERBOSE_ARG /run/media/"$USER" "$HOME"/mnt
+        '';
+      };
     })
   ];
 }
