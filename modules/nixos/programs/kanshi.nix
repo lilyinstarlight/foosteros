@@ -58,7 +58,7 @@ in
     environment.etc."kanshi/config".text = cfg.extraConfig;
 
     systemd.user.services.kanshi = {
-      description = "Wayland notification daemon";
+      description = "Wayland display configuration daemon";
       partOf = [ "graphical-session.target" ];
 
       script = ''
