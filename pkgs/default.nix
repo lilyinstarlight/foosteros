@@ -24,6 +24,16 @@ in with outpkgs;
   };
   nixosTest = nixosTestFor outpkgs;
 
+  # stdenvs
+  tkeyStdenv = mkStdenvNoLibs (overrideCC llvmPackages_16.stdenv (llvmPackages_16.stdenv.cc.override (args: {
+    bintools = buildPackages.llvmPackages_16.tools.bintools;
+    nixSupport = (args.nixSupport or {}) // {
+      cc-cflags = (args.nixSupport.cc-cflags or []) ++ [
+        "-fno-stack-protector"
+      ];
+    };
+  })));
+
   # normal packages
   awf-extended = callPackage ./awf-extended {};
   dnsimple-ddns = callPackage ./dnsimple-ddns {};
@@ -42,6 +52,10 @@ in with outpkgs;
     sonic-pi = sonic-pi_3;
   };
   swaylock-fprintd = callPackage ./swaylock-fprintd {};
+  tkey-libs = callPackage ./tkey-libs {};
+  tkey-ssh-agent = callPackage ./tkey-ssh-agent {};
+  tkey-device-signer = callPackage ./tkey-device-signer {};
+  tkey-verification = callPackage ./tkey-verification {};
 
   # overridden packages
   monofur-nerdfont = nerdfonts.override {
