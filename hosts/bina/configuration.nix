@@ -201,6 +201,10 @@
           tap enabled
       }
 
+      input "5426:132:Razer_Razer_DeathAdder_V2" {
+        pointer_accel -0.6
+      }
+
       ### rules
       for_window [title="Qsynth"] floating enable
       for_window [title=".* — QjackCtl"] floating enable
