@@ -6,20 +6,20 @@
 
 tkeyStdenv.mkDerivation rec {
   pname = "tkey-libs";
-  version = "0.0.1";
+  version = "0.0.2";
 
   src = fetchFromGitHub {
     owner = "tillitis";
     repo = "tkey-libs";
     rev = "v${version}";
-    hash = "sha256-20b27SZWaZQksJ+QTZTI6IA57Kiq+R96FE2DPMZKj3c=";
+    hash = "sha256-mrD2PkE0QR7qb2xAzNgWHQ/Nwqe93EMWQGHCbU/t7q4=";
   };
 
   installPhase = ''
     runHook preInstall
 
     mkdir -p $out
-    cp --parents ./app.lds ./*/*.a ./*/*.h $out
+    cp --parents ./app.lds ./*.a ./*/*.h ./*/*/*.h $out
 
     runHook postInstall
   '';
