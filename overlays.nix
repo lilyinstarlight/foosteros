@@ -8,7 +8,10 @@ let
       }
     )
     {
-      src = ./.;
+      # hack to skip fetchGit when evaluating impurely and get original paths
+      src = {
+        outPath = ./.;
+      };
     }
   ).defaultNix;
 in
