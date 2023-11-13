@@ -40,6 +40,7 @@
   ./sway.nix
   ./sysrq.nix
   ./tex.nix
+  ./tkey.nix
   ./tlp.nix
   ./tmux.nix
   ./udiskie.nix

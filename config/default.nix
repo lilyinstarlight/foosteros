@@ -109,6 +109,8 @@
 
       tex = lib.mkEnableOption (lib.mdDoc "tex profile");
 
+      tkey = lib.mkEnableOption (lib.mdDoc "tkey profile");
+
       tlp = lib.mkEnableOption (lib.mdDoc "tlp profile");
 
       tmux = lib.mkEnableOption (lib.mdDoc "tmux profile") // {
