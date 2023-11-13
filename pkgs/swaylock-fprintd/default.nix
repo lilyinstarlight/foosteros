@@ -64,7 +64,9 @@ stdenv.mkDerivation rec {
       '${fprintd}/share/dbus-1/interfaces/net.reactivated.Fprint'
   '';
 
-  passthru.updateScript = unstableGitUpdater {};
+  passthru.updateScript = unstableGitUpdater {
+    branch = "fprintd";
+  };
 
   meta = with lib; {
     description = "Screen locker for Wayland with fprintd support";
