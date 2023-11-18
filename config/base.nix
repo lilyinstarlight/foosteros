@@ -112,6 +112,9 @@ lib.mkIf config.foosteros.profiles.base {
 
     registry = (lib.mapAttrs (name: value: { flake = value; }) (lib.filterAttrs (name: value: value ? outputs) inputs)) // { foosteros = { flake = self; }; };
     nixPath = map (name: "${name}=/etc/nix/path/${name}") (lib.attrNames inputs ++ [ "foosteros" "nixpkgs-overlays" ]);
+
+    # TODO: remove once Nix 2.18+ are default for `nixVersions.stable`
+    package = pkgs.nixVersions.unstable;
   };
 
   nixpkgs = {
