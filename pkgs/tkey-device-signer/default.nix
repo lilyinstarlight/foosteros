@@ -2,20 +2,18 @@
 , tkeyStdenv
 , fetchFromGitHub
 , tkey-libs
-#, gitUpdater
-, unstableGitUpdater
+, gitUpdater
 }:
 
 tkeyStdenv.mkDerivation rec {
   pname = "tkey-device-signer";
-  version = "unstable-2023-10-03";
+  version = "0.0.8";
 
   src = fetchFromGitHub {
     owner = "tillitis";
     repo = "tkey-device-signer";
-    #rev = "v${version}";
-    rev = "e8c4f0966160b03deeee32413e1eeec2b77c8c6e";
-    hash = "sha256-0mSnznXBet7M/91pvw04d6YfcgDvlX1Ntgtr5oCxUpQ=";
+    rev = "v${version}";
+    hash = "sha256-8hLkY5L3N6nalggAkgUhR/vGuOhrK5owiyi7p+EnWoc=";
   };
 
   makeFlags = [
@@ -32,10 +30,9 @@ tkeyStdenv.mkDerivation rec {
     runHook postInstall
   '';
 
-  #passthru.updateScript = gitUpdater {
-  #  rev-prefix = "v";
-  #};
-  passthru.updateScript = unstableGitUpdater {};
+  passthru.updateScript = gitUpdater {
+    rev-prefix = "v";
+  };
 
   meta = with lib; {
     description = "Ed25519 signer for the Tillitis TKey";
