@@ -16,7 +16,7 @@ lib.mkIf config.foosteros.profiles.production {
           src = fetchurl {
             name = "${attrs.pname}-${version}.tar.gz";
             url = "https://downloads.ndi.tv/SDK/NDI_SDK_Linux/Install_NDI_SDK_v5_Linux.tar.gz";
-            hash = "sha256-flxUaT1q7mtvHW1J9I1O/9coGr0hbZ/2Ab4tVa8S9/U=";
+            hash = "sha256-T/S5LyxfQtI0qn0ULi3n6bBFxytGrVFJpFnUjv2SGN4=";
           };
 
           installPhase = lib.concatStringsSep "\n" (lib.filter (line: !(lib.hasPrefix "mv logos " line)) (lib.splitString "\n" attrs.installPhase));
