@@ -43,7 +43,7 @@ stdenv.mkDerivation rec {
       applied theme.
     '';
     homepage = "https://github.com/luigifab/awf-extended";
-    license = licenses.gpl3;
+    license = licenses.gpl3Plus;
     platforms = platforms.all;
     maintainers = with maintainers; [ lilyinstarlight ];
   };
