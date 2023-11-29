@@ -29,7 +29,7 @@ jobs:
     name: Evaluate Flake
     runs-on: ubuntu-latest
     steps:
-      - uses: cachix/install-nix-action@v23
+      - uses: cachix/install-nix-action@v24
         with:
           install_url: ${{ inputs.nix_installer }}
           extra_nix_config: |
@@ -66,7 +66,7 @@ jobs:
       checks: ${{ steps.identify.outputs.checks }}
       dependencies: ${{ steps.identify.outputs.dependencies }}
     steps:
-      - uses: cachix/install-nix-action@v23
+      - uses: cachix/install-nix-action@v24
         with:
           install_url: ${{ inputs.nix_installer }}
           extra_nix_config: |
@@ -103,7 +103,7 @@ jobs:
         run: |
           sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
 
-      - uses: cachix/install-nix-action@v23
+      - uses: cachix/install-nix-action@v24
         with:
           install_url: ${{ inputs.nix_installer }}
           extra_nix_config: |
