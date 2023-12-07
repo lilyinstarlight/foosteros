@@ -65,7 +65,7 @@ jobs:
         host: ${{ fromJSON(needs.populate.outputs.hosts) }}
     steps:
       # TODO: re-eval once easimon/maximize-build-space#20 is fixed and merged
-      - uses: easimon/maximize-build-space@v9
+      - uses: easimon/maximize-build-space@v10
       #- uses: thiagokokada/maximize-build-space@remove-large-packages
         with:
           build-mount-path: '/nix'
