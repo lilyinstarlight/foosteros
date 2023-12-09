@@ -10,4 +10,6 @@ lib.mkIf config.foosteros.profiles.pipewire {
     pulse.enable = true;
     jack.enable = true;
   };
+
+  sound.enable = false;
 }
