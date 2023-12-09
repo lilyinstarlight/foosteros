@@ -28,7 +28,7 @@ rustPlatform.buildRustPackage rec {
     # TODO: find better way to override sysroot for rust src
     rustLibSrc = runCommand "rust-lib-src" {} ''
       mkdir -p $out
-      cp -r ${rustPlatform.rustcSrc}/{Cargo.lock,library} $out/
+      ln -s ${rustPlatform.rustLibSrc} $out/library
     '';
   in ''
     wrapProgram $out/bin/crank \
