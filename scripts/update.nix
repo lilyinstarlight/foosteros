@@ -20,6 +20,6 @@ in
 
 import "${self.inputs.nixpkgs}/maintainers/scripts/update.nix" ({
   predicate = _path: pkg: with self.inputs.nixpkgs.lib;
-    hasPrefix (toString ../.) (head (splitString ":" pkg.meta.position));
+    hasPrefix (toString ../.) (head (splitString ":" pkg.meta.position or ""));
   include-overlays = builtins.attrValues (removeAttrs self.overlays [ "default" ]);
 } // args)
