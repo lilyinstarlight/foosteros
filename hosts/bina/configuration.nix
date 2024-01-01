@@ -82,6 +82,7 @@
       "mobile"
       "wired"
       "wired-admin"
+      "zee"
       "carolina"
       "cynthia"
     ]));
