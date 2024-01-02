@@ -223,6 +223,6 @@ lib.mkIf config.foosteros.profiles.base {
   systemd.oomd = {
     enableSystemSlice = lib.mkDefault true;
     enableRootSlice = lib.mkDefault true;
-    enableUserServices = lib.mkDefault true;
+    enableUserSlices = lib.mkDefault true;
   };
 }
