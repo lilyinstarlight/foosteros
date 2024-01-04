@@ -90,12 +90,13 @@ rustPlatform.buildRustPackage rec {
     fi
   '';
 
+  passthru.dependsUnfree = true;
+
   meta = with lib; {
     description = "A cargo wrapper for creating games for the Playdate handheld gaming system";
     license = licenses.mit;
     homepage = "https://github.com/rtsuk/crank";
     maintainers = with maintainers; [ lilyinstarlight ];
     platforms = platforms.linux;
-    dependsUnfree = true;
   };
 }
