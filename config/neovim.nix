@@ -95,10 +95,11 @@ lib.mkIf config.foosteros.profiles.neovim {
         " vimwiki
         let g:vimwiki_global_ext=0
         let g:vimwiki_dir_link='index'
+        let g:vimwiki_listsyms=' .-ox'
         let g:vimwiki_list=[{'path': '$HOME/docs/wiki'}]
 
         " vim-sonic-pi
-        let g:sonic_pi_run_args = ['--cue-server', 'external']
+        let g:sonic_pi_run_args=['--cue-server', 'external']
 
         " nvim-lspconfig
         lua << EOF
