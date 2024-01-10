@@ -777,25 +777,25 @@ lib.mkIf config.foosteros.profiles.sway {
       }
     '';
 
-    "xdg/alacritty/alacritty.yml".text = ''
-      font:
-        normal:
-          family: monospace
-          style: Regular
+    "xdg/alacritty/alacritty.toml".text = ''
+      [font]
+      size = 13
 
-        bold:
-          family: monospace
-          style: Bold
+      [font.bold]
+      family = "monospace"
+      style = "Bold"
 
-        italic:
-          family: monospace
-          style: Italic
+      [font.bold_italic]
+      family = "monospace"
+      style = "Bold Italic"
 
-        bold_italic:
-          family: monospace
-          style: Bold Italic
+      [font.italic]
+      family = "monospace"
+      style = "Italic"
 
-        size: 13
+      [font.normal]
+      family = "monospace"
+      style = "Regular"
     '';
   };
 
