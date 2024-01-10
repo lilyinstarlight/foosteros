@@ -96,6 +96,7 @@ lib.mkIf config.foosteros.profiles.neovim {
         let g:vimwiki_global_ext=0
         let g:vimwiki_dir_link='index'
         let g:vimwiki_listsyms=' .-ox'
+        let g:vimwiki_listsym_rejected='!'
         let g:vimwiki_list=[{'path': '$HOME/docs/wiki'}]
 
         " vim-sonic-pi
