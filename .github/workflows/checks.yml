@@ -35,7 +35,7 @@ jobs:
           extra_nix_config: |
             system-features = benchmark big-parallel kvm nixos-test
 
-      - uses: cachix/cachix-action@v13
+      - uses: cachix/cachix-action@v14
         with:
           name: ${{ inputs.cachix_cache_name }}
 
@@ -109,7 +109,7 @@ jobs:
           extra_nix_config: |
             system-features = benchmark big-parallel kvm nixos-test
 
-      - uses: cachix/cachix-action@v13
+      - uses: cachix/cachix-action@v14
         with:
           name: ${{ inputs.cachix_cache_name }}
           authToken: ${{ secrets.cachix_auth_token }}
