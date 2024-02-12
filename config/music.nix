@@ -2,8 +2,7 @@
 
 lib.mkIf config.foosteros.profiles.music {
   environment.systemPackages = with pkgs; [
-    # TODO: re-add beets once NixOS/nixpkgs#268598 is merged
-    ncmpcpp #beets
+    ncmpcpp beets
     rofi-mpd
   ];
 
@@ -21,8 +20,7 @@ lib.mkIf config.foosteros.profiles.music {
     };
 
     programs.beets = {
-      # TODO: re-add beets once NixOS/nixpkgs#268598 is merged
-      #enable = true;
+      enable = true;
       settings = {
         directory = config.services.mopidy.settings.local.media_dir;
       };

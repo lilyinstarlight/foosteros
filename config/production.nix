@@ -8,8 +8,7 @@ lib.mkIf config.foosteros.profiles.production {
     sonic-pi sonic-pi-tool open-stage-control
     lilypond
     (wrapOBS {
-      # TODO: re-add obs-backgroundremoval once NixOS/nixpkgs#258392 is merged
-      plugins = with obs-studio-plugins; [ wlrobs obs-gstreamer obs-move-transition /*obs-backgroundremoval*/ ];
+      plugins = with obs-studio-plugins; [ wlrobs obs-gstreamer obs-move-transition obs-backgroundremoval ];
     })
   ];
 }
