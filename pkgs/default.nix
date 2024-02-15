@@ -56,6 +56,7 @@ in with outpkgs;
   tkey-sign = callPackage ./tkey-sign {};
   tkey-ssh-agent = callPackage ./tkey-ssh-agent {};
   tkey-device-signer = callPackage ./tkey-device-signer {};
+  tkey-random-generator = callPackage ./tkey-random-generator {};
   tkey-verification = callPackage ./tkey-verification {};
 
   # overridden packages
