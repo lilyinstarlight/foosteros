@@ -53,6 +53,7 @@ in with outpkgs;
   };
   swaylock-fprintd = callPackage ./swaylock-fprintd {};
   tkey-libs = callPackage ./tkey-libs {};
+  tkey-sign = callPackage ./tkey-sign {};
   tkey-ssh-agent = callPackage ./tkey-ssh-agent {};
   tkey-device-signer = callPackage ./tkey-device-signer {};
   tkey-verification = callPackage ./tkey-verification {};
