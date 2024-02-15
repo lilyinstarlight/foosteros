@@ -27,7 +27,7 @@ in
         name = "51-tkey.rules";
         destination = "/lib/udev/rules.d/51-tkey.rules";
         text = ''
-          ACTION=="add", SUBSYSTEMS=="usb", ATTRS{idVendor}=="1207", ATTRS{idProduct}=="8887"${lib.optionalString (cfg.group != null) '', MODE="0660", GROUP="${cfg.group}"''}, TAG+="uaccess"
+          ACTION=="add", SUBSYSTEMS=="usb", ATTRS{idVendor}=="1207", ATTRS{idProduct}=="8887", ENV{ID_SECURITY_TOKEN}="1"${lib.optionalString (cfg.group != null) '', MODE="0660", GROUP="${cfg.group}"''}
         '';
       })
     ];
