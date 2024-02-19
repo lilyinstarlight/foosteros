@@ -5,11 +5,9 @@
     disk.sda = {
       device = "/dev/sda";
       content = {
-        type = "table";
-        format = "gpt";
-        partitions = [
-          {
-            name = "esp";
+        type = "gpt";
+        partitions = {
+          esp = {
             start = "1MiB";
             end = "100MiB";
             content = {
@@ -18,9 +16,8 @@
               mountOptions = [ "umask=0077" ];
               mountpoint = "/boot";
             };
-          }
-          {
-            name = "root";
+          };
+          root = {
             start = "100MiB";
             end = "-2GiB";
             content = {
@@ -28,16 +25,15 @@
               format = "btrfs";
               mountpoint = "/";
             };
-          }
-          {
-            name = "swap";
+          };
+          swap = {
             start = "-2GiB";
             end = "100%";
             content = {
               type = "swap";
             };
-          }
-        ];
+          };
+        };
       };
     };
   };

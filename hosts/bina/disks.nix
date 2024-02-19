@@ -5,11 +5,9 @@
     disk.${lib.removePrefix "/dev/" config.system.devices.rootDisk} = {
       device = "${config.system.devices.rootDisk}";
       content = {
-        type = "table";
-        format = "gpt";
-        partitions = [
-          {
-            name = "esp";
+        type = "gpt";
+        partitions = {
+          esp = {
             start = "1MiB";
             end = "512MiB";
             bootable = true;
@@ -19,9 +17,8 @@
               mountOptions = [ "umask=0077" ];
               mountpoint = "/boot";
             };
-          }
-          {
-            name = "nixos";
+          };
+          nixos = {
             start = "512MiB";
             end = "100%";
             content = {
@@ -32,8 +29,8 @@
                 vg = "nixos";
               };
             };
-          }
-        ];
+          };
+        };
       };
     };
 
