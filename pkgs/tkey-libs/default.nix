@@ -24,9 +24,10 @@ tkeyStdenv.mkDerivation rec {
     runHook postInstall
   '';
 
-  passthru.updateScript = gitUpdater {
-    rev-prefix = "v";
-  };
+  # TODO: re-enable when tkey apps support newer libs version
+  #passthru.updateScript = gitUpdater {
+  #  rev-prefix = "v";
+  #};
 
   meta = with lib; {
     description = "Device libraries for the Tillitis TKey";
