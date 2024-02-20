@@ -8,6 +8,7 @@
         type = "gpt";
         partitions = {
           esp = {
+            label = "esp";
             type = "EF00";
             start = "1MiB";
             end = "100MiB";
@@ -19,6 +20,7 @@
             };
           };
           root = {
+            label = "root";
             start = "100MiB";
             end = "-2GiB";
             content = {
@@ -28,6 +30,7 @@
             };
           };
           swap = {
+            label = "swap";
             start = "-2GiB";
             end = "100%";
             content = {

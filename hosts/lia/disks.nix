@@ -8,6 +8,7 @@
         type = "gpt";
         partitions = {
           esp = {
+            label = "esp";
             type = "EF00";
             start = "1MiB";
             end = "512MiB";
@@ -19,6 +20,7 @@
             };
           };
           nixos = {
+            label = "nixos";
             start = "512MiB";
             end = "100%";
             content = {
