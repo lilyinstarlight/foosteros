@@ -82,7 +82,7 @@
       "mobile"
       "wired"
       "wired-admin"
-      "zee"
+      "josie"
       "carolina"
       "cynthia"
     ]));
