@@ -8,8 +8,8 @@ lib.mkIf config.foosteros.profiles.workstation {
     ffmpeg-full (lib.hiPrio (wrapMpv (mpv-unwrapped.override { ffmpeg = ffmpeg-full; }) {}))
     fq ripgrep-all
     mkusb mkwin
-    aria2 openssl wireshark dogdns picocom
-    gnumake llvmPackages_16.clang llvmPackages_16.lldb
+    aria2 openssl wireshark doggo picocom
+    gnumake llvmPackages.clang llvmPackages.lldb
   ] ++ (lib.optionals pkgs.config.allowUnfree [
     pridecat
     slack
