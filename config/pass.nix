@@ -4,10 +4,10 @@ lib.mkIf config.foosteros.profiles.pass {
   environment.systemPackages = with pkgs; lib.mkMerge [
     [ gnupg ]
     (lib.mkIf (config.programs.sway.enable) [
-      pass-wayland-otp rofi-pass-wayland
+      (pass-wayland.withExtensions (ext: [ ext.pass-otp ])) rofi-pass-wayland
     ])
     (lib.mkIf (!config.programs.sway.enable) [
-      pass-otp rofi-pass
+      (pass.withExtensions (ext: [ ext.pass-otp ])) rofi-pass
     ])
   ];
 
