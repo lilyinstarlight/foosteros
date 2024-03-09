@@ -47,7 +47,7 @@ lib.mkIf config.foosteros.profiles.builders {
         maxJobs = 4;
         systems = [ "aarch64-darwin" "x86_64-darwin" ];
         supportedFeatures = [];
-        publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUtYN1cxenR6QXRWWFQrTkJNSVRVK0pMWGNJRTVIVEVPZDdRM2ZRTnU4MFM=";
+        publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUREbmFWRDlUWkRKS1NwaUpRZzBxWXMwV1VIRnEzVXI1aWptL2tIT1k5MU4=";
         sshUser = "lily";
         sshKey = "/home/lily/.ssh/id_ed25519";
       }
