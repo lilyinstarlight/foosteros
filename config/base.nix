@@ -111,7 +111,7 @@ lib.mkIf config.foosteros.profiles.base {
     };
 
     registry = (lib.mapAttrs (name: value: { flake = value; }) (lib.filterAttrs (name: value: value ? outputs) inputs)) // { foosteros = { flake = self; }; };
-    nixPath = map (name: "${name}=/etc/nix/path/${name}") (lib.attrNames inputs ++ [ "foosteros" "nixpkgs-overlays" ]);
+    nixPath = [ "nixpkgs/nixos=/etc/nix/path/nixos-config" ] ++ map (name: "${name}=/etc/nix/path/${name}") (lib.attrNames inputs ++ [ "foosteros" "nixpkgs-overlays" ]);
   };
 
   nixpkgs = {
@@ -170,6 +170,7 @@ lib.mkIf config.foosteros.profiles.base {
   } // lib.mapAttrs' (name: value: lib.nameValuePair "nix/path/${name}" { source = builtins.toString value; }) (inputs // {
     foosteros = ../.;
     nixpkgs-overlays = ../. + "/overlays.nix";
+    nixos-config = ../. + "/nixos.nix";
   });
 
   environment.defaultPackages = lib.mkDefault [];
