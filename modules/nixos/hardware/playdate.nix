@@ -1,27 +1,25 @@
 { config, pkgs, lib, ... }:
 
-with lib;
-
 let
   cfg = config.hardware.playdate;
 in
 
 {
   options.hardware.playdate = {
-    enable = mkEnableOption ''
+    enable = lib.mkEnableOption ''
       Enable udev rules for interfacing with the Playdate handheld console
     '';
 
-    group = mkOption {
-      type = types.nullOr types.str;
+    group = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
       default = null;
-      description = mdDoc ''
+      description = ''
         Grant access to Playdate devices to users in this group.
       '';
     };
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     services.udev.packages = [
       (pkgs.writeTextFile {
         name = "51-playdate.rules";

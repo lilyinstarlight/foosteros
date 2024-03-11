@@ -1,25 +1,15 @@
 { config, lib, pkgs, ... }:
 
-with lib;
-
 let
   cfg = config.programs.swaynag-battery;
 in
 
 {
   options.programs.swaynag-battery = {
-    enable = mkOption {
-      type = types.bool;
-      default = false;
-      description = mdDoc ''
-        Whether to enable a user service for swaynag-battery.
-      '';
-    };
+    enable = lib.mkEnableOption "user service for swaynag-battery";
 
-    install = mkOption {
-      type = types.bool;
-      default = false;
-      description = mdDoc ''
+    install = lib.mkEnableOption "user service for swaynag-battery" // {
+      description = ''
         Whether to install a user service for swaynag-battery.
 
         The service must be manually started for each user with
@@ -28,53 +18,54 @@ in
       '';
     };
 
-    package = mkOption {
-      type = types.package;
-      default = pkgs.swaynag-battery;
-      defaultText = literalExpression "pkgs.swaynag-battery";
-      description = mdDoc ''
-        swaynag-battery derivation to use.
+    package = lib.mkPackageOption pkgs "swaynag-battery" {};
+
+    targets = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ "wlr-session.target" ];
+      description = ''
+        Systemd user targets to enable swaynag-battery for.
       '';
     };
 
-    threshold = mkOption {
-      type = types.ints.unsigned;
+    threshold = lib.mkOption {
+      type = lib.types.ints.unsigned;
       default = 12;
-      description = mdDoc ''
+      description = ''
         Percentage threshold to show notification.
       '';
     };
 
-    interval = mkOption {
-      type = types.str;
+    interval = lib.mkOption {
+      type = lib.types.str;
       default = "1m";
-      description = mdDoc ''
+      description = ''
         Interval to check battery stats.
       '';
     };
 
-    powerSupply = mkOption {
-      type = types.str;
+    powerSupply = lib.mkOption {
+      type = lib.types.str;
       default = "BAT0";
-      description = mdDoc ''
+      description = ''
         Power supply to read battery stats from.
       '';
     };
   };
 
-  config = mkIf (cfg.enable || cfg.install) {
+  config = lib.mkIf (cfg.enable || cfg.install) {
     systemd.user.services.swaynag-battery = {
       description = "Low battery notification";
       partOf = [ "graphical-session.target" ];
 
-      path = [ pkgs.sway ];
+      path = [ config.programs.sway.package ];
 
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${cfg.package}/bin/swaynag-battery --threshold ${toString cfg.threshold} --interval ${cfg.interval} --uevent /sys/class/power_supply/${cfg.powerSupply}/uevent";
+        ExecStart = "${lib.getExe cfg.package} --threshold ${toString cfg.threshold} --interval ${cfg.interval} --uevent /sys/class/power_supply/${cfg.powerSupply}/uevent";
       };
-    } // optionalAttrs cfg.enable {
-      wantedBy = [ "wlr-session.target" ];
+    } // lib.optionalAttrs cfg.enable {
+      wantedBy = cfg.targets;
     };
 
     environment.systemPackages = [ cfg.package ];

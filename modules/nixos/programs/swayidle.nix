@@ -1,32 +1,30 @@
 { config, lib, pkgs, ... }:
 
-with lib;
-
 let
   cfg = config.programs.swayidle;
 
   mkTimeout = entry:
-    "timeout ${toString entry.timeout} ${escapeShellArg entry.command}"
-      + optionalString (entry.resumeCommand != null)
-        "resume ${escapeShellArg entry.resumeCommand}";
-  mkEvent = entry: "${entry.event} ${escapeShellArg entry.command}";
+    "timeout ${toString entry.timeout} ${lib.escapeShellArg entry.command}"
+      + lib.optionalString (entry.resumeCommand != null)
+        "resume ${lib.escapeShellArg entry.resumeCommand}";
+  mkEvent = entry: "${entry.event} ${lib.escapeShellArg entry.command}";
   mkIdleHint = timeout: "idlehint ${toString timeout}";
 
   timeoutModule = { ... }: {
     options = {
-      timeout = mkOption {
-        type = types.ints.positive;
+      timeout = lib.mkOption {
+        type = lib.types.ints.positive;
         example = 60;
         description = "Timeout in seconds.";
       };
 
-      command = mkOption {
-        type = types.str;
+      command = lib.mkOption {
+        type = lib.types.str;
         description = "Command to run after inactivity timeout.";
       };
 
-      resumeCommand = mkOption {
-        type = with types; nullOr str;
+      resumeCommand = lib.mkOption {
+        type = lib.types.nullOr lib.types.str;
         default = null;
         description = "Command to run when there is activity again.";
       };
@@ -35,19 +33,19 @@ let
 
   eventModule = { ... }: {
     options = {
-      event = mkOption {
-        type = types.enum [ "before-sleep" "after-resume" "lock" "unlock" ];
+      event = lib.mkOption {
+        type = lib.types.enum [ "before-sleep" "after-resume" "lock" "unlock" ];
         description = "Event name.";
       };
 
-      command = mkOption {
-        type = types.str;
+      command = lib.mkOption {
+        type = lib.types.str;
         description = "Command to run when event occurs.";
       };
     };
   };
 
-  swayIdleConfig = concatMapStrings (s: s + "\n") (
+  swayIdleConfig = lib.concatMapStrings (s: s + "\n") (
     (map mkTimeout cfg.timeouts)
     ++ (map mkEvent cfg.events)
     ++ (lib.optional (cfg.idleHint != null) (mkIdleHint cfg.idleHint))
@@ -56,18 +54,10 @@ in
 
 {
   options.programs.swayidle = {
-    enable = mkOption {
-      type = types.bool;
-      default = false;
-      description = mdDoc ''
-        Whether to enable a user service for swayidle.
-      '';
-    };
+    enable = lib.mkEnableOption "user service for swayidle";
 
-    install = mkOption {
-      type = types.bool;
-      default = false;
-      description = mdDoc ''
+    install = lib.mkEnableOption "user service for swayidle" // {
+      description = ''
         Whether to install a user service for swayidle.
 
         The service must be manually started for each user with
@@ -76,47 +66,48 @@ in
       '';
     };
 
-    package = mkOption {
-      type = types.package;
-      default = pkgs.swayidle;
-      defaultText = literalExpression "pkgs.swayidle";
-      description = mdDoc ''
-        swayidle derivation to use.
+    package = lib.mkPackageOption pkgs "swayidle" {};
+
+    targets = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ "wlr-session.target" ];
+      description = ''
+        Systemd user targets to enable swayidle for.
       '';
     };
 
-    timeouts = mkOption {
-      type = with types; listOf (submodule timeoutModule);
+    timeouts = lib.mkOption {
+      type = lib.types.listOf (lib.types.submodule timeoutModule);
       default = [];
-      example = literalExpression ''
+      example = lib.literalExpression ''
         [
-          { timeout = 60; command = "${pkgs.swaylock}/bin/swaylock -fF"; }
+          { timeout = 60; command = "''${lib.getExe pkgs.swaylock} -fF"; }
         ]
       '';
       description = "List of commands to run after inactivity timeout.";
     };
 
-    events = mkOption {
-      type = with types; listOf (submodule eventModule);
+    events = lib.mkOption {
+      type = lib.types.listOf (lib.types.submodule eventModule);
       default = [];
-      example = literalExpression ''
+      example = lib.literalExpression ''
         [
-          { event = "before-sleep"; command = "${pkgs.swaylock}/bin/swaylock"; }
+          { event = "before-sleep"; command = "''${lib.getExe pkgs.swaylock}"; }
           { event = "lock"; command = "lock"; }
         ]
       '';
       description = "Run command on occurrence of a event.";
     };
 
-    idleHint = mkOption {
-      type = with types; nullOr ints.positive;
+    idleHint = lib.mkOption {
+      type = lib.types.nullOr lib.types.ints.positive;
       default = null;
       example = 60;
       description = "Timeout in seconds to set logind IdleHint.";
     };
   };
 
-  config = mkIf (cfg.enable || cfg.install) {
+  config = lib.mkIf (cfg.enable || cfg.install) {
     environment.etc."swayidle/config".text = swayIdleConfig;
 
     systemd.user.services.swayidle = {
@@ -144,12 +135,12 @@ in
           swayidleconfig="/etc/swayidle/config"
         fi
 
-        exec ${cfg.package}/bin/swayidle -w -C "$swayidleconfig" -S "$XDG_SEAT"
+        exec ${lib.getExe cfg.package} -w -C "$swayidleconfig" -S "$XDG_SEAT"
       '';
 
       serviceConfig.Type = "simple";
-    } // optionalAttrs cfg.enable {
-      wantedBy = [ "wlr-session.target" ];
+    } // lib.optionalAttrs cfg.enable {
+      wantedBy = cfg.targets;
     };
 
     environment.systemPackages = [ cfg.package ];

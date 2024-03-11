@@ -609,10 +609,10 @@ lib.mkIf config.foosteros.profiles.sway {
       bindsym $mod+shift+print exec ${lib.getExe pkgs.sway-contrib.grimshot} save area - | ${lib.getExe pkgs.swappy} -f -
       bindsym $mod+ctrl+print exec ${lib.getExe pkgs.sway-contrib.grimshot} save window - | ${lib.getExe pkgs.swappy} -f -
       bindsym $mod+alt+print exec ${lib.getExe pkgs.sway-contrib.grimshot} save screen - | ${lib.getExe pkgs.swappy} -f -
-      bindsym $mod+bracketright exec ${lib.getExe pkgs.mako} dismiss -g
-      bindsym $mod+shift+bracketright exec ${lib.getExe pkgs.mako} dismiss -a
-      bindsym $mod+ctrl+bracketright exec ${lib.getExe pkgs.mako} restore
-      bindsym $mod+bracketleft exec ${lib.getExe pkgs.mako} invoke
+      bindsym $mod+bracketright exec ${lib.getExe' pkgs.mako "makoctl"} dismiss -g
+      bindsym $mod+shift+bracketright exec ${lib.getExe' pkgs.mako "makoctl"} dismiss -a
+      bindsym $mod+ctrl+bracketright exec ${lib.getExe' pkgs.mako "makoctl"} restore
+      bindsym $mod+bracketleft exec ${lib.getExe' pkgs.mako "makoctl"} invoke
 
       ### desktop elements
       output * background #111111 solid_color
@@ -908,44 +908,48 @@ lib.mkIf config.foosteros.profiles.sway {
 
   programs.mako = {
     enable = true;
-    extraConfig = ''
-      background-color=#222222
-      border-size=0
-      font=monospace 12
-      icon-path=${pkgs.papirus-icon-theme}/share/icons/Papirus-Dark
-      margin=12
-      progress-color=over #333333
-      text-color=#f29bd4
-    '';
+    settings = {
+      background-color = "#222222";
+      border-size = "0";
+      font = "monospace 12";
+      icon-path = "${pkgs.papirus-icon-theme}/share/icons/Papirus-Dark";
+      margin = "12";
+      progress-color = "over #333333";
+      text-color = "#f29bd4";
+    };
   };
 
   programs.sway-assign-cgroups.enable = true;
 
   programs.swaywsr = {
     enable = true;
-    extraConfig = ''
-      [icons]
-      "org.qutebrowser.qutebrowser" = "#"
-      "firefox" = "#"
-      "chromium-browser" = "#"
-      "Alacritty" = ">"
-      "Element" = "@"
-      "WebCord" = "@"
+    settings = {
+      icons = {
+        "org.qutebrowser.qutebrowser" = "#";
+        "firefox" = "#";
+        "chromium-browser" = "#";
+        "Alacritty" = ">";
+        "Element" = "@";
+        "WebCord" = "@";
+      };
 
-      [aliases]
-      "org.qutebrowser.qutebrowser" = "web"
-      "chromium-browser" = "chromium"
-      "Alacritty" = "term"
-      "Element" = "chat"
-      "WebCord" = "discord"
+      aliases = {
+        "org.qutebrowser.qutebrowser" = "web";
+        "chromium-browser" = "chromium";
+        "Alacritty" = "term";
+        "Element" = "chat";
+        "WebCord" = "discord";
+      };
 
-      [general]
-      default_icon = "*"
-      separator = " | "
+      general = {
+        default_icon = "*";
+        separator = " | ";
+      };
 
-      [options]
-      remove_duplicates = true
-    '';
+      options = {
+        remove_duplicates = true;
+      };
+    };
   };
 
   programs.swaynag-battery = lib.mkIf (config.system.devices.batteryId != null) {

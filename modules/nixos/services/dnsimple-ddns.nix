@@ -1,80 +1,66 @@
 { config, lib, pkgs, fpkgs ? pkgs, ... }:
 
-with lib;
-
 let
   cfg = config.services.dnsimple-ddns;
 in
 
 {
   options.services.dnsimple-ddns = {
-    enable = mkOption {
-      type = types.bool;
-      default = false;
-      description = mdDoc ''
-        Whether to enable service for dnsimple-ddns.
-      '';
+    enable = lib.mkEnableOption "dnsimple-ddns service";
+
+    package = lib.mkPackageOption fpkgs "dnsimple-ddns" {
+      pkgsText = "fpkgs";
     };
 
-    package = mkOption {
-      type = types.package;
-      default = fpkgs.dnsimple-ddns;
-      defaultText = literalExpression "fpkgs.dnsimple-ddns";
-      description = mdDoc ''
-        dnsimple-ddns derivation to use.
-      '';
-    };
-
-    interval = mkOption {
-      type = types.str;
+    interval = lib.mkOption {
+      type = lib.types.str;
       default = "hourly";
-      description = mdDoc ''
-        Interval to send log digest.
+      description = ''
+        Interval to run dnsimple-ddns.
       '';
     };
 
-    config = mkOption {
-      type = types.nullOr types.str;
+    settings = lib.mkOption {
+      type = lib.types.nullOr (lib.types.attrsOf lib.types.str);
       default = null;
-      example = ''
-        token='0123456789abcdefghijklmnopqrstuv'
-        account=1010
-        zone='example.com'
-        arecord=5
-        aaaarecord=6
-
-        ifip=false
-      '';
-      description = mdDoc ''
-        Basic configuration for logmail.
+      example = {
+        token = "0123456789abcdefghijklmnopqrstuv";
+        account = "1010";
+        zone = "example.com";
+        arecord = "5";
+        aaaarecord = "6";
+        ifip = "false";
+      };
+      description = ''
+        Basic configuration for dnsimple-ddns.
       '';
     };
 
-    configFile = mkOption {
-      type = types.nullOr types.str;
+    configFile = lib.mkOption {
+      type = lib.types.nullOr lib.types.path;
       default = null;
     };
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     assertions = [
       {
-        assertion = cfg.config == null || cfg.configFile == null;
-        message = "Only one of `config` or `configFile` may be used at a time.";
+        assertion = cfg.settings == null || cfg.configFile == null;
+        message = "Only one of `settings` or `configFile` may be used at a time.";
       }
     ];
 
     environment.etc."default/ddns" = if (cfg.configFile != null) then {
       source = cfg.configFile;
     } else {
-      text = cfg.config;
+      text = lib.toShellVars cfg.settings;
     };
 
     systemd.services.dnsimple-ddns = {
       description = "Update dynamic DNS address";
       serviceConfig = {
         Type = "oneshot";
-        ExecStart = "${cfg.package}/bin/ddns";
+        ExecStart = lib.getExe cfg.package;
       };
     };
 

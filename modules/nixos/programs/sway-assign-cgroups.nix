@@ -1,25 +1,15 @@
 { config, lib, pkgs, ... }:
 
-with lib;
-
 let
   cfg = config.programs.sway-assign-cgroups;
 in
 
 {
   options.programs.sway-assign-cgroups = {
-    enable = mkOption {
-      type = types.bool;
-      default = false;
-      description = mdDoc ''
-        Whether to enable a user service for sway-assign-cgroups.
-      '';
-    };
+    enable = lib.mkEnableOption "user service for sway-assign-cgroups";
 
-    install = mkOption {
-      type = types.bool;
-      default = false;
-      description = mdDoc ''
+    install = lib.mkEnableOption "user service for sway-assign-cgroups" // {
+      description = ''
         Whether to install a user service for sway-assign-cgroups.
 
         The service must be manually started for each user with
@@ -28,17 +18,18 @@ in
       '';
     };
 
-    package = mkOption {
-      type = types.package;
-      default = pkgs.sway-assign-cgroups;
-      defaultText = literalExpression "pkgs.sway-assign-cgroups";
-      description = mdDoc ''
-        sway-assign-cgroups derivation to use.
+    package = lib.mkPackageOption pkgs "sway-assign-cgroups" {};
+
+    targets = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ "wlr-session.target" ];
+      description = ''
+        Systemd user targets to enable sway-assign-cgroups for.
       '';
     };
   };
 
-  config = mkIf (cfg.enable || cfg.install) {
+  config = lib.mkIf (cfg.enable || cfg.install) {
     systemd.user.services.sway-assign-cgroups = {
       description = "Sway automatic cgroup assignment";
       partOf = [ "graphical-session.target" ];
@@ -47,8 +38,8 @@ in
         Type = "simple";
         ExecStart = lib.getExe' pkgs.sway-assign-cgroups "assign-cgroups.py";
       };
-    } // optionalAttrs cfg.enable {
-      wantedBy = [ "wlr-session.target" ];
+    } // lib.optionalAttrs cfg.enable {
+      wantedBy = cfg.targets;
     };
 
     environment.systemPackages = [ cfg.package ];

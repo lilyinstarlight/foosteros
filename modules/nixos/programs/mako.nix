@@ -1,25 +1,15 @@
 { config, pkgs, lib, ... }:
 
-with lib;
-
 let
   cfg = config.programs.mako;
 in
 
 {
   options.programs.mako = {
-    enable = mkOption {
-      type = types.bool;
-      default = false;
-      description = mdDoc ''
-        Whether to enable a user service for mako.
-      '';
-    };
+    enable = lib.mkEnableOption "user service for mako";
 
-    install = mkOption {
-      type = types.bool;
-      default = false;
-      description = mdDoc ''
+    install = lib.mkEnableOption "user service for mako" // {
+      description = ''
         Whether to install a user service for mako.
 
         The service must be manually started for each user with
@@ -28,34 +18,27 @@ in
       '';
     };
 
-    package = mkOption {
-      type = types.package;
-      default = pkgs.mako;
-      defaultText = literalExpression "pkgs.mako";
-      description = mdDoc ''
-        mako derivation to use.
-      '';
-    };
+    package = lib.mkPackageOption pkgs "mako" {};
 
-    targets = mkOption {
-      type = types.listOf types.str;
+    targets = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
       default = [ "wlr-session.target" ];
-      description = mdDoc ''
+      description = ''
         Systemd user targets to enable mako for.
       '';
     };
 
-    extraConfig = mkOption {
-      type = types.str;
-      default = "";
-      description = mdDoc ''
-        Extra configuration for mako.
+    settings = lib.mkOption {
+      type = lib.types.attrsOf (lib.types.oneOf [ lib.types.str lib.types.int ]);
+      default = {};
+      description = ''
+        Configuration for mako.
       '';
     };
   };
 
-  config = mkIf (cfg.enable || cfg.install) {
-    environment.etc."mako/config".text = cfg.extraConfig;
+  config = lib.mkIf (cfg.enable || cfg.install) {
+    environment.etc."mako/config".text = lib.concatLines (lib.mapAttrsToList (name: value: "${name}=${value}") cfg.settings);
 
     systemd.user.services.mako = {
       description = "Wayland notification daemon";
@@ -79,9 +62,9 @@ in
         fi
 
         if [ -n "$makoconfig" ]; then
-          exec ${cfg.package}/bin/mako --config "$makoconfig"
+          exec ${lib.getExe cfg.package} --config "$makoconfig"
         else
-          exec ${cfg.package}/bin/mako
+          exec ${lib.getExe cfg.package}
         fi
       '';
 
@@ -89,7 +72,7 @@ in
         Type = "dbus";
         BusName = "org.freedesktop.Notifications";
       };
-    } // optionalAttrs cfg.enable {
+    } // lib.optionalAttrs cfg.enable {
       wantedBy = cfg.targets;
     };
   };

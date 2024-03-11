@@ -13,115 +13,115 @@
 
   options = {
     foosteros.profiles = {
-      base = lib.mkEnableOption (lib.mdDoc "base FoosterOS/2 Warp profile") // {
+      base = lib.mkEnableOption "base FoosterOS/2 Warp profile" // {
         default = true;
       };
 
-      lily = lib.mkEnableOption (lib.mdDoc "lily user profile");
+      lily = lib.mkEnableOption "lily user profile";
 
-      adb = lib.mkEnableOption (lib.mdDoc "adb profile");
+      adb = lib.mkEnableOption "adb profile";
 
-      alien = lib.mkEnableOption (lib.mdDoc "alien profile");
+      alien = lib.mkEnableOption "alien profile";
 
-      azure = lib.mkEnableOption (lib.mdDoc "azure profile");
+      azure = lib.mkEnableOption "azure profile";
 
-      bluetooth = lib.mkEnableOption (lib.mdDoc "bluetooth profile");
+      bluetooth = lib.mkEnableOption "bluetooth profile";
 
-      builders = lib.mkEnableOption (lib.mdDoc "builders profile");
+      builders = lib.mkEnableOption "builders profile";
 
-      cad = lib.mkEnableOption (lib.mdDoc "cad profile");
+      cad = lib.mkEnableOption "cad profile";
 
-      ephemeral = lib.mkEnableOption (lib.mdDoc "ephemeral root profile");
+      ephemeral = lib.mkEnableOption "ephemeral root profile";
 
-      fcitx5 = lib.mkEnableOption (lib.mdDoc "fcitx5 profile");
+      fcitx5 = lib.mkEnableOption "fcitx5 profile";
 
-      fish = lib.mkEnableOption (lib.mdDoc "fish profile") // {
+      fish = lib.mkEnableOption "fish profile" // {
         default = true;
       };
 
-      fonts = lib.mkEnableOption (lib.mdDoc "fonts profile");
+      fonts = lib.mkEnableOption "fonts profile";
 
-      fwupd = lib.mkEnableOption (lib.mdDoc "fwupd profile");
+      fwupd = lib.mkEnableOption "fwupd profile";
 
-      gc = lib.mkEnableOption (lib.mdDoc "gc profile");
+      gc = lib.mkEnableOption "gc profile";
 
-      gnupg = lib.mkEnableOption (lib.mdDoc "gnupg profile");
+      gnupg = lib.mkEnableOption "gnupg profile";
 
-      grub = lib.mkEnableOption (lib.mdDoc "grub profile");
+      grub = lib.mkEnableOption "grub profile";
 
-      hibernate = lib.mkEnableOption (lib.mdDoc "hibernate profile");
+      hibernate = lib.mkEnableOption "hibernate profile";
 
-      homebins = lib.mkEnableOption (lib.mdDoc "homebins profile");
+      homebins = lib.mkEnableOption "homebins profile";
 
-      hyfetch = lib.mkEnableOption (lib.mdDoc "hyfetch profile");
+      hyfetch = lib.mkEnableOption "hyfetch profile";
 
-      installer = lib.mkEnableOption (lib.mdDoc "installer profile");
+      installer = lib.mkEnableOption "installer profile";
 
-      ledger = lib.mkEnableOption (lib.mdDoc "ledger profile");
+      ledger = lib.mkEnableOption "ledger profile";
 
-      libvirt = lib.mkEnableOption (lib.mdDoc "libvirt profile");
+      libvirt = lib.mkEnableOption "libvirt profile";
 
-      lsp = lib.mkEnableOption (lib.mdDoc "lsp profile");
+      lsp = lib.mkEnableOption "lsp profile";
 
-      miracast = lib.mkEnableOption (lib.mdDoc "miracast profile");
+      miracast = lib.mkEnableOption "miracast profile";
 
-      music = lib.mkEnableOption (lib.mdDoc "music profile");
+      music = lib.mkEnableOption "music profile";
 
-      neovim = lib.mkEnableOption (lib.mdDoc "neovim profile") // {
+      neovim = lib.mkEnableOption "neovim profile" // {
         default = true;
       };
 
-      networkd = lib.mkEnableOption (lib.mdDoc "networkd profile") // {
+      networkd = lib.mkEnableOption "networkd profile" // {
         default = !config.foosteros.profiles.networkmanager;
         defaultText = lib.literalExpression "!config.foosteros.profiles.networkmanager";
       };
 
-      networkmanager = lib.mkEnableOption (lib.mdDoc "networkmanager profile");
+      networkmanager = lib.mkEnableOption "networkmanager profile";
 
-      nullmailer = lib.mkEnableOption (lib.mdDoc "nullmailer profile");
+      nullmailer = lib.mkEnableOption "nullmailer profile";
 
-      pass = lib.mkEnableOption (lib.mdDoc "pass profile");
+      pass = lib.mkEnableOption "pass profile";
 
-      pipewire = lib.mkEnableOption (lib.mdDoc "pipewire profile");
+      pipewire = lib.mkEnableOption "pipewire profile";
 
-      pki = lib.mkEnableOption (lib.mdDoc "pki profile");
+      pki = lib.mkEnableOption "pki profile";
 
-      playdate = lib.mkEnableOption (lib.mdDoc "playdate profile");
+      playdate = lib.mkEnableOption "playdate profile";
 
-      podman = lib.mkEnableOption (lib.mdDoc "podman profile");
+      podman = lib.mkEnableOption "podman profile";
 
-      printing = lib.mkEnableOption (lib.mdDoc "printing profile");
+      printing = lib.mkEnableOption "printing profile";
 
-      production = lib.mkEnableOption (lib.mdDoc "production profile");
+      production = lib.mkEnableOption "production profile";
 
-      restic = lib.mkEnableOption (lib.mdDoc "restic profile");
+      restic = lib.mkEnableOption "restic profile";
 
-      sd-boot = lib.mkEnableOption (lib.mdDoc "sd-boot profile") // {
+      sd-boot = lib.mkEnableOption "sd-boot profile" // {
         default = !config.foosteros.profiles.grub;
         defaultText = lib.literalExpression "!config.foosteros.profiles.grub";
       };
 
-      secureboot = lib.mkEnableOption (lib.mdDoc "secureboot profile");
+      secureboot = lib.mkEnableOption "secureboot profile";
 
-      sway = lib.mkEnableOption (lib.mdDoc "sway profile");
+      sway = lib.mkEnableOption "sway profile";
 
-      sysrq = lib.mkEnableOption (lib.mdDoc "sysrq profile");
+      sysrq = lib.mkEnableOption "sysrq profile";
 
-      tex = lib.mkEnableOption (lib.mdDoc "tex profile");
+      tex = lib.mkEnableOption "tex profile";
 
-      tkey = lib.mkEnableOption (lib.mdDoc "tkey profile");
+      tkey = lib.mkEnableOption "tkey profile";
 
-      tlp = lib.mkEnableOption (lib.mdDoc "tlp profile");
+      tlp = lib.mkEnableOption "tlp profile";
 
-      tmux = lib.mkEnableOption (lib.mdDoc "tmux profile") // {
+      tmux = lib.mkEnableOption "tmux profile" // {
         default = true;
       };
 
-      udiskie = lib.mkEnableOption (lib.mdDoc "udiskie profile");
+      udiskie = lib.mkEnableOption "udiskie profile";
 
-      vps = lib.mkEnableOption (lib.mdDoc "vps profile");
+      vps = lib.mkEnableOption "vps profile";
 
-      workstation = lib.mkEnableOption (lib.mdDoc "workstation profile");
+      workstation = lib.mkEnableOption "workstation profile";
     };
   };
 

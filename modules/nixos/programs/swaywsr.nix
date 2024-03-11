@@ -1,25 +1,16 @@
 { config, lib, pkgs, ... }:
 
-with lib;
-
 let
   cfg = config.programs.swaywsr;
+  format = pkgs.formats.toml {};
 in
 
 {
   options.programs.swaywsr = {
-    enable = mkOption {
-      type = types.bool;
-      default = false;
-      description = mdDoc ''
-        Whether to enable a user service for swaywsr.
-      '';
-    };
+    enable = lib.mkEnableOption "user service for swaywsr";
 
-    install = mkOption {
-      type = types.bool;
-      default = false;
-      description = mdDoc ''
+    install = lib.mkEnableOption "user service for swaywsr" // {
+      description = ''
         Whether to install a user service for swaywsr.
 
         The service must be manually started for each user with
@@ -28,26 +19,27 @@ in
       '';
     };
 
-    package = mkOption {
-      type = types.package;
-      default = pkgs.swaywsr;
-      defaultText = literalExpression "pkgs.swaywsr";
-      description = mdDoc ''
-        swaywsr derivation to use.
+    package = lib.mkPackageOption pkgs "swaywsr" {};
+
+    targets = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ "wlr-session.target" ];
+      description = ''
+        Systemd user targets to enable swaywsr for.
       '';
     };
 
-    extraConfig = mkOption {
-      type = types.str;
-      default = "";
-      description = mdDoc ''
-        Extra configuration for swaywsr.
+    settings = lib.mkOption {
+      type = lib.types.attrsOf format.type;
+      default = {};
+      description = ''
+        Configuration for swaywsr.
       '';
     };
   };
 
-  config = mkIf (cfg.enable || cfg.install) {
-    environment.etc."swaywsr/config.toml".text = cfg.extraConfig;
+  config = lib.mkIf (cfg.enable || cfg.install) {
+    environment.etc."swaywsr/config.toml".source = format.generate "config.toml" cfg.settings;
 
     systemd.user.services.swaywsr = {
       description = "Sway workspace renamer";
@@ -71,15 +63,15 @@ in
         fi
 
         if [ -n "$swaywsrconfig" ]; then
-          exec ${cfg.package}/bin/swaywsr --config "$swaywsrconfig"
+          exec ${lib.getExe' cfg.package "swaywsr"} --config "$swaywsrconfig"
         else
-          exec ${cfg.package}/bin/swaywsr
+          exec ${lib.getExe' cfg.package "swaywsr"}
         fi
       '';
 
       serviceConfig.Type = "simple";
-    } // optionalAttrs cfg.enable {
-      wantedBy = [ "wlr-session.target" ];
+    } // lib.optionalAttrs cfg.enable {
+      wantedBy = cfg.targets;
     };
 
     environment.systemPackages = [ cfg.package ];

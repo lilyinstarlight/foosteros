@@ -1,65 +1,63 @@
 { config, pkgs, lib, ... }:
 
-with lib;
-
 {
   options.system.devices = {
-    rootDisk = mkOption {
-      type = types.nullOr types.str;
+    rootDisk = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
       default = null;
-      description = mdDoc ''
+      description = ''
         Disk device path to use for root filesystem.
       '';
     };
 
-    coreThermalZone = mkOption {
-      type = types.nullOr types.ints.unsigned;
+    coreThermalZone = lib.mkOption {
+      type = lib.types.nullOr lib.types.ints.unsigned;
       default = null;
-      description = mdDoc ''
+      description = ''
         Primary core temperature to use for configuring status bars and system services.
       '';
     };
 
-    batteryId = mkOption {
-      type = types.nullOr types.ints.unsigned;
+    batteryId = lib.mkOption {
+      type = lib.types.nullOr lib.types.ints.unsigned;
       default = null;
-      description = mdDoc ''
+      description = ''
         Primary battery to use for configuring status bars and system services.
       '';
     };
 
-    wirelessAdapter = mkOption {
-      type = types.nullOr types.str;
+    wirelessAdapter = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
       default = null;
-      description = mdDoc ''
+      description = ''
         Primary wireless adapter to use for configuring status bars and system services.
       '';
     };
 
-    backupAdapter = mkOption {
-      type = types.nullOr types.str;
+    backupAdapter = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
       default = null;
-      description = mdDoc ''
+      description = ''
         Primary adapter to check for backups, to prevent backing up on metered connections.
       '';
     };
 
-    monitorFontSize = mkOption {
-      type = types.ints.positive;
+    monitorFontSize = lib.mkOption {
+      type = lib.types.ints.positive;
       default = 16;
-      description = mdDoc ''
+      description = ''
         What font size is appropriate for the monitor, such as for console fonts or desktop environment config.
       '';
     };
 
-    auxiliary = mkOption {
-      type = types.submoduleWith {
+    auxiliary = lib.mkOption {
+      type = lib.types.submoduleWith {
         modules = [{
-          freeformType = with types; lazyAttrsOf (uniq unspecified);
+          freeformType = lib.types.lazyAttrsOf (lib.types.uniq lib.types.unspecified);
         }];
       };
       default = {};
-      description = mdDoc ''
+      description = ''
         Attribute set of auxiliary options for certain hosts to store configurable devices in.
       '';
     };

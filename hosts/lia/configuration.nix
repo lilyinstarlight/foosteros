@@ -198,23 +198,31 @@
     (lib.filterAttrs (name: value: lib.hasPrefix "networks/" name) config.sops.secrets)
   );
 
-  programs.kanshi.extraConfig = ''
-    profile internal {
-      output eDP-1 enable mode 1920x1080 position 0,0 scale 1
-    }
+  programs.kanshi.profiles = {
+    internal = {
+      outputs = {
+        "eDP-1" = "enable mode 1920x1080 position 0,0 scale 1";
+      };
+    };
 
-    profile desk {
-      output eDP-1 enable mode 1920x1080 position 1920,0 scale 1
-      output "VIZIO, Inc E390i-A1 0x00000101" enable mode 1920x1080 position 0,0 scale 1
-      exec ${pkgs.sway}/bin/swaymsg workspace number 3, move workspace to eDP-1
-      exec ${pkgs.sway}/bin/swaymsg workspace number 1, move workspace to '"VIZIO, Inc E390i-A1 0x00000101"'
-    }
+    desk = {
+      outputs = {
+        "eDP-1" = "enable mode 1920x1080 position 1920,0 scale 1";
+        "VIZIO, Inc E390i-A1 0x00000101" = "enable mode 1920x1080 position 0,0 scale 1";
+      };
+      commands = [
+        "${lib.getExe' pkgs.sway "swaymsg"} workspace number 3, move workspace to eDP-1"
+        "${lib.getExe' pkgs.sway "swaymsg"} workspace number 1, move workspace to '\"VIZIO, Inc E390i-A1 0x00000101\"'"
+      ];
+    };
 
-    profile deskonly {
-      output eDP-1 disable
-      output "VIZIO, Inc E390i-A1 0x00000101" enable mode 1920x1080 position 0,0 scale 1
-    }
-  '';
+    deskonly = {
+      outputs = {
+        "eDP-1" = "disable";
+        "VIZIO, Inc E390i-A1 0x00000101" = "enable mode 1920x1080 position 0,0 scale 1";
+      };
+    };
+  };
 
   services.logind.lidSwitch = "ignore";
 

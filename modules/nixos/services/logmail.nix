@@ -1,75 +1,62 @@
 { config, lib, pkgs, fpkgs ? pkgs, ... }:
 
-with lib;
-
 let
   cfg = config.services.logmail;
 in
 
 {
   options.services.logmail = {
-    enable = mkOption {
-      type = types.bool;
-      default = false;
-      description = mdDoc ''
-        Whether to enable service for logmail.
-      '';
+    enable = lib.mkEnableOption "logmail service";
+
+    package = lib.mkPackageOption fpkgs "logmail" {
+      pkgsText = "fpkgs";
     };
 
-    package = mkOption {
-      type = types.package;
-      default = fpkgs.logmail;
-      defaultText = literalExpression "fpkgs.logmail";
-      description = mdDoc ''
-        logmail derivation to use.
-      '';
-    };
-
-    interval = mkOption {
-      type = types.str;
+    interval = lib.mkOption {
+      type = lib.types.str;
       default = "hourly";
-      description = mdDoc ''
+      description = ''
         Interval to send log digest.
       '';
     };
 
-    timespan = mkOption {
-      type = types.str;
+    timespan = lib.mkOption {
+      type = lib.types.str;
       default = "-1h";
-      description = mdDoc ''
+      description = ''
         Time span of logs to digest.
       '';
     };
 
-    filter = mkOption {
-      type = types.lines;
+    filter = lib.mkOption {
+      type = lib.types.lines;
       default = "";
       example = ''
         systemd\[[0-9]*\]: Failed to start Mark boot as successful.
       '';
-      description = mdDoc ''
+      description = ''
         Filter of items to remove from digests
       '';
     };
 
-    config = mkOption {
-      type = types.str;
-      default = "";
-      example = ''
-        mailfrom="logs@example.com"
-        mailto="logs@example.com"
-        subject="Logs for $(hostname) at $(date +"%F %R")"
-      '';
-      description = mdDoc ''
+    settings = lib.mkOption {
+      type = lib.types.attrsOf lib.types.str;
+      default = {};
+      example = {
+        mailfrom = "logs@example.com";
+        mailto = "logs@example.com";
+        subject = "Logs for host at %F %R";
+      };
+      description = ''
         Basic configuration for logmail.
       '';
     };
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     environment.etc.logfilter.text = cfg.filter;
 
-    environment.etc."default/logmail".text = cfg.config;
+    environment.etc."default/logmail".text = lib.toShellVars cfg.settings;
 
     systemd.services.logmail = {
       description = "Email logged errors and failed units from the last hour";

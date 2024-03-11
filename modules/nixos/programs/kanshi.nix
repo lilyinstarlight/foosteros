@@ -1,25 +1,48 @@
 { config, pkgs, lib, ... }:
 
-with lib;
-
 let
   cfg = config.programs.kanshi;
+
+  mkProfile = name: profile: ''
+    profile ${name} {
+    ${lib.concatLines (
+      (lib.mapAttrsToList (output: options: "  output \"${output}\" ${options}") profile.outputs)
+      ++ (map (command: "  exec ${command}") profile.commands)
+    )}
+    }
+  '';
+
+  profileModule = { ... }: {
+    options = {
+      outputs = lib.mkOption {
+        type = lib.types.attrsOf lib.types.str;
+        default = {};
+        example = {
+          "eDP-1" = "enable mode 2256x1504 position 0,0 scale 1.5";
+        };
+        description = "Outputs to configure.";
+      };
+
+      commands = lib.mkOption {
+        type = lib.types.listOf lib.types.str;
+        default = [];
+        example = lib.literalExpression ''
+          [
+            "''${lib.getExe' pkgs.sway "swaymsg"} workspace number 1, move workspace to eDP-1"
+          ]
+        '';
+        description = "Commands to run when switching to output.";
+      };
+    };
+  };
 in
 
 {
   options.programs.kanshi = {
-    enable = mkOption {
-      type = types.bool;
-      default = false;
-      description = mdDoc ''
-        Whether to enable a user service for kanshi.
-      '';
-    };
+    enable = lib.mkEnableOption "user service for kanshi";
 
-    install = mkOption {
-      type = types.bool;
-      default = false;
-      description = mdDoc ''
+    install = lib.mkEnableOption "user service for kanshi" // {
+      description = ''
         Whether to install a user service for kanshi.
 
         The service must be manually started for each user with
@@ -28,34 +51,38 @@ in
       '';
     };
 
-    package = mkOption {
-      type = types.package;
-      default = pkgs.kanshi;
-      defaultText = literalExpression "pkgs.kanshi";
-      description = mdDoc ''
-        kanshi derivation to use.
-      '';
-    };
+    package = lib.mkPackageOption pkgs "kanshi" {};
 
-    targets = mkOption {
-      type = types.listOf types.str;
+    targets = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
       default = [ "wlr-session.target" ];
-      description = mdDoc ''
+      description = ''
         Systemd user targets to enable kanshi for.
       '';
     };
 
-    extraConfig = mkOption {
-      type = types.str;
+    profiles = lib.mkOption {
+      type = lib.types.attrsOf (lib.types.submodule profileModule);
+      default = {};
+      description = ''
+        Profiles for kanshi.
+      '';
+    };
+
+    extraConfig = lib.mkOption {
+      type = lib.types.lines;
       default = "";
-      description = mdDoc ''
-        Extra configuration for kanshi.
+      description = ''
+        Extra configurations for kanshi.
       '';
     };
   };
 
-  config = mkIf (cfg.enable || cfg.install) {
-    environment.etc."kanshi/config".text = cfg.extraConfig;
+  config = lib.mkIf (cfg.enable || cfg.install) {
+    environment.etc."kanshi/config".text = ''
+      ${lib.concatLines (lib.mapAttrsToList mkProfile cfg.profiles)}
+      ${cfg.extraConfig}
+    '';
 
     systemd.user.services.kanshi = {
       description = "Wayland display configuration daemon";
@@ -79,14 +106,14 @@ in
         fi
 
         if [ -n "$kanshiconfig" ]; then
-          exec ${cfg.package}/bin/kanshi --config "$kanshiconfig"
+          exec ${lib.getExe cfg.package} --config "$kanshiconfig"
         else
-          exec ${cfg.package}/bin/kanshi
+          exec ${lib.getExe cfg.package}
         fi
       '';
 
       serviceConfig.Type = "simple";
-    } // optionalAttrs cfg.enable {
+    } // lib.optionalAttrs cfg.enable {
       wantedBy = cfg.targets;
     };
   };

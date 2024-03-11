@@ -1,27 +1,25 @@
 { config, pkgs, lib, ... }:
 
-with lib;
-
 let
   cfg = config.hardware.tkey;
 in
 
 {
   options.hardware.tkey = {
-    enable = mkEnableOption ''
+    enable = lib.mkEnableOption ''
       Enable udev rules for interfacing with the TKey-1 USB security token
     '';
 
-    group = mkOption {
-      type = types.nullOr types.str;
+    group = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
       default = null;
-      description = mdDoc ''
+      description = ''
         Grant access to TKey-1 devices to users in this group.
       '';
     };
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     services.udev.packages = [
       (pkgs.writeTextFile {
         name = "51-tkey.rules";

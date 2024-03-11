@@ -1,6 +1,4 @@
-{ config, lib, pkgs, ... }:
-
-with lib;
+{ config, lib, pkgs, fpkgs ? pkgs, ... }:
 
 let
   cfg = config.programs.tkey-ssh-agent;
@@ -8,18 +6,10 @@ in
 
 {
   options.programs.tkey-ssh-agent = {
-    enable = mkOption {
-      type = types.bool;
-      default = false;
-      description = mdDoc ''
-        Whether to enable a user service for tkey-ssh-agent.
-      '';
-    };
+    enable = lib.mkEnableOption "user service for tkey-ssh-agent";
 
-    install = mkOption {
-      type = types.bool;
-      default = false;
-      description = mdDoc ''
+    install = lib.mkEnableOption "user service for tkey-ssh-agent" // {
+      description = ''
         Whether to install a user service for tkey-ssh-agent.
 
         The service must be manually started for each user with
@@ -28,44 +18,37 @@ in
       '';
     };
 
-    package = mkOption {
-      type = types.package;
-      default = pkgs.tkey-ssh-agent;
-      defaultText = literalExpression "pkgs.tkey-ssh-agent";
-      description = mdDoc ''
-        tkey-ssh-agent derivation to use.
-      '';
+    package = lib.mkPackageOption fpkgs "tkey-ssh-agent" {
+      pkgsText = "fpkgs";
     };
 
-    socket = mkOption {
-      type = types.str;
+    socket = lib.mkOption {
+      type = lib.types.str;
       default = "\${XDG_RUNTIME_DIR}/ssh-agent";
-      description = mdDoc ''
+      description = ''
         Socket path for SSH agent to listen on.
       '';
     };
 
-    userSuppliedSecret = mkOption {
-      type = types.bool;
+    userSuppliedSecret = lib.mkOption {
+      type = lib.types.bool;
       default = false;
-      description = mdDoc ''
+      description = ''
         Whether to enable typing a User Supplied Secret for SSH keys.
       '';
     };
   };
 
-  config = mkIf (cfg.enable || cfg.install) {
+  config = lib.mkIf (cfg.enable || cfg.install) {
     systemd.user.services.tkey-ssh-agent = {
       description = "TKey SSH Agent";
       partOf = [ "default.target" ];
 
-      path = [ pkgs.sway ];
-
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${cfg.package}/bin/tkey-ssh-agent ${lib.optionalString cfg.userSuppliedSecret "--uss ${lib.optionalString (config.programs.gnupg.agent.settings ? pinentry-program) "--pinentry ${config.programs.gnupg.agent.settings.pinentry-program}"}"} --agent-socket ${cfg.socket}";
+        ExecStart = "${lib.getExe cfg.package} ${lib.optionalString cfg.userSuppliedSecret "--uss ${lib.optionalString (config.programs.gnupg.agent.settings ? pinentry-program) "--pinentry ${config.programs.gnupg.agent.settings.pinentry-program}"}"} --agent-socket ${cfg.socket}";
       };
-    } // optionalAttrs cfg.enable {
+    } // lib.optionalAttrs cfg.enable {
       wantedBy = [ "default.target" ];
     };
 
