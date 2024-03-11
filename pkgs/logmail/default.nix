@@ -12,13 +12,13 @@
 
 stdenvNoCC.mkDerivation {
   pname = "logmail";
-  version = "unstable-2021-12-02";
+  version = "unstable-2024-03-11";
 
   src = fetchFromGitHub {
     owner = "lilyinstarlight";
     repo = "logmail";
-    rev = "0912b816f72a53b7b52c436d1c7e9505c811787a";
-    hash = "sha256-JdBCa1NQuFQL+dOPQC1mWcQlhy7D1TIn3AZPwhudkro=";
+    rev = "13eaba247f305c52dde0ea3627f44b6671ba4a1f";
+    hash = "sha256-iU1qg6qJVAd1vgz1S97O8XSvClfI747QTWLJ6K/2Hq8=";
   };
 
   strictDeps = true;
