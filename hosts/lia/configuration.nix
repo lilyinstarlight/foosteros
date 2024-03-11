@@ -240,11 +240,11 @@
 
   services.logmail = {
     enable = true;
-    config = ''
-      mailfrom="logs@fooster.network"
-      mailto="logs@fooster.network"
-      subject="Logs for $(hostname) at $(date +"%F %R")"
-    '';
+    settings = {
+      mailfrom = "logs@fooster.network";
+      mailto = "logs@fooster.network";
+      subject = "Logs for %h at %F %R";
+    };
     filter = ''
       kernel: DMAR: \[Firmware Bug\]: No firmware reserved region can cover this RMRR \[0x00000000cd800000-0x00000000cfffffff\], contact BIOS vendor for fixes
       kernel: ACPI Error: Needed type \[Reference\], found \[Integer\] [0-9a-f]\{16\} ([0-9]\{8\}/exresop-[0-9]*)
