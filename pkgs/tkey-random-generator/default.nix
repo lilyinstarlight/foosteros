@@ -57,5 +57,6 @@ buildGoModule rec {
     license = licenses.gpl2Only;
     platforms = platforms.all;
     maintainers = with maintainers; [ lilyinstarlight ];
+    mainProgram = "tkey-random-generator";
   };
 }

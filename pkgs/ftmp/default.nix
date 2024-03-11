@@ -1,4 +1,10 @@
-{ stdenvNoCC, lib, wrapPython, fetchFromGitHub, httpx, runCommand, gitUpdater }:
+{ lib
+, stdenvNoCC
+, wrapPython
+, fetchFromGitHub
+, httpx
+, gitUpdater
+}:
 
 stdenvNoCC.mkDerivation rec {
   pname = "ftmp";
@@ -35,5 +41,6 @@ stdenvNoCC.mkDerivation rec {
     homepage = "https://github.com/lilyinstarlight/tmp";
     license = licenses.mit;
     maintainers = with maintainers; [ lilyinstarlight ];
+    mainProgram = "ftmp";
   };
 }

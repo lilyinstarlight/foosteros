@@ -1,12 +1,19 @@
-{ stdenvNoCC, lib, fetchFromGitHub, makeWrapper, iproute2, curl, unstableGitUpdater }:
+{ lib
+, stdenvNoCC
+, fetchFromGitHub
+, makeWrapper
+, iproute2
+, curl
+, unstableGitUpdater
+}:
 
-stdenvNoCC.mkDerivation rec {
+stdenvNoCC.mkDerivation {
   pname = "dnsimple-ddns";
   version = "unstable-2021-12-02";
 
   src = fetchFromGitHub {
     owner = "lilyinstarlight";
-    repo = pname;
+    repo = "dnsimple-ddns";
     rev = "d892881ae40d41b439c81f58d86b9a47531c58f7";
     hash = "sha256-GQl3X32sWe9WzQDUjHv8q5eoe49v7m5PZLJffrjUAzA=";
   };

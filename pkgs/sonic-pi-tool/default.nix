@@ -1,4 +1,19 @@
-{ lib, stdenv, fetchFromGitHub, makePythonPath, makeWrapper, python3, click, oscpy, psutil, sonic-pi, ruby, erlang, bash, supercollider-with-sc3-plugins, jack2, unstableGitUpdater }:
+{ lib
+, stdenv
+, fetchFromGitHub
+, makePythonPath
+, makeWrapper
+, python3
+, click
+, oscpy
+, psutil
+, sonic-pi
+, ruby
+, erlang
+, supercollider-with-sc3-plugins
+, jack2
+, unstableGitUpdater
+}:
 
 let
   pythonPath = makePythonPath [
@@ -17,13 +32,13 @@ let
   ];
 in
 
-stdenv.mkDerivation rec {
+stdenv.mkDerivation {
   pname = "sonic-pi-tool";
   version = "unstable-2021-03-07";
 
   src = fetchFromGitHub {
     owner = "emlyn";
-    repo = pname;
+    repo = "sonic-pi-tool";
     #rev = "v${version}";
     rev = "b955369294b7669b2706b26d388ec2c2a9d0d3a2";
     hash = "sha256-HgJSZGjm0Uwu2TTgv/FMTRKLUdT8ILNaiL4wKJ1RyBs=";
@@ -56,8 +71,8 @@ stdenv.mkDerivation rec {
     patchShebangs $out/bin
 
     wrapProgram $out/bin/sonic-pi-tool \
-      --prefix PYTHONPATH : "${pythonPath}" \
-      --prefix PATH : "${binPath}"
+      --prefix PYTHONPATH : ${pythonPath} \
+      --prefix PATH : ${binPath}
   '';
 
   installCheckPhase = "$out/bin/sonic-pi-tool --help";
@@ -70,5 +85,6 @@ stdenv.mkDerivation rec {
     license = licenses.mpl20;
     maintainers = with maintainers; [ lilyinstarlight ];
     platforms = [ "x86_64-linux" "i686-linux" "aarch64-linux" "armv7l-linux" ];
+    mainProgram = "sonic-pi-tool";
   };
 }

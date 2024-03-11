@@ -1,12 +1,16 @@
-{ stdenvNoCC, lib, fetchFromGitHub, unstableGitUpdater }:
+{ lib
+, stdenvNoCC
+, fetchFromGitHub
+, unstableGitUpdater
+}:
 
-stdenvNoCC.mkDerivation rec {
+stdenvNoCC.mkDerivation {
   pname = "google-10000-english";
   version = "unstable-2021-06-22";
 
   src = fetchFromGitHub {
     owner = "first20hours";
-    repo = pname;
+    repo = "google-10000-english";
     rev = "d0736d492489198e4f9d650c7ab4143bc14c1e9e";
     hash = "sha256-buSJiSOL/TRNq83XXJA1FxUXxsPnJQXkSeOMTTH2tIo=";
   };

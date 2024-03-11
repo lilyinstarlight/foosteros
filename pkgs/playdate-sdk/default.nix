@@ -1,4 +1,37 @@
-{ lib, stdenv, fetchurl, makeDesktopItem, copyDesktopItems, makeWrapper, wrapGAppsHook, autoPatchelfHook, libpng, zlib, udev, gtk3, pango, cairo, gdk-pixbuf, glib, libX11, webkitgtk, libglvnd, alsa-lib, libXext, libXcursor, libXinerama, libXi, libXrandr, libXScrnSaver, libXxf86vm, libxkbcommon, wayland, runtimeShell, coreutils, gnugrep, gnused }:
+{ lib
+, stdenv
+, fetchurl
+, makeDesktopItem
+, copyDesktopItems
+, makeWrapper
+, wrapGAppsHook
+, autoPatchelfHook
+, libpng
+, zlib
+, udev
+, gtk3
+, pango
+, cairo
+, gdk-pixbuf
+, glib
+, libX11
+, webkitgtk
+, libglvnd
+, alsa-lib
+, libXext
+, libXcursor
+, libXinerama
+, libXi
+, libXrandr
+, libXScrnSaver
+, libXxf86vm
+, libxkbcommon
+, wayland
+, runtimeShell
+, coreutils
+, gnugrep
+, gnused
+}:
 
 let
   simLibDeps = [

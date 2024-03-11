@@ -1,4 +1,15 @@
-{ stdenvNoCC, lib, fetchFromGitHub, makeWrapper, grub2_efi, grub2, dosfstools, dialog, ntfs3g, p7zip, runCommand, gitUpdater }:
+{ lib
+, stdenvNoCC
+, fetchFromGitHub
+, makeWrapper
+, grub2_efi
+, grub2
+, dosfstools
+, dialog
+, ntfs3g
+, p7zip
+, gitUpdater
+}:
 
 stdenvNoCC.mkDerivation rec {
   pname = "mkwin";
@@ -6,7 +17,7 @@ stdenvNoCC.mkDerivation rec {
 
   src = fetchFromGitHub {
     owner = "lilyinstarlight";
-    repo = pname;
+    repo = "mkwin";
     rev = "v${version}";
     hash = "sha256-WrxDlrHKW1gwXQVc7pKOtqMDEbXUSRAWWR2C8VEF70Q=";
   };
@@ -41,5 +52,6 @@ stdenvNoCC.mkDerivation rec {
     license = licenses.mit;
     maintainers = with maintainers; [ lilyinstarlight ];
     platforms = [ "x86_64-linux" "i686-linux" "aarch64-linux" "armv7l-linux" ];
+    mainProgram = "mkwin";
   };
 }

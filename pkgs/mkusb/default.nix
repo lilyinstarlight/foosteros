@@ -1,4 +1,14 @@
-{ stdenvNoCC, lib, fetchFromGitHub, makeWrapper, grub2_efi, grub2, dosfstools, dialog, syslinux, runCommand, gitUpdater }:
+{ lib
+, stdenvNoCC
+, fetchFromGitHub
+, makeWrapper
+, grub2_efi
+, grub2
+, dosfstools
+, dialog
+, syslinux
+, gitUpdater
+}:
 
 stdenvNoCC.mkDerivation rec {
   pname = "mkusb";
@@ -6,7 +16,7 @@ stdenvNoCC.mkDerivation rec {
 
   src = fetchFromGitHub {
     owner = "lilyinstarlight";
-    repo = pname;
+    repo = "mkusb";
     rev = "v${version}";
     hash = "sha256-TyL1TCJ/Z/Ko1b0GJdhoLvBbqHhFDpY49rQxDBX0zjw=";
   };
@@ -42,5 +52,6 @@ stdenvNoCC.mkDerivation rec {
     license = licenses.mit;
     maintainers = with maintainers; [ lilyinstarlight ];
     platforms = [ "x86_64-linux" "i686-linux" "aarch64-linux" ];
+    mainProgram = "mkusb";
   };
 }

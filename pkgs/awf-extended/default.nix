@@ -7,6 +7,7 @@
 , gtk2
 , gtk3
 , gtk4
+, gitUpdater
 }:
 
 stdenv.mkDerivation rec {
@@ -34,6 +35,8 @@ stdenv.mkDerivation rec {
     mv LICENSE COPYING
   '';
 
+  passthru.updateScript = gitUpdater {};
+
   meta = with lib; {
     description = "A Widget Factory (extended)";
     longDescription = ''
@@ -46,5 +49,6 @@ stdenv.mkDerivation rec {
     license = licenses.gpl3Plus;
     platforms = platforms.all;
     maintainers = with maintainers; [ lilyinstarlight ];
+    mainProgram = "awf-gtk4";
   };
 }

@@ -1,4 +1,10 @@
-{ stdenvNoCC, lib, wrapPython, fetchFromGitHub, httpx, runCommand, gitUpdater }:
+{ lib
+, stdenvNoCC
+, wrapPython
+, fetchFromGitHub
+, httpx
+, gitUpdater
+}:
 
 stdenvNoCC.mkDerivation rec {
   pname = "furi";
@@ -35,5 +41,6 @@ stdenvNoCC.mkDerivation rec {
     homepage = "https://github.com/lilyinstarlight/uri";
     license = licenses.mit;
     maintainers = with maintainers; [ lilyinstarlight ];
+    mainProgram = "furi";
   };
 }

@@ -44,5 +44,6 @@ buildGoModule rec {
     platforms = platforms.all;
     maintainers = with maintainers; [ lilyinstarlight ];
     sourceProvenance = with sourceTypes; [ fromSource binaryFirmware ];
+    mainProgram = "tkey-verification";
   };
 }

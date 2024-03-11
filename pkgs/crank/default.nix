@@ -1,12 +1,23 @@
-{ lib, runCommand, rustPlatform, fetchFromGitHub, makeWrapper, cargo, gcc-arm-embedded, playdate-sdk, xdg-utils, writeScript, unstableGitUpdater }:
+{ lib
+, rustPlatform
+, runCommand
+, fetchFromGitHub
+, makeWrapper
+, cargo
+, gcc-arm-embedded
+, playdate-sdk
+, xdg-utils
+, writeScript
+, unstableGitUpdater
+}:
 
-rustPlatform.buildRustPackage rec {
+rustPlatform.buildRustPackage {
   pname = "crank";
   version = "unstable-2023-09-16";
 
   src = fetchFromGitHub {
     owner = "pd-rs";
-    repo = pname;
+    repo = "crank";
     rev = "f46cda4a2dd028d5580d89268975fcb21f6f0eb5";
     hash = "sha256-+L1/ZwMPV7HqTK9o3Tczj2KBhBrXNM/5LBLRSqfipxI=";
   };
@@ -98,5 +109,6 @@ rustPlatform.buildRustPackage rec {
     homepage = "https://github.com/rtsuk/crank";
     maintainers = with maintainers; [ lilyinstarlight ];
     platforms = platforms.linux;
+    mainProgram = "crank";
   };
 }

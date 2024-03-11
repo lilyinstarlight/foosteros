@@ -1,12 +1,19 @@
-{ stdenvNoCC, lib, fetchFromGitHub, makeWrapper, hostname, sendmailPath ? "/run/wrappers/bin/sendmail", unstableGitUpdater }:
+{ lib
+, stdenvNoCC
+, fetchFromGitHub
+, makeWrapper
+, hostname
+, sendmailPath ? "/run/wrappers/bin/sendmail"
+, unstableGitUpdater
+}:
 
-stdenvNoCC.mkDerivation rec {
+stdenvNoCC.mkDerivation {
   pname = "logmail";
   version = "unstable-2021-12-02";
 
   src = fetchFromGitHub {
     owner = "lilyinstarlight";
-    repo = pname;
+    repo = "logmail";
     rev = "0912b816f72a53b7b52c436d1c7e9505c811787a";
     hash = "sha256-JdBCa1NQuFQL+dOPQC1mWcQlhy7D1TIn3AZPwhudkro=";
   };
@@ -32,7 +39,7 @@ stdenvNoCC.mkDerivation rec {
     cp logmail $out/bin/logmail
 
     wrapProgram $out/bin/logmail \
-      --prefix PATH : "${lib.makeBinPath [ hostname ]}"
+      --prefix PATH : ${lib.makeBinPath [ hostname ]}
   '';
 
   passthru.updateScript = unstableGitUpdater {};

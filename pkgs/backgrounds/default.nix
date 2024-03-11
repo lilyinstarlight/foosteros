@@ -1,6 +1,16 @@
-{ stdenvNoCC, lib, fetchzip, sway, runtimeShell, findutils, jq, gnugrep, nitrogen, xrandr }:
+{ lib
+, stdenvNoCC
+, fetchzip
+, sway
+, runtimeShell
+, findutils
+, jq
+, gnugrep
+, nitrogen
+, xrandr
+}:
 
-stdenvNoCC.mkDerivation rec {
+stdenvNoCC.mkDerivation {
   pname = "backgrounds";
   version = "20210525";
 
@@ -27,9 +37,9 @@ stdenvNoCC.mkDerivation rec {
     fi
 
     if [ -n "\$SWAYSOCK" ]; then
-      ${sway}/bin/swaymsg output '*' background "\$(${findutils}/bin/find "\$backgrounds"/"\$(${sway}/bin/swaymsg -t get_outputs | ${jq}/bin/jq '.[0].current_mode.height')" -type f | shuf -n1)" fill
+      ${lib.getExe' sway "swaymsg"} output '*' background "\$(${lib.getExe findutils} "\$backgrounds"/"\$(${lib.getExe' sway "swaymsg"} -t get_outputs | ${lib.getExe jq} '.[0].current_mode.height')" -type f | shuf -n1)" fill
     else
-      ${nitrogen}/bin/nitrogen --set-zoom-fill --random "\$backgrounds"/"\$(${xrandr}/bin/xrandr --screen 0 | ${gnugrep}/bin/grep -o 'current [0-9]\+ x [0-9]\+' | cut -d' ' -f4)"
+      ${lib.getExe nitrogen} --set-zoom-fill --random "\$backgrounds"/"\$(${lib.getExe' xrandr "xrandr"} --screen 0 | ${lib.getExe gnugrep} -o 'current [0-9]\+ x [0-9]\+' | cut -d' ' -f4)"
     fi
     EOF
     chmod +x "$out/bin/setbg"
