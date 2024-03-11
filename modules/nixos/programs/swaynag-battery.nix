@@ -5,6 +5,8 @@ let
 in
 
 {
+  meta.maintainers = with lib.maintainers; [ lilyinstarlight ];
+
   options.programs.swaynag-battery = {
     enable = lib.mkEnableOption "user service for swaynag-battery";
 

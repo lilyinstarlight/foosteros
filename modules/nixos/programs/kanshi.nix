@@ -38,6 +38,8 @@ let
 in
 
 {
+  meta.maintainers = with lib.maintainers; [ lilyinstarlight ];
+
   options.programs.kanshi = {
     enable = lib.mkEnableOption "user service for kanshi";
 

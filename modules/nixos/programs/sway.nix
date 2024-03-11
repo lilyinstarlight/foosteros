@@ -5,6 +5,8 @@ let
 in
 
 {
+  meta.maintainers = with lib.maintainers; [ lilyinstarlight ];
+
   config = lib.mkIf cfg.enable {
     environment.etc."sway/config".text = lib.mkDefault ''
       ### systemd integration

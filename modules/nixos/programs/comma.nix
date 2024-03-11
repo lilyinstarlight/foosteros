@@ -5,6 +5,8 @@ let
 in
 
 {
+  meta.maintainers = with lib.maintainers; [ lilyinstarlight ];
+
   options.programs.comma = {
     enable = lib.mkEnableOption "comma, a wrapper to run software without installing it";
 

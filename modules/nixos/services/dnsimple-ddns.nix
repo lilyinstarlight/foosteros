@@ -5,6 +5,8 @@ let
 in
 
 {
+  meta.maintainers = with lib.maintainers; [ lilyinstarlight ];
+
   options.services.dnsimple-ddns = {
     enable = lib.mkEnableOption "dnsimple-ddns service";
 

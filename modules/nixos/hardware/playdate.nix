@@ -5,6 +5,8 @@ let
 in
 
 {
+  meta.maintainers = with lib.maintainers; [ lilyinstarlight ];
+
   options.hardware.playdate = {
     enable = lib.mkEnableOption ''
       Enable udev rules for interfacing with the Playdate handheld console
