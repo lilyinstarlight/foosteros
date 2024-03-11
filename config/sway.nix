@@ -60,7 +60,7 @@ lib.mkIf config.foosteros.profiles.sway {
           colors.webpage.preferred_color_scheme = "dark";
           content.pdfjs = true;
           downloads.location.prompt = false;
-          editor.command = ["${pkgs.alacritty}/bin/alacritty" "-e" "vi" "{}"];
+          editor.command = ["alacritty" "-e" "vi" "{}"];
           fonts = {
             default_family = "monospace";
             default_size = "12pt";
@@ -76,7 +76,7 @@ lib.mkIf config.foosteros.profiles.sway {
       programs.rofi = {
         enable = true;
         package = pkgs.rofi-wayland;
-        terminal = "${pkgs.alacritty}/bin/alacritty";
+        terminal = "alacritty";
         theme = let
           inherit (config.lib.formats.rasi) mkLiteral;
         in {
@@ -259,6 +259,7 @@ lib.mkIf config.foosteros.profiles.sway {
 
   environment.systemPackages = with pkgs; [
     qutebrowser
+    alacritty
     imv mupdf mpv
   ];
 
@@ -441,10 +442,10 @@ lib.mkIf config.foosteros.profiles.sway {
     "sway/config.d/fooster".text = lib.mkDefault ''
       ### variables
       set $mod mod4
-      set $term bash -c "exec ${pkgs.systemd}/bin/systemd-run --user --scope --unit='app-alacritty-$RANDOM' -p CollectMode=inactive-or-failed ${pkgs.alacritty}/bin/alacritty"
-      set $run ${pkgs.rofi-wayland}/bin/rofi -show drun -run-command "${pkgs.systemd}/bin/systemd-run --user --scope --unit='app-{cmd}-$RANDOM' -p CollectMode=inactive-or-failed {cmd}"
-      set $lock ${pkgs.systemd}/bin/loginctl lock-session
-      set $browser bash -c "exec ${pkgs.systemd}/bin/systemd-run --user --scope --unit='app-qutebrowser-$RANDOM' -p CollectMode=inactive-or-failed ${pkgs.qutebrowser}/bin/qutebrowser"
+      set $term alacritty
+      set $run ${lib.getExe pkgs.rofi-wayland} -show drun
+      set $lock ${lib.getExe' pkgs.systemd "loginctl"} lock-session
+      set $browser qutebrowser
 
       ### global settings
       font monospace 12
@@ -570,32 +571,32 @@ lib.mkIf config.foosteros.profiles.sway {
       bindsym $mod+t mode "resize"
 
       #### buttons
-      bindsym xf86monbrightnessdown exec ${pkgs.brightnessctl}/bin/brightnessctl -c backlight set 10%-
-      bindsym xf86monbrightnessup exec ${pkgs.brightnessctl}/bin/brightnessctl -c backlight set 10%+
-      bindsym shift+xf86monbrightnessdown exec ${pkgs.brightnessctl}/bin/brightnessctl -c backlight set 1%-
-      bindsym shift+xf86monbrightnessup exec ${pkgs.brightnessctl}/bin/brightnessctl -c backlight set 1%+
-      bindsym $mod+xf86monbrightnessdown exec ${pkgs.brightnessctl}/bin/brightnessctl -c backlight set 0%
-      bindsym $mod+xf86monbrightnessup exec ${pkgs.brightnessctl}/bin/brightnessctl -c backlight set 100%
+      bindsym xf86monbrightnessdown exec ${lib.getExe pkgs.brightnessctl} -c backlight set 10%-
+      bindsym xf86monbrightnessup exec ${lib.getExe pkgs.brightnessctl} -c backlight set 10%+
+      bindsym shift+xf86monbrightnessdown exec ${lib.getExe pkgs.brightnessctl} -c backlight set 1%-
+      bindsym shift+xf86monbrightnessup exec ${lib.getExe pkgs.brightnessctl} -c backlight set 1%+
+      bindsym $mod+xf86monbrightnessdown exec ${lib.getExe pkgs.brightnessctl} -c backlight set 0%
+      bindsym $mod+xf86monbrightnessup exec ${lib.getExe pkgs.brightnessctl} -c backlight set 100%
 
-      bindsym xf86kbdbrightnessdown exec ${pkgs.brightnessctl}/bin/brightnessctl -c leds set 10%-
-      bindsym xf86kbdbrightnessup exec ${pkgs.brightnessctl}/bin/brightnessctl -c leds set 10%+
-      bindsym shift+xf86kbdbrightnessdown exec ${pkgs.brightnessctl}/bin/brightnessctl -c leds set 1%-
-      bindsym shift+xf86kbdbrightnessup exec ${pkgs.brightnessctl}/bin/brightnessctl -c leds set 1%+
-      bindsym $mod+xf86kbdbrightnessdown exec ${pkgs.brightnessctl}/bin/brightnessctl -c leds set 0%
-      bindsym $mod+xf86kbdbrightnessup exec ${pkgs.brightnessctl}/bin/brightnessctl -c leds set 100%
+      bindsym xf86kbdbrightnessdown exec ${lib.getExe pkgs.brightnessctl} -c leds set 10%-
+      bindsym xf86kbdbrightnessup exec ${lib.getExe pkgs.brightnessctl} -c leds set 10%+
+      bindsym shift+xf86kbdbrightnessdown exec ${lib.getExe pkgs.brightnessctl} -c leds set 1%-
+      bindsym shift+xf86kbdbrightnessup exec ${lib.getExe pkgs.brightnessctl} -c leds set 1%+
+      bindsym $mod+xf86kbdbrightnessdown exec ${lib.getExe pkgs.brightnessctl} -c leds set 0%
+      bindsym $mod+xf86kbdbrightnessup exec ${lib.getExe pkgs.brightnessctl} -c leds set 100%
 
-      bindsym xf86audiolowervolume exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume 0 -10%
-      bindsym xf86audioraisevolume exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume 0 +10%
-      bindsym shift+xf86audiolowervolume exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume 0 -1%
-      bindsym shift+xf86audioraisevolume exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume 0 +1%
-      bindsym $mod+xf86audiolowervolume exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume 0 0%
-      bindsym $mod+xf86audioraisevolume exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume 0 100%
-      bindsym xf86audiomute exec ${pkgs.pulseaudio}/bin/pactl set-sink-mute 0 toggle
+      bindsym xf86audiolowervolume exec ${lib.getExe' pkgs.pulseaudio "pactl"} set-sink-volume 0 -10%
+      bindsym xf86audioraisevolume exec ${lib.getExe' pkgs.pulseaudio "pactl"} set-sink-volume 0 +10%
+      bindsym shift+xf86audiolowervolume exec ${lib.getExe' pkgs.pulseaudio "pactl"} set-sink-volume 0 -1%
+      bindsym shift+xf86audioraisevolume exec ${lib.getExe' pkgs.pulseaudio "pactl"} set-sink-volume 0 +1%
+      bindsym $mod+xf86audiolowervolume exec ${lib.getExe' pkgs.pulseaudio "pactl"} set-sink-volume 0 0%
+      bindsym $mod+xf86audioraisevolume exec ${lib.getExe' pkgs.pulseaudio "pactl"} set-sink-volume 0 100%
+      bindsym xf86audiomute exec ${lib.getExe' pkgs.pulseaudio "pactl"} set-sink-mute 0 toggle
 
-      bindsym xf86audioplay exec ${pkgs.playerctl}/bin/playerctl play-pause
-      bindsym xf86audiostop exec ${pkgs.playerctl}/bin/playerctl stop
-      bindsym xf86audioprev exec ${pkgs.playerctl}/bin/playerctl previous
-      bindsym xf86audionext exec ${pkgs.playerctl}/bin/playerctl next
+      bindsym xf86audioplay exec ${lib.getExe pkgs.playerctl} play-pause
+      bindsym xf86audiostop exec ${lib.getExe pkgs.playerctl} stop
+      bindsym xf86audioprev exec ${lib.getExe pkgs.playerctl} previous
+      bindsym xf86audionext exec ${lib.getExe pkgs.playerctl} next
 
       #### applications
       bindsym $mod+semicolon exec $term
@@ -604,14 +605,14 @@ lib.mkIf config.foosteros.profiles.sway {
       bindsym $mod+a exec $browser
 
       #### shortcuts
-      bindsym $mod+print exec ${pkgs.sway-contrib.grimshot}/bin/grimshot save output - | ${pkgs.swappy}/bin/swappy -f -
-      bindsym $mod+shift+print exec ${pkgs.sway-contrib.grimshot}/bin/grimshot save area - | ${pkgs.swappy}/bin/swappy -f -
-      bindsym $mod+ctrl+print exec ${pkgs.sway-contrib.grimshot}/bin/grimshot save window - | ${pkgs.swappy}/bin/swappy -f -
-      bindsym $mod+alt+print exec ${pkgs.sway-contrib.grimshot}/bin/grimshot save screen - | ${pkgs.swappy}/bin/swappy -f -
-      bindsym $mod+bracketright exec ${pkgs.mako}/bin/makoctl dismiss -g
-      bindsym $mod+shift+bracketright exec ${pkgs.mako}/bin/makoctl dismiss -a
-      bindsym $mod+ctrl+bracketright exec ${pkgs.mako}/bin/makoctl restore
-      bindsym $mod+bracketleft exec ${pkgs.mako}/bin/makoctl invoke
+      bindsym $mod+print exec ${lib.getExe pkgs.sway-contrib.grimshot} save output - | ${lib.getExe pkgs.swappy} -f -
+      bindsym $mod+shift+print exec ${lib.getExe pkgs.sway-contrib.grimshot} save area - | ${lib.getExe pkgs.swappy} -f -
+      bindsym $mod+ctrl+print exec ${lib.getExe pkgs.sway-contrib.grimshot} save window - | ${lib.getExe pkgs.swappy} -f -
+      bindsym $mod+alt+print exec ${lib.getExe pkgs.sway-contrib.grimshot} save screen - | ${lib.getExe pkgs.swappy} -f -
+      bindsym $mod+bracketright exec ${lib.getExe pkgs.mako} dismiss -g
+      bindsym $mod+shift+bracketright exec ${lib.getExe pkgs.mako} dismiss -a
+      bindsym $mod+ctrl+bracketright exec ${lib.getExe pkgs.mako} restore
+      bindsym $mod+bracketleft exec ${lib.getExe pkgs.mako} invoke
 
       ### desktop elements
       output * background #111111 solid_color
@@ -638,7 +639,7 @@ lib.mkIf config.foosteros.profiles.sway {
       }
 
       ### desktop services
-      exec_always ${pkgs.fooster-backgrounds}/bin/setbg
+      exec_always ${lib.getExe' pkgs.fooster-backgrounds "setbg"}
 
       ### desktop environment
       seat seat0 xcursor_theme "Catppuccin-Mocha-Dark-Cursors"
@@ -848,7 +849,7 @@ lib.mkIf config.foosteros.profiles.sway {
       exec "command -v dbus-update-activation-environment >/dev/null 2>&1 && dbus-update-activation-environment --systemd PATH XDG_SESSION_CLASS XDG_CONFIG_DIRS XDG_DATA_DIRS XDG_SESSION_DESKTOP XDG_CURRENT_DESKTOP XDG_SESSION_TYPE DCONF_PROFILE XDG_DESKTOP_PORTAL_DIR DISPLAY WAYLAND_DISPLAY SWAYSOCK XMODIFIERS XCURSOR_SIZE XCURSOR_THEME GDK_PIXBUF_MODULE_FILE GIO_EXTRA_MODULES GTK_IM_MODULE QT_PLUGIN_PATH QT_QPA_PLATFORMTHEME QT_STYLE_OVERRIDE QT_IM_MODULE NIXOS_OZONE_WL || systemctl --user import-environment PATH XDG_SESSION_CLASS XDG_CONFIG_DIRS XDG_DATA_DIRS XDG_SESSION_DESKTOP XDG_CURRENT_DESKTOP XDG_SESSION_TYPE DCONF_PROFILE XDG_DESKTOP_PORTAL_DIR DISPLAY WAYLAND_DISPLAY SWAYSOCK XMODIFIERS XCURSOR_SIZE XCURSOR_THEME GDK_PIXBUF_MODULE_FILE GIO_EXTRA_MODULES GTK_IM_MODULE QT_PLUGIN_PATH QT_QPA_PLATFORMTHEME QT_STYLE_OVERRIDE QT_IM_MODULE NIXOS_OZONE_WL"
       exec "${lib.getExe config.programs.regreet.package} >/var/log/regreet/stdio 2>&1; swaymsg exit"
     '';
-  in "${config.programs.sway.package}/bin/sway --config ${greetdSwayConfig}";
+  in "${lib.getExe config.programs.sway.package} --config ${greetdSwayConfig}";
   systemd.tmpfiles.rules = let
     regreetUsers = lib.concatMap (user: lib.optional user.isNormalUser user.name) (lib.attrValues config.users.users);
     regreetCache = pkgs.writeText "regreet-cache.toml" (''
@@ -875,7 +876,7 @@ lib.mkIf config.foosteros.profiles.sway {
     extraPackages = with pkgs; [
       pulseaudio brightnessctl playerctl jq glib
       swaybg swaylock-fprintd swayidle
-      kanshi i3status swaywsr mako rofi-wayland alacritty
+      kanshi i3status swaywsr mako rofi-wayland
       polkit-sway
       fooster-backgrounds catppuccin-gtk-sway catppuccin-cursors-sway papirus-icon-theme sway-default-icon-theme
       slurp grim wl-clipboard libnotify sway-contrib.grimshot swappy wf-recorder wl-mirror
@@ -896,9 +897,9 @@ lib.mkIf config.foosteros.profiles.sway {
   programs.swayidle = {
     enable = true;
     events = [
-      { event = "before-sleep"; command = "${pkgs.systemd}/bin/loginctl lock-session"; }
-      { event = "lock"; command = "${pkgs.swaylock-fprintd}/bin/swaylock -p -f -c 000000 --bs-hl-color 333333 --caps-lock-bs-hl-color 333333 --caps-lock-key-hl-color 333333 --font 'monospace' --font-size ${toString config.system.devices.monitorFontSize} --inside-color 222222 --inside-clear-color 222222 --inside-caps-lock-color 222222 --inside-ver-color 333333 --inside-wrong-color 222222 --key-hl-color f29bd4 --line-color 222222 --ring-color 222222 --ring-clear-color 333333 --ring-caps-lock-color 222222 --ring-ver-color 333333 --ring-wrong-color aa4444 --separator-color 222222 --text-color f29bd4 --text-clear-color f29bd4 --text-caps-lock-color f29bd4 --text-ver-color f29bd4 --text-wrong-color f29bd4"; }
-      { event = "unlock"; command = "${pkgs.procps}/bin/pkill --session \"$XDG_SESSION_ID\" -USR1 swaylock"; }
+      { event = "before-sleep"; command = "${lib.getExe' pkgs.systemd "loginctl"} lock-session"; }
+      { event = "lock"; command = "${lib.getExe pkgs.swaylock-fprintd} -p -f -c 000000 --bs-hl-color 333333 --caps-lock-bs-hl-color 333333 --caps-lock-key-hl-color 333333 --font 'monospace' --font-size ${toString config.system.devices.monitorFontSize} --inside-color 222222 --inside-clear-color 222222 --inside-caps-lock-color 222222 --inside-ver-color 333333 --inside-wrong-color 222222 --key-hl-color f29bd4 --line-color 222222 --ring-color 222222 --ring-clear-color 333333 --ring-caps-lock-color 222222 --ring-ver-color 333333 --ring-wrong-color aa4444 --separator-color 222222 --text-color f29bd4 --text-clear-color f29bd4 --text-caps-lock-color f29bd4 --text-ver-color f29bd4 --text-wrong-color f29bd4"; }
+      { event = "unlock"; command = "${lib.getExe' pkgs.procps "pkill"} --session \"$XDG_SESSION_ID\" -USR1 swaylock"; }
     ];
   };
 
@@ -917,6 +918,8 @@ lib.mkIf config.foosteros.profiles.sway {
       text-color=#f29bd4
     '';
   };
+
+  programs.sway-assign-cgroups.enable = true;
 
   programs.swaywsr = {
     enable = true;
