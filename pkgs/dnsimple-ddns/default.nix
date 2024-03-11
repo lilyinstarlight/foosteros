@@ -9,13 +9,13 @@
 
 stdenvNoCC.mkDerivation {
   pname = "dnsimple-ddns";
-  version = "unstable-2021-12-02";
+  version = "unstable-2024-03-11";
 
   src = fetchFromGitHub {
     owner = "lilyinstarlight";
     repo = "dnsimple-ddns";
-    rev = "d892881ae40d41b439c81f58d86b9a47531c58f7";
-    hash = "sha256-GQl3X32sWe9WzQDUjHv8q5eoe49v7m5PZLJffrjUAzA=";
+    rev = "f4a141def6c6631df237356beabfc2582146a40d";
+    hash = "sha256-wnzTWlYQpXKNqw2oCUtlt1MF1fvcV2zONdBnbnxD+MA=";
   };
 
   strictDeps = true;
