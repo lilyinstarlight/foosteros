@@ -5,6 +5,7 @@
   ./programs/kanshi.nix
   ./programs/mako.nix
   ./programs/sway.nix
+  ./programs/sway-assign-cgroups.nix
   ./programs/swayidle.nix
   ./programs/swaynag-battery.nix
   ./programs/swaywsr.nix
