@@ -35,7 +35,9 @@ stdenv.mkDerivation rec {
     mv LICENSE COPYING
   '';
 
-  passthru.updateScript = gitUpdater {};
+  passthru.updateScript = gitUpdater {
+    rev-prefix = "v";
+  };
 
   meta = with lib; {
     description = "A Widget Factory (extended)";
