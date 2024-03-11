@@ -2,7 +2,10 @@
 , stdenvNoCC
 , fetchFromGitHub
 , makeWrapper
+, gnugrep
+, gnused
 , hostname
+, systemd
 , sendmailPath ? "/run/wrappers/bin/sendmail"
 , unstableGitUpdater
 }:
@@ -39,7 +42,7 @@ stdenvNoCC.mkDerivation {
     cp logmail $out/bin/logmail
 
     wrapProgram $out/bin/logmail \
-      --prefix PATH : ${lib.makeBinPath [ hostname ]}
+      --prefix PATH : ${lib.makeBinPath [ gnugrep gnused hostname systemd ]}
   '';
 
   passthru.updateScript = unstableGitUpdater {};
