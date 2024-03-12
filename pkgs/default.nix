@@ -53,10 +53,13 @@ in with outpkgs;
   };
   swaylock-fprintd = callPackage ./swaylock-fprintd {};
   tkey-libs = callPackage ./tkey-libs {};
+  tkey-devtools = callPackage ./tkey-devtools {};
   tkey-sign = callPackage ./tkey-sign {};
   tkey-ssh-agent = callPackage ./tkey-ssh-agent {};
   tkey-device-signer = callPackage ./tkey-device-signer {};
+  tkey-fido = callPackage ./tkey-fido {};
   tkey-random-generator = callPackage ./tkey-random-generator {};
+  tkey-totp = callPackage ./tkey-totp {};
   tkey-verification = callPackage ./tkey-verification {};
 
   # overridden packages
