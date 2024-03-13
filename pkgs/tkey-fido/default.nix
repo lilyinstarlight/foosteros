@@ -8,7 +8,7 @@
 
 buildGoModule rec {
   pname = "tkey-fido";
-  version = "0-unstable-2023-10-16";
+  version = "unstable-2023-10-16";
 
   src = fetchFromGitHub {
     owner = "tillitis";
