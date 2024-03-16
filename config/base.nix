@@ -179,7 +179,7 @@ lib.mkIf config.foosteros.profiles.base {
     man-pages man-pages-posix
     dbus file python3 rsync strace tree unzip xxd
     cachix fpaste ftmp furi
-    git delta fd ripgrep
+    git git-absorb delta fd ripgrep
     shellcheck progress libqalculate
   ];
 
