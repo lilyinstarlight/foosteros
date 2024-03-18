@@ -879,6 +879,7 @@ lib.mkIf config.foosteros.profiles.sway {
       kanshi i3status swaywsr mako rofi-wayland
       polkit-sway
       fooster-backgrounds catppuccin-gtk-sway catppuccin-cursors-sway papirus-icon-theme sway-default-icon-theme
+      qt6.qtsvg qt6.qtwayland
       slurp grim wl-clipboard libnotify sway-contrib.grimshot swappy wf-recorder wl-mirror
       xwayland
       xdg-utils
@@ -912,7 +913,7 @@ lib.mkIf config.foosteros.profiles.sway {
       background-color = "#222222";
       border-size = "0";
       font = "monospace 12";
-      icon-path = "${pkgs.papirus-icon-theme}/share/icons/Papirus-Dark";
+      icon-path = "${config.system.path}/share/icons/Papirus-Dark";
       margin = "12";
       progress-color = "over #333333";
       text-color = "#f29bd4";
