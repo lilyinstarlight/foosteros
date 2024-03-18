@@ -265,6 +265,7 @@ lib.mkIf config.foosteros.profiles.sway {
 
   environment.variables = {
     NIXOS_OZONE_WL = "1";
+    QT_SCALE_FACTOR_ROUNDING_POLICY = "RoundPreferFloor";  # TODO: temp fix for qt6 apps with fractional scaling
   };
 
   environment.etc = {
