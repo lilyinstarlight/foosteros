@@ -78,6 +78,7 @@ jobs:
       - uses: easimon/maximize-build-space@v10
         with:
           build-mount-path: '/nix'
+          root-reserve-mb: '4096'
 
       - uses: cachix/install-nix-action@v26
         with:
