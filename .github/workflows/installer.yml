@@ -76,6 +76,12 @@ jobs:
           remove-docker-images: 'true'
           #remove-large-packages: 'true'
 
+      - name: Remove large packages
+        run: |
+          sudo apt-get purge -y '^llvm-.*' 'php.*' '^mongodb-.*' '^mysql-.*' azure-cli google-cloud-cli google-chrome-stable firefox powershell microsoft-edge-stable
+          sudo apt-get autoremove -y
+          sudo apt-get clean
+
       - uses: cachix/install-nix-action@v26
         with:
           extra_nix_config: |
