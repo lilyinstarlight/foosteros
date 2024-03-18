@@ -24,6 +24,14 @@ in
       pkgsText = "fpkgs";
     };
 
+    port = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
+      default = null;
+      description = ''
+        Serial port device path for TKey.
+      '';
+    };
+
     socket = lib.mkOption {
       type = lib.types.str;
       default = "\${XDG_RUNTIME_DIR}/ssh-agent";
@@ -48,7 +56,7 @@ in
 
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${lib.getExe cfg.package} ${lib.optionalString cfg.userSuppliedSecret "--uss ${lib.optionalString (config.programs.gnupg.agent.settings ? pinentry-program) "--pinentry ${config.programs.gnupg.agent.settings.pinentry-program}"}"} --agent-socket ${cfg.socket}";
+        ExecStart = "${lib.getExe cfg.package} ${lib.optionalString cfg.userSuppliedSecret "--uss ${lib.optionalString (config.programs.gnupg.agent.settings ? pinentry-program) "--pinentry ${config.programs.gnupg.agent.settings.pinentry-program}"}"} ${lib.optionalString (cfg.port != null) "--port ${cfg.port}"} --agent-socket ${cfg.socket}";
       };
     } // lib.optionalAttrs cfg.enable {
       wantedBy = [ "default.target" ];
