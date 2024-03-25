@@ -120,6 +120,7 @@
         ".backgrounds"
         ".config/dconf"
         ".config/Element"
+        ".config/Mattermost"
         ".config/obs-studio"
         ".config/pipewire"
         ".config/PrusaSlicer"
