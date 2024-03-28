@@ -8,7 +8,7 @@
 
 buildGoModule rec {
   pname = "tkey-totp";
-  version = "unstable-2024-01-05";
+  version = "0-unstable-2024-01-05";
 
   src = fetchFromGitHub {
     owner = "tillitis";
