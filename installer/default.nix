@@ -7,7 +7,7 @@
 
   boot.kernelParams = lib.mkAfter [ "noquiet" ];
 
-  # TODO: installer does not support systemd initrd yet
+  # TODO: installer does not support systemd initrd yet, remove one line when NixOS/nixpkgs#291750 is merged
   boot.initrd.systemd.enable = lib.mkImageMediaOverride false;
   boot.initrd.systemd.emergencyAccess = lib.mkImageMediaOverride true;
 
