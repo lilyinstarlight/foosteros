@@ -826,19 +826,19 @@ lib.mkIf config.foosteros.profiles.sway {
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
-  services.xserver.displayManager.sessionPackages = [
-      (lib.hiPrio (pkgs.runCommand "sway-session.desktop" {
-        desktopItem = pkgs.makeDesktopItem {
-          name = "sway";
-          desktopName = "Sway";
-          comment = "An i3-compatible Wayland compositor";
-          exec = "sway-session";
-        };
-        passthru.providedSessions = [ "sway" ];
-      } ''
-        install -Dt $out/share/wayland-sessions $desktopItem/share/applications/*
-      ''))
-    ];
+  services.displayManager.sessionPackages = [
+    (lib.hiPrio (pkgs.runCommand "sway-session.desktop" {
+      desktopItem = pkgs.makeDesktopItem {
+        name = "sway";
+        desktopName = "Sway";
+        comment = "An i3-compatible Wayland compositor";
+        exec = "sway-session";
+      };
+      passthru.providedSessions = [ "sway" ];
+    } ''
+      install -Dt $out/share/wayland-sessions $desktopItem/share/applications/*
+    ''))
+  ];
 
   programs.regreet.enable = true;
   services.greetd.settings.default_session.command = let

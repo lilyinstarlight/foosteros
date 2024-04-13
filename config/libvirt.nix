@@ -7,7 +7,7 @@ lib.mkIf config.foosteros.profiles.libvirt {
     qemu.package = pkgs.qemu_kvm;
   };
 
-  environment.systemPackages = with pkgs; lib.optionals (config.services.xserver.displayManager.sessionData.sessionNames != []) [
+  environment.systemPackages = with pkgs; lib.optionals (config.services.displayManager.sessionData != {}) [
     virt-manager
   ];
 }
