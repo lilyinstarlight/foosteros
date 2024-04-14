@@ -1,7 +1,6 @@
 [
   ./hardware/playdate.nix
   ./hardware/tkey.nix
-  ./programs/comma.nix
   ./programs/kanshi.nix
   ./programs/mako.nix
   ./programs/sway.nix
