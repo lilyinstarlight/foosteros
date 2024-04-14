@@ -193,10 +193,8 @@ lib.mkIf config.foosteros.profiles.base {
   };
 
   programs.command-not-found.enable = false;
-  programs.nix-index = {
-    enable = true;
-    comma.enable = true;
-  };
+  programs.nix-index.enable = true;
+  programs.nix-index-database.comma.enable = true;
 
   programs.htop = {
     enable = true;
