@@ -6,13 +6,13 @@
 
 tkeyStdenv.mkDerivation rec {
   pname = "tkey-libs";
-  version = "0.0.2";
+  version = "0.1.1";
 
   src = fetchFromGitHub {
     owner = "tillitis";
     repo = "tkey-libs";
     rev = "v${version}";
-    hash = "sha256-mrD2PkE0QR7qb2xAzNgWHQ/Nwqe93EMWQGHCbU/t7q4=";
+    hash = "sha256-K+4Td7crh0gB/ZkizKZ3qFjcP3bsEmM9/3z5xgY1IIw=";
   };
 
   installPhase = ''
@@ -24,10 +24,9 @@ tkeyStdenv.mkDerivation rec {
     runHook postInstall
   '';
 
-  # TODO: re-enable when tkey apps support newer libs version
-  #passthru.updateScript = gitUpdater {
-  #  rev-prefix = "v";
-  #};
+  passthru.updateScript = gitUpdater {
+    rev-prefix = "v";
+  };
 
   meta = with lib; {
     description = "Device libraries for the Tillitis TKey";

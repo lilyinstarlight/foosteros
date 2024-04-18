@@ -1,0 +1,25 @@
+diff --git a/app/main.c b/app/main.c
+index edf2e13..f157dd0 100644
+--- a/app/main.c
++++ b/app/main.c
+@@ -71,7 +71,7 @@ int main(void)
+     qemu_puts((char*)records.record[0].key);
+     qemu_lf();
+ 
+-    set_led(LED_BLUE);
++    led_set(LED_BLUE);
+     for (;;)
+     {
+         in = readbyte();
+@@ -87,7 +87,10 @@ int main(void)
+ 
+         memset(cmd, 0, CMDLEN_MAXBYTES);
+         // Read app command, blocking
+-        read(cmd, hdr.len);
++        if (read(cmd, CMDLEN_MAXBYTES, hdr.len) != 0) {
++            qemu_puts("read: buffer overrun\n");
++            continue;
++        }
+ 
+         if (hdr.endpoint == DST_FW)
+         {

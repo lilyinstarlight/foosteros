@@ -1,0 +1,16 @@
+diff --git a/random-generator/main.c b/random-generator/main.c
+index 1bf56db..0976774 100644
+--- a/random-generator/main.c
++++ b/random-generator/main.c
+@@ -83,7 +83,10 @@ int main(void)
+ 
+ 		memset(cmd, 0, CMDLEN_MAXBYTES);
+ 		// Read app command, blocking
+-		read(cmd, hdr.len);
++		if (read(cmd, CMDLEN_MAXBYTES, hdr.len) != 0) {
++			qemu_puts("read: buffer overrun\n");
++			continue;
++		}
+ 
+ 		if (hdr.endpoint == DST_FW) {
+ 			appreply_nok(hdr);

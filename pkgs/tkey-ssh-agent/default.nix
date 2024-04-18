@@ -7,16 +7,16 @@
 
 buildGoModule rec {
   pname = "tkey-ssh-agent";
-  version = "0.0.6";
+  version = "1.0.0";
 
   src = fetchFromGitHub {
     owner = "tillitis";
     repo = "tillitis-key1-apps";
     rev = "v${version}";
-    hash = "sha256-FqWzeaS6rRrVTw15DsGZDwKfvR8+ljxh4GMl7lzHj58=";
+    hash = "sha256-Uf3VJJfZn4UYX1q79JdaOfrore+L/Mic3whzpP32JV0=";
   };
 
-  vendorHash = "sha256-l5IEaaiC19UOsq8IOg7e1m0zzmatijmxTT9s846aNCk=";
+  vendorHash = "sha256-SFyp1UB6+m7/YllRyY56SwweJ3X175bChXQYiG2M7zM=";
 
   subPackages = [ "cmd/tkey-ssh-agent" ];
 

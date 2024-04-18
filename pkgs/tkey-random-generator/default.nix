@@ -30,6 +30,10 @@ buildGoModule rec {
 
     inherit src version;
 
+    patches = [
+      ./tkey-libs-0-1-1.patch
+    ];
+
     makeFlags = [
       "LIBDIR=${tkey-libs}"
       "random-generator/app.bin"
