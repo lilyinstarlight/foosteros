@@ -83,8 +83,9 @@
       "wired"
       "wired-admin"
       "josie"
-      "carolina"
       "cynthia"
+      "carolina"
+      "allison"
     ]));
   };
 
