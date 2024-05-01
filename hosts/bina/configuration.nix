@@ -245,7 +245,7 @@
     };
   };
 
-  environment.systemPackages = with pkgs; [ prism-launcher ];
+  environment.systemPackages = with pkgs; [ prismlauncher ];
 
   services.resolved.dnssec = "false";
 
