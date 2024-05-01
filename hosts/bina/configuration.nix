@@ -133,6 +133,7 @@
         ".local/share/fish"
         ".local/share/mopidy"
         ".local/share/nvim"
+        ".local/share/PrismLauncher"
         ".local/share/qutebrowser"
         ".local/state/wireplumber"
         ".mozilla"
@@ -243,6 +244,8 @@
       };
     };
   };
+
+  environment.systemPackages = with pkgs; [ prism-launcher ];
 
   services.resolved.dnssec = "false";
 
