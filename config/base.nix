@@ -215,13 +215,13 @@ lib.mkIf config.foosteros.profiles.base {
 
   services.openssh.enable = true;
 
+  services.libinput.enable = true;
+
   services.xserver = {
     xkb = {
       layout = "us";
       options = "caps:escape";
     };
-
-    libinput.enable = true;
   };
 
   systemd.oomd = {
