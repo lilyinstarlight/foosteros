@@ -4,7 +4,7 @@
 , makeDesktopItem
 , copyDesktopItems
 , makeWrapper
-, wrapGAppsHook
+, wrapGAppsHook3
 , autoPatchelfHook
 , libpng
 , zlib
@@ -63,7 +63,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     copyDesktopItems
     makeWrapper
-    wrapGAppsHook
+    wrapGAppsHook3
     autoPatchelfHook
   ];
 

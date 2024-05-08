@@ -3,7 +3,7 @@
 , fetchFromGitHub
 , autoreconfHook
 , pkg-config
-, wrapGAppsHook
+, wrapGAppsHook3
 , gtk2
 , gtk3
 , gtk4
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-Kr8iFtnGQ6CyG6ck1pVLwr8EBRyHXeOKyPpdoRyEWuM=";
   };
 
-  nativeBuildInputs = [ autoreconfHook pkg-config wrapGAppsHook ];
+  nativeBuildInputs = [ autoreconfHook pkg-config wrapGAppsHook3 ];
 
   buildInputs = [ gtk2 gtk3 gtk4 ];
 
