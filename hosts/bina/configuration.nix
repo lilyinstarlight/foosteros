@@ -249,6 +249,8 @@
 
   services.resolved.dnssec = "false";
 
+  services.fwupd.extraRemotes = [ "lvfs-testing" ];
+
   services.fprintd.enable = true;
 
   services.nullmailer.remotesFile = config.sops.secrets.nullmailer-remotes.path;
