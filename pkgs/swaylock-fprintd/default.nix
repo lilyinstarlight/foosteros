@@ -20,7 +20,7 @@
 
 stdenv.mkDerivation rec {
   pname = "swaylock-fprintd";
-  version = "unstable-2023-11-09";
+  version = "0-unstable-2023-11-09";
 
   src = fetchFromGitHub {
     owner = "lilyinstarlight";
