@@ -13,7 +13,7 @@
 
 rustPlatform.buildRustPackage {
   pname = "crank";
-  version = "0-unstable-2023-09-16";
+  version = "0.2.9-unstable-2023-09-16";
 
   src = fetchFromGitHub {
     owner = "pd-rs";
