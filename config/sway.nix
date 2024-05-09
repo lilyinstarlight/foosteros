@@ -862,6 +862,14 @@ lib.mkIf config.foosteros.profiles.sway {
 
   services.xserver.gdk-pixbuf.modulePackages = with pkgs; [ librsvg ];
 
+  programs.gnupg.agent.pinentryPackage = pkgs.writeShellApplication {
+    name = "pinentry-rofi";
+    runtimeInputs = with pkgs; [ rofi-wayland ];
+    text = ''
+      exec ${pkgs.pinentry-rofi}/bin/pinentry-rofi "$@"
+    '';
+  };
+
   programs.dconf.profiles.sway = sway-dconf-profile;
 
   programs.tmux.extraConfig = ''
