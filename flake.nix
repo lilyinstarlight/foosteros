@@ -50,6 +50,19 @@
       inputs.flake-compat.follows = "flake-compat";
     };
 
+    lix = {
+      url = "git+https://git@git.lix.systems/lix-project/lix";
+      flake = false;
+    };
+
+    lix-module = {
+      url = "git+https://git.lix.systems/lix-project/nixos-module";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.lix.follows = "lix";
+      inputs.flake-utils.follows = "flake-utils";
+      inputs.flakey-profile.follows = "flakey-profile";
+    };
+
 
     ## transitive inputs
 
@@ -68,6 +81,8 @@
 
     flake-utils.url = "github:numtide/flake-utils";
 
+    flakey-profile.url = "github:lf-/flakey-profile";
+
 
     ## misc inputs
 
@@ -82,7 +97,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, sops-nix, impermanence, nix-index-database, nix-alien, ... }:
+  outputs = { self, nixpkgs, home-manager, sops-nix, impermanence, nix-index-database, nix-alien, lix, lix-module, ... }:
     let
       supportedSystems = with nixpkgs.lib; intersectLists (platforms.x86_64 ++ platforms.aarch64) (platforms.linux ++ platforms.darwin);
 

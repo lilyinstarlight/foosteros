@@ -104,8 +104,8 @@ lib.mkIf config.foosteros.profiles.base {
   nix = {
     settings = {
       auto-allocate-uids = true;
-      substituters = [ "https://foosteros.cachix.org/" ];
-      trusted-public-keys = [ "foosteros.cachix.org-1:rrDalTfOT1YohJXiMv8upgN+mFLKZp7eWW1+OGbPRww=" ];
+      substituters = [ "https://foosteros.cachix.org" "https://cache.lix.systems" ];
+      trusted-public-keys = [ "foosteros.cachix.org-1:rrDalTfOT1YohJXiMv8upgN+mFLKZp7eWW1+OGbPRww=" "cache.lix.systems:aBnZUw8zA7H35Cz2RyKFVs3H4PlGTLawyY5KRbvJR8o=" ];
       experimental-features = [ "nix-command" "flakes" "repl-flake" "auto-allocate-uids" ];
       flake-registry = "${inputs.flake-registry}/flake-registry.json";
     };

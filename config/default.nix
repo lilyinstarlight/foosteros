@@ -8,6 +8,7 @@
     inputs.lanzaboote.nixosModules.lanzaboote
     inputs.disko.nixosModules.disko
     inputs.nix-index-database.nixosModules.nix-index
+    inputs.lix-module.nixosModules.default
     self.nixosModules.foosteros
   ] ++ import ./module-list.nix;
 
