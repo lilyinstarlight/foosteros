@@ -97,7 +97,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, sops-nix, impermanence, nix-index-database, nix-alien, lix, lix-module, ... }:
+  outputs = { self, nixpkgs, sops-nix, ... }:
     let
       supportedSystems = with nixpkgs.lib; intersectLists (platforms.x86_64 ++ platforms.aarch64) (platforms.linux ++ platforms.darwin);
 
