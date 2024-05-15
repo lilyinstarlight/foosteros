@@ -22,7 +22,7 @@ jobs:
       filenames: ${{ steps.identify.outputs.filenames }}
       start: ${{ steps.identify.outputs.start }}
     steps:
-      - uses: cachix/install-nix-action@v26
+      - uses: cachix/install-nix-action@V27
         with:
           extra_nix_config: |
             system-features = benchmark big-parallel kvm nixos-test
@@ -80,7 +80,7 @@ jobs:
           build-mount-path: '/nix'
           root-reserve-mb: '10240'
 
-      - uses: cachix/install-nix-action@v26
+      - uses: cachix/install-nix-action@V27
         with:
           extra_nix_config: |
             system-features = benchmark big-parallel kvm nixos-test
@@ -117,7 +117,7 @@ jobs:
     needs: [populate, build]
     runs-on: ubuntu-latest
     steps:
-      - uses: cachix/install-nix-action@v26
+      - uses: cachix/install-nix-action@V27
         with:
           extra_nix_config: |
             system-features = benchmark big-parallel kvm nixos-test
