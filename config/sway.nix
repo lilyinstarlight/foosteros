@@ -37,6 +37,15 @@ let
     sed -e 's/^OnlyShowIn=.*$/OnlyShowIn=sway;/' ${pkgs.polkit_gnome}/etc/xdg/autostart/polkit-gnome-authentication-agent-1.desktop >$out/etc/xdg/autostart/polkit-sway-authentication-agent-1.desktop
   '';
 
+  pinentry-rofi = pkgs.pinentry-rofi.overrideAttrs (old: {
+    postPatch = old.postPatch or "" + ''
+      substituteInPlace pinentry-rofi.scm \
+        --replace \
+          '#:prompt (pinentry-prompt pinentry)' \
+          '#:prompt (string-trim-right (pinentry-prompt pinentry) #\:)'
+    '';
+  });
+
   catppuccin-gtk-sway = pkgs.catppuccin-gtk.override {
     variant = "mocha";
     accents = [ "pink" ];
@@ -866,7 +875,7 @@ lib.mkIf config.foosteros.profiles.sway {
     name = "pinentry-rofi";
     runtimeInputs = with pkgs; [ rofi-wayland ];
     text = ''
-      exec ${pkgs.pinentry-rofi}/bin/pinentry-rofi "$@"
+      exec ${pinentry-rofi}/bin/pinentry-rofi "$@"
     '';
   };
 
