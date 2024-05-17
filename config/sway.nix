@@ -38,12 +38,54 @@ let
   '';
 
   pinentry-rofi = pkgs.pinentry-rofi.overrideAttrs (old: {
-    postPatch = old.postPatch or "" + ''
-      substituteInPlace pinentry-rofi.scm \
-        --replace \
-          '#:prompt (pinentry-prompt pinentry)' \
-          '#:prompt (string-trim-right (pinentry-prompt pinentry) #\:)'
-    '';
+    patches = old.patches or [] ++ [
+      (pkgs.writeText "pinentry-rofi-fixes.patch" ''
+        diff --git a/pinentry-rofi.scm b/pinentry-rofi.scm
+        index 320be09..f23aa48 100755
+        --- a/pinentry-rofi.scm
+        +++ b/pinentry-rofi.scm
+        @@ -48,6 +48,7 @@
+                     pinentry-setok
+                     pinentry-setcancel
+                     pinentry-setnotok
+        +            pinentry-settitle
+                     pinentry-setdesc
+                     pinentry-seterror
+                     pinentry-setprompt
+        @@ -261,6 +262,14 @@ touch-file=/run/user/1000/gnupg/S.gpg-agent"
+                (match:substring regex-match 1)))
+             regex-match))
+
+        +(define (pinentry-settitle pinentry line)
+        +  "SETTITLE title"
+        +  (let ((setkeyinfo-re (make-regexp "^SETTITLE (.+)$"))
+        +        (regex-match #f))
+        +    (when (set-and-return! regex-match (regexp-exec setkeyinfo-re line))
+        +      (set-pinentry-ok! pinentry #t))
+        +    regex-match))
+        +
+         (define (pinentry-setdesc pinentry line)
+           "SETDESC description"
+           (let ((setdesc-re (make-regexp "^SETDESC (.+)$"))
+        @@ -346,7 +355,7 @@ Return the input from the user if succeeded else #f."
+           (let ((getpin-re (make-regexp "^GETPIN$"))
+                 (regex-match #f))
+             (when (set-and-return! regex-match (regexp-exec getpin-re line))
+        -      (let ((pass (pin-program #:prompt (pinentry-prompt pinentry)
+        +      (let ((pass (pin-program #:prompt (string-trim-right (pinentry-prompt pinentry) #\:)
+                                        #:message (compose-message pinentry)
+                                        #:visibility (pinentry-visibility pinentry)
+                                        #:env `(("DISPLAY" . ,(pinentry-display pinentry))
+        @@ -421,6 +430,7 @@ Return the input from the user if succeeded else #f."
+                ((pinentry-option pinentry line))
+                ((pinentry-getinfo pinentry line))
+                ((pinentry-setkeyinfo pinentry line))
+        +       ((pinentry-settitle pinentry line))
+                ((pinentry-setdesc pinentry line))
+                ((pinentry-setok pinentry line))
+                ((pinentry-setnotok pinentry line))
+      '')
+    ];
   });
 
   catppuccin-gtk-sway = pkgs.catppuccin-gtk.override {
