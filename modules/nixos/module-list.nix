@@ -9,6 +9,7 @@
   ./programs/swayidle.nix
   ./programs/swaynag-battery.nix
   ./programs/swaywsr.nix
+  ./programs/tkey-fido.nix
   ./programs/tkey-ssh-agent.nix
   ./services/dnsimple-ddns.nix
   ./services/logmail.nix
