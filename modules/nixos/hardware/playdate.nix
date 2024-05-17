@@ -8,15 +8,13 @@ in
   meta.maintainers = with lib.maintainers; [ lilyinstarlight ];
 
   options.hardware.playdate = {
-    enable = lib.mkEnableOption ''
-      Enable udev rules for interfacing with the Playdate handheld console
-    '';
+    enable = lib.mkEnableOption "udev rules for interfacing with the Playdate handheld console";
 
     group = lib.mkOption {
       type = lib.types.nullOr lib.types.str;
       default = null;
       description = ''
-        Grant access to Playdate devices to users in this group.
+        Grant access to Playdate devices for users in this group.
       '';
     };
   };

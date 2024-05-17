@@ -8,15 +8,13 @@ in
   meta.maintainers = with lib.maintainers; [ lilyinstarlight ];
 
   options.hardware.tkey = {
-    enable = lib.mkEnableOption ''
-      Enable udev rules for interfacing with the TKey-1 USB security token
-    '';
+    enable = lib.mkEnableOption "udev rules for interfacing with the TKey-1 USB security token";
 
     group = lib.mkOption {
       type = lib.types.nullOr lib.types.str;
       default = null;
       description = ''
-        Grant access to TKey-1 devices to users in this group.
+        Grant access to TKey-1 devices for users in this group.
       '';
     };
   };
