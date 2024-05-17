@@ -6,4 +6,8 @@ lib.mkIf config.foosteros.profiles.tkey {
     enable = true;
     userSuppliedSecret = true;
   };
+  programs.tkey-fido = {
+    enable = true;
+    userSuppliedSecret = true;
+  };
 }
