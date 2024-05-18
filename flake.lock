@@ -129,7 +129,6 @@
     "gitignore": {
       "inputs": {
         "nixpkgs": [
-          "pre-commit-hooks-nix",
           "nixpkgs"
         ]
       },
@@ -154,11 +153,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1715486357,
-        "narHash": "sha256-4pRuzsHZOW5W4CsXI9uhKtiJeQSUoe1d2M9mWU98HC4=",
+        "lastModified": 1715930644,
+        "narHash": "sha256-W9pyM3/vePxrffHtzlJI6lDS3seANQ+Nqp+i58O46LI=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "44677a1c96810a8e8c4ffaeaad10c842402647c1",
+        "rev": "e3ad5108f54177e6520535768ddbf1e6af54b59d",
         "type": "github"
       },
       "original": {
@@ -198,7 +197,7 @@
           "nixpkgs"
         ],
         "pre-commit-hooks-nix": [
-          "pre-commit-hooks-nix"
+          "pre-commit-hooks"
         ],
         "rust-overlay": "rust-overlay"
       },
@@ -219,11 +218,11 @@
     "lix": {
       "flake": false,
       "locked": {
-        "lastModified": 1715908244,
-        "narHash": "sha256-+aa9ZALET2yJEDK5wmBUcFjj60/lNQqA4+DUPK0wzZE=",
+        "lastModified": 1715982153,
+        "narHash": "sha256-45kzknNWfy1FWshqveZToqCT4jH4jKQr5yOHqvwFkew=",
         "ref": "refs/heads/main",
-        "rev": "005ee33a9a145f714f4837b1c0b5c430ac3bc588",
-        "revCount": 15578,
+        "rev": "236466faf385f98f3639ec04147c171774d03726",
+        "revCount": 15587,
         "type": "git",
         "url": "https://git@git.lix.systems/lix-project/lix"
       },
@@ -373,12 +372,14 @@
         "type": "github"
       }
     },
-    "pre-commit-hooks-nix": {
+    "pre-commit-hooks": {
       "inputs": {
         "flake-compat": [
           "flake-compat"
         ],
-        "gitignore": "gitignore",
+        "gitignore": [
+          "gitignore"
+        ],
         "nixpkgs": [
           "nixpkgs"
         ],
@@ -390,13 +391,13 @@
         "lastModified": 1715870890,
         "narHash": "sha256-nacSOeXtUEM77Gn0G4bTdEOeFIrkCBXiyyFZtdGwuH0=",
         "owner": "cachix",
-        "repo": "pre-commit-hooks.nix",
+        "repo": "git-hooks.nix",
         "rev": "fa606cccd7b0ccebe2880051208e4a0f61bfc8c1",
         "type": "github"
       },
       "original": {
         "owner": "cachix",
-        "repo": "pre-commit-hooks.nix",
+        "repo": "git-hooks.nix",
         "type": "github"
       }
     },
@@ -408,6 +409,7 @@
         "flake-registry": "flake-registry",
         "flake-utils": "flake-utils",
         "flakey-profile": "flakey-profile",
+        "gitignore": "gitignore",
         "home-manager": "home-manager",
         "impermanence": "impermanence",
         "lanzaboote": "lanzaboote",
@@ -418,7 +420,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",
-        "pre-commit-hooks-nix": "pre-commit-hooks-nix",
+        "pre-commit-hooks": "pre-commit-hooks",
         "sops-nix": "sops-nix"
       }
     },
