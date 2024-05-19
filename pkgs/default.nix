@@ -67,6 +67,18 @@ in with outpkgs;
     fonts = [ "Monofur" ];
   };
 
+  # TODO: remove when slurp or wlroots or sway fixes this
+  slurp = pkgs.slurp.overrideAttrs (old: {
+    patches = old.patches or [] ++ [
+      # https://github.com/emersion/slurp/pull/124
+      (fetchpatch {
+        name = "slurp-fix-segfault.patch";
+        url = "https://github.com/emersion/slurp/compare/6a21ddcdde33affc74f45bcd322292db90984293~1...820041f4f17437b16701c16deed5f2188d9b4993.diff";
+        hash = "sha256-uVJ/7ycGxPNoawXbGYjR5YZ8AZCWiPiYLeFHSlHkKT8=";
+      })
+    ];
+  });
+
   # TODO: remove when xdg-desktop-portal-wlr fixes upstream bitmasking error
   xdg-desktop-portal-wlr = pkgs.xdg-desktop-portal-wlr.overrideAttrs (old: {
     postPatch = old.postPatch or "" + ''
