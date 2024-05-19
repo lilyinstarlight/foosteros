@@ -67,6 +67,13 @@ in with outpkgs;
     fonts = [ "Monofur" ];
   };
 
+  # TODO: remove when xdg-desktop-portal-wlr fixes upstream bitmasking error
+  xdg-desktop-portal-wlr = pkgs.xdg-desktop-portal-wlr.overrideAttrs (old: {
+    postPatch = old.postPatch or "" + ''
+      substituteInPlace src/screencast/screencast.c --replace 'if (mask & (1<<WINDOW))' 'if (!(mask & MONITOR))'
+    '';
+  });
+
   # dependents of unfree packages
   crank = callPackage ./crank {};
 
