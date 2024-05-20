@@ -27,7 +27,7 @@ jobs:
           extra_nix_config: |
             system-features = benchmark big-parallel kvm nixos-test
 
-      - uses: cachix/cachix-action@v14
+      - uses: cachix/cachix-action@v15
         with:
           name: foosteros
 
@@ -85,7 +85,7 @@ jobs:
           extra_nix_config: |
             system-features = benchmark big-parallel kvm nixos-test
 
-      - uses: cachix/cachix-action@v14
+      - uses: cachix/cachix-action@v15
         with:
           name: foosteros
 
@@ -122,7 +122,7 @@ jobs:
           extra_nix_config: |
             system-features = benchmark big-parallel kvm nixos-test
 
-      - uses: cachix/cachix-action@v14
+      - uses: cachix/cachix-action@v15
         with:
           name: foosteros
 
