@@ -44,17 +44,17 @@
     "flake-compat": {
       "flake": false,
       "locked": {
-        "lastModified": 1696426674,
-        "narHash": "sha256-kvjfFW7WAETZlt09AgDn1MrtKzP7t90Vf7vypd3OL1U=",
-        "owner": "edolstra",
-        "repo": "flake-compat",
-        "rev": "0f9255e01c2351cc7d116c072cb317785dd33b33",
-        "type": "github"
+        "lastModified": 1714705744,
+        "narHash": "sha256-SsaS620K6QZVCOUqcWU/sHEkipnsJcqslfrU9oko+f4=",
+        "ref": "refs/heads/main",
+        "rev": "5adafc5bfbb5b1df965df8ade18b1b0ce00a418e",
+        "revCount": 61,
+        "type": "git",
+        "url": "https://git.lix.systems/lix-project/flake-compat"
       },
       "original": {
-        "owner": "edolstra",
-        "repo": "flake-compat",
-        "type": "github"
+        "type": "git",
+        "url": "https://git.lix.systems/lix-project/flake-compat"
       }
     },
     "flake-parts": {

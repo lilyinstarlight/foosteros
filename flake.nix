@@ -97,7 +97,7 @@
     };
 
     flake-compat = {
-      url = "github:edolstra/flake-compat";
+      url = "git+https://git.lix.systems/lix-project/flake-compat";
       flake = false;
     };
   };
