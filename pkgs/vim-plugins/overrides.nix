@@ -1,4 +1,4 @@
-{ buildVimPluginFrom2Nix, luaPackages, python3, gnused, writeText }:
+{ buildVimPlugin, luaPackages, python3, gnused, writeText }:
 
 self: super: {
   vim-radical = super.vim-radical.overrideAttrs (attrs: {

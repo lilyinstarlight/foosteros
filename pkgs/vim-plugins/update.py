@@ -72,9 +72,9 @@ with import (
   {{}};
 
 let
-  inherit (vimUtils.override {{inherit vim;}}) buildNeovimPluginFrom2Nix buildVimPluginFrom2Nix;
+  inherit (vimUtils.override {{inherit vim;}}) buildNeovimPlugin buildVimPlugin;
   generated = callPackage {ROOT}/generated.nix {{
-    inherit buildNeovimPluginFrom2Nix buildVimPluginFrom2Nix;
+    inherit buildNeovimPlugin buildVimPlugin;
   }};
   hasChecksum = value: lib.isAttrs value && lib.hasAttrByPath ["src" "outputHash"] value;
   getChecksum = name: value:
@@ -124,7 +124,7 @@ class VimEditor(pluginupdate.Editor):
         with open(outfile, "w+") as f:
             f.write(HEADER)
             f.write(textwrap.dedent("""
-                { lib, buildVimPluginFrom2Nix, buildNeovimPluginFrom2Nix, fetchFromGitHub, fetchgit }:
+                { lib, buildVimPlugin, buildNeovimPlugin, fetchFromGitHub, fetchgit }:
 
                 final: prev:
                 {
@@ -151,7 +151,7 @@ class VimEditor(pluginupdate.Editor):
   }};
 
 """.format(
-        buildFn="buildNeovimPluginFrom2Nix" if isNeovim else "buildVimPluginFrom2Nix", plugin=plugin, src_nix=src_nix, repo=repo)
+        buildFn="buildNeovimPlugin" if isNeovim else "buildVimPlugin", plugin=plugin, src_nix=src_nix, repo=repo)
         print(content)
         return content
 
