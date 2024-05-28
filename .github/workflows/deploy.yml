@@ -36,6 +36,7 @@ jobs:
       - uses: cachix/cachix-action@v15
         with:
           name: foosteros
+          extraPullNames: cosmic
 
       - uses: actions/checkout@v4
 
