@@ -63,6 +63,12 @@
       inputs.flakey-profile.follows = "flakey-profile";
     };
 
+    nixos-cosmic = {
+      url = "github:lilyinstarlight/nixos-cosmic";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-compat.follows = "flake-compat";
+    };
+
 
     ## transitive inputs
 

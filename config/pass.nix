@@ -3,10 +3,10 @@
 lib.mkIf config.foosteros.profiles.pass {
   environment.systemPackages = with pkgs; lib.mkMerge [
     [ gnupg ]
-    (lib.mkIf (config.programs.sway.enable) [
+    (lib.mkIf (config.programs.sway.enable || config.services.desktopManager.cosmic.enable) [
       (pass-wayland.withExtensions (ext: [ ext.pass-otp ])) rofi-pass-wayland
     ])
-    (lib.mkIf (!config.programs.sway.enable) [
+    (lib.mkIf (!config.programs.sway.enable && !config.services.desktopManager.cosmic.enable) [
       (pass.withExtensions (ext: [ ext.pass-otp ])) rofi-pass
     ])
   ];

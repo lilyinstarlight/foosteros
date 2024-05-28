@@ -325,6 +325,29 @@
         "type": "github"
       }
     },
+    "nixos-cosmic": {
+      "inputs": {
+        "flake-compat": [
+          "flake-compat"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1716853176,
+        "narHash": "sha256-9gUu2VJu5bL+jjNS3mWG/h7T+vIsYhKYyQAunvZtBT4=",
+        "owner": "lilyinstarlight",
+        "repo": "nixos-cosmic",
+        "rev": "996ad8af9bfe04587c0457fcf72f5167e481fe5a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lilyinstarlight",
+        "repo": "nixos-cosmic",
+        "type": "github"
+      }
+    },
     "nixos-hardware": {
       "locked": {
         "lastModified": 1716798306,
@@ -417,6 +440,7 @@
         "lix-module": "lix-module",
         "nix-alien": "nix-alien",
         "nix-index-database": "nix-index-database",
+        "nixos-cosmic": "nixos-cosmic",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",

@@ -15,6 +15,7 @@
     alien = true;
     azure = true;
     bluetooth = true;
+    cosmic = true;
     ephemeral = true;
     fcitx5 = true;
     fwupd = true;
@@ -33,8 +34,6 @@
     pass = true;
     pki = true;
     podman = true;
-    sway = true;
-    tlp = true;
     udiskie = true;
     workstation = true;
   };
