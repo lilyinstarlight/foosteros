@@ -64,11 +64,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1715865404,
-        "narHash": "sha256-/GJvTdTpuDjNn84j82cU6bXztE0MSkdnTWClUCRub78=",
+        "lastModified": 1717285511,
+        "narHash": "sha256-iKzJcpdXih14qYVcZ9QC9XuZYnPc6T8YImb6dX166kw=",
         "owner": "hercules-ci",
         "repo": "flake-parts",
-        "rev": "8dc45382d5206bd292f9c2768b8058a8fd8311d9",
+        "rev": "2a55567fcf15b1b1c7ed712a2c6fadaec7412ea8",
         "type": "github"
       },
       "original": {
@@ -218,11 +218,11 @@
     "lix": {
       "flake": false,
       "locked": {
-        "lastModified": 1717183352,
-        "narHash": "sha256-sWH7QtLou3DMBmIIK5gNSyGBR9XCSz3WEvRdkfJYMV0=",
+        "lastModified": 1717269433,
+        "narHash": "sha256-iGUCRyhjV8Llg7FVYa329K95PEMusQfY1ZOec04N8So=",
         "ref": "refs/heads/main",
-        "rev": "c7ca87461dff6892b166e46203024cb82bd89e55",
-        "revCount": 15717,
+        "rev": "d374a9908f8f92e479c736a160ef90af6df4ca94",
+        "revCount": 15722,
         "type": "git",
         "url": "https://git@git.lix.systems/lix-project/lix"
       },
@@ -336,11 +336,11 @@
         "nixpkgs-stable": "nixpkgs-stable"
       },
       "locked": {
-        "lastModified": 1717161664,
-        "narHash": "sha256-W0Wb4JiMuCpD75FqNBp1wcAtmyrYeb93jVrrgBmpD3U=",
+        "lastModified": 1717221137,
+        "narHash": "sha256-Ku5dXil8eQxCQhdC/LmyCEoTXtm4ctwSJlHNcGDCqyc=",
         "owner": "lilyinstarlight",
         "repo": "nixos-cosmic",
-        "rev": "de03b867ecb4da37560de6fbb9e964ff59a667fa",
+        "rev": "848384c85159d3009f24f78b8b53082be451a9e5",
         "type": "github"
       },
       "original": {
@@ -351,11 +351,11 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1716987116,
-        "narHash": "sha256-uuEkErFVsFdg2K0cKbNQ9JlFSAm/xYqPr4rbPLI91Y8=",
+        "lastModified": 1717248095,
+        "narHash": "sha256-e8X2eWjAHJQT82AAN+mCI0B68cIDBJpqJ156+VRrFO0=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "8251761f93d6f5b91cee45ac09edb6e382641009",
+        "rev": "7b49d3967613d9aacac5b340ef158d493906ba79",
         "type": "github"
       },
       "original": {
@@ -382,11 +382,11 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1717090882,
-        "narHash": "sha256-Up5tvtY9YlVEyVn9hfZcxFQi5qVhQ5hdVNGPQOUchNw=",
+        "lastModified": 1717144377,
+        "narHash": "sha256-F/TKWETwB5RaR8owkPPi+SPJh83AQsm6KrQAlJ8v/uA=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "d24e7fdcfaecdca496ddd426cae98c9e2d12dfe8",
+        "rev": "805a384895c696f802a9bf5bf4720f37385df547",
         "type": "github"
       },
       "original": {
