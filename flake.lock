@@ -153,11 +153,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1717097707,
-        "narHash": "sha256-HC5vJ3oYsjwsCaSbkIPv80e4ebJpNvFKQTBOGlHvjLs=",
+        "lastModified": 1717316182,
+        "narHash": "sha256-Xi0EpZcu39N0eW7apLjFfUOR9y80toyjYizez7J1wMI=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "0eb314b4f0ba337e88123e0b1e57ef58346aafd9",
+        "rev": "9b53a10f4c91892f5af87cf55d08fba59ca086af",
         "type": "github"
       },
       "original": {
@@ -218,11 +218,11 @@
     "lix": {
       "flake": false,
       "locked": {
-        "lastModified": 1717269433,
-        "narHash": "sha256-iGUCRyhjV8Llg7FVYa329K95PEMusQfY1ZOec04N8So=",
+        "lastModified": 1717288159,
+        "narHash": "sha256-SjUmRVWmFR/IjYo6EZKoxj6GMshqaDD8GkhWadR+Q68=",
         "ref": "refs/heads/main",
-        "rev": "d374a9908f8f92e479c736a160ef90af6df4ca94",
-        "revCount": 15722,
+        "rev": "c55e93ca23eae608f2ff80e940f35f5daa6b4f7f",
+        "revCount": 15723,
         "type": "git",
         "url": "https://git@git.lix.systems/lix-project/lix"
       },
@@ -312,11 +312,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1716772633,
-        "narHash": "sha256-Idcye44UW+EgjbjCoklf2IDF+XrehV6CVYvxR1omst4=",
+        "lastModified": 1717297675,
+        "narHash": "sha256-43UmlS1Ifx17y93/Vc258U7bOlAAIZbu8dsGDHOIIr0=",
         "owner": "nix-community",
         "repo": "nix-index-database",
-        "rev": "ff80cb4a11bb87f3ce8459be6f16a25ac86eb2ac",
+        "rev": "972a52bee3991ae1f1899e6452e0d7c01ee566d9",
         "type": "github"
       },
       "original": {
@@ -336,11 +336,11 @@
         "nixpkgs-stable": "nixpkgs-stable"
       },
       "locked": {
-        "lastModified": 1717221137,
-        "narHash": "sha256-Ku5dXil8eQxCQhdC/LmyCEoTXtm4ctwSJlHNcGDCqyc=",
+        "lastModified": 1717373864,
+        "narHash": "sha256-u2KUSVpIiKEAHOIzXK4TEKuHkXvQ9QkOVNTvFysoMAQ=",
         "owner": "lilyinstarlight",
         "repo": "nixos-cosmic",
-        "rev": "848384c85159d3009f24f78b8b53082be451a9e5",
+        "rev": "a7b43233104076ceeebdfa721085193a19f090d3",
         "type": "github"
       },
       "original": {
@@ -500,11 +500,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1716692524,
-        "narHash": "sha256-sALodaA7Zkp/JD6ehgwc0UCBrSBfB4cX66uFGTsqeFU=",
+        "lastModified": 1717297459,
+        "narHash": "sha256-cZC2f68w5UrJ1f+2NWGV9Gx0dEYmxwomWN2B0lx0QRA=",
         "owner": "Mic92",
         "repo": "sops-nix",
-        "rev": "962797a8d7f15ed7033031731d0bb77244839960",
+        "rev": "ab2a43b0d21d1d37d4d5726a892f714eaeb4b075",
         "type": "github"
       },
       "original": {
