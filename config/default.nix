@@ -115,8 +115,6 @@
 
       tkey = lib.mkEnableOption "tkey profile";
 
-      tlp = lib.mkEnableOption "tlp profile";
-
       tmux = lib.mkEnableOption "tmux profile" // {
         default = true;
       };

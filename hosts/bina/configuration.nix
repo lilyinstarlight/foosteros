@@ -43,7 +43,6 @@
     sysrq = true;
     tex = true;
     tkey = true;
-    tlp = true;
     udiskie = true;
     workstation = true;
   };
