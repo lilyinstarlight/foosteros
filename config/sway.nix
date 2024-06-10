@@ -9,7 +9,7 @@ let
       gtk-theme='Catppuccin-Mocha-Standard-Pink-Dark'
       icon-theme='Papirus-Dark'
       font-name='monospace 12'
-      cursor-theme='Catppuccin-Mocha-Dark-Cursors'
+      cursor-theme='catppuccin-mocha-dark-cursors'
       color-scheme='prefer-dark'
     '';
   };
@@ -28,7 +28,7 @@ let
     destination = "/share/icons/default/index.theme";
     text = ''
       [icon theme]
-      Inherits=Papirus-Dark;Catppuccin-Mocha-Dark-Cursors
+      Inherits=Papirus-Dark;catppuccin-mocha-dark-cursors
     '';
   };
 
@@ -468,7 +468,7 @@ lib.mkIf config.foosteros.profiles.sway {
       gtk-theme-name=Catppuccin-Mocha-Standard-Pink-Dark
       gtk-icon-theme-name=Papirus-Dark
       gtk-font-name=monospace 12
-      gtk-cursor-theme-name=Catppuccin-Mocha-Dark-Cursors
+      gtk-cursor-theme-name=catppuccin-mocha-dark-cursors
       gtk-application-prefer-dark-theme=true
     '';
     "gtk-4.0/settings.ini".source = config.environment.etc."xdg/gtk-3.0/settings.ini".source;
@@ -478,7 +478,7 @@ lib.mkIf config.foosteros.profiles.sway {
       gtk-theme-name=Catppuccin-Mocha-Standard-Pink-Dark
       gtk-icon-theme-name=Papirus-Dark
       gtk-font-name=monospace 12
-      gtk-cursor-theme-name=Catppuccin-Mocha-Dark-Cursors
+      gtk-cursor-theme-name=catppuccin-mocha-dark-cursors
       gtk-application-prefer-dark-theme=true
     '';
     "gtk-3.0/settings.ini".source = config.environment.etc."xdg/gtk-3.0/settings.ini".source;
@@ -487,7 +487,7 @@ lib.mkIf config.foosteros.profiles.sway {
       gtk-theme-name="Catppuccin-Mocha-Standard-Pink-Dark"
       gtk-icon-theme-name="Papirus-Dark"
       gtk-font-name="monospace 12"
-      gtk-cursor-theme-name="Catppuccin-Mocha-Dark-Cursors"
+      gtk-cursor-theme-name="catppuccin-mocha-dark-cursors"
     '';
     "gtk-2.0/gtkrc".source = config.environment.etc."xdg/gtk-2.0/gtkrc".source;
 
@@ -694,7 +694,7 @@ lib.mkIf config.foosteros.profiles.sway {
       exec_always ${lib.getExe' pkgs.fooster-backgrounds "setbg"}
 
       ### desktop environment
-      seat seat0 xcursor_theme "Catppuccin-Mocha-Dark-Cursors"
+      seat seat0 xcursor_theme "catppuccin-mocha-dark-cursors"
     '';
 
     "xdg/i3status/config".text = lib.mkDefault ''
@@ -896,7 +896,7 @@ lib.mkIf config.foosteros.profiles.sway {
     greetdSwayConfig = pkgs.writeText "greetd-sway-config" ''
       font monospace 12
       output * background #111111 solid_color
-      seat seat0 xcursor_theme "Catppuccin-Mocha-Dark-Cursors"
+      seat seat0 xcursor_theme "catppuccin-mocha-dark-cursors"
       xwayland disable
       exec "command -v dbus-update-activation-environment >/dev/null 2>&1 && dbus-update-activation-environment --systemd PATH XDG_SESSION_CLASS XDG_CONFIG_DIRS XDG_DATA_DIRS XDG_SESSION_DESKTOP XDG_CURRENT_DESKTOP XDG_SESSION_TYPE DCONF_PROFILE XDG_DESKTOP_PORTAL_DIR DISPLAY WAYLAND_DISPLAY SWAYSOCK XMODIFIERS XCURSOR_SIZE XCURSOR_THEME GDK_PIXBUF_MODULE_FILE GIO_EXTRA_MODULES GTK_IM_MODULE QT_PLUGIN_PATH QT_QPA_PLATFORMTHEME QT_STYLE_OVERRIDE QT_IM_MODULE NIXOS_OZONE_WL || systemctl --user import-environment PATH XDG_SESSION_CLASS XDG_CONFIG_DIRS XDG_DATA_DIRS XDG_SESSION_DESKTOP XDG_CURRENT_DESKTOP XDG_SESSION_TYPE DCONF_PROFILE XDG_DESKTOP_PORTAL_DIR DISPLAY WAYLAND_DISPLAY SWAYSOCK XMODIFIERS XCURSOR_SIZE XCURSOR_THEME GDK_PIXBUF_MODULE_FILE GIO_EXTRA_MODULES GTK_IM_MODULE QT_PLUGIN_PATH QT_QPA_PLATFORMTHEME QT_STYLE_OVERRIDE QT_IM_MODULE NIXOS_OZONE_WL"
       exec "${lib.getExe config.programs.regreet.package} >/var/log/regreet/stdio 2>&1; swaymsg exit"
