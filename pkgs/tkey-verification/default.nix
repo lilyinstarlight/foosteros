@@ -6,13 +6,13 @@
 
 buildGoModule rec {
   pname = "tkey-verification";
-  version = "0.0.2";
+  version = "0.0.3";
 
   src = fetchFromGitHub {
     owner = "tillitis";
     repo = "tkey-verification";
     rev = "v${version}";
-    hash = "sha256-G66yGp3riioitn3ookRkkeikjHmTckUf7PhOeJiynJA=";
+    hash = "sha256-35+r+OxBLb+wF2S7LM4towlxmToe+UtzXP340pR58b0=";
   };
 
   vendorHash = "sha256-fiFG16njTHbdSXnNtMSjqKdlTtqL3YZRRaPKuKt02xg=";
