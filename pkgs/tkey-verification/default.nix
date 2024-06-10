@@ -25,7 +25,9 @@ buildGoModule rec {
     # upstream oci container build.
     VERISIGNER_VERSION = "0.0.3";
     VERISIGNER_BIN = fetchurl {
-      url = "https://github.com/tillitis/tkey-verification/releases/download/v${version}/verisigner-v${VERISIGNER_VERSION}.bin";
+      # TODO: restore when newer versions have verisigner release asset or tillitis/tkey-verification#19 is merged
+      #url = "https://github.com/tillitis/tkey-verification/releases/download/v${version}/verisigner-v${VERISIGNER_VERSION}.bin";
+      url = "https://github.com/tillitis/tkey-verification/releases/download/v0.0.2/verisigner-v${VERISIGNER_VERSION}.bin";
       hash = "sha256-g6VNQ1nGjhVjUeCgjZc4U8+BRVAe6F4NfAKB25s4dv0=";
     };
   };
