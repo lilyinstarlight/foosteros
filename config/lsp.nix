@@ -11,6 +11,6 @@ lib.mkIf config.foosteros.profiles.lsp {
     pylsp-with-plugins
     rust-analyzer rustc rustfmt cargo clippy
     nil # TODO: consider nixd
-    nodePackages.bash-language-server
+    bash-language-server
   ];
 }
