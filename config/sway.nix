@@ -6,7 +6,7 @@ let
     destination = "/dconf/sway-custom";
     text = ''
       [org/gnome/desktop/interface]
-      gtk-theme='Catppuccin-Mocha-Standard-Pink-Dark'
+      gtk-theme='Colloid-Pink-Dark-Catppuccin'
       icon-theme='Papirus-Dark'
       font-name='monospace 12'
       cursor-theme='catppuccin-mocha-dark-cursors'
@@ -88,9 +88,10 @@ let
     ];
   });
 
-  catppuccin-gtk-sway = pkgs.catppuccin-gtk.override {
-    variant = "mocha";
-    accents = [ "pink" ];
+  colloid-gtk-theme-sway = pkgs.colloid-gtk-theme.override {
+    tweaks = [ "catppuccin" ];
+    colorVariants = [ "dark" ];
+    themeVariants = [ "pink" ];
   };
 
   catppuccin-cursors-sway = pkgs.catppuccin-cursors.mochaDark;
@@ -465,7 +466,7 @@ lib.mkIf config.foosteros.profiles.sway {
 
     "xdg/gtk-4.0/settings.ini".text = lib.mkDefault ''
       [Settings]
-      gtk-theme-name=Catppuccin-Mocha-Standard-Pink-Dark
+      gtk-theme-name=Colloid-Pink-Dark-Catppuccin
       gtk-icon-theme-name=Papirus-Dark
       gtk-font-name=monospace 12
       gtk-cursor-theme-name=catppuccin-mocha-dark-cursors
@@ -475,7 +476,7 @@ lib.mkIf config.foosteros.profiles.sway {
 
     "xdg/gtk-3.0/settings.ini".text = lib.mkDefault ''
       [Settings]
-      gtk-theme-name=Catppuccin-Mocha-Standard-Pink-Dark
+      gtk-theme-name=Colloid-Pink-Dark-Catppuccin
       gtk-icon-theme-name=Papirus-Dark
       gtk-font-name=monospace 12
       gtk-cursor-theme-name=catppuccin-mocha-dark-cursors
@@ -484,7 +485,7 @@ lib.mkIf config.foosteros.profiles.sway {
     "gtk-3.0/settings.ini".source = config.environment.etc."xdg/gtk-3.0/settings.ini".source;
 
     "xdg/gtk-2.0/gtkrc".text = lib.mkDefault ''
-      gtk-theme-name="Catppuccin-Mocha-Standard-Pink-Dark"
+      gtk-theme-name="Colloid-Pink-Dark-Catppuccin"
       gtk-icon-theme-name="Papirus-Dark"
       gtk-font-name="monospace 12"
       gtk-cursor-theme-name="catppuccin-mocha-dark-cursors"
@@ -938,7 +939,7 @@ lib.mkIf config.foosteros.profiles.sway {
       swaybg swaylock-fprintd swayidle
       kanshi i3status swaywsr mako rofi-wayland
       polkit-sway
-      fooster-backgrounds catppuccin-gtk-sway catppuccin-cursors-sway papirus-icon-theme sway-default-icon-theme
+      fooster-backgrounds colloid-gtk-theme-sway catppuccin-cursors-sway papirus-icon-theme sway-default-icon-theme
       qt6.qtsvg qt6.qtwayland
       slurp grim wl-clipboard libnotify sway-contrib.grimshot swappy wf-recorder wl-mirror
       xwayland
