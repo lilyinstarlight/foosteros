@@ -12,7 +12,7 @@ on:
         required: false
         type: boolean
       nix_installer:
-        default: 'https://nixos.org/nix/install'
+        default: ''
         required: false
         type: string
       cachix_cache_name:
