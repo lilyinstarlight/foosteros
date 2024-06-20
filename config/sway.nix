@@ -911,7 +911,7 @@ lib.mkIf config.foosteros.profiles.sway {
     '' + lib.concatMapStrings (user: "${user} = \"Sway\"\n") regreetUsers);
   in lib.optionals (regreetUsers != []) [ "L+ /var/cache/regreet/cache.toml - - - - ${regreetCache}" ];
 
-  services.xserver.gdk-pixbuf.modulePackages = with pkgs; [ librsvg ];
+  programs.gdk-pixbuf.modulePackages = with pkgs; [ librsvg ];
 
   programs.gnupg.agent.pinentryPackage = pkgs.writeShellApplication {
     name = "pinentry-rofi";
