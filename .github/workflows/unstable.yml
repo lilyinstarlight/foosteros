@@ -1,10 +1,10 @@
 name: Unstable Nix
 
 on:
-  pull_request:
-  push:
-    branches:
-      - main
+#  pull_request:
+#  push:
+#    branches:
+#      - main
   workflow_dispatch:
 
 jobs:
