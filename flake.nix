@@ -3,7 +3,6 @@
     ## nixpkgs inputs
 
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-23.05";
 
 
     ## foosteros inputs
@@ -18,7 +17,7 @@
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-stable.follows = "nixpkgs-stable";
+      inputs.nixpkgs-stable.follows = "";
     };
 
     impermanence.url = "github:nix-community/impermanence";
@@ -51,7 +50,7 @@
     };
 
     lix = {
-      url = "git+https://git@git.lix.systems/lix-project/lix";
+      url = "git+https://git.lix.systems/lix-project/lix";
       flake = false;
     };
 
@@ -66,6 +65,7 @@
     nixos-cosmic = {
       url = "github:lilyinstarlight/nixos-cosmic";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-stable.follows = "";
       inputs.flake-compat.follows = "flake-compat";
     };
 
@@ -80,7 +80,7 @@
     pre-commit-hooks = {
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-stable.follows = "nixpkgs-stable";
+      inputs.nixpkgs-stable.follows = "";
       inputs.flake-compat.follows = "flake-compat";
       inputs.gitignore.follows = "gitignore";
     };
