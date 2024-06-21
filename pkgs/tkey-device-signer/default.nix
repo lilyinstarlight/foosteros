@@ -7,13 +7,13 @@
 
 tkeyStdenv.mkDerivation rec {
   pname = "tkey-device-signer";
-  version = "1.0.0";
+  version = "1.0.1";
 
   src = fetchFromGitHub {
     owner = "tillitis";
     repo = "tkey-device-signer";
     rev = "v${version}";
-    hash = "sha256-TNXfuToxIvtDc35M/SDjRIwF4QmoqE1lZNQLQFO4BpY=";
+    hash = "sha256-G5nKMCKaoJNCkw5PgU+4vz8T6/hMECuFYM4cggwc/EM=";
   };
 
   makeFlags = [
