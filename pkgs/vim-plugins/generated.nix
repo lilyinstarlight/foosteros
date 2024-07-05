@@ -29,12 +29,12 @@ final: prev:
 
   vim-interestingwords = buildVimPlugin {
     pname = "vim-interestingwords";
-    version = "2020-10-29";
+    version = "2024-07-04";
     src = fetchFromGitHub {
       owner = "lfv89";
       repo = "vim-interestingwords";
-      rev = "e59f97aca15c6180e6f3aceaf4f7b50ca04326ed";
-      sha256 = "1pf7vhdvi200lkkz694x0afxlpjl3dcn30jhjgyz0kgby4q9gywc";
+      rev = "1a67ea7bdf4f35c6533f9557051cac0720d3f32f";
+      sha256 = "0b6pqfljm08jimpf7hddqh4h2fpmc3acyhwj5xx2q62axc23rz0a";
     };
     meta.homepage = "https://github.com/lfv89/vim-interestingwords/";
   };
