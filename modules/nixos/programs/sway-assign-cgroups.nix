@@ -5,7 +5,7 @@ let
 in
 
 {
-  meta.maintainers = with lib.maintainers; [ lilyinstarlight ];
+  meta.maintainers = with lib.maintainers; [ /*lilyinstarlight*/ ];
 
   options.programs.sway-assign-cgroups = {
     enable = lib.mkEnableOption "user service for sway-assign-cgroups";

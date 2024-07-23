@@ -60,7 +60,7 @@ buildGoModule rec {
     homepage = "https://github.com/tillitis/tkey-random-generator";
     license = licenses.gpl2Only;
     platforms = platforms.all;
-    maintainers = with maintainers; [ lilyinstarlight ];
+    maintainers = with maintainers; [ /*lilyinstarlight*/ ];
     mainProgram = "tkey-random-generator";
   };
 }

@@ -5,7 +5,7 @@ let
 in
 
 {
-  meta.maintainers = with lib.maintainers; [ lilyinstarlight ];
+  meta.maintainers = with lib.maintainers; [ /*lilyinstarlight*/ ];
 
   options.hardware.tkey = {
     enable = lib.mkEnableOption "udev rules for interfacing with the TKey-1 USB security token";

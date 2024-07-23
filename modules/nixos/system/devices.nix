@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 
 {
-  meta.maintainers = with lib.maintainers; [ lilyinstarlight ];
+  meta.maintainers = with lib.maintainers; [ /*lilyinstarlight*/ ];
 
   options.system.devices = {
     rootDisk = lib.mkOption {

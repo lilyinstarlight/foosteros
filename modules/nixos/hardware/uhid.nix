@@ -5,7 +5,7 @@ let
 in
 
 {
-  meta.maintainers = with lib.maintainers; [ lilyinstarlight ];
+  meta.maintainers = with lib.maintainers; [ /*lilyinstarlight*/ ];
 
   options.hardware.uhid = {
     enable = lib.mkEnableOption "udev rules for unprivileged UHID access";

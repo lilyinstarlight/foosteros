@@ -50,7 +50,7 @@ stdenv.mkDerivation rec {
     homepage = "https://github.com/luigifab/awf-extended";
     license = licenses.gpl3Plus;
     platforms = platforms.all;
-    maintainers = with maintainers; [ lilyinstarlight ];
+    maintainers = with maintainers; [ /*lilyinstarlight*/ ];
     mainProgram = "awf-gtk4";
   };
 }

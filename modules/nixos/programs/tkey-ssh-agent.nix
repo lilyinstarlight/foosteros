@@ -5,7 +5,7 @@ let
 in
 
 {
-  meta.maintainers = with lib.maintainers; [ lilyinstarlight ];
+  meta.maintainers = with lib.maintainers; [ /*lilyinstarlight*/ ];
 
   options.programs.tkey-ssh-agent = {
     enable = lib.mkEnableOption "user service for tkey-ssh-agent";

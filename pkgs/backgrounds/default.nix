@@ -48,7 +48,7 @@ stdenvNoCC.mkDerivation {
   meta = with lib; {
     description = "FoosterOS/2 backgrounds";
     homepage = "https://github.com/lilyinstarlight/foosteros";
-    maintainers = with maintainers; [ lilyinstarlight ];
+    maintainers = with maintainers; [ /*lilyinstarlight*/ ];
     platforms = platforms.linux;
   };
 }

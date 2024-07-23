@@ -45,7 +45,7 @@ buildGoModule rec {
     homepage = "https://github.com/tillitis/tkey-devtools";
     license = licenses.gpl2Only;
     platforms = platforms.all;
-    maintainers = with maintainers; [ lilyinstarlight ];
+    maintainers = with maintainers; [ /*lilyinstarlight*/ ];
     mainProgram = "tkey-runapp";
   };
 }

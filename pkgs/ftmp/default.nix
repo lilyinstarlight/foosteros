@@ -40,7 +40,7 @@ stdenvNoCC.mkDerivation rec {
     description = "Command line utility for FoosterNET Temp";
     homepage = "https://github.com/lilyinstarlight/tmp";
     license = licenses.mit;
-    maintainers = with maintainers; [ lilyinstarlight ];
+    maintainers = with maintainers; [ /*lilyinstarlight*/ ];
     mainProgram = "ftmp";
   };
 }

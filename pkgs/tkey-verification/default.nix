@@ -44,7 +44,7 @@ buildGoModule rec {
     homepage = "https://github.com/tillitis/tkey-verification";
     license = licenses.gpl2Only;
     platforms = platforms.all;
-    maintainers = with maintainers; [ lilyinstarlight ];
+    maintainers = with maintainers; [ /*lilyinstarlight*/ ];
     sourceProvenance = with sourceTypes; [ fromSource binaryFirmware ];
     mainProgram = "tkey-verification";
   };

@@ -45,7 +45,7 @@ stdenvNoCC.mkDerivation {
     description = "DNSimple zone updater for dynamic IPs";
     homepage = "https://github.com/lilyinstarlight/dnsimple-ddns";
     license = licenses.mit;
-    maintainers = with maintainers; [ lilyinstarlight ];
+    maintainers = with maintainers; [ /*lilyinstarlight*/ ];
     platforms = platforms.linux;
     mainProgram = "ddns";
   };

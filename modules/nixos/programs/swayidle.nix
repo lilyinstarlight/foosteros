@@ -53,7 +53,7 @@ let
 in
 
 {
-  meta.maintainers = with lib.maintainers; [ lilyinstarlight ];
+  meta.maintainers = with lib.maintainers; [ /*lilyinstarlight*/ ];
 
   options.programs.swayidle = {
     enable = lib.mkEnableOption "user service for swayidle";

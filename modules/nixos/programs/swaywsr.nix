@@ -6,7 +6,7 @@ let
 in
 
 {
-  meta.maintainers = with lib.maintainers; [ lilyinstarlight ];
+  meta.maintainers = with lib.maintainers; [ /*lilyinstarlight*/ ];
 
   options.programs.swaywsr = {
     enable = lib.mkEnableOption "user service for swaywsr";

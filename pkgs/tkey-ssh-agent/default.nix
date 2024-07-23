@@ -35,7 +35,7 @@ buildGoModule rec {
     homepage = "https://github.com/tillitis/tillitis-key1-apps";
     license = licenses.gpl2Only;
     platforms = platforms.all;
-    maintainers = with maintainers; [ lilyinstarlight ];
+    maintainers = with maintainers; [ /*lilyinstarlight*/ ];
     mainProgram = "tkey-ssh-agent";
   };
 }

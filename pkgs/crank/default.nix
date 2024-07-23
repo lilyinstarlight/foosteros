@@ -107,7 +107,7 @@ rustPlatform.buildRustPackage {
     description = "A cargo wrapper for creating games for the Playdate handheld gaming system";
     license = licenses.mit;
     homepage = "https://github.com/rtsuk/crank";
-    maintainers = with maintainers; [ lilyinstarlight ];
+    maintainers = with maintainers; [ /*lilyinstarlight*/ ];
     platforms = platforms.linux;
     mainProgram = "crank";
   };

@@ -39,6 +39,6 @@ tkeyStdenv.mkDerivation rec {
     homepage = "https://github.com/tillitis/tkey-device-signer";
     license = licenses.gpl2Only;
     platforms = platforms.all;
-    maintainers = with maintainers; [ lilyinstarlight ];
+    maintainers = with maintainers; [ /*lilyinstarlight*/ ];
   };
 }

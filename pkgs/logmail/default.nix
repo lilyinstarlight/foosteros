@@ -51,7 +51,7 @@ stdenvNoCC.mkDerivation {
     description = "Log error and failed unit digest emailer";
     homepage = "https://github.com/lilyinstarlight/logmail";
     license = licenses.mit;
-    maintainers = with maintainers; [ lilyinstarlight ];
+    maintainers = with maintainers; [ /*lilyinstarlight*/ ];
     platforms = platforms.linux;
     mainProgram = "logmail";
   };
