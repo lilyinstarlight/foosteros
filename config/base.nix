@@ -203,8 +203,6 @@ lib.mkIf config.foosteros.profiles.base {
     };
   };
 
-  sound.enable = lib.mkDefault true;
-
   services.dbus.implementation = "broker";
 
   services.resolved.enable = lib.mkDefault true;
