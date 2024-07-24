@@ -27,7 +27,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.pre-commit-hooks-nix.follows = "pre-commit-hooks";
       inputs.flake-parts.follows = "flake-parts";
-      inputs.flake-utils.follows = "flake-utils";
       inputs.flake-compat.follows = "flake-compat";
     };
 

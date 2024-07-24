@@ -25,11 +25,13 @@ in with outpkgs;
   nixosTest = nixosTestFor outpkgs;
 
   # stdenvs
-  tkeyStdenv = mkStdenvNoLibs (overrideCC llvmPackages_16.stdenv (llvmPackages_16.stdenv.cc.override (args: {
-    bintools = buildPackages.llvmPackages_16.tools.bintools;
+  tkeyStdenv = mkStdenvNoLibs (overrideCC llvmPackages_18.stdenv (llvmPackages_18.stdenv.cc.override (args: {
+    bintools = buildPackages.llvmPackages_18.tools.bintools.override {
+      defaultHardeningFlags = lib.subtractLists [ "stackprotector" "zerocallusedregs" ] buildPackages.llvmPackages_18.tools.bintools.defaultHardeningFlags;
+    };
     nixSupport = (args.nixSupport or {}) // {
       cc-cflags = (args.nixSupport.cc-cflags or []) ++ [
-        "-fno-stack-protector"
+        "-fno-asynchronous-unwind-tables"
       ];
     };
   })));
