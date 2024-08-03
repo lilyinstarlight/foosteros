@@ -107,6 +107,8 @@
 
       secureboot = lib.mkEnableOption "secureboot profile";
 
+      steam = lib.mkEnableOption "steam profile";
+
       sway = lib.mkEnableOption "sway profile";
 
       sysrq = lib.mkEnableOption "sysrq profile";

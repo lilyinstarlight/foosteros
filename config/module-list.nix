@@ -38,6 +38,7 @@
   ./restic.nix
   ./sd-boot.nix
   ./secureboot.nix
+  ./steam.nix
   ./sway.nix
   ./sysrq.nix
   ./tex.nix

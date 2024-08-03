@@ -39,6 +39,7 @@
     printing = true;
     production = true;
     secureboot = true;
+    steam = true;
     sway = true;
     sysrq = true;
     tex = true;
