@@ -90,6 +90,7 @@
       "/var/lib/bluetooth"
       "/var/lib/libvirt"
       "/var/lib/systemd"
+      "/var/lib/tpm"
       "/var/log"
     ];
     files = [
@@ -180,6 +181,8 @@
   services.logind.lidSwitch = "ignore";
 
   services.resolved.dnssec = "false";
+
+  services.tcsd.enable = true;
 
   services.nullmailer.remotesFile = config.sops.secrets.nullmailer-remotes.path;
   systemd.services.nullmailer.serviceConfig = {
