@@ -266,7 +266,7 @@
         description = "Josie Wirszyla";
         isNormalUser = true;
         hashedPasswordFile = config.sops.secrets.josie-password.path;
-        extraGroups = with config.users.groups; map (grp: grp.name) [ networkmanager ];
+        extraGroups = with config.users.groups; map (grp: grp.name) [ wheel networkmanager ];
       };
     };
   };
