@@ -2,7 +2,7 @@
 
 {
   boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "sd_mod" "rtsx_pci_sdmmc" ];
-  boot.initrd.kernelModules = [ "dm-snapshot" "i915" ];
+  boot.initrd.kernelModules = [ "dm-snapshot" "i915" "tpm_tis" ];
 
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];

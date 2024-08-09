@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, utils, pkgs, ... }:
 
 {
   imports = [
@@ -158,6 +158,43 @@
   networking = {
     hostName = "lia";
     domain = "fooster.network";
+  };
+
+  boot.initrd.services.udev.rules = ''
+    ACTION=="add", KERNEL=="tpm[0-9]*", TAG+="systemd"
+  '';
+
+  boot.initrd.systemd = {
+    extraBin = {
+      nv_readvalue = "${pkgs.tpm-luks}/usr/bin/nv_readvalue";
+    };
+
+    services.unlock-with-tpm12-key = {
+      description = "Unlock LUKS with TPM 1.2 key";
+
+      requires = [ "dev-tpm0.device" "${utils.escapeSystemdPath config.boot.initrd.luks.devices.nixos.device}.device"];
+      after = [ "dev-tpm0.device" "${utils.escapeSystemdPath config.boot.initrd.luks.devices.nixos.device}.device" ];
+      wantedBy = [ "initrd-root-device.target" ];
+      before = [ "systemd-cryptsetup@${config.boot.initrd.luks.devices.nixos.name}.service" "initrd-root-device.target" ];
+
+      unitConfig = {
+        AssertPathExists = "/etc/initrd-release";
+        DefaultDependencies = false;
+      };
+
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+      };
+
+      script = ''
+        touch /dev/shm/luks-key
+        chmod a=,u=r /dev/shm/luks-key
+        nv_readvalue -ix 2 -sz 32 -of /dev/shm/luks-key
+        systemd-cryptsetup attach ${config.boot.initrd.luks.devices.nixos.name} ${config.boot.initrd.luks.devices.nixos.device} /dev/shm/luks-key
+        shred -fu /dev/shm/luks-key
+      '';
+    };
   };
 
   services.restic.backups.lia = {
