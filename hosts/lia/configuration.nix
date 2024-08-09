@@ -49,6 +49,9 @@
       lily-password = {
         neededForUsers = true;
       };
+      josie-password = {
+        neededForUsers = true;
+      };
       restic-backup-password = {};
       restic-backup-environment = {};
       dnsimple-ddns = {};
@@ -72,6 +75,7 @@
       "mobile"
       "wired"
       "wired-admin"
+      "josie"
     ]));
   };
 
@@ -79,6 +83,7 @@
     hideMounts = true;
     directories = [
       "/etc/nixos"
+      "/home/josie"
       "/var/db/sudo"
       "/var/lib/bluetooth"
       "/var/lib/libvirt"
@@ -103,6 +108,7 @@
         "vids"
         ".azure"
         ".backgrounds"
+        ".config/cosmic"
         ".config/dconf"
         ".config/Element"
         ".config/Mattermost"
@@ -165,64 +171,9 @@
     };
   };
 
-  environment.etc = {
-    "sway/config.d/lia".text = ''
-      ### ouputs
-      output eDP-1 resolution 1920x1080 position 0 0 scale 1
-
-      ### inputs
-      input type:keyboard {
-          xkb_options caps:escape
-      }
-
-      input "1:1:AT_Translated_Set_2_keyboard" {
-          xkb_layout us
-      }
-
-      input "1739:0:Synaptics_TM3053-003" {
-          click_method clickfinger
-          dwt enabled
-          middle_emulation enabled
-          natural_scroll enabled
-          scroll_method two_finger
-          tap enabled
-      }
-
-      ### rules
-      for_window [title="Qsynth"] floating enable
-      for_window [title=".* — QjackCtl"] floating enable
-      for_window [title="Virtual MIDI Piano Keyboard"] floating enable
-    '';
-  } // (lib.mapAttrs'
+  environment.etc = lib.mapAttrs'
     (name: value: lib.nameValuePair "NetworkManager/system-connections/${lib.removePrefix "networks/" name}" { source = value.path; })
-    (lib.filterAttrs (name: value: lib.hasPrefix "networks/" name) config.sops.secrets)
-  );
-
-  programs.kanshi.profiles = {
-    internal = {
-      outputs = {
-        "eDP-1" = "enable mode 1920x1080 position 0,0 scale 1";
-      };
-    };
-
-    desk = {
-      outputs = {
-        "eDP-1" = "enable mode 1920x1080 position 1920,0 scale 1";
-        "VIZIO, Inc E390i-A1 0x00000101" = "enable mode 1920x1080 position 0,0 scale 1";
-      };
-      commands = [
-        "${lib.getExe' pkgs.sway "swaymsg"} workspace number 3, move workspace to eDP-1"
-        "${lib.getExe' pkgs.sway "swaymsg"} workspace number 1, move workspace to '\"VIZIO, Inc E390i-A1 0x00000101\"'"
-      ];
-    };
-
-    deskonly = {
-      outputs = {
-        "eDP-1" = "disable";
-        "VIZIO, Inc E390i-A1 0x00000101" = "enable mode 1920x1080 position 0,0 scale 1";
-      };
-    };
-  };
+    (lib.filterAttrs (name: value: lib.hasPrefix "networks/" name) config.sops.secrets);
 
   services.logind.lidSwitch = "ignore";
 
@@ -268,6 +219,12 @@
       lily = {
         hashedPasswordFile = config.sops.secrets.lily-password.path;
         extraGroups = with config.users.groups; map (grp: grp.name) [ networkmanager keys adbusers ];
+      };
+      josie = {
+        description = "Josie Wirszyla";
+        isNormalUser = true;
+        hashedPasswordFile = config.sops.secrets.josie-password.path;
+        extraGroups = with config.users.groups; map (grp: grp.name) [ networkmanager ];
       };
     };
   };
