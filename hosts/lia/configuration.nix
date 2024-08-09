@@ -34,6 +34,7 @@
     pass = true;
     pki = true;
     podman = true;
+    secureboot = true;
     udiskie = true;
     workstation = true;
   };
@@ -83,6 +84,7 @@
     hideMounts = true;
     directories = [
       "/etc/nixos"
+      "/etc/secureboot"
       "/home/josie"
       "/var/db/sudo"
       "/var/lib/bluetooth"
