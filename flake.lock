@@ -215,11 +215,11 @@
     "lix": {
       "flake": false,
       "locked": {
-        "lastModified": 1723158731,
-        "narHash": "sha256-FIXisGWmQpPjPcEKy/Xa6YvnUYg9KysfLsFq0biMIug=",
+        "lastModified": 1723233557,
+        "narHash": "sha256-xfvFAMmR7bc2RaD1ehaT0hBE4Kka/wuqxMeW6L8x3MM=",
         "ref": "refs/heads/main",
-        "rev": "3b902683e93ad21be3537ef77f3e5200fbbed900",
-        "revCount": 16108,
+        "rev": "c7d97802e4f59b8621e67cf62275d6a7fde8fe62",
+        "revCount": 16119,
         "type": "git",
         "url": "https://git.lix.systems/lix-project/lix"
       },
@@ -334,11 +334,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1723160425,
-        "narHash": "sha256-ocOk6+G0MRQpeQLHV3e9wYzTv5xuVRI8p2LDoX6W3WM=",
+        "lastModified": 1723245532,
+        "narHash": "sha256-4C6tp69429ncSuREGW2Gy03i075Jxbfvqh0XX4hmNfA=",
         "owner": "lilyinstarlight",
         "repo": "nixos-cosmic",
-        "rev": "aaeee8114bba72b345cbcc03f075e420abf2ecdd",
+        "rev": "120e78e86609d06053c9cb33b269f3956aca7bec",
         "type": "github"
       },
       "original": {
@@ -392,11 +392,11 @@
         "nixpkgs-stable": []
       },
       "locked": {
-        "lastModified": 1723056346,
-        "narHash": "sha256-YpzywjTAUHRRHcO8zz9x2gYqJ0JmZlcB9+RaUvD89qM=",
+        "lastModified": 1723202784,
+        "narHash": "sha256-qbhjc/NEGaDbyy0ucycubq4N3//gDFFH3DOmp1D3u1Q=",
         "owner": "cachix",
         "repo": "git-hooks.nix",
-        "rev": "3c977f1c9930f54066c085305b4b2291385e7a73",
+        "rev": "c7012d0c18567c889b948781bc74a501e92275d1",
         "type": "github"
       },
       "original": {
@@ -457,11 +457,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1722997267,
-        "narHash": "sha256-8Pncp8IKd0f0N711CRrCGTC4iLfBE+/5kaMqyWxnYic=",
+        "lastModified": 1723083652,
+        "narHash": "sha256-ait+SeO67n8b3lIaBWwuzVX6F1zyTJ0cY6cHWtvhTyc=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "d720bf3cebac38c2426d77ee2e59943012854cb8",
+        "rev": "69e0ad9289fc08ee5a313fb107f00e0f21e7cbb2",
         "type": "github"
       },
       "original": {
