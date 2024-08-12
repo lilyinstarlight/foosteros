@@ -83,9 +83,14 @@ in with outpkgs;
 
   # TODO: remove when xdg-desktop-portal-wlr fixes upstream bitmasking error
   xdg-desktop-portal-wlr = pkgs.xdg-desktop-portal-wlr.overrideAttrs (old: {
-    postPatch = old.postPatch or "" + ''
-      substituteInPlace src/screencast/screencast.c --replace 'if (mask & (1<<WINDOW))' 'if (!(mask & MONITOR))'
-    '';
+    patches = old.patches or [] ++ [
+      # https://github.com/emersion/xdg-desktop-portal-wlr/pull/309
+      (fetchpatch {
+        name = "xdg-desktop-portal-wlr-fix-screencast-select-sources.patch";
+        url = "https://github.com/emersion/xdg-desktop-portal-wlr/commit/d9ada849aeca6137915de2df69beaef4e272cc1d.diff";
+        hash = "sha256-iyjdKOyh1uZGu7T1SRc5Nwlr5nnfV6eI4eKeBl3hlf8=";
+      })
+    ];
   });
 
   # dependents of unfree packages
