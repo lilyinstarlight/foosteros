@@ -83,6 +83,7 @@
       "wired"
       "wired-admin"
       "josie"
+      "mallory"
       "cynthia"
       "carolina"
       "allison"
