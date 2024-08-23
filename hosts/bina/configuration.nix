@@ -99,6 +99,7 @@
       "/var/lib/bluetooth"
       "/var/lib/fprint"
       "/var/lib/libvirt"
+      "/var/lib/nixos"
       "/var/lib/systemd"
       "/var/log"
     ];

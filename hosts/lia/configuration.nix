@@ -89,6 +89,7 @@
       "/var/db/sudo"
       "/var/lib/bluetooth"
       "/var/lib/libvirt"
+      "/var/lib/nixos"
       "/var/lib/systemd"
       "/var/lib/tpm"
       "/var/log"
