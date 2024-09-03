@@ -4,7 +4,7 @@
   imports = [
     inputs.home-manager.nixosModules.home-manager
     inputs.sops-nix.nixosModules.sops
-    inputs.impermanence.nixosModules.impermanence
+    inputs.preservation.nixosModules.preservation
     inputs.lanzaboote.nixosModules.lanzaboote
     inputs.disko.nixosModules.disko
     inputs.nix-index-database.nixosModules.nix-index
@@ -131,7 +131,6 @@
 
   config = {
     home-manager.sharedModules = [
-      inputs.impermanence.nixosModules.home-manager.impermanence
       self.homeManagerModules.foosteros
     ];
   };

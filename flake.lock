@@ -188,21 +188,6 @@
         "type": "github"
       }
     },
-    "impermanence": {
-      "locked": {
-        "lastModified": 1724489415,
-        "narHash": "sha256-ey8vhwY/6XCKoh7fyTn3aIQs7WeYSYtLbYEG87VCzX4=",
-        "owner": "nix-community",
-        "repo": "impermanence",
-        "rev": "c7f5b394397398c023000cf843986ee2571a1fd7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "impermanence",
-        "type": "github"
-      }
-    },
     "lanzaboote": {
       "inputs": {
         "crane": "crane",
@@ -451,6 +436,21 @@
         "type": "github"
       }
     },
+    "preservation": {
+      "locked": {
+        "lastModified": 1725286724,
+        "narHash": "sha256-BECwmbk++THuJOJAcu/5VDNc/nC2q5+p9lDDY8eSGIA=",
+        "owner": "WilliButz",
+        "repo": "preservation",
+        "rev": "2d7f1df67835191f4039cadb5426a1a733cfa6c1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "WilliButz",
+        "repo": "preservation",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "disko": "disko",
@@ -461,7 +461,6 @@
         "flakey-profile": "flakey-profile",
         "gitignore": "gitignore",
         "home-manager": "home-manager",
-        "impermanence": "impermanence",
         "lanzaboote": "lanzaboote",
         "lix": "lix",
         "lix-module": "lix-module",
@@ -471,6 +470,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "pre-commit-hooks": "pre-commit-hooks",
+        "preservation": "preservation",
         "sops-nix": "sops-nix"
       }
     },

@@ -90,79 +90,89 @@
     ]));
   };
 
-  environment.persistence."/state" = {
-    hideMounts = true;
-    directories = [
-      "/etc/nixos"
-      "/etc/secureboot"
-      "/var/db/sudo"
-      "/var/lib/bluetooth"
-      "/var/lib/fprint"
-      "/var/lib/libvirt"
-      "/var/lib/nixos"
-      "/var/lib/systemd"
-      "/var/log"
-    ];
-    files = [
-      "/etc/machine-id"
-      "/etc/ssh/ssh_host_ed25519_key"
-      "/etc/ssh/ssh_host_ed25519_key.pub"
-      "/etc/ssh/ssh_host_rsa_key"
-      "/etc/ssh/ssh_host_rsa_key.pub"
-    ];
-    users.lily = {
-      directories = [
-        "docs"
-        "emu"
-        "music"
-        "pics"
-        "public"
-        "src"
-        "vids"
-        ".azure"
-        ".backgrounds"
-        ".config/dconf"
-        ".config/Element"
-        ".config/Mattermost"
-        ".config/obs-studio"
-        ".config/pipewire"
-        ".config/PrusaSlicer"
-        ".config/qutebrowser"
-        ".config/rncbc.org"
-        ".config/teams-for-linux"
-        ".config/WebCord"
-        ".gnupg"
-        ".local/share/fish"
-        ".local/share/mopidy"
-        ".local/share/nvim"
-        ".local/share/PrismLauncher"
-        ".local/share/qutebrowser"
-        ".local/state/wireplumber"
-        ".mozilla"
-        ".password-store"
-        ".Playdate Simulator"
-        ".sonic-pi"
-        ".ssh"
-      ];
-      files = [
-        ".android/adbkey"
-        ".android/adbkey.pub"
-        ".config/beets/library.db"
-        ".config/beets/state.pickle"
-        ".lmmsrc.xml"
-      ];
+  preservation = {
+    enable = true;
+    preserveAt = {
+      "/state" = {
+        directories = [
+          "/etc/nixos"
+          "/etc/secureboot"
+          "/var/db/sudo"
+          "/var/lib/bluetooth"
+          "/var/lib/fprint"
+          "/var/lib/libvirt"
+          { directory =  "/var/lib/nixos"; inInitrd = true; }
+          "/var/lib/systemd"
+          { directory =  "/var/log"; inInitrd = true; }
+        ];
+        files = [
+          { file = "/etc/machine-id"; inInitrd = true; }
+          { file = "/etc/ssh/ssh_host_ed25519_key"; mode = "0700"; inInitrd = true; }
+          { file = "/etc/ssh/ssh_host_ed25519_key.pub"; inInitrd = true; }
+          { file = "/etc/ssh/ssh_host_rsa_key"; mode = "0700"; inInitrd = true; }
+          { file = "/etc/ssh/ssh_host_rsa_key.pub"; inInitrd = true; }
+        ];
+        users.lily = {
+          directories = [
+            "docs"
+            "emu"
+            "music"
+            "pics"
+            "public"
+            "src"
+            "vids"
+            ".azure"
+            ".backgrounds"
+            ".config/dconf"
+            ".config/Element"
+            ".config/Mattermost"
+            ".config/obs-studio"
+            ".config/pipewire"
+            ".config/PrusaSlicer"
+            ".config/qutebrowser"
+            ".config/rncbc.org"
+            ".config/teams-for-linux"
+            ".config/WebCord"
+            { directory = ".gnupg"; mode = "0700"; }
+            ".local/share/fish"
+            ".local/share/mopidy"
+            ".local/share/nvim"
+            ".local/share/PrismLauncher"
+            ".local/share/qutebrowser"
+            ".local/state/wireplumber"
+            ".mozilla"
+            ".password-store"
+            ".Playdate Simulator"
+            ".sonic-pi"
+            { directory = ".ssh"; mode = "0700"; }
+          ];
+          files = [
+            { file = ".android/adbkey"; configureParent = true; }
+            { file = ".android/adbkey.pub"; configureParent = true; }
+            { file = ".config/beets/library.db"; configureParent = true; }
+            { file = ".config/beets/state.pickle"; configureParent = true; }
+            ".lmmsrc.xml"
+          ];
+        };
+      };
+
+      "/persist" = {
+        users.lily = {
+          directories = [
+            "iso"
+            "tmp"
+            ".cargo/registry"
+          ];
+        };
+      };
     };
   };
 
-  environment.persistence."/persist" = {
-    hideMounts = true;
-    users.lily = {
-      directories = [
-        "iso"
-        "tmp"
-        ".cargo/registry"
-      ];
-    };
+  systemd.tmpfiles.settings.preservation = {
+    "/home/lily/.config".d = { user = "lily"; group = "users"; mode = "0755"; };
+    "/home/lily/.local".d = { user = "lily"; group = "users"; mode = "0755"; };
+    "/home/lily/.local/share".d = { user = "lily"; group = "users"; mode = "0755"; };
+    "/home/lily/.local/state".d = { user = "lily"; group = "users"; mode = "0755"; };
   };
 
   networking = {
