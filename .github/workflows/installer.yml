@@ -22,10 +22,10 @@ jobs:
       filenames: ${{ steps.identify.outputs.filenames }}
       start: ${{ steps.identify.outputs.start }}
     steps:
-      - uses: cachix/install-nix-action@V27
+      - uses: DeterminateSystems/nix-installer-action@v14
         with:
-          extra_nix_config: |
-            system-features = benchmark big-parallel kvm nixos-test
+          diagnostic-endpoint: ''
+          install_url: 'https://install.lix.systems/lix/lix-installer-x86_64-linux'
 
       - uses: cachix/cachix-action@v15
         with:
@@ -81,10 +81,10 @@ jobs:
           build-mount-path: '/nix'
           root-reserve-mb: '10240'
 
-      - uses: cachix/install-nix-action@V27
+      - uses: DeterminateSystems/nix-installer-action@v14
         with:
-          extra_nix_config: |
-            system-features = benchmark big-parallel kvm nixos-test
+          diagnostic-endpoint: ''
+          install_url: 'https://install.lix.systems/lix/lix-installer-x86_64-linux'
 
       - uses: cachix/cachix-action@v15
         with:
@@ -119,10 +119,10 @@ jobs:
     needs: [populate, build]
     runs-on: ubuntu-latest
     steps:
-      - uses: cachix/install-nix-action@V27
+      - uses: DeterminateSystems/nix-installer-action@v14
         with:
-          extra_nix_config: |
-            system-features = benchmark big-parallel kvm nixos-test
+          diagnostic-endpoint: ''
+          install_url: 'https://install.lix.systems/lix/lix-installer-x86_64-linux'
 
       - uses: cachix/cachix-action@v15
         with:
