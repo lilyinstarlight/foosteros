@@ -151,7 +151,7 @@
           directories = [
             "iso"
             "tmp"
-            ".cargo/registry"
+            { directory = ".cargo/registry"; configureParent = true; }
           ];
         };
       };
