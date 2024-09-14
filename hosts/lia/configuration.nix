@@ -35,6 +35,7 @@
     pki = true;
     podman = true;
     secureboot = true;
+    steam = true;
     udiskie = true;
     workstation = true;
   };
