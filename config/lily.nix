@@ -38,5 +38,13 @@ lib.mkIf config.foosteros.profiles.lily {
         uppull = "pull upstream HEAD";
       };
     };
+
+    programs.ssh = {
+      enable = true;
+      matchBlocks = {
+        "cl.forkos.org".user = "lilyinstarlight";
+        "gerrit.lix.systems".user = "lilyinstarlight";
+      };
+    };
   };
 }
