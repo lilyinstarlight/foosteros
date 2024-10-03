@@ -57,10 +57,19 @@ let
     ];
   });
 
-  colloid-gtk-theme-sway = pkgs.colloid-gtk-theme.override {
+  # TODO: remove when new upstream release is available
+  colloid-gtk-theme-sway = (pkgs.colloid-gtk-theme.override {
     tweaks = [ "catppuccin" ];
     colorVariants = [ "dark" ];
     themeVariants = [ "pink" ];
+  }).overrideAttrs {
+    version = "2024-06-18-unstable-2024-09-08";
+    src = pkgs.fetchFromGitHub {
+      owner = "vinceliuice";
+      repo = "colloid-gtk-theme";
+      rev = "d269edf9af5e14a9abcc9b9c8e6a35fd4d24ae6f";
+      hash = "sha256-9xh+OG53uXXQjCb2iU0efVBqUYh+hXsPP6q441f+yp0=";
+    };
   };
 
   catppuccin-cursors-sway = pkgs.catppuccin-cursors.mochaDark;
