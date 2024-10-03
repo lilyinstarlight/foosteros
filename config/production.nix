@@ -7,6 +7,7 @@ lib.mkIf config.foosteros.profiles.production {
     ardour lmms
     sonic-pi sonic-pi-tool open-stage-control
     lilypond
+    godot_4
     (wrapOBS {
       plugins = with obs-studio-plugins; [ wlrobs obs-gstreamer obs-move-transition obs-backgroundremoval ];
     })
