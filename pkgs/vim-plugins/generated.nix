@@ -125,12 +125,12 @@ final: prev:
 
   vim-zeek = buildVimPlugin {
     pname = "vim-zeek";
-    version = "2023-09-04";
+    version = "2024-10-08";
     src = fetchFromGitHub {
       owner = "zeek";
       repo = "vim-zeek";
-      rev = "49d7e5166fe5e7eb518e391ba29a7a245e72df8b";
-      sha256 = "0fsyj3718wpaa09nz6sfixwrbjss782h11gdpvs0xr9xasslz5jn";
+      rev = "a0f420cfc38b6088207a5f7189fea8485d8d21a4";
+      sha256 = "0ayxfvcza93w0497jn42s1ijkqmq6f5b3g8y55b0miic7zijck8r";
     };
     meta.homepage = "https://github.com/zeek/vim-zeek/";
   };
