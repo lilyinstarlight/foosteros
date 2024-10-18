@@ -6,13 +6,13 @@
 
 tkeyStdenv.mkDerivation rec {
   pname = "tkey-libs";
-  version = "0.1.1";
+  version = "0.1.2";
 
   src = fetchFromGitHub {
     owner = "tillitis";
     repo = "tkey-libs";
     rev = "v${version}";
-    hash = "sha256-K+4Td7crh0gB/ZkizKZ3qFjcP3bsEmM9/3z5xgY1IIw=";
+    hash = "sha256-6V8r67MxLyAUR4mnqvLrPky1Q9KlSbc5t/76yKIJgyo=";
   };
 
   installPhase = ''
