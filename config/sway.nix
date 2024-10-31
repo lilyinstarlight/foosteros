@@ -877,7 +877,13 @@ lib.mkIf config.foosteros.profiles.sway {
     ''))
   ];
 
-  programs.regreet.enable = true;
+  programs.regreet = {
+    enable = true;
+    theme.name = "Colloid-Pink-Dark-Catppuccin";
+    iconTheme.name = "Papirus-Dark";
+    font.name = "monospace 12";
+    cursorTheme.name = "catppuccin-mocha-dark-cursors";
+  };
   services.greetd.settings.default_session.command = let
     greetdSwayConfig = pkgs.writeText "greetd-sway-config" ''
       font monospace 12
