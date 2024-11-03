@@ -78,6 +78,7 @@
       "wired"
       "wired-admin"
       "josie"
+      "isabella"
     ]));
   };
 
