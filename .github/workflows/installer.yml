@@ -22,7 +22,7 @@ jobs:
       filenames: ${{ steps.identify.outputs.filenames }}
       start: ${{ steps.identify.outputs.start }}
     steps:
-      - uses: DeterminateSystems/nix-installer-action@v14
+      - uses: DeterminateSystems/nix-installer-action@v15
         with:
           diagnostic-endpoint: ''
           source-url: 'https://install.lix.systems/lix/lix-installer-x86_64-linux'
@@ -83,7 +83,7 @@ jobs:
           root-reserve-mb: '10240'
           swap-size-mb: '5120'
 
-      - uses: DeterminateSystems/nix-installer-action@v14
+      - uses: DeterminateSystems/nix-installer-action@v15
         with:
           diagnostic-endpoint: ''
           source-url: 'https://install.lix.systems/lix/lix-installer-x86_64-linux'
@@ -121,7 +121,7 @@ jobs:
     needs: [populate, build]
     runs-on: ubuntu-latest
     steps:
-      - uses: DeterminateSystems/nix-installer-action@v14
+      - uses: DeterminateSystems/nix-installer-action@v15
         with:
           diagnostic-endpoint: ''
           source-url: 'https://install.lix.systems/lix/lix-installer-x86_64-linux'
