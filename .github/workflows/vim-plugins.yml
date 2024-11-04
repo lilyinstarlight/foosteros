@@ -13,7 +13,7 @@ jobs:
       changed: ${{ steps.update.outputs.changed }}
       head: ${{ steps.stage.outputs.head }}
     steps:
-      - uses: DeterminateSystems/nix-installer-action@v14
+      - uses: DeterminateSystems/nix-installer-action@v15
         with:
           diagnostic-endpoint: ''
           source-url: 'https://install.lix.systems/lix/lix-installer-x86_64-linux'
