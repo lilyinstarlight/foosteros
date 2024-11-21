@@ -81,7 +81,7 @@ jobs:
           build-mount-path: '/nix'
           build-mount-path-ownership: 'root:root'
           root-reserve-mb: '10240'
-          swap-size-mb: '5120'
+          swap-size-mb: '3584'
 
       - uses: DeterminateSystems/nix-installer-action@v16
         with:
