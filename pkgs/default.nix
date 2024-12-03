@@ -64,11 +64,6 @@ in with outpkgs;
   tkey-totp = callPackage ./tkey-totp {};
   tkey-verification = callPackage ./tkey-verification {};
 
-  # overridden packages
-  monofur-nerdfont = nerdfonts.override {
-    fonts = [ "Monofur" ];
-  };
-
   # TODO: remove when slurp or wlroots or sway fixes this
   slurp = pkgs.slurp.overrideAttrs (old: {
     patches = old.patches or [] ++ [

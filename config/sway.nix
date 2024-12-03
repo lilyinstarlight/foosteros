@@ -279,7 +279,7 @@ lib.mkIf config.foosteros.profiles.sway {
   ];
 
   fonts.packages = with pkgs; [
-    monofur-nerdfont
+    nerd-fonts.monofur
   ];
 
   fonts.fontconfig.defaultFonts.monospace = [
