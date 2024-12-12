@@ -30,7 +30,7 @@ jobs:
 
       - name: Configure $NIX_PATH
         run: |
-          echo "NIX_PATH=nixpkgs=https://github.com/NixOS/nixpkgs/archive/$(jq -r '.nodes.nixpkgs.locked.rev' flake.lock).tar.gz" >> $GITHUB_ENV
+          echo "NIX_PATH=nixpkgs=https://github.com/NixOS/nixpkgs/archive/$(jq -r '.nodes.[.nodes.[.root].inputs.nixpkgs].locked.rev' flake.lock).tar.gz" >> $GITHUB_ENV
 
       - id: update
         name: nix-shell scripts/update.nix --argstr commit true
