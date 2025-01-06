@@ -118,6 +118,10 @@ jobs:
           diagnostic-endpoint: ''
           source-url: ${{ inputs.nix_installer }}
 
+      - name: 'Remove AppArmor restrictions on unprivileged user namespaces'
+        run: |
+          sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+
       - uses: cachix/cachix-action@v15
         with:
           name: ${{ inputs.cachix_cache_name }}
