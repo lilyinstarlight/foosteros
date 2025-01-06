@@ -253,18 +253,18 @@
     desk = {
       outputs = {
         "eDP-1" = "enable mode 2256x1504 position 1920,0 scale 1.5";
-        "VIZIO, Inc E390i-A1 0x00000101" = "enable mode 1920x1080 position 0,0 scale 1";
+        "VIZIO, Inc E390i-A1 0x01010101" = "enable mode 1920x1080 position 0,0 scale 1";
       };
       commands = [
         "${lib.getExe' pkgs.sway "swaymsg"} workspace number 3, move workspace to eDP-1"
-        "${lib.getExe' pkgs.sway "swaymsg"} workspace number 1, move workspace to '\"VIZIO, Inc E390i-A1 0x00000101\"'"
+        "${lib.getExe' pkgs.sway "swaymsg"} workspace number 1, move workspace to '\"VIZIO, Inc E390i-A1 0x01010101\"'"
       ];
     };
 
     deskonly = {
       outputs = {
         "eDP-1" = "disable";
-        "VIZIO, Inc E390i-A1 0x00000101" = "enable mode 1920x1080 position 0,0 scale 1";
+        "VIZIO, Inc E390i-A1 0x01010101" = "enable mode 1920x1080 position 0,0 scale 1";
       };
     };
   };
