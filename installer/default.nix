@@ -11,8 +11,8 @@
   boot.initrd.systemd.enable = lib.mkImageMediaOverride false;
   boot.initrd.systemd.emergencyAccess = lib.mkImageMediaOverride true;
 
-  isoImage.isoName = lib.mkImageMediaOverride
-    "foosteros-${config.system.build.installHostname}-${config.system.nixos.release}-${self.shortRev or "dirty"}-${pkgs.stdenv.hostPlatform.uname.processor}.iso";
+  image.baseName = lib.mkImageMediaOverride
+    "foosteros-${config.system.build.installHostname}-${config.system.nixos.release}-${self.shortRev or "dirty"}-${pkgs.stdenv.hostPlatform.uname.processor}";
   isoImage.volumeID = "foosteros-${config.system.nixos.release}-${self.shortRev or "dirty"}-${pkgs.stdenv.hostPlatform.uname.processor}";
 
   networking.hostName = lib.mkImageMediaOverride "${config.system.build.installHostname}-installer";
