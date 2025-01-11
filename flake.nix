@@ -146,8 +146,8 @@
                 in {
                   installerSystem = installerConfiguration;
                   installer = let
-                    isoName = "${installerConfiguration.config.image.baseName}.iso";
-                    isoPath = "${installerConfiguration.config.system.build.isoImage}/iso/${isoName}";
+                    isoName = installerConfiguration.config.image.fileName;
+                    isoPath = "${installerConfiguration.config.system.build.image}/${installerConfiguration.config.image.filePath}";
                   in pkgs.runCommandLocal isoName { inherit isoPath; } ''ln -s "$isoPath" $out'';
                 };
               })
