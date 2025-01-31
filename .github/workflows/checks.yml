@@ -51,17 +51,17 @@ jobs:
       - name: 'Pre-evaluate all derivation-type outputs'
         if: inputs.impure != 'true'
         run: |
-          outputs="$(for system in x86_64-linux aarch64-linux x86_64-darwin aarch64-darwin; do nix -vL flake show --legacy --system "$system" --json | jq --compact-output -r '. as $outputs | paths | select(.[-1] == "type") | . as $path | $outputs | getpath($path) as $type | if ($type == "derivation") then ($path[:-1] | join(".")) elif ($type == "nixos-configuration") then ($path[:-1] + ["config", "system", "build", "toplevel"] | join(".")) else empty end'; done | jq --raw-input --slurp --compact-output -r 'split("\n") | map(select(. != ""))')"
-          jq --null-input --raw-input --compact-output --argjson outputs "$outputs" -r '$outputs[]' | xargs -I'{}' nix -vL eval --json '.#{}.drvPath' | jq -r
+          outputs="$(for system in x86_64-linux aarch64-linux x86_64-darwin aarch64-darwin; do nix -L flake show --legacy --system "$system" --json | jq --compact-output -r '. as $outputs | paths | select(.[-1] == "type") | . as $path | $outputs | getpath($path) as $type | if ($type == "derivation") then ($path[:-1] | join(".")) elif ($type == "nixos-configuration") then ($path[:-1] + ["config", "system", "build", "toplevel"] | join(".")) else empty end'; done | jq --raw-input --slurp --compact-output -r 'split("\n") | map(select(. != ""))')"
+          jq --null-input --raw-input --compact-output --argjson outputs "$outputs" -r '$outputs[]' | xargs -I'{}' nix -L eval --json '.#{}.drvPath' | jq -r
 
       - if: inputs.impure != 'true'
-        run: nix -vL --show-trace flake check --no-build --system x86_64-linux
+        run: nix -L --show-trace flake check --no-build --system x86_64-linux
       - if: inputs.impure != 'true'
-        run: nix -vL --show-trace flake check --no-build --system aarch64-linux
+        run: nix -L --show-trace flake check --no-build --system aarch64-linux
       - if: inputs.impure != 'true'
-        run: nix -vL --show-trace flake check --no-build --system x86_64-darwin
+        run: nix -L --show-trace flake check --no-build --system x86_64-darwin
       - if: inputs.impure != 'true'
-        run: nix -vL --show-trace flake check --no-build --system aarch64-darwin
+        run: nix -L --show-trace flake check --no-build --system aarch64-darwin
 
   populate:
     name: Populate Checks Matrix
@@ -85,9 +85,9 @@ jobs:
           IMPURE: ${{ inputs.impure }}
         run: |
           if ! [ "$IMPURE" = true ]; then
-            checks="$(nix -vL eval ".#checks.$(nix show-config --json | jq -r .system.value)" --apply 'builtins.mapAttrs (_: drv: drv.drvPath)' --json)"
+            checks="$(nix -L eval ".#checks.$(nix show-config --json | jq -r .system.value)" --apply 'builtins.mapAttrs (_: drv: drv.drvPath)' --json)"
           else
-            checks="$(nix-instantiate -v --eval --strict --read-write-mode --expr 'builtins.mapAttrs (_: drv: drv.drvPath) (import ./test.nix {})' --json)"
+            checks="$(nix-instantiate --eval --strict --read-write-mode --expr 'builtins.mapAttrs (_: drv: drv.drvPath) (import ./test.nix {})' --json)"
           fi
           echo "checks=$(jq --null-input --raw-input --compact-output --argjson checks "$checks" '$checks | keys')" >> $GITHUB_OUTPUT
           echo "dependencies=$(jq --null-input --raw-input --compact-output --argjson checks "$checks" -r '$checks[]' | xargs -I'{}' sh -c 'if ! [ "$IMPURE" = true ]; then nix path-info --derivation -r '"'{}'"'"^*"; else nix-store --query --requisites'"'{}'"'"^*"; fi | jq --raw-input --slurp '"'"'split("\n") | map(select(. != "")) as $drvs | {"path": $drvs[-1], "references": $drvs[:-1]}'"'" | jq --compact-output --argjson checks "$checks" --slurp 'map({"name": (.path as $drv | $checks | with_entries(select(.value == $drv)) | keys | first | select(. != null)), "value": (.references | map(. as $drv | $checks | with_entries(select(.value == $drv)) | keys | first | select(. != null)))}) | from_entries')" >> $GITHUB_OUTPUT
@@ -139,9 +139,9 @@ jobs:
           CHECK: ${{ matrix.check }}
         run: |
           if ! [ "$IMPURE" = true ]; then
-            narhash="$(nix -vL --show-trace eval --raw ".#checks.$(nix show-config --json | jq -r .system.value).$CHECK" --apply 'builtins.substring 11 32')"
+            narhash="$(nix -L --show-trace eval --raw ".#checks.$(nix show-config --json | jq -r .system.value).$CHECK" --apply 'builtins.substring 11 32')"
           else
-            narhash="$(nix-instantiate -v --show-trace --eval --expr '{ attr }: (import ./test.nix {}).${attr}.outPath' --argstr attr "$CHECK" --json | jq -r '.[11:43]')"
+            narhash="$(nix-instantiate --show-trace --eval --expr '{ attr }: (import ./test.nix {}).${attr}.outPath' --argstr attr "$CHECK" --json | jq -r '.[11:43]')"
           fi
           for cache in {${{ inputs.cachix_cache_name }},${{ inputs.cachix_extra_cache_names }}}.cachix.org cache.nixos.org; do
             if curl -sfo /dev/null "https://$cache/$narhash.narinfo"; then
@@ -170,7 +170,7 @@ jobs:
           CHECK: ${{ matrix.check }}
         run: |
           if ! [ "$IMPURE" = true ]; then
-            nix -vL --show-trace build ".#checks.$(nix show-config --json | jq -r .system.value).$CHECK"
+            nix -L --show-trace build ".#checks.$(nix show-config --json | jq -r .system.value).$CHECK"
           else
-            nix-build -v --show-trace test.nix -A "$CHECK"
+            nix-build --show-trace test.nix -A "$CHECK"
           fi

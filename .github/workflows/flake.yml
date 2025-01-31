@@ -27,7 +27,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
 
-      - run: nix -vL --show-trace flake update
+      - run: nix -L --show-trace flake update
 
       - id: commit
         name: Commit and stage changes

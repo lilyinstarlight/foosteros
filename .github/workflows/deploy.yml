@@ -43,8 +43,8 @@ jobs:
       - id: build
         name: Build hosts
         run: |
-          nix -vL --show-trace build .#deploy
-          echo "spec=$(nix -vL --show-trace eval --raw .#deploy)" >> $GITHUB_OUTPUT
+          nix -L --show-trace build .#deploy
+          echo "spec=$(nix -L --show-trace eval --raw .#deploy)" >> $GITHUB_OUTPUT
 
       - name: Deploy hosts
         env:

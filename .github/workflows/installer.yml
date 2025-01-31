@@ -37,15 +37,15 @@ jobs:
       - id: identify
         name: Identify hosts capable of being built into an installer
         run: |
-          hosts="$(nix -vL eval .#nixosConfigurations --apply builtins.attrNames --json | jq -r '.[]')"
+          hosts="$(nix -L eval .#nixosConfigurations --apply builtins.attrNames --json | jq -r '.[]')"
           buildHosts=""
           buildFilenames=""
 
           for host in $hosts; do
-            if nix -vL eval .#nixosConfigurations."$host".config.system.build.installer.outPath &>/dev/null \
-                && [ "$(nix -vL eval --raw .#nixosConfigurations."$host".pkgs.stdenv.hostPlatform.uname.processor)" = "$(uname -m)" ]; then
+            if nix -L eval .#nixosConfigurations."$host".config.system.build.installer.outPath &>/dev/null \
+                && [ "$(nix -L eval --raw .#nixosConfigurations."$host".pkgs.stdenv.hostPlatform.uname.processor)" = "$(uname -m)" ]; then
               buildHosts="$(printf '%s\n%s\n' "$buildHosts" "$host")"
-              filename="$(nix -vL --show-trace eval --raw .#nixosConfigurations."$host".config.system.build.installer.name)"
+              filename="$(nix -L --show-trace eval --raw .#nixosConfigurations."$host".config.system.build.installer.name)"
               buildFilenames="$(printf '%s\n%s\n' "$buildFilenames" "$filename")"
             fi
           done
@@ -100,8 +100,8 @@ jobs:
         env:
           HOST: ${{ matrix.host }}
         run: |
-          nix -vL --show-trace build ".#nixosConfigurations.$HOST.config.system.build.installer"
-          echo "filename=$(nix -vL --show-trace eval --raw ".#nixosConfigurations.$HOST.config.system.build.installer.name")" >> $GITHUB_OUTPUT
+          nix -L --show-trace build ".#nixosConfigurations.$HOST.config.system.build.installer"
+          echo "filename=$(nix -L --show-trace eval --raw ".#nixosConfigurations.$HOST.config.system.build.installer.name")" >> $GITHUB_OUTPUT
 
       - name: Deploy ISO to website
         env:
