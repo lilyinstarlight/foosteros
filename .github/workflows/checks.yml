@@ -12,7 +12,7 @@ on:
         required: false
         type: boolean
       nix_installer:
-        default: 'https://install.lix.systems/lix/lix-installer-x86_64-linux'
+        default: 'https://install.lix.systems/lix'
         required: false
         type: string
       cachix_cache_name:
