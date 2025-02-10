@@ -26,6 +26,9 @@ jobs:
         with:
           diagnostic-endpoint: ''
           source-url: 'https://install.lix.systems/lix/lix-installer-x86_64-linux'
+          # TODO: remove when <https://git.lix.systems/lix-project/lix/issues/662> is fixed
+          extra-conf: |
+            http2 = false
 
       - uses: cachix/cachix-action@v15
         with:
@@ -87,6 +90,9 @@ jobs:
         with:
           diagnostic-endpoint: ''
           source-url: 'https://install.lix.systems/lix/lix-installer-x86_64-linux'
+          # TODO: remove when <https://git.lix.systems/lix-project/lix/issues/662> is fixed
+          extra-conf: |
+            http2 = false
 
       - uses: cachix/cachix-action@v15
         with:
@@ -125,6 +131,9 @@ jobs:
         with:
           diagnostic-endpoint: ''
           source-url: 'https://install.lix.systems/lix/lix-installer-x86_64-linux'
+          # TODO: remove when <https://git.lix.systems/lix-project/lix/issues/662> is fixed
+          extra-conf: |
+            http2 = false
 
       - uses: cachix/cachix-action@v15
         with:

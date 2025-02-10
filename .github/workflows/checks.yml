@@ -37,6 +37,9 @@ jobs:
         with:
           diagnostic-endpoint: ''
           source-url: ${{ inputs.nix_installer }}
+          # TODO: remove when <https://git.lix.systems/lix-project/lix/issues/662> is fixed
+          extra-conf: |
+            http2 = false
 
       - uses: cachix/cachix-action@v15
         with:
@@ -74,6 +77,9 @@ jobs:
         with:
           diagnostic-endpoint: ''
           source-url: ${{ inputs.nix_installer }}
+          # TODO: remove when <https://git.lix.systems/lix-project/lix/issues/662> is fixed
+          extra-conf: |
+            http2 = false
 
       - uses: actions/checkout@v4
         with:
@@ -117,6 +123,9 @@ jobs:
         with:
           diagnostic-endpoint: ''
           source-url: ${{ inputs.nix_installer }}
+          # TODO: remove when <https://git.lix.systems/lix-project/lix/issues/662> is fixed
+          extra-conf: |
+            http2 = false
 
       - name: 'Remove AppArmor restrictions on unprivileged user namespaces'
         run: |
