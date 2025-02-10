@@ -25,7 +25,7 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@v16
         with:
           diagnostic-endpoint: ''
-          source-url: 'https://install.lix.systems/lix/lix-installer-x86_64-linux'
+          source-url: 'https://install.lix.systems/lix/lix-installer-${{ fromJSON('{"X64":"x86_64","X86":"i686","ARM64":"aarch64","ARM":"armv7l"}')[runner.arch] }}-${{ fromJSON('{"Linux":"linux","macOS":"darwin","Windows":"windows"}')[runner.os] }}'
           # TODO: remove when <https://git.lix.systems/lix-project/lix/issues/662> is fixed
           extra-conf: |
             http2 = false
@@ -89,7 +89,7 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@v16
         with:
           diagnostic-endpoint: ''
-          source-url: 'https://install.lix.systems/lix/lix-installer-x86_64-linux'
+          source-url: 'https://install.lix.systems/lix/lix-installer-${{ fromJSON('{"X64":"x86_64","X86":"i686","ARM64":"aarch64","ARM":"armv7l"}')[runner.arch] }}-${{ fromJSON('{"Linux":"linux","macOS":"darwin","Windows":"windows"}')[runner.os] }}'
           # TODO: remove when <https://git.lix.systems/lix-project/lix/issues/662> is fixed
           extra-conf: |
             http2 = false
@@ -130,7 +130,7 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@v16
         with:
           diagnostic-endpoint: ''
-          source-url: 'https://install.lix.systems/lix/lix-installer-x86_64-linux'
+          source-url: 'https://install.lix.systems/lix/lix-installer-${{ fromJSON('{"X64":"x86_64","X86":"i686","ARM64":"aarch64","ARM":"armv7l"}')[runner.arch] }}-${{ fromJSON('{"Linux":"linux","macOS":"darwin","Windows":"windows"}')[runner.os] }}'
           # TODO: remove when <https://git.lix.systems/lix-project/lix/issues/662> is fixed
           extra-conf: |
             http2 = false
