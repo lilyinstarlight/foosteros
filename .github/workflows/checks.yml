@@ -37,8 +37,7 @@ jobs:
           diagnostic-endpoint: ''
           source-url: '${{ inputs.nix_installer || format(''https://install.lix.systems/lix/lix-installer-{0}-{1}'', fromJSON(''{"X64":"x86_64","X86":"i686","ARM64":"aarch64","ARM":"armv7l"}'')[runner.arch], fromJSON(''{"Linux":"linux","macOS":"darwin","Windows":"windows"}'')[runner.os]) }}'
           # TODO: remove when <https://git.lix.systems/lix-project/lix/issues/662> is fixed
-          extra-conf: |
-            http2 = false
+          extra-args: '--nix-package-url https://file.lily.flowers/foosteros/lix-ur-curl-x86_64-linux.tar.xz'
 
       - uses: cachix/cachix-action@v15
         with:
@@ -77,8 +76,7 @@ jobs:
           diagnostic-endpoint: ''
           source-url: '${{ inputs.nix_installer || format(''https://install.lix.systems/lix/lix-installer-{0}-{1}'', fromJSON(''{"X64":"x86_64","X86":"i686","ARM64":"aarch64","ARM":"armv7l"}'')[runner.arch], fromJSON(''{"Linux":"linux","macOS":"darwin","Windows":"windows"}'')[runner.os]) }}'
           # TODO: remove when <https://git.lix.systems/lix-project/lix/issues/662> is fixed
-          extra-conf: |
-            http2 = false
+          extra-args: '--nix-package-url https://file.lily.flowers/foosteros/lix-ur-curl-x86_64-linux.tar.xz'
 
       - uses: actions/checkout@v4
         with:
@@ -123,8 +121,7 @@ jobs:
           diagnostic-endpoint: ''
           source-url: '${{ inputs.nix_installer || format(''https://install.lix.systems/lix/lix-installer-{0}-{1}'', fromJSON(''{"X64":"x86_64","X86":"i686","ARM64":"aarch64","ARM":"armv7l"}'')[runner.arch], fromJSON(''{"Linux":"linux","macOS":"darwin","Windows":"windows"}'')[runner.os]) }}'
           # TODO: remove when <https://git.lix.systems/lix-project/lix/issues/662> is fixed
-          extra-conf: |
-            http2 = false
+          extra-args: '--nix-package-url https://file.lily.flowers/foosteros/lix-ur-curl-x86_64-linux.tar.xz'
 
       - name: 'Remove AppArmor restrictions on unprivileged user namespaces'
         run: |
