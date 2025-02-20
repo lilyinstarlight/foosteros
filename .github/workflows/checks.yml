@@ -90,7 +90,7 @@ jobs:
           IMPURE: ${{ inputs.impure }}
         run: |
           if ! [ "$IMPURE" = true ]; then
-            checks="$(nix -L eval ".#checks.$(nix show-config --json | jq -r .system.value)" --apply 'builtins.mapAttrs (_: drv: drv.drvPath)' --json)"
+            checks="$(nix -L eval ".#checks.$(nix config show --json | jq -r .system.value)" --apply 'builtins.mapAttrs (_: drv: drv.drvPath)' --json)"
           else
             checks="$(nix-instantiate --eval --strict --read-write-mode --expr 'builtins.mapAttrs (_: drv: drv.drvPath) (import ./test.nix {})' --json)"
           fi
@@ -147,7 +147,7 @@ jobs:
           CHECK: ${{ matrix.check }}
         run: |
           if ! [ "$IMPURE" = true ]; then
-            narhash="$(nix -L --show-trace eval --raw ".#checks.$(nix show-config --json | jq -r .system.value).$CHECK" --apply 'builtins.substring 11 32')"
+            narhash="$(nix -L --show-trace eval --raw ".#checks.$(nix config show --json | jq -r .system.value).$CHECK" --apply 'builtins.substring 11 32')"
           else
             narhash="$(nix-instantiate --show-trace --eval --expr '{ attr }: (import ./test.nix {}).${attr}.outPath' --argstr attr "$CHECK" --json | jq -r '.[11:43]')"
           fi
@@ -178,7 +178,7 @@ jobs:
           CHECK: ${{ matrix.check }}
         run: |
           if ! [ "$IMPURE" = true ]; then
-            nix -L --show-trace build ".#checks.$(nix show-config --json | jq -r .system.value).$CHECK"
+            nix -L --show-trace build ".#checks.$(nix config show --json | jq -r .system.value).$CHECK"
           else
             nix-build --show-trace test.nix -A "$CHECK"
           fi
