@@ -286,7 +286,6 @@ lib.mkIf config.foosteros.profiles.sway {
 
   environment.variables = {
     NIXOS_OZONE_WL = "1";
-    QT_SCALE_FACTOR_ROUNDING_POLICY = "RoundPreferFloor";  # TODO: temp fix for qt6 apps with fractional scaling
   };
 
   xdg.mime.defaultApplications = lib.listToAttrs (lib.flatten (lib.mapAttrsToList (app: mimes: lib.map (mime: lib.nameValuePair mime (lib.mkDefault app)) mimes) {
