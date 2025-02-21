@@ -5,9 +5,6 @@ lib.mkIf config.foosteros.profiles.printing {
 
   services.printing = {
     enable = true;
-    drivers = with pkgs; (lib.optionals pkgs.config.allowUnfree [
-      canon-cups-ufr2
-    ]);
   };
 
   hardware.sane = {
