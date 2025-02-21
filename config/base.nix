@@ -190,6 +190,7 @@ lib.mkIf config.foosteros.profiles.base {
     free = "free -h";
     curl = "curl -L";
     cget = "command curl -fLJO --progress-bar";
+    qalc = "qalc --set autocalc";
   };
 
   programs.command-not-found.enable = false;
