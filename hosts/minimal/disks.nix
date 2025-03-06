@@ -8,10 +8,11 @@
         type = "gpt";
         partitions = {
           esp = {
+            priority = 1;
             label = "esp";
-            type = "EF00";
+            type = "ef00";
             start = "1MiB";
-            end = "100MiB";
+            size = "100M";
             content = {
               type = "filesystem";
               format = "vfat";
@@ -20,8 +21,8 @@
             };
           };
           root = {
+            priority = 2;
             label = "root";
-            start = "100MiB";
             end = "-2GiB";
             content = {
               type = "filesystem";
@@ -30,9 +31,9 @@
             };
           };
           swap = {
+            priority = 3;
             label = "swap";
-            start = "-2GiB";
-            end = "100%";
+            size = "100%";
             content = {
               type = "swap";
             };

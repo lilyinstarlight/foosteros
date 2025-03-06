@@ -8,10 +8,11 @@
         type = "gpt";
         partitions = {
           esp = {
+            priority = 1;
             label = "esp";
-            type = "EF00";
+            type = "ef00";
             start = "1MiB";
-            end = "512MiB";
+            size = "512M";
             content = {
               type = "filesystem";
               format = "vfat";
@@ -20,9 +21,9 @@
             };
           };
           nixos = {
+            priority = 2;
             label = "nixos";
-            start = "512MiB";
-            end = "100%";
+            size = "100%";
             content = {
               type = "luks";
               name = "nixos";
