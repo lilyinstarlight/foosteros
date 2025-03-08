@@ -891,7 +891,7 @@ lib.mkIf config.foosteros.profiles.sway {
 
       [user_to_last_sess]
     '' + lib.concatMapStrings (user: "${user} = \"Sway\"\n") regreetUsers);
-  in lib.optionals (regreetUsers != []) [ "L+ /var/cache/regreet/cache.toml - - - - ${regreetCache}" ];
+  in lib.optionals (regreetUsers != []) [ "L+ /var/lib/regreet/state.toml - - - - ${regreetCache}" ];
 
   programs.gdk-pixbuf.modulePackages = with pkgs; [ librsvg ];
 
