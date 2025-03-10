@@ -40,7 +40,7 @@ jobs:
           extra-conf: |
             http2 = false
 
-      - uses: cachix/cachix-action@v15
+      - uses: cachix/cachix-action@v16
         with:
           name: ${{ inputs.cachix_cache_name }}
           extraPullNames: ${{ inputs.cachix_extra_cache_names }}
@@ -130,7 +130,7 @@ jobs:
         run: |
           sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
 
-      - uses: cachix/cachix-action@v15
+      - uses: cachix/cachix-action@v16
         with:
           name: ${{ inputs.cachix_cache_name }}
           extraPullNames: ${{ inputs.cachix_extra_cache_names }}
