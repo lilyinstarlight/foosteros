@@ -5,7 +5,6 @@ lib.mkIf config.foosteros.profiles.vps {
     grub = lib.mkDefault true;
   };
 
-
   boot.initrd.services.lvm.enable = true;
 
   networking.usePredictableInterfaceNames = lib.mkDefault false;
