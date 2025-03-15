@@ -93,7 +93,7 @@
           "/var/db/sudo"
           "/var/lib/bluetooth"
           "/var/lib/libvirt"
-          { directory =  "/var/lib/nixos"; inInitrd = true; }
+          { directory = "/var/lib/nixos"; inInitrd = true; }
           "/var/lib/systemd"
           "/var/lib/tpm"
           "/var/log"

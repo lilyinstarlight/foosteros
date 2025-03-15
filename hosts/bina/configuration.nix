@@ -102,7 +102,7 @@
           "/var/lib/bluetooth"
           "/var/lib/fprint"
           "/var/lib/libvirt"
-          { directory =  "/var/lib/nixos"; inInitrd = true; }
+          { directory = "/var/lib/nixos"; inInitrd = true; }
           "/var/lib/systemd"
           "/var/log"
         ];
