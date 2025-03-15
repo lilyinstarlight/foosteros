@@ -1,0 +1,17 @@
+keys:
+  - &user_lily C1B21F148A374CC0BD4A776F2E23AF668B14BA1F
+  - &host_bina 5763BFC33186B5F5B9D3C7CAA4C4F99447BC0805
+  - &host_lia 6C77B41292ADD3171602DEAB3B6B7DCE275E5070
+
+creation_rules:
+  - path_regex: hosts/bina/[^/]+\.(yaml|json|env|ini)$
+    key_groups:
+    - pgp:
+      - *user_lily
+      - *host_bina
+
+  - path_regex: hosts/lia/[^/]+\.(yaml|json|env|ini)$
+    key_groups:
+    - pgp:
+      - *user_lily
+      - *host_lia
