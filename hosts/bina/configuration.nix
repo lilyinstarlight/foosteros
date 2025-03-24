@@ -67,11 +67,6 @@
         group = config.services.nullmailer.group;
         restartUnits = [ "nullmailer.service" ];
       };
-      mopidy-lily-secrets = {
-        mode = "0400";
-        owner = config.users.users.lily.name;
-        group = config.users.users.lily.group;
-      };
     } // (let
       mkNmSecret = name: lib.nameValuePair "networks/${name}" {
         restartUnits = [ "NetworkManager.service" ];
@@ -324,10 +319,6 @@
         extraGroups = with config.users.groups; map (grp: grp.name) [ networkmanager keys adbusers ];
       };
     };
-  };
-
-  home-manager.users.lily = { pkgs, lib, ... }: {
-    services.mopidy.extraConfigFiles = [ config.sops.secrets.mopidy-lily-secrets.path ];
   };
 
   system.stateVersion = "23.11";
