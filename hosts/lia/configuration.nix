@@ -223,7 +223,8 @@
   nix = {
     settings = {
       keep-outputs = true;
-      max-jobs = "auto";
+      cores = 2;
+      max-jobs = 2;
     };
   };
 
