@@ -1,10 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
 {
-  imports = [
-    inputs.nixos-hardware.nixosModules.framework-12th-gen-intel
-  ];
-
   boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
 
   boot.kernelModules = [ "kvm-intel" ];
