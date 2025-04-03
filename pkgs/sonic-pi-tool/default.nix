@@ -3,7 +3,7 @@
 , fetchFromGitHub
 , makePythonPath
 , makeWrapper
-, python3
+, python
 , click
 , oscpy
 , psutil
@@ -51,7 +51,7 @@ stdenv.mkDerivation {
   ];
 
   buildInputs = [
-    python3
+    python
   ];
 
   dontConfigure = true;
