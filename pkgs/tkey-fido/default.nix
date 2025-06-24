@@ -9,13 +9,13 @@
 
 buildGoModule rec {
   pname = "tkey-fido";
-  version = "0-unstable-2023-10-16";
+  version = "0-unstable-2025-06-03";
 
   src = fetchFromGitHub {
     owner = "tillitis";
     repo = "tkey-fido";
-    rev = "7bfbc40c3a9cd19191adc34e87b183ac702527e6";
-    hash = "sha256-Ho1T7YwCoAxQhl2oQGlG7Sj1jfl4l+eMccGuS6sF6fc=";
+    rev = "1a837d1cab1334304b03cd8b4bea95a96118f56f";
+    hash = "sha256-ujD7+yCXvjKGKf6qD8QJpDRlSFHCODPouhqSKj64pbo=";
   };
 
   vendorHash = "sha256-2JeIHnbW8qa3yR9PJ2FaihVY8r4yS/izEMqW0hEyvwk=";
