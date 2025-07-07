@@ -7,9 +7,9 @@ lib.mkIf config.foosteros.profiles.production {
     # TODO: re-add lmms once NixOS/nixpkgs#418925 is merged
     #ardour lmms
     ardour
-    # TODO: re-add open-stage-control once NixOS/nixpkgs#408849 is fixed
+    # TODO: re-add open-stage-control once NixOS/nixpkgs#408849 is fixed and sonic-pi-tool once it works with newer sonic-pi
     #sonic-pi sonic-pi-tool open-stage-control
-    sonic-pi sonic-pi-tool
+    sonic-pi
     lilypond
     godot_4
     (wrapOBS {
