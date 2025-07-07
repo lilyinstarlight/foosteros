@@ -12,7 +12,6 @@ let mypkgs = let
   in scope // { inherit callPackage; });
 
   python3Packages = makeCallPackageScope outpkgs.python3Packages;
-  libsForQt5 = makeCallPackageScope outpkgs.libsForQt5;
 in with outpkgs;
 
 {
@@ -49,10 +48,6 @@ in with outpkgs;
     syslinux = if stdenv.isx86_64 then syslinux else pkgsCross.gnu64.syslinux;
   };
   mkwin = callPackage ./mkwin {};
-  sonic-pi_3 = libsForQt5.callPackage ./sonic-pi/v3.nix {};
-  sonic-pi-tool = python3Packages.callPackage ./sonic-pi-tool {
-    sonic-pi = sonic-pi_3;
-  };
   swaylock-fprintd = callPackage ./swaylock-fprintd {};
   tkey-libs = callPackage ./tkey-libs {};
   tkey-devtools = callPackage ./tkey-devtools {};
