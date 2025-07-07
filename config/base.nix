@@ -104,9 +104,10 @@ lib.mkIf config.foosteros.profiles.base {
   nix = {
     settings = {
       auto-allocate-uids = true;
+      use-cgroups = true;
       substituters = [ "https://foosteros.cachix.org" ];
       trusted-public-keys = [ "foosteros.cachix.org-1:rrDalTfOT1YohJXiMv8upgN+mFLKZp7eWW1+OGbPRww=" ];
-      experimental-features = [ "nix-command" "flakes" "auto-allocate-uids" ];
+      experimental-features = [ "nix-command" "flakes" "auto-allocate-uids" "cgroups" ];
       flake-registry = "${inputs.flake-registry}/flake-registry.json";
     };
 
