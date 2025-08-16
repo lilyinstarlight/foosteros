@@ -304,7 +304,8 @@
       bluetoothd\[[0-9]*\]: src/profile\.c:record_cb() Unable to get Hands-Free Voice gateway SDP record: Host is down
       bluetoothd\[[0-9]*\]: src/device\.c:set_wake_allowed_complete() Set device flags return status: Invalid Parameters
       kernel: tpm tpm0: \[Firmware Bug\]: TPM interrupt not working, polling instead
-      kernel: cros-usbpd-charger cros-usbpd-charger\.2\.auto: Unexpected number of charge port count
+      kernel: cros-usbpd-charger cros-usbpd-charger\.[0-9]\.auto: Unexpected number of charge port count
+      kernel: cros-usbpd-charger cros-usbpd-charger\.[0-9]\.auto: probe with driver cros-usbpd-charger failed with error -71
       kernel: cros_ec_lpcs cros_ec_lpcs\.0: bad packet checksum [0-9a-f]\{2\}
       kernel: cros_ec_lpcs cros_ec_lpcs\.0: packet too long ([0-9]* bytes, expected [0-9]*)
       systemd-udevd\[[0-9]*\]: /nix/store/[0-9a-z]\{32\}-systemd-[^/]*/lib/udev/rules\.d/50-udev-default\.rules:[0-9]* Unknown group '[^']*', ignoring
