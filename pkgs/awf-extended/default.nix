@@ -7,23 +7,24 @@
 , gtk2
 , gtk3
 , gtk4
+, libnotify
 , gitUpdater
 }:
 
 stdenv.mkDerivation rec {
   pname = "awf-extended";
-  version = "3.0.0";
+  version = "3.1.0";
 
   src = fetchFromGitHub {
     owner = "luigifab";
     repo = "awf-extended";
     rev = "v${version}";
-    sha256 = "sha256-HZEsg3eEysPSkj3hj6KwcZTUI5FOzbOEYbu6RDdx9q4=";
+    sha256 = "sha256-K/aw/OAg5pKIjSJdtDhiU2aTonDQg9Go4C2uwlwWkpA=";
   };
 
   nativeBuildInputs = [ autoreconfHook pkg-config wrapGAppsHook3 ];
 
-  buildInputs = [ gtk2 gtk3 gtk4 ];
+  buildInputs = [ gtk2 gtk3 gtk4 libnotify ];
 
   postPatch = ''
     substituteInPlace src/Makefile.am \
