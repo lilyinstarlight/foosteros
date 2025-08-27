@@ -6,7 +6,7 @@ lib.mkIf config.foosteros.profiles.hibernate {
         (lib.filter (swap: lib.hasPrefix "/dev/" swap.device && !swap.randomEncryption.enable && !(lib.hasPrefix "/dev/zram" swap.device)) config.swapDevices));
     in lib.mkIf ((lib.length eligibleSwaps) > 0) (lib.mkDefault (lib.head eligibleSwaps));
 
-  services.logind.lidSwitch = lib.mkDefault "suspend-then-hibernate";
+  services.logind.settings.Login.HandleLidSwitch = lib.mkDefault "suspend-then-hibernate";
 
   systemd.sleep.extraConfig = ''
     HibernateDelaySec=30m

@@ -232,7 +232,7 @@
     (name: value: lib.nameValuePair "NetworkManager/system-connections/${lib.removePrefix "networks/" name}" { source = value.path; })
     (lib.filterAttrs (name: value: lib.hasPrefix "networks/" name) config.sops.secrets);
 
-  services.logind.lidSwitch = "ignore";
+  services.logind.settings.Login.HandleLidSwitch = "ignore";
 
   services.resolved.dnssec = "false";
 

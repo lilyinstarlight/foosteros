@@ -41,6 +41,7 @@ lib.mkIf config.foosteros.profiles.lily {
 
     programs.ssh = {
       enable = true;
+      enableDefaultConfig = false;
       matchBlocks = {
         "cl.forkos.org".user = "lilyinstarlight";
         "gerrit.lix.systems".user = "lilyinstarlight";
