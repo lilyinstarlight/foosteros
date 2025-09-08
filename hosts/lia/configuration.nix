@@ -268,6 +268,7 @@
       bluetoothd\[[0-9]*\]: sap-server: Operation not permitted (1)
       pipewire\[[0-9]*\]: jack-device 0x[0-9a-f]\{12\}: can't open client: Input/output error
       dbus-broker-launch\[[0-9]*\]: Ignoring duplicate name '[^']*' in service file '[^']*'
+      cupsd\[[0-9]*\]: \[Client [0-9]*\] Returning IPP client-error-not-possible for CUPS-Add-Modify-Printer ([^)]*) from localhost.
     '';
   };
 

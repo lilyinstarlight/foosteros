@@ -311,6 +311,7 @@
       systemd-udevd\[[0-9]*\]: /nix/store/[0-9a-z]\{32\}-systemd-[^/]*/lib/udev/rules\.d/50-udev-default\.rules:[0-9]* Unknown group '[^']*', ignoring
       systemd-udevd\[[0-9]*\]: event_source: Failed to get device name: No such file or directory
       dbus-broker-launch\[[0-9]*\]: Ignoring duplicate name '[^']*' in service file '[^']*'
+      cupsd\[[0-9]*\]: \[Client [0-9]*\] Returning IPP client-error-not-possible for CUPS-Add-Modify-Printer ([^)]*) from localhost.
     '';
   };
 
