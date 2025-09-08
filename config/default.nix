@@ -9,7 +9,7 @@
     inputs.disko.nixosModules.disko
     inputs.nix-index-database.nixosModules.nix-index
     inputs.lix-module.nixosModules.default
-    inputs.nixos-cosmic.nixosModules.default
+    #inputs.nixos-cosmic.nixosModules.default
     self.nixosModules.foosteros
   ] ++ import ./module-list.nix;
 

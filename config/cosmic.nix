@@ -18,10 +18,10 @@ lib.mkIf config.foosteros.profiles.cosmic {
     NIXOS_OZONE_WL = "1";
   };
 
-  nix.settings = {
-    substituters = [ "https://cosmic.cachix.org" ];
-    trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
-  };
+  #nix.settings = {
+  #  substituters = [ "https://cosmic.cachix.org" ];
+  #  trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
+  #};
 
   services.flatpak.enable = true;
 
