@@ -31,7 +31,6 @@ rustPlatform.buildRustPackage {
     sed -i '$!N;s/^\(name = "crankstart-cli"\nversion =\) "[^"]*"$/\1 "'"$(sed -n '/^version\s*=/ s/^version = "\([^"]*\)"$/\1/p' source/Cargo.toml)"'"/;P;D' source/Cargo.lock
   '';
 
-  useFetchCargoVendor = true;
   cargoHash = "sha256-cq/4700JBIfoCZfDf+pfcU1VQYDwwBZ8DpXimWmPBP4=";
 
   nativeBuildInputs = [ makeWrapper ];
