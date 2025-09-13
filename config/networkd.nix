@@ -3,6 +3,8 @@
 lib.mkIf config.foosteros.profiles.networkd {
   networking.useNetworkd = lib.mkDefault true;
 
+  systemd.network.wait-online.anyInterface = lib.mkDefault true;
+
   systemd.network.networks = lib.mkIf config.networking.useNetworkd {
     "80-wl" = {
       name = "wl*";
@@ -14,9 +16,6 @@ lib.mkIf config.foosteros.profiles.networkd {
       };
       dhcpV6Config = {
         RouteMetric = 700;
-      };
-      linkConfig = {
-        RequiredForOnline = "no";
       };
       networkConfig = {
         IPv6PrivacyExtensions = "kernel";
@@ -33,9 +32,6 @@ lib.mkIf config.foosteros.profiles.networkd {
       };
       dhcpV6Config = {
         RouteMetric = 200;
-      };
-      linkConfig = {
-        RequiredForOnline = "no";
       };
       networkConfig = {
         IPv6PrivacyExtensions = "kernel";
