@@ -34,6 +34,7 @@
         mkdir -p /mnt/etc
         cp -rT ${self} /mnt/etc/nixos
         git -C /mnt/etc/nixos init
+        git -C /mnt/etc/nixos add -N .
         git -C /mnt/etc/nixos remote add origin https://github.com/lilyinstarlight/foosteros.git
         (
           git -C /mnt/etc/nixos fetch && \
