@@ -91,8 +91,8 @@ rustPlatform.buildRustPackage {
         exit 0
     fi
 
-    curhash="$(nixeval "$attr.cargoDeps.outputHash")"
-    newhash="$(vendorhash "$attr.cargoDeps")"
+    curhash="$(nixeval "$attr.cargoDeps.vendorStaging.outputHash")"
+    newhash="$(vendorhash "$attr.cargoDeps.vendorStaging")"
 
     if [ -n "$newhash" ] && [ "$curhash" != "$newhash" ]; then
         sed -i -e "s|\"$curhash\"|\"$newhash\"|" "$pkgpath"
