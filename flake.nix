@@ -111,12 +111,12 @@
   {
     lib = {
       foosterosSystem = let
-        foosterosSystem = nixpkgs.lib.makeOverridable ({ modules ? [], baseModules ? [], installer ? null }: let
+        foosterosSystem = nixpkgs.lib.makeOverridable (args @ { modules ? [], baseModules ? [], extraSpecialArgs ? {}, installer ? null, nixpkgs ? self.inputs.nixpkgs }: let
           selfSystem = nixpkgs.lib.nixosSystem {
             specialArgs = {
               inherit self;
               inherit (self) inputs;
-            };
+            } // extraSpecialArgs;
             modules = baseModules ++ [
               self.nixosModules.config
             ] ++ modules ++ nixpkgs.lib.optionals (installer != null) [
@@ -139,6 +139,11 @@
                       self.nixosModules.installer
                       installer
                     ];
+                    extraSpecialArgs = let
+                      installerPath = (builtins.unsafeGetAttrPos "installer" args).file or "${builtins.toString self}/flake.nix";
+                    in {
+                      src = if installerPath == "${builtins.toString self}/flake.nix" then self else (nixpkgs.lib.filesystem.locateDominatingFile ''flake\.nix'' installerPath).path;
+                    } // extraSpecialArgs;
                   };
                 in {
                   installerSystem = installerConfiguration;

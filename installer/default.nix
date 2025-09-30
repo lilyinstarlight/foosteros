@@ -1,8 +1,8 @@
-{ config, lib, pkgs, self, inputs, ... }:
+{ config, lib, pkgs, self, modulesPath, src, ... }:
 
 {
   imports = [
-    "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+    "${builtins.toString modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
   ];
 
   boot.kernelParams = lib.mkAfter [ "noquiet" ];
@@ -32,13 +32,13 @@
         ${config.system.build.installDiskoScript or "echo 'No disko config, not partitioning automatically'"}
 
         mkdir -p /mnt/etc
-        cp -rT ${self} /mnt/etc/nixos
+        cp -rT ${src} /mnt/etc/nixos
         git -C /mnt/etc/nixos init
         git -C /mnt/etc/nixos add -N .
         git -C /mnt/etc/nixos remote add origin https://github.com/lilyinstarlight/foosteros.git
         (
           git -C /mnt/etc/nixos fetch && \
-          git -C /mnt/etc/nixos reset ${self.rev or "origin/HEAD"} && \
+          git -C /mnt/etc/nixos reset ${src.rev or "origin/HEAD"} && \
           git -C /mnt/etc/nixos branch --set-upstream-to=origin/main main
         ) || true
 
