@@ -121,8 +121,6 @@ lib.mkIf config.foosteros.profiles.neovim {
           bashls = {},
         }
 
-        local nvim_lsp = require('lspconfig')
-
         local on_attach = function (client, bufnr)
           local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
           local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
@@ -164,7 +162,8 @@ lib.mkIf config.foosteros.profiles.neovim {
             args[key] = val
           end
 
-          nvim_lsp[server].setup(args)
+          vim.lsp.config(server, args)
+          vim.lsp.enable(server)
         end
         EOF
       '';
