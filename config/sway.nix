@@ -96,7 +96,7 @@ lib.mkIf config.foosteros.profiles.sway {
 
       programs.rofi = {
         enable = true;
-        package = pkgs.rofi-wayland;
+        package = pkgs.rofi;
         terminal = "alacritty";
         theme = let
           inherit (config.lib.formats.rasi) mkLiteral;
@@ -471,7 +471,7 @@ lib.mkIf config.foosteros.profiles.sway {
       ### variables
       set $mod mod4
       set $term alacritty
-      set $run ${lib.getExe pkgs.rofi-wayland} -show drun
+      set $run ${lib.getExe pkgs.rofi} -show drun
       set $lock ${lib.getExe' pkgs.systemd "loginctl"} lock-session
       set $browser qutebrowser
 
@@ -897,7 +897,7 @@ lib.mkIf config.foosteros.profiles.sway {
 
   programs.gnupg.agent.pinentryPackage = pkgs.writeShellApplication {
     name = "pinentry-rofi";
-    runtimeInputs = with pkgs; [ rofi-wayland ];
+    runtimeInputs = with pkgs; [ rofi ];
     text = ''
       exec ${pinentry-rofi}/bin/pinentry-rofi "$@"
     '';
@@ -918,7 +918,7 @@ lib.mkIf config.foosteros.profiles.sway {
     extraPackages = with pkgs; [
       pulseaudio brightnessctl playerctl jq glib
       swaybg swaylock-fprintd swayidle
-      kanshi i3status swaywsr mako rofi-wayland
+      kanshi i3status swaywsr mako rofi
       polkit-sway
       fooster-backgrounds colloid-gtk-theme-sway catppuccin-cursors-sway papirus-icon-theme sway-default-icon-theme
       qt6.qtsvg qt6.qtwayland
