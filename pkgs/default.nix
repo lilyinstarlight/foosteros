@@ -85,11 +85,21 @@ in with outpkgs;
 
   # TODO: remove both when NixOS/nixpkgs#449595 is fixed
   qgnomeplatform = pkgs.qgnomeplatform.overrideAttrs (old: {
-    cmakeFlags = old.cmakeFlags ++ [ "-DCMAKE_POLICY_VERSION_MINIMUM=3.5" ];
+    cmakeFlags = (old.cmakeFlags or []) ++ [ "-DCMAKE_POLICY_VERSION_MINIMUM=3.5" ];
   });
   qgnomeplatform-qt6 = pkgs.qgnomeplatform-qt6.overrideAttrs (old: {
-    cmakeFlags = old.cmakeFlags ++ [ "-DCMAKE_POLICY_VERSION_MINIMUM=3.5" ];
+    cmakeFlags = (old.cmakeFlags or []) ++ [ "-DCMAKE_POLICY_VERSION_MINIMUM=3.5" ];
   });
+
+  # TODO: remove when NixOS/nixpkgs#?????? is fixed
+  supercollider-with-sc3-plugins = pkgs.supercollider-with-plugins.override rec {
+    supercollider = pkgs.supercollider.overrideAttrs (old: {
+      cmakeFlags = (old.cmakeFlags or []) ++ [ "-DCMAKE_POLICY_VERSION_MINIMUM=3.5" ];
+    });
+    plugins = [ ((pkgs.supercolliderPlugins.sc3-plugins.override { inherit supercollider; }).overrideAttrs (old: {
+      cmakeFlags = (old.cmakeFlags or []) ++ [ "-DCMAKE_POLICY_VERSION_MINIMUM=3.5" ];
+    })) ];
+  };
 
   # dependents of unfree packages
   crank = callPackage ./crank {};
