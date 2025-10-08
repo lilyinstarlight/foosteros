@@ -91,7 +91,7 @@ in with outpkgs;
     cmakeFlags = (old.cmakeFlags or []) ++ [ "-DCMAKE_POLICY_VERSION_MINIMUM=3.5" ];
   });
 
-  # TODO: remove when NixOS/nixpkgs#?????? is fixed
+  # TODO: remove both when NixOS/nixpkgs#?????? is fixed
   supercollider-with-sc3-plugins = pkgs.supercollider-with-plugins.override rec {
     supercollider = pkgs.supercollider.overrideAttrs (old: {
       cmakeFlags = (old.cmakeFlags or []) ++ [ "-DCMAKE_POLICY_VERSION_MINIMUM=3.5" ];
