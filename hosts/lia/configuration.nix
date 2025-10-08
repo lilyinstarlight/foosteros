@@ -76,18 +76,15 @@
     ]));
   };
 
-  preservation = {
-    enable = true;
-    preserveAt = {
-      "/state" = {
+  preservation.preserveAt = {
+    ${config.system.devices.preservedState} = {
+      directories = [
+        "/var/lib/tpm"
+      ];
+      users.lily = {
         directories = [
-          "/var/lib/tpm"
+          ".Playdate Simulator"
         ];
-        users.lily = {
-          directories = [
-            ".Playdate Simulator"
-          ];
-        };
       };
     };
   };
