@@ -21,5 +21,7 @@
     coreThermalZone = 0;
     batteryId = 0;
     wirelessAdapter = "wlp4s0";
+    preservedState = "/state";
+    persistedState = "/persist";
   };
 }

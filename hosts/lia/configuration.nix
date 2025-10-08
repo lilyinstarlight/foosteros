@@ -16,7 +16,6 @@
     azure = true;
     bluetooth = true;
     cosmic = true;
-    ephemeral = true;
     fcitx5 = true;
     fwupd = true;
     gc = true;
@@ -33,8 +32,10 @@
     nullmailer = true;
     pass = true;
     pki = true;
+    preservation = true;
     podman = true;
     secureboot = true;
+    sops = true;
     steam = true;
     udiskie = true;
     workstation = true;
@@ -42,8 +43,6 @@
 
   sops = {
     defaultSopsFile = ./secrets.yaml;
-    age.sshKeyPaths = [];
-    gnupg.sshKeyPaths = [ "/state/etc/ssh/ssh_host_rsa_key" ];
     secrets = {
       root-password = {
         neededForUsers = true;
@@ -82,93 +81,15 @@
     preserveAt = {
       "/state" = {
         directories = [
-          "/etc/nixos"
-          "/etc/secureboot"
-          { directory = "/home/josie"; user = "josie"; group = "users"; }
-          "/var/db/sudo"
-          "/var/lib/bluetooth"
-          "/var/lib/libvirt"
-          { directory = "/var/lib/nixos"; inInitrd = true; }
-          "/var/lib/systemd"
           "/var/lib/tpm"
-          "/var/log"
-        ];
-        files = [
-          { file = "/etc/machine-id"; inInitrd = true; how = "symlink"; }
-          { file = "/etc/ssh/ssh_host_ed25519_key"; mode = "0700"; inInitrd = true; }
-          { file = "/etc/ssh/ssh_host_ed25519_key.pub"; inInitrd = true; }
-          { file = "/etc/ssh/ssh_host_rsa_key"; mode = "0700"; inInitrd = true; }
-          { file = "/etc/ssh/ssh_host_rsa_key.pub"; inInitrd = true; }
         ];
         users.lily = {
           directories = [
-            "docs"
-            "emu"
-            "music"
-            "pics"
-            "public"
-            "src"
-            "vids"
-            ".azure"
-            ".backgrounds"
-            ".config/dconf"
-            ".config/Element"
-            ".config/Mattermost"
-            ".config/obs-studio"
-            ".config/pipewire"
-            ".config/PrusaSlicer"
-            ".config/qutebrowser"
-            ".config/rncbc.org"
-            ".config/teams-for-linux"
-            ".config/WebCord"
-            { directory = ".gnupg"; mode = "0700"; }
-            ".local/share/fish"
-            ".local/share/mopidy"
-            ".local/share/nvim"
-            ".local/share/qutebrowser"
-            ".local/state/wireplumber"
-            ".mozilla"
-            ".password-store"
             ".Playdate Simulator"
-            ".sonic-pi"
-            { directory = ".ssh"; mode = "0700"; }
-          ];
-          files = [
-            { file = ".android/adbkey"; configureParent = true; }
-            { file = ".android/adbkey.pub"; configureParent = true; }
-            { file = ".config/beets/library.db"; configureParent = true; }
-            { file = ".config/beets/state.pickle"; configureParent = true; }
-            ".lmmsrc.xml"
-          ];
-        };
-      };
-
-      "/persist" = {
-        users.lily = {
-          directories = [
-            "iso"
-            "tmp"
-            { directory = ".cargo/registry"; configureParent = true; }
           ];
         };
       };
     };
-  };
-
-  systemd.tmpfiles.settings.preservation = {
-    "/home/lily/.config".d = { user = "lily"; group = "users"; mode = "0755"; };
-    "/home/lily/.local".d = { user = "lily"; group = "users"; mode = "0755"; };
-    "/home/lily/.local/share".d = { user = "lily"; group = "users"; mode = "0755"; };
-    "/home/lily/.local/state".d = { user = "lily"; group = "users"; mode = "0755"; };
-  };
-
-  systemd.services.systemd-machine-id-commit = {
-    unitConfig.ConditionPathIsMountPoint = [
-      "" "/state/etc/machine-id"
-    ];
-    serviceConfig.ExecStart = [
-      "" "systemd-machine-id-setup --commit --root /state"
-    ];
   };
 
   networking = {

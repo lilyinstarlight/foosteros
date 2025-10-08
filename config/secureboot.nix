@@ -11,4 +11,10 @@ lib.mkIf config.foosteros.profiles.secureboot {
     enable = true;
     pkiBundle = "/etc/secureboot";
   };
+
+  preservation.preserveAt = lib.mkIf config.preservation.enable {
+    ${config.system.devices.preservedState}.directories = [
+      "/etc/secureboot"
+    ];
+  };
 }

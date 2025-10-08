@@ -44,6 +44,22 @@
       '';
     };
 
+    preservedState = lib.mkOption {
+      type = lib.types.nullOr lib.types.path;
+      default = null;
+      description = ''
+        Mount point for preserved state.
+      '';
+    };
+
+    persistedState = lib.mkOption {
+      type = lib.types.nullOr lib.types.path;
+      default = null;
+      description = ''
+        Mount point for persisted (but not preserved) state.
+      '';
+    };
+
     monitorFontSize = lib.mkOption {
       type = lib.types.ints.positive;
       default = 16;

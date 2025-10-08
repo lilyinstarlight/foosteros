@@ -35,7 +35,10 @@
 
       cosmic = lib.mkEnableOption "cosmic profile";
 
-      ephemeral = lib.mkEnableOption "ephemeral root profile";
+      ephemeral = lib.mkEnableOption "ephemeral root profile" // {
+        default = config.foosteros.profiles.preservation;
+        defaultText = lib.literalExpression "config.foosteros.profiles.preservation";
+      };
 
       fcitx5 = lib.mkEnableOption "fcitx5 profile";
 
@@ -44,6 +47,8 @@
       };
 
       fonts = lib.mkEnableOption "fonts profile";
+
+      fprint = lib.mkEnableOption "fprint profile";
 
       fwupd = lib.mkEnableOption "fwupd profile";
 
@@ -94,6 +99,8 @@
 
       podman = lib.mkEnableOption "podman profile";
 
+      preservation = lib.mkEnableOption "preservation profile";
+
       printing = lib.mkEnableOption "printing profile";
 
       production = lib.mkEnableOption "production profile";
@@ -106,6 +113,8 @@
       };
 
       secureboot = lib.mkEnableOption "secureboot profile";
+
+      sops = lib.mkEnableOption "sops profile";
 
       steam = lib.mkEnableOption "steam profile";
 

@@ -10,6 +10,7 @@ lib.mkIf config.foosteros.profiles.workstation {
     mkusb mkwin
     aria2 openssl wireshark doggo picocom
     gnumake llvmPackages.clang llvmPackages.lldb
+    rustc rustfmt cargo clippy
   ] ++ (lib.optionals pkgs.config.allowUnfree [
     pridecat
     slack
@@ -23,4 +24,26 @@ lib.mkIf config.foosteros.profiles.workstation {
       };
     }
   ];
+
+  preservation.preserveAt = lib.mkIf (config.preservation.enable && (config.users.users.lily.enable or false)) {
+    ${config.system.devices.preservedState} = {
+      users.lily = {
+        directories = [
+          ".config/Element"
+          ".config/Mattermost"
+          ".config/teams-for-linux"
+          ".config/WebCord"
+          ".mozilla"
+        ];
+      };
+    };
+
+    ${config.system.devices.persistedState} = {
+      users.lily = {
+        directories = [
+          { directory = ".cargo/registry"; configureParent = true; }
+        ];
+      };
+    };
+  };
 }

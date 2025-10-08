@@ -17,7 +17,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    preservation.url = "github:WilliButz/preservation";
+    preservation.url = "github:nix-community/preservation";
 
     lanzaboote = {
       url = "github:nix-community/lanzaboote";

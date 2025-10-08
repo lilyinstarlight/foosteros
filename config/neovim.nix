@@ -212,4 +212,14 @@ lib.mkIf config.foosteros.profiles.neovim {
       };
     };
   };
+
+  preservation.preserveAt = lib.mkIf (config.preservation.enable && (config.users.users.lily.enable or false)) {
+    ${config.system.devices.preservedState} = {
+      users.lily = {
+        directories = [
+          ".local/share/nvim"
+        ];
+      };
+    };
+  };
 }

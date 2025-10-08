@@ -10,4 +10,10 @@ lib.mkIf config.foosteros.profiles.libvirt {
   environment.systemPackages = with pkgs; lib.optionals (config.services.displayManager.sessionData != {}) [
     virt-manager
   ];
+
+  preservation.preserveAt = lib.mkIf config.preservation.enable {
+    ${config.system.devices.preservedState}.directories = [
+      "/var/lib/libvirt"
+    ];
+  };
 }

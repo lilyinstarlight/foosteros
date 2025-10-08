@@ -16,4 +16,19 @@ lib.mkIf config.foosteros.profiles.production {
       plugins = with obs-studio-plugins; [ wlrobs obs-gstreamer obs-move-transition obs-backgroundremoval ];
     })
   ];
+
+  preservation.preserveAt = lib.mkIf (config.preservation.enable && (config.users.users.lily.enable or false)) {
+    ${config.system.devices.preservedState} = {
+      users.lily = {
+        directories = [
+          ".config/obs-studio"
+          ".config/rncbc.org"
+          ".sonic-pi"
+        ];
+        files = [
+          ".lmmsrc.xml"
+        ];
+      };
+    };
+  };
 }

@@ -10,4 +10,15 @@ lib.mkIf config.foosteros.profiles.pipewire {
     pulse.enable = true;
     jack.enable = true;
   };
+
+  preservation.preserveAt = lib.mkIf (config.preservation.enable && (config.users.users.lily.enable or false)) {
+    ${config.system.devices.preservedState} = {
+      users.lily = {
+        directories = [
+          ".config/pipewire"
+          ".local/state/wireplumber"
+        ];
+      };
+    };
+  };
 }

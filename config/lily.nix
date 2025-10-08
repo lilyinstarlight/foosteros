@@ -48,4 +48,40 @@ lib.mkIf config.foosteros.profiles.lily {
       };
     };
   };
+
+  preservation.preserveAt = lib.mkIf config.preservation.enable {
+    ${config.system.devices.preservedState} = {
+      users.lily = {
+        directories = [
+          "docs"
+          "emu"
+          "music"
+          "pics"
+          "public"
+          "src"
+          "vids"
+          ".config/dconf"
+          { directory = ".ssh"; mode = "0700"; }
+        ];
+      };
+    };
+
+    ${config.system.devices.persistedState} = {
+      users.lily = {
+        directories = [
+          "iso"
+          "tmp"
+        ];
+      };
+    };
+  };
+
+  systemd.tmpfiles.settings = lib.mkIf config.preservation.enable {
+    preservation = {
+      "/home/lily/.config".d = { user = "lily"; group = "users"; mode = "0755"; };
+      "/home/lily/.local".d = { user = "lily"; group = "users"; mode = "0755"; };
+      "/home/lily/.local/share".d = { user = "lily"; group = "users"; mode = "0755"; };
+      "/home/lily/.local/state".d = { user = "lily"; group = "users"; mode = "0755"; };
+    };
+  };
 }

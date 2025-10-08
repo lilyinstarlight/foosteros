@@ -64,4 +64,14 @@ lib.mkIf config.foosteros.profiles.pass {
       };
     })
   ];
+
+  preservation.preserveAt = lib.mkIf (config.preservation.enable && (config.users.users.lily.enable or false)) {
+    ${config.system.devices.preservedState} = {
+      users.lily = {
+        directories = [
+          ".password-store"
+        ];
+      };
+    };
+  };
 }

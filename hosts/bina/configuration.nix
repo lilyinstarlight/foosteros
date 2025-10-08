@@ -17,8 +17,8 @@
     bluetooth = true;
     builders = true;
     cad = true;
-    ephemeral = true;
     fcitx5 = true;
+    fprint = true;
     fwupd = true;
     gc = true;
     gnupg = true;
@@ -36,9 +36,11 @@
     pki = true;
     playdate = true;
     podman = true;
+    preservation = true;
     printing = true;
     production = true;
     secureboot = true;
+    sops = true;
     steam = true;
     sway = true;
     sysrq = true;
@@ -50,8 +52,6 @@
 
   sops = {
     defaultSopsFile = ./secrets.yaml;
-    age.sshKeyPaths = [];
-    gnupg.sshKeyPaths = [ "/state/etc/ssh/ssh_host_rsa_key" ];
     secrets = {
       root-password = {
         neededForUsers = true;
@@ -86,98 +86,15 @@
     ]));
   };
 
-  preservation = {
-    enable = true;
-    preserveAt = {
-      "/state" = {
+  preservation.preserveAt = {
+    ${config.system.devices.preservedState} = {
+      users.lily = {
         directories = [
-          "/etc/nixos"
-          "/etc/secureboot"
-          "/var/db/sudo"
-          "/var/lib/bluetooth"
-          "/var/lib/fprint"
-          "/var/lib/libvirt"
-          { directory = "/var/lib/nixos"; inInitrd = true; }
-          "/var/lib/systemd"
-          "/var/log"
+          ".local/share/PrismLauncher"
+          ".Playdate Simulator"
         ];
-        files = [
-          { file = "/etc/machine-id"; inInitrd = true; how = "symlink"; }
-          { file = "/etc/ssh/ssh_host_ed25519_key"; mode = "0700"; inInitrd = true; }
-          { file = "/etc/ssh/ssh_host_ed25519_key.pub"; inInitrd = true; }
-          { file = "/etc/ssh/ssh_host_rsa_key"; mode = "0700"; inInitrd = true; }
-          { file = "/etc/ssh/ssh_host_rsa_key.pub"; inInitrd = true; }
-        ];
-        users.lily = {
-          directories = [
-            "docs"
-            "emu"
-            "music"
-            "pics"
-            "public"
-            "src"
-            "vids"
-            ".azure"
-            ".backgrounds"
-            ".config/dconf"
-            ".config/Element"
-            ".config/Mattermost"
-            ".config/obs-studio"
-            ".config/pipewire"
-            ".config/PrusaSlicer"
-            ".config/qutebrowser"
-            ".config/rncbc.org"
-            ".config/teams-for-linux"
-            ".config/WebCord"
-            { directory = ".gnupg"; mode = "0700"; }
-            ".local/share/fish"
-            ".local/share/mopidy"
-            ".local/share/nvim"
-            ".local/share/PrismLauncher"
-            ".local/share/qutebrowser"
-            ".local/state/wireplumber"
-            ".mozilla"
-            ".password-store"
-            ".Playdate Simulator"
-            ".sonic-pi"
-            { directory = ".ssh"; mode = "0700"; }
-          ];
-          files = [
-            { file = ".android/adbkey"; configureParent = true; }
-            { file = ".android/adbkey.pub"; configureParent = true; }
-            { file = ".config/beets/library.db"; configureParent = true; }
-            { file = ".config/beets/state.pickle"; configureParent = true; }
-            ".lmmsrc.xml"
-          ];
-        };
-      };
-
-      "/persist" = {
-        users.lily = {
-          directories = [
-            "iso"
-            "tmp"
-            { directory = ".cargo/registry"; configureParent = true; }
-          ];
-        };
       };
     };
-  };
-
-  systemd.tmpfiles.settings.preservation = {
-    "/home/lily/.config".d = { user = "lily"; group = "users"; mode = "0755"; };
-    "/home/lily/.local".d = { user = "lily"; group = "users"; mode = "0755"; };
-    "/home/lily/.local/share".d = { user = "lily"; group = "users"; mode = "0755"; };
-    "/home/lily/.local/state".d = { user = "lily"; group = "users"; mode = "0755"; };
-  };
-
-  systemd.services.systemd-machine-id-commit = {
-    unitConfig.ConditionPathIsMountPoint = [
-      "" "/state/etc/machine-id"
-    ];
-    serviceConfig.ExecStart = [
-      "" "systemd-machine-id-setup --commit --root /state"
-    ];
   };
 
   networking = {
@@ -270,8 +187,6 @@
   services.resolved.dnssec = "false";
 
   services.fwupd.extraRemotes = [ "lvfs-testing" ];
-
-  services.fprintd.enable = true;
 
   services.tlp.enable = true;
 

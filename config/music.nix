@@ -26,4 +26,18 @@ lib.mkIf config.foosteros.profiles.music {
       };
     };
   };
+
+  preservation.preserveAt = lib.mkIf (config.preservation.enable && (config.users.users.lily.enable or false)) {
+    ${config.system.devices.preservedState} = {
+      users.lily = {
+        directories = [
+          ".local/share/mopidy"
+        ];
+        files = [
+          { file = ".config/beets/library.db"; configureParent = true; }
+          { file = ".config/beets/state.pickle"; configureParent = true; }
+        ];
+      };
+    };
+  };
 }

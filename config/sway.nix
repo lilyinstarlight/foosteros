@@ -999,4 +999,16 @@ lib.mkIf config.foosteros.profiles.sway {
     enable = true;
     powerSupply = "BAT${toString config.system.devices.batteryId}";
   };
+
+  preservation.preserveAt = lib.mkIf (config.preservation.enable && (config.users.users.lily.enable or false)) {
+    ${config.system.devices.preservedState} = {
+      users.lily = {
+        directories = [
+          ".backgrounds"
+          ".config/qutebrowser"
+          ".local/share/qutebrowser"
+        ];
+      };
+    };
+  };
 }

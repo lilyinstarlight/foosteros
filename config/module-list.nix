@@ -11,6 +11,7 @@
   ./fcitx5.nix
   ./fish.nix
   ./fonts.nix
+  ./fprint.nix
   ./fwupd.nix
   ./gc.nix
   ./gnupg.nix
@@ -33,11 +34,13 @@
   ./pki.nix
   ./playdate.nix
   ./podman.nix
+  ./preservation.nix
   ./printing.nix
   ./production.nix
   ./restic.nix
   ./sd-boot.nix
   ./secureboot.nix
+  ./sops.nix
   ./steam.nix
   ./sway.nix
   ./sysrq.nix
