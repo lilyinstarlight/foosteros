@@ -91,24 +91,6 @@ in with outpkgs;
     cmakeFlags = (old.cmakeFlags or []) ++ [ "-DCMAKE_POLICY_VERSION_MINIMUM=3.5" ];
   });
 
-  # TODO: remove both when NixOS/nixpkgs#?????? is fixed
-  supercollider-with-sc3-plugins = pkgs.supercollider-with-plugins.override rec {
-    supercollider = pkgs.supercollider.overrideAttrs (old: {
-      cmakeFlags = (old.cmakeFlags or []) ++ [ "-DCMAKE_POLICY_VERSION_MINIMUM=3.5" ];
-    });
-    plugins = [ ((pkgs.supercolliderPlugins.sc3-plugins.override { inherit supercollider; }).overrideAttrs (old: {
-      cmakeFlags = (old.cmakeFlags or []) ++ [ "-DCMAKE_POLICY_VERSION_MINIMUM=3.5" ];
-    })) ];
-  };
-  sonic-pi = pkgs.sonic-pi.overrideAttrs (old: {
-    cmakeFlags = (old.cmakeFlags or []) ++ [ "-DCMAKE_POLICY_VERSION_MINIMUM=3.5" ];
-    preConfigure = old.preConfigure + ''
-      substituteInPlace external/CMakeLists.txt --replace-fail \
-        '-DCMAKE_INSTALL_PREFIX=''${CMAKE_CURRENT_SOURCE_DIR}/../server/beam/tau/priv' \
-        '-DCMAKE_INSTALL_PREFIX=''${CMAKE_CURRENT_SOURCE_DIR}/../server/beam/tau/priv -DCMAKE_POLICY_VERSION_MINIMUM=3.5'
-    '';
-  });
-
   # dependents of unfree packages
   crank = callPackage ./crank {};
 
