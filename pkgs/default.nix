@@ -83,14 +83,6 @@ in with outpkgs;
     ];
   });
 
-  # TODO: remove both when NixOS/nixpkgs#449595 is fixed
-  qgnomeplatform = pkgs.qgnomeplatform.overrideAttrs (old: {
-    cmakeFlags = (old.cmakeFlags or []) ++ [ "-DCMAKE_POLICY_VERSION_MINIMUM=3.5" ];
-  });
-  qgnomeplatform-qt6 = pkgs.qgnomeplatform-qt6.overrideAttrs (old: {
-    cmakeFlags = (old.cmakeFlags or []) ++ [ "-DCMAKE_POLICY_VERSION_MINIMUM=3.5" ];
-  });
-
   # dependents of unfree packages
   crank = callPackage ./crank {};
 
