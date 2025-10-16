@@ -2,7 +2,9 @@
 
 lib.mkIf config.foosteros.profiles.production {
   environment.systemPackages = with pkgs; [
-    inkscape (gimp-with-plugins.override { plugins = with gimp2Plugins; [ lqrPlugin gmic ]; }) krita
+    # TODO: add lqr plugin when fixed for 3.x
+    #inkscape (gimp-with-plugins.override { plugins = with gimpPlugins; [ lqrPlugin gmic ]; }) krita
+    inkscape (gimp-with-plugins.override { plugins = with gimpPlugins; [ gmic ]; }) krita
     helvum qjackctl qsynth vmpk calf
     # TODO: re-add lmms once NixOS/nixpkgs#?????? is fixed
     #ardour lmms
