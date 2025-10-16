@@ -13,13 +13,13 @@
 
 stdenv.mkDerivation rec {
   pname = "awf-extended";
-  version = "3.1.0";
+  version = "3.2.0";
 
   src = fetchFromGitHub {
     owner = "luigifab";
     repo = "awf-extended";
     rev = "v${version}";
-    sha256 = "sha256-K/aw/OAg5pKIjSJdtDhiU2aTonDQg9Go4C2uwlwWkpA=";
+    sha256 = "sha256-UTas/y6Oum9ZzJeta6KglZGlkyp/3EvVOk99roiknCs=";
   };
 
   nativeBuildInputs = [ autoreconfHook pkg-config wrapGAppsHook3 ];
