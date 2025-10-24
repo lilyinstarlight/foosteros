@@ -15,7 +15,7 @@
 , gdk-pixbuf
 , glib
 , libX11
-, webkitgtk_4_0
+, webkitgtk_4_1
 , libglvnd
 , alsa-lib
 , libXext
@@ -81,7 +81,7 @@ stdenv.mkDerivation rec {
     glib
     libX11
     stdenv.cc.cc.lib
-    webkitgtk_4_0
+    webkitgtk_4_1
   ];
 
   dontConfigure = true;
