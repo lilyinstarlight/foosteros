@@ -18,24 +18,26 @@ lib.mkIf config.foosteros.profiles.lily {
 
     programs.git = {
       enable = true;
-      userName = "Lily Foster";
-      userEmail = "lily@lily.flowers";
       signing = {
         key = "49340081E484C893!";
         signByDefault = true;
       };
-      extraConfig = {
+      settings = {
+        user = {
+          name = "Lily Foster";
+          email = "lily@lily.flowers";
+        };
         checkout.defaultRemote = "origin";
         init.defaultBranch = "main";
         merge.conflictStyle = "diff3";
         pull.ff = "only";
         push.autoSetupRemote = true;
-      };
-      aliases = {
-        kill = "!sh -c 'git reset HEAD --hard && git clean -xdf'";
-        subupd = "submodule update --init";
-        subpull = "submodule foreach git pull";
-        uppull = "pull upstream HEAD";
+        alias = {
+          kill = "!sh -c 'git reset HEAD --hard && git clean -xdf'";
+          subupd = "submodule update --init";
+          subpull = "submodule foreach git pull";
+          uppull = "pull upstream HEAD";
+        };
       };
     };
 
