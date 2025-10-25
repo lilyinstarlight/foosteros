@@ -86,22 +86,12 @@ in with outpkgs;
   # TODO: remove when NixOS/nixpkgs#454910 is fixed
   qgnomeplatform-qt6 = pkgs.qgnomeplatform-qt6.overrideAttrs (old: {
     patches = (old.patches or []) ++ [
-      (pkgs.writeText "qgnomeplatform-qt6-guiprivate.patch" ''
-        diff --git a/CMakeLists.txt b/CMakeLists.txt
-        index cc0b067..2c9d191 100644
-        --- a/CMakeLists.txt
-        +++ b/CMakeLists.txt
-        @@ -26,7 +26,7 @@ include(GNUInstallDirs)
-         include(FeatureSummary)
+      (fetchpatch {
+        name = "qt6_10.patch";
+        url = "https://github.com/NixOS/nixpkgs/raw/290f7d59d57fc817f643a30df1eab69efaee25bb/pkgs/development/libraries/qgnomeplatform/qt6_10.patch";
+        hash = "sha256-alQcI+TXR9aA39dLUdFrxrYResDJ9turJ+6vQnEfjqs=";
 
-         if (USE_QT6)
-        -    find_package(QT NAMES Qt6 COMPONENTS Core DBus Gui Widgets REQUIRED)
-        +    find_package(QT NAMES Qt6 COMPONENTS Core DBus Gui Widgets REQUIRED GuiPrivate)
-         else()
-        -    find_package(QT NAMES Qt5 COMPONENTS Core DBus Gui Widgets REQUIRED)
-        +    find_package(QT NAMES Qt5 COMPONENTS Core DBus Gui Widgets REQUIRED GuiPrivate)
-         endif()
-      '')
+      })
     ];
   });
 
