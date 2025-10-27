@@ -1,11 +1,7 @@
 { config, lib, pkgs, ... }:
 
 lib.mkIf config.foosteros.profiles.adb {
-  services.udev.packages = with pkgs; [
-    android-udev-rules
-  ];
-
-  users.groups.adbusers = {};
+  programs.adb.enable = true;
 
   preservation.preserveAt = lib.mkIf (config.preservation.enable && (config.users.users.lily.enable or false)) {
     ${config.system.devices.preservedState} = {
