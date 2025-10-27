@@ -236,7 +236,7 @@
       root.hashedPasswordFile = config.sops.secrets.root-password.path;
       lily = {
         hashedPasswordFile = config.sops.secrets.lily-password.path;
-        extraGroups = with config.users.groups; map (grp: grp.name) [ networkmanager keys adbusers ];
+        extraGroups = with config.users.groups; map (grp: grp.name) [ networkmanager keys ];
       };
     };
   };
