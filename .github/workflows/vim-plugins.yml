@@ -18,7 +18,7 @@ jobs:
           diagnostic-endpoint: ''
           source-url: 'https://install.lix.systems/lix/lix-installer-${{ fromJSON(''{"X64":"x86_64","X86":"i686","ARM64":"aarch64","ARM":"armv7l"}'')[runner.arch] }}-${{ fromJSON(''{"Linux":"linux","macOS":"darwin","Windows":"windows"}'')[runner.os] }}'
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ssh-key: ${{ secrets.REPO_KEY }}
 
@@ -64,7 +64,7 @@ jobs:
     needs: [update, check]
     if: needs.update.outputs.changed == 'true'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ssh-key: ${{ secrets.REPO_KEY }}
           fetch-depth: 2
