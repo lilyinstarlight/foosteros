@@ -30,6 +30,11 @@ jobs:
           extra-conf: |
             http2 = false
 
+      - name: 'Remove unnecessary cache.lix.systems substituter'
+        # TODO: remove if there becomes a better way to do this with the installer
+        run: |
+          sudo sed -i -e 's# https://cache\.lix\.systems/\?##' /etc/nix/nix.conf
+
       - uses: cachix/cachix-action@v16
         with:
           name: foosteros
@@ -94,6 +99,11 @@ jobs:
           extra-conf: |
             http2 = false
 
+      - name: 'Remove unnecessary cache.lix.systems substituter'
+        # TODO: remove if there becomes a better way to do this with the installer
+        run: |
+          sudo sed -i -e 's# https://cache\.lix\.systems/\?##' /etc/nix/nix.conf
+
       - uses: cachix/cachix-action@v16
         with:
           name: foosteros
@@ -134,6 +144,11 @@ jobs:
           # TODO: remove when <https://git.lix.systems/lix-project/lix/issues/662> is fixed
           extra-conf: |
             http2 = false
+
+      - name: 'Remove unnecessary cache.lix.systems substituter'
+        # TODO: remove if there becomes a better way to do this with the installer
+        run: |
+          sudo sed -i -e 's# https://cache\.lix\.systems/\?##' /etc/nix/nix.conf
 
       - uses: cachix/cachix-action@v16
         with:

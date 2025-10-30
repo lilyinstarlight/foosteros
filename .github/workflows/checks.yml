@@ -40,6 +40,11 @@ jobs:
           extra-conf: |
             http2 = false
 
+      - name: 'Remove unnecessary cache.lix.systems substituter'
+        # TODO: remove if there becomes a better way to do this with the installer
+        run: |
+          sudo sed -i -e 's# https://cache\.lix\.systems/\?##' /etc/nix/nix.conf
+
       - uses: cachix/cachix-action@v16
         with:
           name: ${{ inputs.cachix_cache_name }}
@@ -79,6 +84,11 @@ jobs:
           # TODO: remove when <https://git.lix.systems/lix-project/lix/issues/662> is fixed
           extra-conf: |
             http2 = false
+
+      - name: 'Remove unnecessary cache.lix.systems substituter'
+        # TODO: remove if there becomes a better way to do this with the installer
+        run: |
+          sudo sed -i -e 's# https://cache\.lix\.systems/\?##' /etc/nix/nix.conf
 
       - uses: actions/checkout@v4
         with:
@@ -125,6 +135,11 @@ jobs:
           # TODO: remove when <https://git.lix.systems/lix-project/lix/issues/662> is fixed
           extra-conf: |
             http2 = false
+
+      - name: 'Remove unnecessary cache.lix.systems substituter'
+        # TODO: remove if there becomes a better way to do this with the installer
+        run: |
+          sudo sed -i -e 's# https://cache\.lix\.systems/\?##' /etc/nix/nix.conf
 
       - name: 'Remove AppArmor restrictions on unprivileged user namespaces'
         run: |
