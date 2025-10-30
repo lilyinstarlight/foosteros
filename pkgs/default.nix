@@ -24,9 +24,9 @@ in with outpkgs;
   nixosTest = nixosTestFor outpkgs;
 
   # stdenvs
-  tkeyStdenv = mkStdenvNoLibs (overrideCC llvmPackages_18.stdenv (llvmPackages_18.stdenv.cc.override (args: {
-    bintools = buildPackages.llvmPackages_18.tools.bintools.override {
-      defaultHardeningFlags = lib.subtractLists [ "stackprotector" "zerocallusedregs" ] buildPackages.llvmPackages_18.tools.bintools.defaultHardeningFlags;
+  tkeyStdenv = mkStdenvNoLibs (overrideCC llvmPackages.stdenv (llvmPackages.stdenv.cc.override (args: {
+    bintools = buildPackages.llvmPackages.bintools.override {
+      defaultHardeningFlags = lib.subtractLists [ "stackprotector" "zerocallusedregs" ] buildPackages.llvmPackages.bintools.defaultHardeningFlags;
     };
     nixSupport = (args.nixSupport or {}) // {
       cc-cflags = (args.nixSupport.cc-cflags or []) ++ [
