@@ -18,12 +18,8 @@ let
   ).defaultNix;
 in
 
-(import "${self.inputs.nixpkgs}/maintainers/scripts/update.nix" ({
+import "${self.inputs.nixpkgs}/maintainers/scripts/update.nix" ({
   predicate = _path: pkg: with self.inputs.nixpkgs.lib;
     hasPrefix (toString ../.) (head (splitString ":" pkg.meta.position or ""));
   include-overlays = builtins.attrValues (removeAttrs self.overlays [ "default" ]);
-} // args)).overrideAttrs (old: {
-  # TODO: remove hack when temp dirs are properly kept with nix-shell
-  passAsFile = (old.passAsFile or []) ++ [ "meow" ];
-  meow = ":3";
-})
+} // args)
