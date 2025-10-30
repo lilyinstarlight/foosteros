@@ -50,7 +50,7 @@ jobs:
           name: ${{ inputs.cachix_cache_name }}
           extraPullNames: ${{ inputs.cachix_extra_cache_names }}
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ inputs.ref_head }}
 
@@ -90,7 +90,7 @@ jobs:
         run: |
           sudo sed -i -e 's# https://cache\.lix\.systems/\?##' /etc/nix/nix.conf
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ inputs.ref_head }}
 
@@ -151,7 +151,7 @@ jobs:
           extraPullNames: ${{ inputs.cachix_extra_cache_names }}
           authToken: ${{ secrets.cachix_auth_token }}
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ inputs.ref_head }}
 
