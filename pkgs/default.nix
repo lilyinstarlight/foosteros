@@ -59,30 +59,6 @@ in with outpkgs;
   tkey-totp = callPackage ./tkey-totp {};
   tkey-verification = callPackage ./tkey-verification {};
 
-  # TODO: remove when slurp or wlroots or sway fixes this
-  slurp = pkgs.slurp.overrideAttrs (old: {
-    patches = old.patches or [] ++ [
-      # https://github.com/emersion/slurp/pull/124
-      (fetchpatch {
-        name = "slurp-fix-segfault.patch";
-        url = "https://github.com/emersion/slurp/compare/6a21ddcdde33affc74f45bcd322292db90984293~1...820041f4f17437b16701c16deed5f2188d9b4993.diff";
-        hash = "sha256-uVJ/7ycGxPNoawXbGYjR5YZ8AZCWiPiYLeFHSlHkKT8=";
-      })
-    ];
-  });
-
-  # TODO: remove when xdg-desktop-portal-wlr fixes upstream bitmasking error
-  xdg-desktop-portal-wlr = pkgs.xdg-desktop-portal-wlr.overrideAttrs (old: {
-    patches = old.patches or [] ++ [
-      # https://github.com/emersion/xdg-desktop-portal-wlr/pull/309
-      (fetchpatch {
-        name = "xdg-desktop-portal-wlr-fix-screencast-select-sources.patch";
-        url = "https://github.com/emersion/xdg-desktop-portal-wlr/commit/d9ada849aeca6137915de2df69beaef4e272cc1d.diff";
-        hash = "sha256-iyjdKOyh1uZGu7T1SRc5Nwlr5nnfV6eI4eKeBl3hlf8=";
-      })
-    ];
-  });
-
   # TODO: remove when NixOS/nixpkgs#454910 is fixed
   qgnomeplatform-qt6 = pkgs.qgnomeplatform-qt6.overrideAttrs (old: {
     patches = (old.patches or []) ++ [
