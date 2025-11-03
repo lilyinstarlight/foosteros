@@ -184,7 +184,7 @@
     };
   };
 
-  environment.systemPackages = with pkgs; [ aws-workspaces bitwarden-desktop prismlauncher ];
+  environment.systemPackages = with pkgs; [ bitwarden-desktop prismlauncher ] ++ lib.optionals pkgs.config.allowUnfree [ aws-workspaces ];
 
   services.resolved.dnssec = "false";
 
