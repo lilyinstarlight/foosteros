@@ -182,7 +182,7 @@
     };
   };
 
-  environment.systemPackages = with pkgs; [ prismlauncher ];
+  environment.systemPackages = with pkgs; [ aws-workspaces prismlauncher ];
 
   services.resolved.dnssec = "false";
 
