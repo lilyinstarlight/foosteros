@@ -59,18 +59,6 @@ in with outpkgs;
   tkey-totp = callPackage ./tkey-totp {};
   tkey-verification = callPackage ./tkey-verification {};
 
-  # TODO: remove when NixOS/nixpkgs#454910 is fixed
-  qgnomeplatform-qt6 = pkgs.qgnomeplatform-qt6.overrideAttrs (old: {
-    patches = (old.patches or []) ++ [
-      (fetchpatch {
-        name = "qt6_10.patch";
-        url = "https://github.com/NixOS/nixpkgs/raw/290f7d59d57fc817f643a30df1eab69efaee25bb/pkgs/development/libraries/qgnomeplatform/qt6_10.patch";
-        hash = "sha256-alQcI+TXR9aA39dLUdFrxrYResDJ9turJ+6vQnEfjqs=";
-
-      })
-    ];
-  });
-
   # dependents of unfree packages
   crank = callPackage ./crank {};
 
