@@ -90,7 +90,9 @@
     ${config.system.devices.preservedState} = {
       users.lily = {
         directories = [
+          ".config/Bitwarden"
           ".local/share/PrismLauncher"
+          ".local/share/workspacesclient"
           ".Playdate Simulator"
         ];
       };
@@ -182,7 +184,7 @@
     };
   };
 
-  environment.systemPackages = with pkgs; [ aws-workspaces prismlauncher ];
+  environment.systemPackages = with pkgs; [ aws-workspaces bitwarden-desktop prismlauncher ];
 
   services.resolved.dnssec = "false";
 
