@@ -72,7 +72,7 @@ in with outpkgs;
     inherit (pkgs.lib) getVersion;
   };
 
-  vimPlugins = recurseIntoAttrs (callPackage ./vim-plugins {});
+  vimPlugins = pkgs.lib.recurseIntoAttrs (callPackage ./vim-plugins {});
 });
 
 in mypkgs
