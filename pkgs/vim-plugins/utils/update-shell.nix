@@ -22,10 +22,10 @@
 
 { nixpkgs ? import (
     let
-      lock = builtins.fromJSON (builtins.readFile ../../flake.lock);
+      lock = builtins.fromJSON (builtins.readFile ../../../flake.lock);
     in fetchTarball {
-      url = "https://github.com/NixOS/nixpkgs/archive/${lock.nodes.nixpkgs.locked.rev}.tar.gz";
-      sha256 = lock.nodes.nixpkgs.locked.narHash;
+      url = "https://github.com/NixOS/nixpkgs/archive/${lock.nodes.${lock.nodes.${lock.root}.inputs.nixpkgs}.locked.rev}.tar.gz";
+        sha256 = lock.nodes.${lock.nodes.${lock.root}.inputs.nixpkgs}.locked.narHash;
     }
   )
   {}
@@ -33,15 +33,13 @@
 
 with nixpkgs;
 
-let
-  pyEnv = python3.withPackages(ps: [ ps.GitPython ]);
-in
-
 mkShell {
+  env.NIXPKGS_PATH = builtins.toString nixpkgs.path;
   packages = [
-    bash
-    pyEnv
+    (python3.withPackages (ps: [ ps.requests ps.nixpkgs-plugin-update ]))
     nix
-    nix-prefetch-scripts
+    nix-prefetch-git
+    neovim-unwrapped
+    nurl
   ];
 }
