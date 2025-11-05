@@ -20,29 +20,15 @@
 #   OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 #   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-{ callPackage, config, lib, vimUtils, vim, luaPackages }:
+{ callPackage, config, lib, vimUtils, vim }:
 
 let
 
-  inherit (vimUtils.override {inherit vim;})
-    buildVimPlugin vimGenDocHook vimCommandCheckHook;
+  inherit (vimUtils.override { inherit vim; }) buildVimPlugin;
 
   inherit (lib) extends;
 
-  initialPackages = self: {
-    # Convert derivation to a vim plugin.
-    toVimPlugin = drv:
-      drv.overrideAttrs(oldAttrs: {
-
-        nativeBuildInputs = oldAttrs.nativeBuildInputs or [] ++ [
-          vimGenDocHook
-          vimCommandCheckHook
-        ];
-        passthru = (oldAttrs.passthru or {}) // {
-          vimPlugin = true;
-        };
-      });
-  };
+  initialPackages = self: { };
 
   plugins = callPackage ./generated.nix {
     inherit buildVimPlugin;
@@ -57,16 +43,13 @@ let
   # add to ./overrides.nix.
   overrides = callPackage ./overrides.nix {
     inherit buildVimPlugin;
-    inherit luaPackages;
   };
 
   aliases = if (config.allowAliases or true) then (import ./aliases.nix lib) else final: prev: {};
-
-  extensible-self = lib.makeExtensible
-    (extends aliases
-      (extends overrides
-        (extends plugins initialPackages)
-      )
-    );
 in
-  extensible-self
+  lib.pipe initialPackages [
+    (extends plugins)
+    (extends overrides)
+    (extends aliases)
+    lib.makeExtensible
+  ]
