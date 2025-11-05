@@ -32,9 +32,9 @@ jobs:
           echo "NIX_PATH=nixpkgs=https://github.com/NixOS/nixpkgs/archive/$(jq -r '.nodes.[.nodes.[.root].inputs.nixpkgs].locked.rev' flake.lock).tar.gz" >> $GITHUB_ENV
 
       - id: update
-        name: pkgs/vim-plugins/update.py
+        name: pkgs/vim-plugins/utils/update.py
         run: |
-          pkgs/vim-plugins/update.py
+          pkgs/vim-plugins/utils/update.py
 
           if ! git diff --exit-code --quiet remotes/origin/${{ github.ref_name }}..; then
             echo "changed=true" >> $GITHUB_OUTPUT
