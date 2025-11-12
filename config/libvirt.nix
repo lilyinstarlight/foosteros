@@ -4,7 +4,10 @@ lib.mkIf config.foosteros.profiles.libvirt {
   virtualisation.kvmgt.enable = true;
   virtualisation.libvirtd = {
     enable = true;
-    qemu.package = pkgs.qemu_kvm;
+    qemu = {
+      package = pkgs.qemu_kvm;
+      swtpm.enable = true;
+    };
   };
 
   environment.systemPackages = with pkgs; lib.optionals (config.services.displayManager.sessionData != {}) [
