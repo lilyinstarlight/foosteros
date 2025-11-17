@@ -34,6 +34,7 @@ jobs:
     steps:
       - uses: DeterminateSystems/nix-installer-action@v20
         with:
+          determinate: false
           diagnostic-endpoint: ''
           source-url: '${{ inputs.nix_installer || format(''https://install.lix.systems/lix/lix-installer-{0}-{1}'', fromJSON(''{"X64":"x86_64","X86":"i686","ARM64":"aarch64","ARM":"armv7l"}'')[runner.arch], fromJSON(''{"Linux":"linux","macOS":"darwin","Windows":"windows"}'')[runner.os]) }}'
           # TODO: remove when <https://git.lix.systems/lix-project/lix/issues/662> is fixed
@@ -79,6 +80,7 @@ jobs:
     steps:
       - uses: DeterminateSystems/nix-installer-action@v20
         with:
+          determinate: false
           diagnostic-endpoint: ''
           source-url: '${{ inputs.nix_installer || format(''https://install.lix.systems/lix/lix-installer-{0}-{1}'', fromJSON(''{"X64":"x86_64","X86":"i686","ARM64":"aarch64","ARM":"armv7l"}'')[runner.arch], fromJSON(''{"Linux":"linux","macOS":"darwin","Windows":"windows"}'')[runner.os]) }}'
           # TODO: remove when <https://git.lix.systems/lix-project/lix/issues/662> is fixed
@@ -130,6 +132,7 @@ jobs:
 
       - uses: DeterminateSystems/nix-installer-action@v20
         with:
+          determinate: false
           diagnostic-endpoint: ''
           source-url: '${{ inputs.nix_installer || format(''https://install.lix.systems/lix/lix-installer-{0}-{1}'', fromJSON(''{"X64":"x86_64","X86":"i686","ARM64":"aarch64","ARM":"armv7l"}'')[runner.arch], fromJSON(''{"Linux":"linux","macOS":"darwin","Windows":"windows"}'')[runner.os]) }}'
           # TODO: remove when <https://git.lix.systems/lix-project/lix/issues/662> is fixed

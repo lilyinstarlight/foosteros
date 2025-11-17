@@ -15,6 +15,7 @@ jobs:
     steps:
       - uses: DeterminateSystems/nix-installer-action@v20
         with:
+          determinate: false
           diagnostic-endpoint: ''
           source-url: 'https://install.lix.systems/lix/lix-installer-${{ fromJSON(''{"X64":"x86_64","X86":"i686","ARM64":"aarch64","ARM":"armv7l"}'')[runner.arch] }}-${{ fromJSON(''{"Linux":"linux","macOS":"darwin","Windows":"windows"}'')[runner.os] }}'
 
