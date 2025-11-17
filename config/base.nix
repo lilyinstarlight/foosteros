@@ -103,6 +103,7 @@ lib.mkIf config.foosteros.profiles.base {
 
   nix = {
     settings = {
+      accept-flake-config = false;
       auto-allocate-uids = true;
       use-cgroups = true;
       substituters = [ "https://foosteros.cachix.org" ];
