@@ -34,7 +34,7 @@ jobs:
           name: foosteros
           extraPullNames: cosmic
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - id: identify
         name: Identify hosts capable of being built into an installer
@@ -86,7 +86,7 @@ jobs:
           name: foosteros
           extraPullNames: cosmic
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - id: build
         name: Build ISO
@@ -126,7 +126,7 @@ jobs:
           name: foosteros
           extraPullNames: cosmic
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Remove old files
         env:
