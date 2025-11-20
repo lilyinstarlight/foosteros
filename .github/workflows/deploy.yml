@@ -26,7 +26,7 @@ jobs:
           name: foosteros
           extraPullNames: cosmic
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - id: build
         name: Build hosts
