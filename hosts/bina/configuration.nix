@@ -182,7 +182,7 @@
     };
   };
 
-  environment.systemPackages = with pkgs; [ prismlauncher ];
+  environment.systemPackages = with pkgs; [ handbrake mkvtoolnix prismlauncher subtitleedit ];
 
   services.resolved.dnssec = "false";
 
