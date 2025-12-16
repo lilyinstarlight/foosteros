@@ -16,6 +16,7 @@ in
       include /etc/sway/config.d/*
     '';
 
+    # TODO: remove if upstream NixOS module version of this is adequate
     systemd.user.targets.wlr-session = {
       description = "wlroots compositor session";
 
