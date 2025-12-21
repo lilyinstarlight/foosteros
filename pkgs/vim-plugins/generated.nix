@@ -9,12 +9,12 @@
 final: prev: {
   hexmode = buildVimPlugin {
     pname = "hexmode";
-    version = "2023-02-08";
+    version = "0-unstable-2023-02-08";
     src = fetchFromGitHub {
       owner = "fidian";
       repo = "hexmode";
       rev = "550cae65fdbd06d61d757dc6fe5a9be5be2e3ef4";
-      sha256 = "0ap2iycs71553wagjch2baz90kv59dhc8sddkiza80p50jyc8ab6";
+      hash = "sha256-ZinEvATlAqR+nK1pxGBLZU+QvloCMvkUH6WEo5mP4io=";
     };
     meta.homepage = "https://github.com/fidian/hexmode/";
     meta.hydraPlatforms = [ ];
@@ -22,12 +22,12 @@ final: prev: {
 
   vim-fish = buildVimPlugin {
     pname = "vim-fish";
-    version = "2022-03-06";
+    version = "0-unstable-2022-03-06";
     src = fetchFromGitHub {
       owner = "inkch";
       repo = "vim-fish";
       rev = "e648eaf250be676eef02b3e2c9e25eabfdb2ed75";
-      sha256 = "1zpjg656wgxgq5za06ql1z7ajls58gbcy1chkm83fnh1h2kr6c99";
+      hash = "sha256-KTGTp4ABWjdQnZAFz9ZDRVOpzg8UG6B+wa8/bop58v4=";
     };
     meta.homepage = "https://github.com/inkch/vim-fish/";
     meta.hydraPlatforms = [ ];
@@ -35,12 +35,12 @@ final: prev: {
 
   vim-interestingwords = buildVimPlugin {
     pname = "vim-interestingwords";
-    version = "2024-07-04";
+    version = "0.0.2-unstable-2024-07-04";
     src = fetchFromGitHub {
       owner = "lfv89";
       repo = "vim-interestingwords";
       rev = "1a67ea7bdf4f35c6533f9557051cac0720d3f32f";
-      sha256 = "0b6pqfljm08jimpf7hddqh4h2fpmc3acyhwj5xx2q62axc23rz0a";
+      hash = "sha256-Cvw8BOtKGCx6L5JDz9Rg9ToBCcStweNujRKBKqnD1yw=";
     };
     meta.homepage = "https://github.com/lfv89/vim-interestingwords/";
     meta.hydraPlatforms = [ ];
@@ -48,12 +48,12 @@ final: prev: {
 
   vim-jdaddy = buildVimPlugin {
     pname = "vim-jdaddy";
-    version = "2022-03-26";
+    version = "0-unstable-2022-03-26";
     src = fetchFromGitHub {
       owner = "tpope";
       repo = "vim-jdaddy";
       rev = "23b67752cb869dd9c8f3109173b69aa96a1f3acf";
-      sha256 = "1frkyq5zpwkwrrjcf0sscmr6q696vaaxnc0r93mk9psv5zbna4vl";
+      hash = "sha256-dBNl1y9b3zTrSBkw25XaJhlscmVaA8dkznzy+wv2M7s=";
     };
     meta.homepage = "https://github.com/tpope/vim-jdaddy/";
     meta.hydraPlatforms = [ ];
@@ -61,12 +61,12 @@ final: prev: {
 
   vim-lilypond-integrator = buildVimPlugin {
     pname = "vim-lilypond-integrator";
-    version = "2016-03-26";
+    version = "0-unstable-2016-03-26";
     src = fetchFromGitHub {
       owner = "gisraptor";
       repo = "vim-lilypond-integrator";
       rev = "7fc48f2e19092a8c8f8e400e2a9afe8c27c90d17";
-      sha256 = "0znj10wrz0ggli2l25fvj05qa7r32hbghx24qp8msbdc4vyl3vjx";
+      hash = "sha256-Xe5B/SasLV3RxUR0+BYUIx+FC5DbFUFFpO+BnzkI0n4=";
     };
     meta.homepage = "https://github.com/gisraptor/vim-lilypond-integrator/";
     meta.hydraPlatforms = [ ];
@@ -74,12 +74,12 @@ final: prev: {
 
   vim-magnum = buildVimPlugin {
     pname = "vim-magnum";
-    version = "2019-11-12";
+    version = "2.1.1-unstable-2019-11-12";
     src = fetchFromGitHub {
       owner = "glts";
       repo = "vim-magnum";
       rev = "7a30761b935d72bada5bbe90162a6afdb77c858d";
-      sha256 = "1fwjmpj3m4p1izd103sc3647xxcq2xp36islablf1qvxl13m3dkl";
+      hash = "sha256-dLZRR6B94+DoUlRHM24XmPV+iBlMDxDaj+GSOuStkrs=";
     };
     meta.homepage = "https://github.com/glts/vim-magnum/";
     meta.hydraPlatforms = [ ];
@@ -87,12 +87,12 @@ final: prev: {
 
   vim-radical = buildVimPlugin {
     pname = "vim-radical";
-    version = "2024-03-25";
+    version = "1.2.0-unstable-2024-03-25";
     src = fetchFromGitHub {
       owner = "glts";
       repo = "vim-radical";
       rev = "aca8992a25d317a4c6fa42e263e8506ea3e355d8";
-      sha256 = "02s4pds7p1xh1vjlngyy2m62kxlihdwf16vzp784533az3w2ndis";
+      hash = "sha256-OjYr+PhqjELQuX+b4HiDkfYpTBXeP0vlDrCHe3S7RAs=";
     };
     meta.homepage = "https://github.com/glts/vim-radical/";
     meta.hydraPlatforms = [ ];
@@ -100,12 +100,12 @@ final: prev: {
 
   vim-resolve = buildVimPlugin {
     pname = "vim-resolve";
-    version = "2019-01-19";
+    version = "0-unstable-2019-01-19";
     src = fetchFromGitHub {
       owner = "lilyinstarlight";
       repo = "vim-resolve";
       rev = "a8eaa0156fd6a8f3b0806be51397005f2df693b1";
-      sha256 = "11nddnjz751kdj18h5gp4qsvc4w8zfqfip1rw8lcci837254j7dg";
+      hash = "sha256-rx1JijgDRcYo4jnc6LD7iBO2NSb3FYiCbDOU86VtzYY=";
     };
     meta.homepage = "https://github.com/lilyinstarlight/vim-resolve/";
     meta.hydraPlatforms = [ ];
@@ -113,12 +113,12 @@ final: prev: {
 
   vim-sonic-pi = buildVimPlugin {
     pname = "vim-sonic-pi";
-    version = "2022-08-08";
+    version = "0-unstable-2022-08-08";
     src = fetchFromGitHub {
       owner = "lilyinstarlight";
       repo = "vim-sonic-pi";
       rev = "7af4b0b5039cdb6e1721ef5e19f6f6114f2179bd";
-      sha256 = "099gy6ij54jaa9ln1z19kigxg8gsx0n2plwf8vm0ay9x933cv5jn";
+      hash = "sha256-VpbNxkg9eQXqRo7TKyzo+qHXX5wp/GBpUkqSIqPxLyU=";
     };
     meta.homepage = "https://github.com/lilyinstarlight/vim-sonic-pi/";
     meta.hydraPlatforms = [ ];
@@ -126,12 +126,12 @@ final: prev: {
 
   vim-spl = buildVimPlugin {
     pname = "vim-spl";
-    version = "2018-10-19";
+    version = "0-unstable-2018-10-19";
     src = fetchFromGitHub {
       owner = "lilyinstarlight";
       repo = "vim-spl";
       rev = "f89da952dc4c08b0d830370d40cd53886d402547";
-      sha256 = "14na2k3f22sg43b0p83q1wiilma5c3b3jz790m35zxgnh1w70fnh";
+      hash = "sha256-0DpweID29V9GBel8OdZgRVUaIw94oAvWIE8L4cYUypI=";
     };
     meta.homepage = "https://github.com/lilyinstarlight/vim-spl/";
     meta.hydraPlatforms = [ ];
@@ -139,12 +139,12 @@ final: prev: {
 
   vim-zeek = buildVimPlugin {
     pname = "vim-zeek";
-    version = "2025-01-27";
+    version = "0-unstable-2025-01-27";
     src = fetchFromGitHub {
       owner = "zeek";
       repo = "vim-zeek";
       rev = "a0b57ffdaa356c724686462a9d402598cc7ce360";
-      sha256 = "0n7j332nm07d0dphsf9z3crfqs7i4cflgfpqf4wwjzgncyrqfahx";
+      hash = "sha256-HSqHs2f2fck5cfi6Rx0j8WjsMhs/OQ1vA+2AasUY8lg=";
     };
     meta.homepage = "https://github.com/zeek/vim-zeek/";
     meta.hydraPlatforms = [ ];
