@@ -147,11 +147,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1766387499,
-        "narHash": "sha256-AjK3/UKDzeXFeYNLVBaJ3+HLE9he1g5UrlNd4/BM3eA=",
+        "lastModified": 1766529376,
+        "narHash": "sha256-+HR+i6cEesSJnT+yYYdY1HZHTX4m3eNpLYximRkYH1U=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "527ad07e6625302b648ed3b28c34b62a79bd103e",
+        "rev": "20728df08f6ecf69a99ee6f031c235bf393ea585",
         "type": "github"
       },
       "original": {
@@ -190,11 +190,11 @@
     "lix": {
       "flake": false,
       "locked": {
-        "lastModified": 1766385782,
-        "narHash": "sha256-Dln76wwiK/Zgbr3I7HYvFn+40GVCqI3rYHmkl6i6X/8=",
+        "lastModified": 1766497103,
+        "narHash": "sha256-mwb5UTdVIFRoG/K5qRSGqF3k9JOlVyMoHqpnC6ebwmM=",
         "ref": "refs/heads/main",
-        "rev": "8f27c09a08f6430f253ee93f35a519e42da19832",
-        "revCount": 18699,
+        "rev": "c0f177081b4a5b43cc125005133031267f61318e",
+        "revCount": 18700,
         "type": "git",
         "url": "https://git.lix.systems/lix-project/lix"
       },
@@ -219,11 +219,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1766242842,
-        "narHash": "sha256-WRWsYt3d4xod9+2SVJ1h7RH+rHo4Fjk/R1neEWdecaE=",
+        "lastModified": 1766482918,
+        "narHash": "sha256-0TGU/SZslVxyYLvZU7n+3gaZApbhQYAzNXYv4CbVPRU=",
         "ref": "refs/heads/main",
-        "rev": "9b76a77150b4ed4f7066f641f54791b1ac4c778c",
-        "revCount": 172,
+        "rev": "862e78b074d6d7dc9913a87bdb78070fcd0ecc34",
+        "revCount": 174,
         "type": "git",
         "url": "https://git.lix.systems/lix-project/nixos-module"
       },
@@ -364,11 +364,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1766371695,
-        "narHash": "sha256-W7CX9vy7H2Jj3E8NI4djHyF8iHSxKpb2c/7uNQ/vGFU=",
+        "lastModified": 1766457837,
+        "narHash": "sha256-aeBbkQ0HPFNOIsUeEsXmZHXbYq4bG8ipT9JRlCcKHgU=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "d81285ba8199b00dc31847258cae3c655b605e8c",
+        "rev": "2c7510a559416d07242621d036847152d970612b",
         "type": "github"
       },
       "original": {
