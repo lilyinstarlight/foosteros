@@ -6,9 +6,7 @@ lib.mkIf config.foosteros.profiles.production {
     #inkscape (gimp-with-plugins.override { plugins = with gimpPlugins; [ lqrPlugin gmic ]; }) krita
     inkscape (gimp-with-plugins.override { plugins = with gimpPlugins; [ gmic ]; }) krita
     helvum qjackctl qsynth vmpk calf
-    # TODO: re-add lmms once NixOS/nixpkgs#?????? is fixed
-    #ardour lmms
-    ardour
+    ardour lmms
     # TODO: re-add open-stage-control once NixOS/nixpkgs#408849 is fixed and sonic-pi-tool once it works with newer sonic-pi
     #sonic-pi sonic-pi-tool open-stage-control
     sonic-pi
