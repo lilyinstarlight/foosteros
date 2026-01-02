@@ -8,7 +8,7 @@ lib.mkIf config.foosteros.profiles.ledger {
   home-manager.users.lily = { config, lib, ... }: {
     home.activation = {
       linkHomeLedger = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        $DRY_RUN_CMD ln -sTf $VERBOSE_ARG "$HOME"/docs/ledger/2024.journal "$HOME"/.hledger.journal
+        $DRY_RUN_CMD ln -sTf $VERBOSE_ARG "$HOME"/docs/ledger/2026.journal "$HOME"/.hledger.journal
       '';
     };
   };
