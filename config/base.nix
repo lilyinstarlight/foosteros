@@ -133,8 +133,8 @@ lib.mkIf config.foosteros.profiles.base {
   };
 
   environment.variables = {
-    EDITOR = "vi";
-    VISUAL = "vi";
+    EDITOR = lib.mkDefault "vi";
+    VISUAL = lib.mkDefault "vi";
   };
 
   environment.homeBinInPath = true;
