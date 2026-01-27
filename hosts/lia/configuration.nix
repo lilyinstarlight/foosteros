@@ -152,8 +152,6 @@
 
   services.logind.settings.Login.HandleLidSwitch = "ignore";
 
-  services.resolved.dnssec = "false";
-
   services.tcsd.enable = true;
 
   services.nullmailer.remotesFile = config.sops.secrets.nullmailer-remotes.path;

@@ -184,8 +184,6 @@
 
   environment.systemPackages = with pkgs; [ handbrake mkvtoolnix prismlauncher subtitleedit ];
 
-  services.resolved.dnssec = "false";
-
   services.fwupd.extraRemotes = [ "lvfs-testing" ];
 
   services.tlp.enable = true;
