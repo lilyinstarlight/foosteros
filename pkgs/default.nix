@@ -4,11 +4,11 @@ let mypkgs = let
   outpkgs = if (args ? outpkgs) then args.outpkgs else pkgs.lib.recursiveUpdate pkgs mypkgs;
 
   callPackage = if (args ? outpkgs) then args.outpkgs.callPackage else let
-    callPackage = pkgs.lib.callPackageWith (outpkgs // outpkgs.xorg // { inherit callPackage; });
+    callPackage = pkgs.lib.callPackageWith (outpkgs // { inherit callPackage; });
   in callPackage;
 
   makeCallPackageScope = if (args ? outpkgs) then pkgs.lib.id else (scope: let
-    callPackage = pkgs.lib.callPackageWith (outpkgs // outpkgs.xorg // scope // { inherit callPackage; });
+    callPackage = pkgs.lib.callPackageWith (outpkgs // scope // { inherit callPackage; });
   in scope // { inherit callPackage; });
 
   python3Packages = makeCallPackageScope outpkgs.python3Packages;
