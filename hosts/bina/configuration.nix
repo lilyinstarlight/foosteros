@@ -28,7 +28,8 @@
     ledger = true;
     libvirt = true;
     lsp = true;
-    miracast = true;
+    # TODO: re-enable miracast when sway has support for RemoteDesktop portal
+    #miracast = true;
     music = true;
     networkmanager = true;
     nullmailer = true;
