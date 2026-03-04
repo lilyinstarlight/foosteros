@@ -65,8 +65,6 @@ in with outpkgs;
   # unfree packages
   playdate-sdk = callPackage ./playdate-sdk {};
 
-  # TODO: remove when NixOS/nixpkgs#494110 is merged
-  ncmpcpp = pkgs.ncmpcpp.override { boost = boost187; };
   # TODO: remove when beets build is fixed
   beets = let
     self = pkgs.python3.override {
