@@ -37,7 +37,7 @@ let
   };
 
   needsEscaping = s: null != builtins.match "[a-zA-Z0-9]+" s;
-  escapeIfNeccessary = s: if needsEscaping s then s else ''"${lib.escape [ "\$" "\"" "\\" "\`" ] s}"'';
+  escapeIfNeccessary = s: if needsEscaping s then s else ''"${lib.escape [ "\$" "\"" "\\" "`" ] s}"'';
   attrsToText = attrs:
     lib.concatStringsSep "\n" (
       lib.mapAttrsToList (n: v: ''${n}=${escapeIfNeccessary (toString v)}'') attrs

@@ -64,6 +64,70 @@ in with outpkgs;
 
   # unfree packages
   playdate-sdk = callPackage ./playdate-sdk {};
+
+  # TODO: remove when NixOS/nixpkgs#494110 is merged
+  ncmpcpp = pkgs.ncmpcpp.override { boost = boost187; };
+  # TODO: remove when beets build is fixed
+  beets = let
+    self = pkgs.python3.override {
+      packageOverrides = (self: super: {
+        autodocsumm = super.autodocsumm.overridePythonAttrs (old: {
+          nativeBuildInputs = (old.nativeBuildInputs or []) ++ [
+            self.pythonRelaxDepsHook
+          ];
+
+          pythonRelaxDeps = (old.pythonRelaxDeps or []) ++ [
+            "sphinx"
+          ];
+
+          postPatch = (old.postPatch or "") + ''
+            substituteInPlace autodocsumm/__init__.py --replace-fail \
+              "$(printf 'from sphinx.ext.autodoc import (\n    ClassDocumenter, ModuleDocumenter, ALL, PycodeError,\n    ModuleAnalyzer, AttributeDocumenter, DataDocumenter, Options, ExceptionDocumenter,\n    Documenter, prepare_docstring)')" \
+              "$(printf 'from sphinx.errors import PycodeError\nfrom sphinx.pycode import ModuleAnalyzer\nfrom sphinx.util.docstrings import prepare_docstring\nfrom sphinx.ext.autodoc import (\n    ClassDocumenter, ModuleDocumenter, ALL,\n    AttributeDocumenter, DataDocumenter, Options, ExceptionDocumenter,\n    Documenter)')"
+          '';
+        });
+        pyrate-limiter = super.pyrate-limiter_2;
+        sphinx-prompt = super.sphinx-prompt.overridePythonAttrs (old: {
+          postPatch = (old.postPatch or "") + ''
+            # create the old sphinx-prompt directory for compatibility
+            # https://github.com/sbrunner/sphinx-prompt/issues/612
+            cp -r sphinx{_,-}prompt
+          '';
+        });
+        sphinx-tabs = super.sphinx-tabs.overridePythonAttrs {
+          version = "3.4.7-unstable-2026-01-24";
+          src = fetchFromGitHub {
+            owner = "executablebooks";
+            repo = "sphinx-tabs";
+            rev = "d613cb7b6bff083227e35e9b3a4c56b24f6c6ad4";
+            hash = "sha256-aYlc9bs37Mu4Beuggx0dgVdoRa+X65oDNnYg3Wa4dgc=";
+          };
+        };
+        sphinx-toolbox = super.sphinx-toolbox.overridePythonAttrs (old: {
+          dependencies = (old.dependencies or []) ++ [
+            self.roman
+          ];
+
+          nativeBuildInputs = (old.nativeBuildInputs or []) ++ [
+            self.pythonRelaxDepsHook
+          ];
+
+          pythonRelaxDeps = (old.pythonRelaxDeps or []) ++ [
+            "ruamel.yaml"
+          ];
+
+          postPatch = (old.postPatch or "") + ''
+            substituteInPlace sphinx_toolbox/utils.py --replace-fail \
+              'from sphinx.ext.autodoc import Documenter, logger' \
+              "$(printf 'import sphinx.util.logging\nlogger = sphinx.util.logging.getLogger(__name__)\nfrom sphinx.ext.autodoc import Documenter')"
+          '';
+        });
+      });
+      inherit self;
+    };
+  in self.pkgs.toPythonApplication self.pkgs.beets;
+  # TODO: remove when fixed in nixpkgs
+  sonic-pi = pkgs.sonic-pi.override { boost = boost187; ruby = ruby_3_3; };
 } // (if (args ? outpkgs) then {
   vimPlugins = pkgs.vimPlugins.extend (self: super: callPackage ./vim-plugins {});
 } else {

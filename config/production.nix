@@ -2,9 +2,9 @@
 
 lib.mkIf config.foosteros.profiles.production {
   environment.systemPackages = with pkgs; [
-    # TODO: add lqr plugin when fixed for 3.x
+    # TODO: add lqr plugin when fixed for 3.x and krita when build fixed
     #inkscape (gimp-with-plugins.override { plugins = with gimpPlugins; [ lqrPlugin gmic ]; }) krita
-    inkscape (gimp-with-plugins.override { plugins = with gimpPlugins; [ gmic ]; }) krita
+    inkscape (gimp-with-plugins.override { plugins = with gimpPlugins; [ gmic ]; })
     helvum qjackctl qsynth vmpk calf
     ardour lmms
     # TODO: re-add open-stage-control once NixOS/nixpkgs#408849 is fixed and sonic-pi-tool once it works with newer sonic-pi
