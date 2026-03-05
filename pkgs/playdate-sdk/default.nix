@@ -14,17 +14,17 @@
 , cairo
 , gdk-pixbuf
 , glib
-, libX11
+, libx11
 , webkitgtk_4_1
 , libglvnd
 , alsa-lib
-, libXext
-, libXcursor
-, libXinerama
-, libXi
-, libXrandr
-, libXScrnSaver
-, libXxf86vm
+, libxext
+, libxcursor
+, libxinerama
+, libxi
+, libxrandr
+, libxscrnsaver
+, libxxf86vm
 , libxkbcommon
 , wayland
 , runtimeShell
@@ -37,13 +37,13 @@ let
   simLibDeps = [
     libglvnd
     alsa-lib
-    libXext
-    libXcursor
-    libXinerama
-    libXi
-    libXrandr
-    libXScrnSaver
-    libXxf86vm
+    libxext
+    libxcursor
+    libxinerama
+    libxi
+    libxrandr
+    libxscrnsaver
+    libxxf86vm
     libxkbcommon
     wayland
   ];
@@ -79,7 +79,7 @@ stdenv.mkDerivation rec {
     cairo
     gdk-pixbuf
     glib
-    libX11
+    libx11
     stdenv.cc.cc.lib
     webkitgtk_4_1
   ];
