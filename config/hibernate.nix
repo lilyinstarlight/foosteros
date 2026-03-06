@@ -8,7 +8,5 @@ lib.mkIf config.foosteros.profiles.hibernate {
 
   services.logind.settings.Login.HandleLidSwitch = lib.mkDefault "suspend-then-hibernate";
 
-  systemd.sleep.extraConfig = ''
-    HibernateDelaySec=30m
-  '';
+  systemd.sleep.settings.Sleep.HibernateDelaySec = "30m";
 }
