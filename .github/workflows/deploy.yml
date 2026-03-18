@@ -21,7 +21,7 @@ jobs:
 
       - uses: samueldr/lix-gha-installer-action@v2025-10-27
 
-      - uses: cachix/cachix-action@v16
+      - uses: cachix/cachix-action@v17
         with:
           name: foosteros
           extraPullNames: cosmic

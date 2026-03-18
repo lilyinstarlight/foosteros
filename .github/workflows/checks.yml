@@ -39,7 +39,7 @@ jobs:
         run: |
           sudo sed -i -e 's# https://cache\.lix\.systems/\?##' /etc/nix/nix.conf
 
-      - uses: cachix/cachix-action@v16
+      - uses: cachix/cachix-action@v17
         with:
           name: ${{ inputs.cachix_cache_name }}
           extraPullNames: ${{ inputs.cachix_extra_cache_names }}
@@ -118,7 +118,7 @@ jobs:
         run: |
           sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
 
-      - uses: cachix/cachix-action@v16
+      - uses: cachix/cachix-action@v17
         with:
           name: ${{ inputs.cachix_cache_name }}
           extraPullNames: ${{ inputs.cachix_extra_cache_names }}

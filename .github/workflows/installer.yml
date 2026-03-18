@@ -29,7 +29,7 @@ jobs:
         run: |
           sudo sed -i -e 's# https://cache\.lix\.systems/\?##' /etc/nix/nix.conf
 
-      - uses: cachix/cachix-action@v16
+      - uses: cachix/cachix-action@v17
         with:
           name: foosteros
           extraPullNames: cosmic
@@ -81,7 +81,7 @@ jobs:
         run: |
           sudo sed -i -e 's# https://cache\.lix\.systems/\?##' /etc/nix/nix.conf
 
-      - uses: cachix/cachix-action@v16
+      - uses: cachix/cachix-action@v17
         with:
           name: foosteros
           extraPullNames: cosmic
@@ -121,7 +121,7 @@ jobs:
         run: |
           sudo sed -i -e 's# https://cache\.lix\.systems/\?##' /etc/nix/nix.conf
 
-      - uses: cachix/cachix-action@v16
+      - uses: cachix/cachix-action@v17
         with:
           name: foosteros
           extraPullNames: cosmic
