@@ -56,7 +56,6 @@ in with outpkgs;
   tkey-device-signer = callPackage ./tkey-device-signer {};
   tkey-fido = callPackage ./tkey-fido {};
   tkey-random-generator = callPackage ./tkey-random-generator {};
-  tkey-totp = callPackage ./tkey-totp {};
   tkey-verification = callPackage ./tkey-verification {};
 
   # dependents of unfree packages
