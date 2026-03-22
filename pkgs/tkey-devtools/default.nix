@@ -79,7 +79,7 @@ in rec {
     description = "Development tools for the Tillitis TKey USB security token";
     homepage = "https://github.com/tillitis/tkey-devtools";
     license = licenses.gpl2Only;
-    platforms = platforms.all;
+    platforms = platforms.linux;
     maintainers = with maintainers; [ /*lilyinstarlight*/ ];
     mainProgram = "tkey-runapp";
   };
