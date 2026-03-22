@@ -65,7 +65,7 @@ in with outpkgs;
   playdate-sdk = callPackage ./playdate-sdk {};
 
   # TODO: remove when fixed in nixpkgs
-  sonic-pi = pkgs.sonic-pi.override { boost = boost187; ruby = ruby_3_3; };
+  sonic-pi = (pkgs.sonic-pi.override { boost = boost187; ruby = ruby_3_3; }).overrideAttrs (attrs: { meta = (attrs.meta or {}) // { broken = false; }; });
 } // (if (args ? outpkgs) then {
   vimPlugins = pkgs.vimPlugins.extend (self: super: callPackage ./vim-plugins {});
 } else {
