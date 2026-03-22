@@ -9,6 +9,7 @@ lib.mkIf config.foosteros.profiles.workstation {
     (element-desktop.override { element-web = element-web.override { conf.show_labs_settings = true; }; }) mattermost-desktop teams-for-linux (webcord.override { buildNpmPackage = buildNpmPackage.override { nodejs = nodejs_22; }; })
     ffmpeg-full (lib.hiPrio (mpv.override { mpv-unwrapped = mpv-unwrapped.override { ffmpeg = ffmpeg-full; }; }))
     fq ripgrep-all
+    magic-wormhole-rs
     mkusb mkwin
     aria2 openssl wireshark doggo picocom
     gnumake llvmPackages.clang llvmPackages.lldb
