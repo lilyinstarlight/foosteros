@@ -8,16 +8,16 @@
 
 buildGoModule rec {
   pname = "tkey-random-generator";
-  version = "0.0.3";
+  version = "0.0.4";
 
   src = fetchFromGitHub {
     owner = "tillitis";
     repo = "tkey-random-generator";
     rev = "v${version}";
-    hash = "sha256-04s92CGDTUOuzj43m6fMPPpw2Yi7Nh/xt6r0ATe5iNY=";
+    hash = "sha256-NjCkzh8nHLD+YgbeAwofs7Ec7lvgCr4CZD8E54Q+wM8=";
   };
 
-  vendorHash = "sha256-/ZuLpHOk+ga2FLzXYM47RwkNoUsERybgvMi5hdiWDUc=";
+  vendorHash = "sha256-cQL1r8+fFwd41UUSjV9R2NnYi7tH1X6l+Ini5qAZ3v0=";
 
   subPackages = [ "cmd/tkey-random-generator" ];
 
