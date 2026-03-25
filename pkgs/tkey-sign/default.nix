@@ -7,16 +7,16 @@
 
 buildGoModule rec {
   pname = "tkey-sign";
-  version = "1.1.0";
+  version = "1.1.1";
 
   src = fetchFromGitHub {
     owner = "tillitis";
     repo = "tkey-sign-cli";
     rev = "v${version}";
-    hash = "sha256-a3ljf30bYozfcM5OxehXSilQytElqnkNo44mrvRu6Ok=";
+    hash = "sha256-QsfV8jql6apPWfAfY+AqUPr6UJmE/FDOC/Nto4XqFEs=";
   };
 
-  vendorHash = "sha256-/UCSneF6WPy0Hby1HBDJFCNJjA0DOBsil0VkqevdtOg=";
+  vendorHash = "sha256-jtVCy3QLqXeZ/LWLmP36qeUhX5fBp8B1tLPmEOWafV0=";
 
   subPackages = [ "cmd/tkey-sign" ];
 
