@@ -14,7 +14,7 @@ lib.mkIf config.foosteros.profiles.networkd {
         ClientIdentifier = "mac";
         RouteMetric = 700;
       };
-      dhcpV6Config = {
+      ipv6AcceptRAConfig = {
         RouteMetric = 700;
       };
       networkConfig = {
@@ -30,7 +30,7 @@ lib.mkIf config.foosteros.profiles.networkd {
         ClientIdentifier = "mac";
         RouteMetric = 200;
       };
-      dhcpV6Config = {
+      ipv6AcceptRAConfig = {
         RouteMetric = 200;
       };
       networkConfig = {
