@@ -51,11 +51,11 @@ in
 
 stdenv.mkDerivation rec {
   pname = "playdate-sdk";
-  version = "3.0.3";
+  version = "3.0.5";
 
   src = fetchurl {
     url = "https://download.panic.com/playdate_sdk/Linux/PlaydateSDK-${version}.tar.gz";
-    hash = "sha256-CNLWe8Rk8r9c4Xg9JNqaWmEmsWMnpEewrUQ08W/q6Mg=";
+    hash = "sha256-8CDVpcysSYLN6Se9l53QoA/zAPAEk2pkGoXPMdKnwgg=";
   };
 
   strictDeps = true;
