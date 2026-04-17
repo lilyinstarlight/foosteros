@@ -10,5 +10,5 @@
 
   foosteros.profiles.lily = true;
 
-  system.stateVersion = "23.11";
+  system.stateVersion = "26.05";
 }
