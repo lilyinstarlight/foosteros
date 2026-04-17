@@ -104,6 +104,8 @@
     domain = "fooster.network";
   };
 
+  time.timeZone = "Europe/Paris";
+
   services.restic.backups.bina = {
     passwordFile = config.sops.secrets.restic-backup-password.path;
     environmentFile = config.sops.secrets.restic-backup-environment.path;
