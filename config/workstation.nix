@@ -4,7 +4,7 @@ lib.mkIf config.foosteros.profiles.workstation {
   environment.systemPackages = with pkgs; [
     firefox ungoogled-chromium
     pavucontrol qalculate-gtk
-    (element-desktop.override { element-web = element-web.override { conf.show_labs_settings = true; }; }) mattermost-desktop teams-for-linux webcord
+    (element-desktop.override { element-web = element-web.override { conf.show_labs_settings = true; }; }) mattermost-desktop signal-desktop teams-for-linux webcord
     ffmpeg-full (lib.hiPrio (mpv.override { mpv-unwrapped = mpv-unwrapped.override { ffmpeg = ffmpeg-full; }; }))
     fq ripgrep-all
     magic-wormhole-rs
@@ -32,6 +32,7 @@ lib.mkIf config.foosteros.profiles.workstation {
         directories = [
           ".config/Element"
           ".config/Mattermost"
+          ".config/Signal"
           ".config/teams-for-linux"
           ".config/WebCord"
           ".mozilla"
