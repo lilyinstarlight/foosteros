@@ -84,6 +84,7 @@
       "carolina"
       "allison"
       "emma"
+      "lixcon"
     ]));
   };
 
