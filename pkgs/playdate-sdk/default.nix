@@ -6,6 +6,7 @@
 , makeWrapper
 , wrapGAppsHook3
 , autoPatchelfHook
+, patchelfUnstable
 , libpng
 , zlib
 , udev
@@ -65,6 +66,7 @@ stdenv.mkDerivation rec {
     makeWrapper
     wrapGAppsHook3
     autoPatchelfHook
+    patchelfUnstable
   ];
 
   buildInputs = [
@@ -92,9 +94,6 @@ stdenv.mkDerivation rec {
     # SDK
     mkdir -p $out/sdk
     cp -r * $out/sdk/
-
-    # TODO: Patchelf chokes when SHT_NOTE sections are non-contiguous, remove when this is no longer necessary
-    strip --remove-section=.note.gnu.property $out/sdk/bin/crashpad_handler
 
     # MIME resources
     for size in 16 32 48 512; do

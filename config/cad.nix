@@ -2,9 +2,7 @@
 
 lib.mkIf config.foosteros.profiles.cad {
   environment.systemPackages = with pkgs; [
-    # TODO: re-add freecad when it builds
-    #freecad prusa-slicer
-    prusa-slicer
+    freecad prusa-slicer
     kicad-small
   ];
 
