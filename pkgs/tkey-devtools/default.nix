@@ -11,13 +11,13 @@
 
 stdenv.mkDerivation (finalAttrs: rec {
   pname = "tkey-devtools";
-  version = "0.0.2";
+  version = "0.0.3";
 
   src = fetchFromGitHub {
     owner = "tillitis";
     repo = "tkey-devtools";
     rev = "v${version}";
-    hash = "sha256-hKdH+UQsonXG6Iet3vYaKWzSWOs4o1j1zMcmmG964yA=";
+    hash = "sha256-FZXTL1kTdfngHuRC2mVwIpU7W1hHDDbKe1THVHYNSP8=";
   };
 
   passthru = let
@@ -39,7 +39,7 @@ stdenv.mkDerivation (finalAttrs: rec {
   in {
     cmdList = {
       tkey-runapp = {
-        vendorHash = "sha256-kJkUe2wxRtRgH2Ib4v6xYGTZC8KDINOgfaf3Uvw5+1s=";
+        vendorHash = "sha256-eOOgSwX1FF+8tkeSOmvXbztOFsUa3sL4XuRpMMD/Grc=";
       };
       hidread = {
         buildInputs = [ udev ];
