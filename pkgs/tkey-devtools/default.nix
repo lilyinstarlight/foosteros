@@ -9,23 +9,7 @@
 , nix-update-script
 }:
 
-stdenv.mkDerivation (finalAttrs: let
-  mkCmd = name: args: buildGoModule (args // {
-    pname = "${finalAttrs.pname}-${name}";
-
-    inherit (finalAttrs) version src;
-
-    modRoot = "cmd/${name}";
-
-    ldflags = (args.ldflags or []) ++ [
-      "-X main.version=${finalAttrs.version}"
-    ];
-
-    meta = finalAttrs.meta // {
-      mainProgram = name;
-    };
-  });
-in rec {
+stdenv.mkDerivation (finalAttrs: rec {
   pname = "tkey-devtools";
   version = "0.0.2";
 
@@ -36,14 +20,39 @@ in rec {
     hash = "sha256-hKdH+UQsonXG6Iet3vYaKWzSWOs4o1j1zMcmmG964yA=";
   };
 
-  passthru.cmdList = {
-    tkey-runapp = {
-      vendorHash = "sha256-kJkUe2wxRtRgH2Ib4v6xYGTZC8KDINOgfaf3Uvw5+1s=";
-    };
-    hidread = {
-      buildInputs = [ udev ];
+  passthru = let
+    mkCmd = name: args: buildGoModule (args // {
+      pname = "${finalAttrs.pname}-${name}";
 
-      vendorHash = "sha256-DxCxv56D0bGQBZEvmRtoUP+C0rPRN6DLun1nyYfOFhU=";
+      inherit (finalAttrs) version src;
+
+      modRoot = "cmd/${name}";
+
+      ldflags = (args.ldflags or []) ++ [
+        "-X main.version=${finalAttrs.version}"
+      ];
+
+      meta = finalAttrs.meta // {
+        mainProgram = name;
+      };
+    });
+  in {
+    cmdList = {
+      tkey-runapp = {
+        vendorHash = "sha256-kJkUe2wxRtRgH2Ib4v6xYGTZC8KDINOgfaf3Uvw5+1s=";
+      };
+      hidread = {
+        buildInputs = [ udev ];
+
+        vendorHash = "sha256-DxCxv56D0bGQBZEvmRtoUP+C0rPRN6DLun1nyYfOFhU=";
+      };
+    };
+
+    cmds = lib.mapAttrs (name: args: mkCmd name args) finalAttrs.passthru.cmdList;
+
+    # TODO: test if this still works?
+    updateScript = nix-update-script {
+      extraArgs = lib.concatMap (name: [ "-s" ("cmds." + name) ]) (lib.attrNames finalAttrs.passthru.cmds);
     };
   };
 
@@ -57,7 +66,7 @@ in rec {
 
     mkdir -p $out/bin
 
-    for cmd in ${lib.escapeShellArgs (lib.mapAttrsToList (name: args: lib.getExe (mkCmd name args)) finalAttrs.passthru.cmdList)}; do
+    for cmd in ${lib.escapeShellArgs (lib.mapAttrsToList (_name: cmd: lib.getExe cmd) finalAttrs.passthru.cmds)}; do
       ln -s "$cmd" $out/bin/
     done
 
@@ -71,9 +80,6 @@ in rec {
 
     runHook postInstall
   '';
-
-  # TODO: test if this still works?
-  #passthru.updateScript = nix-update-script {};
 
   meta = with lib; {
     description = "Development tools for the Tillitis TKey USB security token";
