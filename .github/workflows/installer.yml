@@ -24,11 +24,6 @@ jobs:
     steps:
       - uses: samueldr/lix-gha-installer-action@v2025-10-27
 
-      - name: 'Remove unnecessary cache.lix.systems substituter'
-        # TODO: remove if there becomes a better way to do this with the installer
-        run: |
-          sudo sed -i -e 's# https://cache\.lix\.systems/\?##' /etc/nix/nix.conf
-
       - uses: cachix/cachix-action@v17
         with:
           name: foosteros
@@ -76,11 +71,6 @@ jobs:
 
       - uses: samueldr/lix-gha-installer-action@v2025-10-27
 
-      - name: 'Remove unnecessary cache.lix.systems substituter'
-        # TODO: remove if there becomes a better way to do this with the installer
-        run: |
-          sudo sed -i -e 's# https://cache\.lix\.systems/\?##' /etc/nix/nix.conf
-
       - uses: cachix/cachix-action@v17
         with:
           name: foosteros
@@ -115,11 +105,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: samueldr/lix-gha-installer-action@v2025-10-27
-
-      - name: 'Remove unnecessary cache.lix.systems substituter'
-        # TODO: remove if there becomes a better way to do this with the installer
-        run: |
-          sudo sed -i -e 's# https://cache\.lix\.systems/\?##' /etc/nix/nix.conf
 
       - uses: cachix/cachix-action@v17
         with:

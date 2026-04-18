@@ -34,11 +34,6 @@ jobs:
     steps:
       - uses: samueldr/lix-gha-installer-action@v2025-10-27
 
-      - name: 'Remove unnecessary cache.lix.systems substituter'
-        # TODO: remove if there becomes a better way to do this with the installer
-        run: |
-          sudo sed -i -e 's# https://cache\.lix\.systems/\?##' /etc/nix/nix.conf
-
       - uses: cachix/cachix-action@v17
         with:
           name: ${{ inputs.cachix_cache_name }}
@@ -73,11 +68,6 @@ jobs:
     steps:
       - uses: samueldr/lix-gha-installer-action@v2025-10-27
 
-      - name: 'Remove unnecessary cache.lix.systems substituter'
-        # TODO: remove if there becomes a better way to do this with the installer
-        run: |
-          sudo sed -i -e 's# https://cache\.lix\.systems/\?##' /etc/nix/nix.conf
-
       - uses: actions/checkout@v6
         with:
           ref: ${{ inputs.ref_head }}
@@ -108,11 +98,6 @@ jobs:
       - uses: samueldr/more-space-action@v2025-01-24.pre
 
       - uses: samueldr/lix-gha-installer-action@v2025-10-27
-
-      - name: 'Remove unnecessary cache.lix.systems substituter'
-        # TODO: remove if there becomes a better way to do this with the installer
-        run: |
-          sudo sed -i -e 's# https://cache\.lix\.systems/\?##' /etc/nix/nix.conf
 
       - name: 'Remove AppArmor restrictions on unprivileged user namespaces'
         run: |
