@@ -475,6 +475,32 @@ lib.mkIf config.foosteros.profiles.sway {
     '';
     "gtk-2.0/gtkrc".source = config.environment.etc."xdg/gtk-2.0/gtkrc".source;
 
+    "xdg/qt5ct/qt5ct.conf".text = lib.mkDefault ''
+      [Appearance]
+      color_scheme_path=${config.system.path}/share/qt5ct/colors/catppuccin-mocha-pink.conf
+      custom_palette=true
+      icon_theme=Papirus-Dark
+      standard_dialogs=xdgdesktopportal
+      style=Darkly
+
+      [Fonts]
+      fixed="monospace,12,-1,5,50,0,0,0,0,0"
+      general="monospace,12,-1,5,50,0,0,0,0,0"
+    '';
+
+    "xdg/qt6ct/qt6ct.conf".text = lib.mkDefault ''
+      [Appearance]
+      color_scheme_path=${config.system.path}/share/qt6ct/colors/catppuccin-mocha-pink.conf
+      custom_palette=true
+      icon_theme=Papirus-Dark
+      standard_dialogs=xdgdesktopportal
+      style=Darkly
+
+      [Fonts]
+      fixed="monospace,12,-1,5,400,0,0,0,0,0,0,0,0,0,0,1"
+      general="monospace,12,-1,5,400,0,0,0,0,0,0,0,0,0,0,1"
+    '';
+
     "sway/config.d/fooster".text = lib.mkDefault ''
       ### variables
       set $mod mod4
