@@ -268,7 +268,7 @@ lib.mkIf config.foosteros.profiles.sway {
 
         "qt6ct/qt6ct.conf".text = ''
           [Appearance]
-          color_scheme_path=${config.system.path}/share/qt6ct/colors/catppuccin-mocha-pink.conf
+          color_scheme_path=${pkgs.catppuccin-qt5ct}/share/qt6ct/colors/catppuccin-mocha-pink.conf
           custom_palette=true
           icon_theme=Papirus-Dark
           standard_dialogs=xdgdesktopportal
@@ -281,7 +281,7 @@ lib.mkIf config.foosteros.profiles.sway {
 
         "qt5ct/qt5ct.conf".text = ''
           [Appearance]
-          color_scheme_path=${config.system.path}/share/qt5ct/colors/catppuccin-mocha-pink.conf
+          color_scheme_path=${pkgs.catppuccin-qt5ct}/share/qt5ct/colors/catppuccin-mocha-pink.conf
           custom_palette=true
           icon_theme=Papirus-Dark
           standard_dialogs=xdgdesktopportal
