@@ -278,6 +278,11 @@ lib.mkIf config.foosteros.profiles.sway {
     "Noto Color Emoji"
   ];
 
+  environment.pathsToLink = [
+    "/share/qt5ct"
+    "/share/qt6ct"
+  ];
+
   environment.systemPackages = with pkgs; [
     # Qt style
     darkly darkly-qt5 catppuccin-qt5ct
