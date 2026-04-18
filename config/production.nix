@@ -2,9 +2,9 @@
 
 lib.mkIf config.foosteros.profiles.production {
   environment.systemPackages = with pkgs; [
-    # TODO: add lqr plugin when fixed for 3.x and krita when build fixed
+    # TODO: add lqr plugin when fixed for 3.x
     #inkscape (gimp-with-plugins.override { plugins = with gimpPlugins; [ lqrPlugin gmic ]; }) krita
-    inkscape (gimp-with-plugins.override { plugins = with gimpPlugins; [ gmic ]; })
+    inkscape (gimp-with-plugins.override { plugins = with gimpPlugins; [ gmic ]; }) krita
     # TODO: readd with helvum if readded or some successor project
     #helvum qjackctl qsynth vmpk calf
     qjackctl qsynth vmpk calf
