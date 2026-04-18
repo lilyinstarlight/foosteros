@@ -279,6 +279,9 @@ lib.mkIf config.foosteros.profiles.sway {
   ];
 
   environment.systemPackages = with pkgs; [
+    # Qt style
+    darkly darkly-qt5 catppuccin-qt5ct
+    # packages
     qutebrowser
     alacritty
     imv mupdf mpv
@@ -840,11 +843,10 @@ lib.mkIf config.foosteros.profiles.sway {
     { domain = "@users"; item = "rtprio"; type = "-"; value = 1; }
   ];
 
-  # TODO: use qt5ct/qt6ct theme with lightly style once Luwx/Lightly#200 is finished
   qt = {
     enable = true;
-    platformTheme = "gnome";
-    style = "adwaita-dark";
+    # qt{5,6}ct style/color packages in `config.environment.systemPackages` above
+    platformTheme = "qt5ct";
   };
 
   xdg.portal = {
