@@ -50,7 +50,6 @@ stdenv.mkDerivation (finalAttrs: rec {
 
     cmds = lib.mapAttrs (name: args: mkCmd name args) finalAttrs.passthru.cmdList;
 
-    # TODO: test if this still works?
     updateScript = nix-update-script {
       extraArgs = lib.concatMap (name: [ "-s" ("cmds." + name) ]) (lib.attrNames finalAttrs.passthru.cmds);
     };
