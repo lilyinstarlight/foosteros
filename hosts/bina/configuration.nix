@@ -84,7 +84,6 @@
       "carolina"
       "allison"
       "emma"
-      "lixcon"
     ]));
   };
 
@@ -103,8 +102,6 @@
     hostName = "bina";
     domain = "fooster.network";
   };
-
-  time.timeZone = "Europe/Paris";
 
   services.restic.backups.bina = {
     passwordFile = config.sops.secrets.restic-backup-password.path;
