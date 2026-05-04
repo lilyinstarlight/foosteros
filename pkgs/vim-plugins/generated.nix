@@ -20,6 +20,19 @@ final: prev: {
     meta.hydraPlatforms = [ ];
   };
 
+  jellybeans-vim = buildVimPlugin {
+    pname = "jellybeans.vim";
+    version = "1.7-unstable-2019-06-22";
+    src = fetchFromGitHub {
+      owner = "nanotech";
+      repo = "jellybeans.vim";
+      rev = "ef83bf4dc8b3eacffc97bf5c96ab2581b415c9fa";
+      hash = "sha256-X+37Mlyt6+ZwfYlt4ZtdHPXDgcKtiXlUoUPZVb58w/8=";
+    };
+    meta.homepage = "https://github.com/nanotech/jellybeans.vim/";
+    meta.hydraPlatforms = [ ];
+  };
+
   vim-fish = buildVimPlugin {
     pname = "vim-fish";
     version = "0-unstable-2022-03-06";

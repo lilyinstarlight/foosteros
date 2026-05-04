@@ -1,5 +1,6 @@
 repo,branch,alias
 https://github.com/fidian/hexmode/,,
+https://github.com/nanotech/jellybeans.vim/,,
 https://github.com/inkch/vim-fish/,,
 https://github.com/lfv89/vim-interestingwords/,,
 https://github.com/tpope/vim-jdaddy/,,
