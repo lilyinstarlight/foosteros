@@ -108,7 +108,7 @@
 
   outputs = { self, nixpkgs, sops-nix, ... }:
     let
-      supportedSystems = with nixpkgs.lib; intersectLists (platforms.x86_64 ++ platforms.aarch64) (platforms.linux ++ platforms.darwin);
+      supportedSystems = with nixpkgs.lib; (intersectLists (platforms.x86_64 ++ platforms.aarch64) platforms.linux) ++ (intersectLists platforms.aarch64 platforms.darwin);
 
       forAllSystems = f: nixpkgs.lib.genAttrs supportedSystems (system: f system);
     in
@@ -169,7 +169,7 @@
 
     packages = forAllSystems (system: {
       default = nixpkgs.legacyPackages.${system}.linkFarmFromDrvs "foosteros-pkgs"
-        (nixpkgs.lib.unique (nixpkgs.lib.filter (drv: drv.meta ? position && !drv.meta.unsupported && !drv.meta.broken && !drv.meta.unfree && (drv ? dependsUnfree -> !drv.dependsUnfree)) (nixpkgs.lib.collect (drv: nixpkgs.lib.isDerivation drv) self.legacyPackages.${system})));
+        (nixpkgs.lib.unique (nixpkgs.lib.filter (drv: drv.meta ? available && !drv.meta.unsupported && !drv.meta.broken && !drv.meta.unfree && (drv ? dependsUnfree -> !drv.dependsUnfree)) (nixpkgs.lib.collect (drv: nixpkgs.lib.isDerivation drv) self.legacyPackages.${system})));
 
       deploy = nixpkgs.legacyPackages.${system}.writeText "cachix-deploy.json" (builtins.toJSON {
         agents = (nixpkgs.lib.mapAttrs (host: cfg: cfg.config.system.build.toplevel) (nixpkgs.lib.filterAttrs (host: cfg:
