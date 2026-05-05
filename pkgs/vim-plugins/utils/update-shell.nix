@@ -39,6 +39,7 @@ mkShell {
     (python3.withPackages (ps: [ ps.requests ps.nixpkgs-plugin-update ]))
     nix
     nix-prefetch-git
+    nix-prefetch-github
     neovim-unwrapped
     nurl
   ];
