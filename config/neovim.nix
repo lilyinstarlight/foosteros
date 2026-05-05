@@ -187,7 +187,6 @@ lib.mkIf config.foosteros.profiles.neovim {
           vim-nix
           vim-peekaboo
           vim-ps1
-          vim-qml
           vim-repeat
           vim-slash
           vim-sleuth
