@@ -21,7 +21,7 @@ final: prev: {
   };
 
   jellybeans-vim = buildVimPlugin {
-    pname = "jellybeans.vim";
+    pname = "jellybeans-vim";
     version = "1.7-unstable-2019-06-22";
     src = fetchFromGitHub {
       owner = "nanotech";
@@ -87,11 +87,11 @@ final: prev: {
 
   vim-magnum = buildVimPlugin {
     pname = "vim-magnum";
-    version = "2.1.1-unstable-2019-11-12";
+    version = "2.1.1";
     src = fetchFromGitHub {
       owner = "glts";
       repo = "vim-magnum";
-      rev = "7a30761b935d72bada5bbe90162a6afdb77c858d";
+      tag = "v2.1.1";
       hash = "sha256-dLZRR6B94+DoUlRHM24XmPV+iBlMDxDaj+GSOuStkrs=";
     };
     meta.homepage = "https://github.com/glts/vim-magnum/";
