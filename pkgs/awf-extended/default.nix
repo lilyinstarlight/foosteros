@@ -15,13 +15,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "awf-extended";
-  version = "4.0.0";
+  version = "4.1.0";
 
   src = fetchFromGitHub {
     owner = "luigifab";
     repo = "awf-extended";
     rev = "v${finalAttrs.version}";
-    sha256 = "sha256-8v+cV1YKlNLz0vrKrflz6eF5UKIHD8QZhutKd4bn6Dg=";
+    sha256 = "sha256-wTjMnNQXR8Xe8sR5SBJjnjDFmMym6QfcuunAt2ZKDV8=";
   };
 
   dontConfigure = true;
