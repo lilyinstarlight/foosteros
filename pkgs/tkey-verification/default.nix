@@ -6,16 +6,16 @@
 
 buildGoModule rec {
   pname = "tkey-verification";
-  version = "1.0.0";
+  version = "erisigner-v0.0.3";
 
   src = fetchFromGitHub {
     owner = "tillitis";
     repo = "tkey-verification";
     rev = "v${version}";
-    hash = "sha256-WoV0AsMWMupRW+rJpsD28zGdASzeqQmIu9OGvFNcSW4=";
+    hash = "sha256-hXCfDq0gsMyNDRi6gUWf6ZkGPKnnmHd2/PJVmbDpTHM=";
   };
 
-  vendorHash = "sha256-ikCn68wh+46KCEAHjlt7ATrIcPyIpL/WwR0b0rfdWfY=";
+  vendorHash = "sha256-fiFG16njTHbdSXnNtMSjqKdlTtqL3YZRRaPKuKt02xg=";
 
   subPackages = [ "cmd/tkey-verification" ];
 
