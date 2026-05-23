@@ -19,7 +19,9 @@ buildGoModule rec {
 
   subPackages = [ "cmd/tkey-verification" ];
 
-  passthru.updateScript = nix-update-script {};
+  passthru.updateScript = nix-update-script {
+    extraArgs = [ "--version-regex" "v(.*)" ];
+  };
 
   meta = with lib; {
     description = "A tool used for signing a TKey identity and verifying that it still has the same identity as it did when it was produced by Tillitis";
