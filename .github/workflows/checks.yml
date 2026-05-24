@@ -122,7 +122,7 @@ jobs:
           if ! [ "$IMPURE" = true ]; then
             narhash="$(nix -L --show-trace eval --raw ".#checks.$(nix config show --json | jq -r .system.value).$CHECK" --apply 'builtins.substring 11 32')"
           else
-            narhash="$(nix-instantiate --show-trace --eval --expr '{ attr }: (import ./test.nix {}).${attr}.outPath' --argstr attr "$CHECK" --json | jq -r '.[11:43]')"
+            narhash="$(nix-instantiate --show-trace --eval --read-write-mode --expr '{ attr }: (import ./test.nix {}).${attr}.outPath' --argstr attr "$CHECK" --json | jq -r '.[11:43]')"
           fi
           for cache in {${{ inputs.cachix_cache_name }},${{ inputs.cachix_extra_cache_names }}}.cachix.org cache.nixos.org; do
             if curl -sfo /dev/null "https://$cache/$narhash.narinfo"; then
