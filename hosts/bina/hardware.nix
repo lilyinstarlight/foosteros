@@ -16,7 +16,7 @@
 
   system.devices = {
     rootDisk = "/dev/nvme0n1";
-    coreThermalZone = 7;
+    coreThermalZone = 2;
     batteryId = 1;
     wirelessAdapter = "wlp166s0";
     preservedState = "/state";
