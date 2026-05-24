@@ -16,15 +16,15 @@ let
     ] value;
 
   parse = name: value: {
-    pname = value.pname;
-    version = value.version;
+    inherit (value) pname version;
     homePage = value.meta.homepage;
     checksum =
       if hasChecksum value then
         {
           submodules = value.src.fetchSubmodules or false;
           sha256 = value.src.outputHash;
-          rev = value.src.rev;
+          inherit (value.src) rev;
+          tag = value.src.tag or null;
         }
       else
         null;
