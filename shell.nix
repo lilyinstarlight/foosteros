@@ -10,10 +10,8 @@ let
       }
     )
     {
-      # hack to skip fetchGit when evaluating impurely and get original paths
-      src = {
-        outPath = ./.;
-      };
+      src = ./.;
+      copySourceTreeToStore = false;
     }
   ).defaultNix;
 in
