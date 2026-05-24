@@ -42,21 +42,22 @@ jobs:
       - uses: actions/checkout@v6
         with:
           ref: ${{ inputs.ref_head }}
+          fetch-depth: ${{ case(!inputs.impure, 1, 0) }}
 
       # TODO: fix OOMs from using `--all-systems` (maybe just detect what systems have outputs and run commands in sequence like this automatically?)
       - name: 'Pre-evaluate all derivation-type outputs'
-        if: inputs.impure != 'true'
+        if: '!inputs.impure'
         run: |
           outputs="$(for system in x86_64-linux aarch64-linux x86_64-darwin aarch64-darwin; do nix -L flake show --legacy --system "$system" --json | jq --compact-output -r '. as $outputs | paths | select(.[-1] == "type") | . as $path | $outputs | getpath($path) as $type | if ($type == "derivation") then ($path[:-1] | join(".")) elif ($type == "nixos-configuration") then ($path[:-1] + ["config", "system", "build", "toplevel"] | join(".")) else empty end'; done | jq --raw-input --slurp --compact-output -r 'split("\n") | map(select(. != ""))')"
           jq --null-input --raw-input --compact-output --argjson outputs "$outputs" -r '$outputs[]' | xargs -I'{}' nix -L eval --json '.#{}.drvPath' | jq -r
 
-      - if: inputs.impure != 'true'
+      - if: '!inputs.impure'
         run: nix -L --show-trace flake check --no-build --system x86_64-linux
-      - if: inputs.impure != 'true'
+      - if: '!inputs.impure'
         run: nix -L --show-trace flake check --no-build --system aarch64-linux
-      - if: inputs.impure != 'true'
+      - if: '!inputs.impure'
         run: nix -L --show-trace flake check --no-build --system x86_64-darwin
-      - if: inputs.impure != 'true'
+      - if: '!inputs.impure'
         run: nix -L --show-trace flake check --no-build --system aarch64-darwin
 
   populate:
@@ -71,6 +72,7 @@ jobs:
       - uses: actions/checkout@v6
         with:
           ref: ${{ inputs.ref_head }}
+          fetch-depth: ${{ case(!inputs.impure, 1, 0) }}
 
       - id: identify
         name: Identify all system-compatible checks
@@ -112,6 +114,7 @@ jobs:
       - uses: actions/checkout@v6
         with:
           ref: ${{ inputs.ref_head }}
+          fetch-depth: ${{ case(!inputs.impure, 1, 0) }}
 
       - id: query
         name: 'Check cache for checks.${{ matrix.check }}'
