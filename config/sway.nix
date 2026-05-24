@@ -64,6 +64,27 @@ let
   };
 
   catppuccin-cursors-sway = pkgs.catppuccin-cursors.mochaDark;
+
+  darkly-qt5 = (pkgs.darkly.override {
+    qt6 = pkgs.libsForQt5;
+    kdePackages = pkgs.libsForQt5 // pkgs.libsForQt5.__internalKF5 // {
+      kirigami = pkgs.libsForQt5.__internalKF5.kirigami2;
+      kcolorscheme = null;
+      kdecoration = null;
+      kcmutils = pkgs.libsForQt5.__internalKF5.kconfigwidgets;
+    };
+  }).overrideAttrs (old: {
+    pname = "darkly-qt5";
+
+    cmakeFlags = [ "-DBUILD_QT5=ON" "-DBUILD_QT6=OFF" ];
+
+    postPatch = (old.postPatch or "") + ''
+      substituteInPlace CMakeLists.txt \
+        --replace-fail 'KF5KCMUtils' 'KF5ConfigWidgets'
+    '';
+
+    meta = lib.removeAttrs old.meta [ "mainProgram" ];
+  });
 in
 
 lib.mkIf config.foosteros.profiles.sway {
