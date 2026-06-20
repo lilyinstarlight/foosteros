@@ -77,10 +77,6 @@ lib.mkIf config.foosteros.profiles.base {
   boot.consoleLogLevel = 3;
   boot.kernelParams = [ "quiet" ];
 
-  boot.bootspec.enable = true;
-
-  boot.loader.efi.canTouchEfiVariables = true;
-
   boot.initrd.systemd = {
     enable = true;
 

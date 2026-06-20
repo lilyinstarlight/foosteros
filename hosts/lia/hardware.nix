@@ -14,6 +14,8 @@
   hardware.enableRedistributableFirmware = true;
   hardware.cpu.intel.updateMicrocode = true;
 
+  boot.loader.efi.canTouchEfiVariables = true;
+
   nixpkgs.hostPlatform = "x86_64-linux";
 
   system.devices = {
