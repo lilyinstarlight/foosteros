@@ -925,7 +925,11 @@ lib.mkIf config.foosteros.profiles.sway {
     enable = true;
     theme.name = "Colloid-Pink-Dark-Catppuccin";
     iconTheme.name = "Papirus-Dark";
-    font.name = "monospace 12";
+    font = {
+      package = pkgs.nerd-fonts.monofur;
+      name = "Monofur Nerd Font";
+      size = 12;
+    };
     cursorTheme.name = "catppuccin-mocha-dark-cursors";
   };
   services.greetd.settings.default_session.command = let
