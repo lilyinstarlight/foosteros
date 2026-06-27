@@ -18,14 +18,14 @@ lib.mkIf config.foosteros.profiles.hyfetch {
       programs.hyfetch = {
         enable = true;
         settings = {
+          backend = "neofetch";
           preset = "transfeminine";
           mode = "rgb";
           light_dark = "dark";
           lightness = 0.5;
+          pride_month_disable = false;
           color_align = {
             mode = "horizontal";
-            custom_colors = [ ];
-            fore_back = null;
           };
         };
       };
