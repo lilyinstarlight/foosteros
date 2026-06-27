@@ -7,7 +7,7 @@ lib.mkIf config.foosteros.profiles.tex {
       name = "pdflatexmk";
       runtimeInputs = with pkgs; [ texlive.combined.scheme-full ];
       text = ''
-            latexmk -pdf "$@" && latexmk -c "$@"
+        latexmk -pdf "$@" && latexmk -c "$@"
       '';
     })
   ];
