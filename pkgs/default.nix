@@ -63,21 +63,6 @@ in with outpkgs;
 
   # unfree packages
   playdate-sdk = callPackage ./playdate-sdk {};
-
-  # TODO: remove when xdp-wlr supports RemoteDesktop portal
-  xdg-desktop-portal-wlr = pkgs.xdg-desktop-portal-wlr.overrideAttrs (old: {
-    patches = (old.patches or []) ++ [
-      (fetchurl {
-        name = "xdp-wlr-remotedesktop.patch";
-        url = "https://github.com/emersion/xdg-desktop-portal-wlr/compare/e34a77ec7e5c3a5f2807282338a2f25964bd98d7~1..bdd26ad0096290e1cc9a952e18732e8544f783bc.diff";
-        hash = "sha256-osIh5S9YpePRLJ1TCkj+DacAFqiKYM5keYkXiSwQ57w=";
-      })
-    ];
-
-    buildInputs = (old.buildInputs or []) ++ [
-      libxkbcommon
-    ];
-  });
 } // (if (args ? outpkgs) then {
   vimPlugins = pkgs.vimPlugins.extend (self: super: callPackage ./vim-plugins {});
 } else {
