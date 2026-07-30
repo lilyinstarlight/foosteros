@@ -101,7 +101,8 @@
 
   boot.initrd.systemd = {
     extraBin = {
-      nv_readvalue = "${pkgs.tpm-luks}/usr/bin/nv_readvalue";
+      tcsd = "${pkgs.trousers}/usr/bin/tcsd";
+      tpm_nvread = "${pkgs.tpm-tools}/usr/bin/tpm_nvread";
     };
 
     services.unlock-with-tpm12-key = {
@@ -125,7 +126,7 @@
       script = ''
         touch /dev/shm/luks-key
         chmod a=,u=r /dev/shm/luks-key
-        nv_readvalue -ix 2 -sz 32 -of /dev/shm/luks-key
+        (trap 'kill $!' EXIT; tcsd -f & sleep 0.1; tpm_nvread -i 2 -s 32 -f /dev/shm/luks-key)
         systemd-cryptsetup attach ${config.boot.initrd.luks.devices.nixos.name} ${config.boot.initrd.luks.devices.nixos.device} /dev/shm/luks-key
         shred -fu /dev/shm/luks-key
       '';
