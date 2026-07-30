@@ -905,6 +905,8 @@ lib.mkIf config.foosteros.profiles.sway {
     enable = true;
     xdgOpenUsePortal = true;
   };
+  # disable default PATH to inherit service manager PATH even when overridden by module options
+  systemd.user.services.xdg-desktop-portal-wlr.enableDefaultPath = false;
 
   services.displayManager.sessionPackages = [
     (lib.hiPrio (pkgs.runCommand "sway.desktop" {
