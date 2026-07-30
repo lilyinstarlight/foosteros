@@ -24,7 +24,9 @@ lib.mkIf config.foosteros.profiles.podman {
     })
   ];
 
-  virtualisation.containers.registries.search = [ "docker.io" ];
+  virtualisation.containers.registries.settings = {
+    unqualified-search-registries = [ "docker.io" ];
+  };
 
   environment.systemPackages = with pkgs; [
     podman-compose
