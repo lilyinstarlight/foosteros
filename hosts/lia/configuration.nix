@@ -26,8 +26,7 @@
     ledger = true;
     libvirt = true;
     lsp = true;
-    # TODO: reenable when cosmic has support for RemoteDesktop portal
-    #miracast = true;
+    miracast = true;
     music = true;
     networkmanager = true;
     nullmailer = true;
@@ -74,6 +73,7 @@
       "wired-admin"
       "josie"
       "emma"
+      "mel"
     ]));
   };
 
