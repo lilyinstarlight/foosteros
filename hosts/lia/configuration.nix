@@ -17,6 +17,7 @@
     bluetooth = true;
     cosmic = true;
     fcitx5 = true;
+    firewalld = true;
     fwupd = true;
     gc = true;
     gnupg = true;

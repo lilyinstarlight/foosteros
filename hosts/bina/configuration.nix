@@ -18,6 +18,7 @@
     builders = true;
     cad = true;
     fcitx5 = true;
+    firewalld = true;
     fprint = true;
     fwupd = true;
     gc = true;

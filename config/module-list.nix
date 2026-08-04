@@ -9,6 +9,7 @@
   ./cosmic.nix
   ./ephemeral.nix
   ./fcitx5.nix
+  ./firewalld.nix
   ./fish.nix
   ./fonts.nix
   ./fprint.nix

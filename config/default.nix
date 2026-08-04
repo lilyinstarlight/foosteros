@@ -42,6 +42,8 @@
 
       fcitx5 = lib.mkEnableOption "fcitx5 profile";
 
+      firewalld = lib.mkEnableOption "firewalld profile";
+
       fish = lib.mkEnableOption "fish profile" // {
         default = true;
       };
