@@ -908,6 +908,11 @@ lib.mkIf config.foosteros.profiles.sway {
   # disable default PATH to inherit service manager PATH even when overridden by module options
   systemd.user.services.xdg-desktop-portal-wlr.enableDefaultPath = false;
 
+  systemd.user.targets.sway-session = {
+    wants = [ "xdg-desktop-autostart.target" ];
+    before = [ "xdg-desktop-autostart.target" ];
+  };
+
   services.displayManager.sessionPackages = [
     (lib.hiPrio (pkgs.runCommand "sway.desktop" {
       desktopItem = pkgs.makeDesktopItem {
