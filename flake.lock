@@ -127,11 +127,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1786487128,
-        "narHash": "sha256-ad60hrRVhH/bo3Jl1YLzO+QcS3mUNZr9LNJdzhMO2P4=",
+        "lastModified": 1786538400,
+        "narHash": "sha256-PH8B1YKxedcWKNw2xsk6cKPVk/rJoLgdlWd5d+Icies=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "f404edbfa4117810c96b97048299242fc50e5362",
+        "rev": "e13ba5e5abbd9b912fa8c6979bd119e87ca7fdd9",
         "type": "github"
       },
       "original": {
@@ -170,11 +170,11 @@
     "lix": {
       "flake": false,
       "locked": {
-        "lastModified": 1786479978,
-        "narHash": "sha256-9R0krBqEbKhlqFaQ30pZN4EqtWvaCLktFZ0MIx6LBfY=",
+        "lastModified": 1786539427,
+        "narHash": "sha256-uipuaI3owf8YEIOtzNrqp+i4dDPtBNjHs/c61gvVJLM=",
         "ref": "refs/heads/main",
-        "rev": "9cbe9d5b468496eeac1bd7184004e0d7ff878a06",
-        "revCount": 19460,
+        "rev": "c60a53d1d560a6d03a408cd30c95db1d752e0896",
+        "revCount": 19469,
         "type": "git",
         "url": "https://git.lix.systems/lix-project/lix"
       },
@@ -340,11 +340,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1786420161,
-        "narHash": "sha256-PU4CY4GUCDFOoS67dGrc/fS6Y+d1cYZSh6nbgYqAAwE=",
+        "lastModified": 1786507911,
+        "narHash": "sha256-w5aZRLbiu7H6TqsYXVMdRKg0S4DRaJpxyqxx86AwxVk=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "3a646bd5daa3af78a78a1cb32329cb72d18fcae0",
+        "rev": "39db48099ad16834af7e27485a4babf9c28b3897",
         "type": "github"
       },
       "original": {
