@@ -3,10 +3,11 @@
 , fetchzip
 , sway
 , runtimeShell
+, coreutils
 , findutils
 , jq
 , gnugrep
-, nitrogen
+, setroot
 , xrandr
 }:
 
@@ -37,9 +38,9 @@ stdenvNoCC.mkDerivation {
     fi
 
     if [ -n "\$SWAYSOCK" ]; then
-      ${lib.getExe' sway "swaymsg"} output '*' background "\$(${lib.getExe findutils} "\$backgrounds"/"\$(${lib.getExe' sway "swaymsg"} -t get_outputs | ${lib.getExe jq} '.[0].current_mode.height')" -type f | shuf -n1)" fill
+      ${lib.getExe' sway "swaymsg"} output '*' background "\$(${lib.getExe findutils} "\$backgrounds"/"\$(${lib.getExe' sway "swaymsg"} -t get_outputs | ${lib.getExe jq} '.[0].current_mode.height')" -type f | ${lib.getExe' coreutils "shuf"} -n1)" fill
     else
-      ${lib.getExe nitrogen} --set-zoom-fill --random "\$backgrounds"/"\$(${lib.getExe' xrandr "xrandr"} --screen 0 | ${lib.getExe gnugrep} -o 'current [0-9]\+ x [0-9]\+' | cut -d' ' -f4)"
+      ${lib.getExe setroot} --zoom "\$(${lib.getExe findutils} "\$backgrounds"/"\$(${lib.getExe' xrandr "xrandr"} --screen 0 | ${lib.getExe gnugrep} -o 'current [0-9]\+ x [0-9]\+' | cut -d' ' -f4)" -type f | ${lib.getExe' coreutils "shuf"} -n1)"
     fi
     EOF
     chmod +x "$out/bin/setbg"
