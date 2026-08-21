@@ -45,7 +45,7 @@ in with outpkgs;
   google-10000-english = callPackage ./google-10000-english {};
   logmail = callPackage ./logmail {};
   mkusb = callPackage ./mkusb {
-    syslinux = if stdenv.isx86_64 then syslinux else pkgsCross.gnu64.syslinux;
+    syslinux = if stdenv.hostPlatform.isx86_64 then syslinux else pkgsCross.gnu64.syslinux;
   };
   mkwin = callPackage ./mkwin {};
   swaylock-fprintd = callPackage ./swaylock-fprintd {};
