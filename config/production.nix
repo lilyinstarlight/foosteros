@@ -14,7 +14,9 @@ lib.mkIf config.foosteros.profiles.production {
     lilypond
     godot_4
     (wrapOBS {
-      plugins = with obs-studio-plugins; [ wlrobs obs-gstreamer obs-move-transition obs-backgroundremoval ];
+      # TODO: re-add obs-move-transition once NixOS/nixpkgs#556032 is merged
+      #plugins = with obs-studio-plugins; [ obs-gstreamer obs-move-transition obs-backgroundremoval ];
+      plugins = with obs-studio-plugins; [ obs-gstreamer obs-backgroundremoval ];
     })
   ];
 
