@@ -26,7 +26,6 @@
   ./lsp.nix
   ./miracast.nix
   ./music.nix
-  ./neovim.nix
   ./networkd.nix
   ./networkmanager.nix
   ./nullmailer.nix
@@ -49,6 +48,7 @@
   ./tkey.nix
   ./tmux.nix
   ./udiskie.nix
+  ./vim.nix
   ./vps.nix
   ./workstation.nix
 ]

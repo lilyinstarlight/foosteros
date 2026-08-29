@@ -78,10 +78,6 @@
 
       music = lib.mkEnableOption "music profile";
 
-      neovim = lib.mkEnableOption "neovim profile" // {
-        default = true;
-      };
-
       networkd = lib.mkEnableOption "networkd profile" // {
         default = !config.foosteros.profiles.networkmanager;
         defaultText = lib.literalExpression "!config.foosteros.profiles.networkmanager";
@@ -133,6 +129,10 @@
       };
 
       udiskie = lib.mkEnableOption "udiskie profile";
+
+      vim = lib.mkEnableOption "vim profile" // {
+        default = true;
+      };
 
       vps = lib.mkEnableOption "vps profile";
 
