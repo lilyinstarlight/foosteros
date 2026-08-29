@@ -5,7 +5,39 @@ lib.mkIf config.foosteros.profiles.vim {
     enable = true;
     defaultEditor = true;
 
-    package = pkgs.vim-full.customize {
+    package = (pkgs.vimUtils.makeCustomizable (pkgs.vim-classic.overrideAttrs (old: {
+      nativeBuildInputs = (old.nativeBuildInputs or []) ++
+      # unfortunately cannot cross-compile with python3 or ruby since it gets paths from executables
+      (lib.optionals (pkgs.stdenv.hostPlatform == pkgs.stdenv.buildPlatform) [
+        pkgs.python3
+        pkgs.ruby
+      ]);
+
+      buildInputs = (old.buildInputs or []) ++ [
+        # clipboard support
+        pkgs.libx11
+        pkgs.libxt
+        # lua support
+        pkgs.lua
+      ];
+
+      configureFlags = (old.configureFlags or []) ++ [
+        # lua support
+        "--with-lua-prefix=${pkgs.lua}"
+        "--enable-luainterp"
+        # python3 support
+        "--enable-python3interp=yes"
+        "--with-python3-config-dir=${pkgs.python3}/lib"
+        "--disable-pythoninterp"
+        # ruby support
+        "--enable-rubyinterp"
+      ];
+
+      # vi symlink
+      postInstall = (old.postInstall or "") + ''
+        ln -s $out/bin/vim $out/bin/vi
+      '';
+    }))).customize {
       vimrcConfig = {
         customRC = ''
           " settings
