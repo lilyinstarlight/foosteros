@@ -45,9 +45,12 @@ lib.mkIf config.foosteros.profiles.vim {
           set autoindent
           set autoread
           set autowrite
+          set backspace=indent,eol,start
+          set backupdir=$HOME/.local/share/vim/backup//
           set clipboard=unnamedplus
           set cursorcolumn
           set cursorline
+          set directory=$HOME/.local/share/vim/swap//
           set display=lastline
           set encoding=utf-8
           set formatoptions+=n,j
@@ -58,20 +61,20 @@ lib.mkIf config.foosteros.profiles.vim {
           set laststatus=2
           set listchars=eol:$,tab:>-,space:.,trail:#,extends:>,precedes:<,conceal:*,nbsp:+
           set mouse=a
-          set nrformats=hex,alpha
           set nocompatible
           set nohlsearch
           set nojoinspaces
-          set noshowmode
           set noruler
+          set noshowmode
+          set nrformats=hex,alpha
           set number
           set printoptions=number:y,paper:letter
-          set showmatch
           set scrolloff=2
           set showcmd
+          set showmatch
           set smartcase
           set smarttab
-          set undodir=$HOME/.local/share/vim/undo
+          set undodir=$HOME/.local/share/vim/undo/
           set undofile
           set viminfo='20,<500,h
           set wildmenu
