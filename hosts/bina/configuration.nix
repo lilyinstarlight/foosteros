@@ -185,7 +185,7 @@
     };
   };
 
-  environment.systemPackages = with pkgs; [ handbrake mkvtoolnix prismlauncher subtitleedit ];
+  environment.systemPackages = with pkgs; [ handbrake mkvtoolnix prismlauncher subtitleeditor ];
 
   services.fwupd.extraRemotes = [ "lvfs-testing" ];
 
