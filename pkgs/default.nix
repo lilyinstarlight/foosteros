@@ -48,6 +48,7 @@ in with outpkgs;
     syslinux = if stdenv.hostPlatform.isx86_64 then syslinux else pkgsCross.gnu64.syslinux;
   };
   mkwin = callPackage ./mkwin {};
+  subtitleedit = callPackage ./subtitleedit {};
   swaylock-fprintd = callPackage ./swaylock-fprintd {};
   tkey-libs = callPackage ./tkey-libs {};
   tkey-devtools = callPackage ./tkey-devtools {};
