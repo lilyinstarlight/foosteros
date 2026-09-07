@@ -206,9 +206,7 @@ lib.mkIf config.foosteros.profiles.base {
 
   services.resolved.enable = lib.mkDefault true;
 
-  services.journald.extraConfig = lib.mkDefault ''
-    SystemMaxUse=256M
-  '';
+  services.journald.settings.Journal.SystemMaxUse = lib.mkDefault "256M";
 
   services.openssh.enable = true;
 
