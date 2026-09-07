@@ -49,7 +49,7 @@ in with outpkgs;
   };
   mkwin = callPackage ./mkwin {};
   rofi-pass = callPackage ./rofi-pass {};
-  rofi-pass-wayland = rofi-pass.override { backend = "wayland"; };
+  rofi-pass-wayland = callPackage ./rofi-pass { backend = "wayland"; };
   swaylock-fprintd = callPackage ./swaylock-fprintd {};
   tkey-libs = callPackage ./tkey-libs {};
   tkey-devtools = callPackage ./tkey-devtools {};
