@@ -40,6 +40,16 @@ lib.mkIf config.foosteros.profiles.vim {
     }))).customize {
       vimrcConfig = {
         customRC = ''
+          " necessary directories
+          for dir in ["backup", "swap", "undo"]
+            let path = expand("$HOME/.local/share/vim/" . dir)
+            if !isdirectory(path)
+              silent! execute "!mkdir -p " . shellescape(path)
+            endif
+            unlet path
+          endfor
+          unlet dir
+
           " settings
           set autochdir
           set autoindent
@@ -92,7 +102,7 @@ lib.mkIf config.foosteros.profiles.vim {
           " autocommands
           augroup vimrc
             autocmd!
-            autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+            autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g`\"" | endif
             autocmd BufNewFile,BufRead *.ly let b:commentary_format = '%%s' | compiler lilypond
             autocmd BufNewFile,BufRead *.tex let b:tex_flavor = 'pdflatexmk' | compiler tex
           augroup END
