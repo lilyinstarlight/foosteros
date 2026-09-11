@@ -81,7 +81,7 @@
   preservation.preserveAt = {
     ${config.system.devices.preservedState} = {
       directories = [
-        "/var/lib/tpm"
+        { directory = "/var/lib/tpm"; user = "tss"; group = "tss"; mode = "0700"; }
       ];
       users.lily = {
         directories = [
