@@ -100,11 +100,28 @@
     ACTION=="add", KERNEL=="tpm[0-9]*", TAG+="systemd"
   '';
 
-  boot.initrd.systemd = {
+  boot.initrd.systemd = let
+    tcsdConf = pkgs.writeText "tcsd.conf" ''
+      port = 30003
+      system_ps_file = /var/lib/tpm/system.data
+    '';
+  in {
     extraBin = {
-      tcsd = "${pkgs.trousers}/usr/bin/tcsd";
-      tpm_nvread = "${pkgs.tpm-tools}/usr/bin/tpm_nvread";
+      grep = lib.getExe' pkgs.busybox "grep";
+      ss = lib.getExe' pkgs.iproute2 "ss";
+      tcsd = lib.getExe' pkgs.trousers "tcsd";
+      tpm_nvread = lib.getExe' pkgs.tpm-tools "tpm_nvread";
     };
+
+    storePaths = [
+      pkgs.glibc.libgcc
+      tcsdConf
+    ];
+
+    contents."/etc/hosts".text = ''
+      127.0.0.1 localhost
+      ::1 localhost
+    '';
 
     services.unlock-with-tpm12-key = {
       description = "Unlock LUKS with TPM 1.2 key";
@@ -127,7 +144,7 @@
       script = ''
         touch /dev/shm/luks-key
         chmod a=,u=r /dev/shm/luks-key
-        (trap 'kill $!' EXIT; tcsd -f & sleep 0.1; tpm_nvread -i 2 -s 32 -f /dev/shm/luks-key)
+        (trap 'kill $!' EXIT; mkdir -p /var/lib/tpm; tcsd -f -c ${tcsdConf} & while ! ss -tln | grep -qF '[::1]:30003'; do kill -0 $! || exit 1; done; tpm_nvread -i 2 -s 32 -f /dev/shm/luks-key)
         systemd-cryptsetup attach ${config.boot.initrd.luks.devices.nixos.name} ${config.boot.initrd.luks.devices.nixos.device} /dev/shm/luks-key
         shred -fu /dev/shm/luks-key
       '';
