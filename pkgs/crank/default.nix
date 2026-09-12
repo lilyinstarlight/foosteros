@@ -13,13 +13,13 @@
 
 rustPlatform.buildRustPackage {
   pname = "crank";
-  version = "0.2.9-unstable-2025-09-15";
+  version = "0.2.9-unstable-2026-09-11";
 
   src = fetchFromGitHub {
     owner = "pd-rs";
     repo = "crank";
-    rev = "5162c28a04c7bf464376c32becf3b1d3aa8405ea";
-    hash = "sha256-6qDiRkm616FHtCjIQNbLkIFCOHeZIOjmNlpbxGN80uM=";
+    rev = "872bc45f4a3d00c40604d4cf81252a796672b62c";
+    hash = "sha256-wpGrw0PaZUBdK56cVotUucfxvE73N3rZR2zo0W0CvRU=";
   };
 
   cargoPatches = [
