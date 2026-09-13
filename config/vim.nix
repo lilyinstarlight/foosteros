@@ -41,14 +41,12 @@ lib.mkIf config.foosteros.profiles.vim {
       vimrcConfig = {
         customRC = ''
           " necessary directories
-          for dir in ["backup", "swap", "undo"]
-            let path = expand("$HOME/.local/share/vim/" . dir)
-            if !isdirectory(path)
-              silent! execute "!mkdir -p " . shellescape(path)
-            endif
-            unlet path
-          endfor
-          unlet dir
+          if exists("*mkdir")
+            for dir in ["backup", "spell", "swap", "undo"]
+              silent! call mkdir(expand("$HOME/.local/share/vim/" . dir), "p")
+            endfor
+            unlet dir
+          endif
 
           " settings
           set autochdir
@@ -57,7 +55,9 @@ lib.mkIf config.foosteros.profiles.vim {
           set autowrite
           set backspace=indent,eol,start
           set backupdir=$HOME/.local/share/vim/backup//
+          set belloff=all
           set clipboard=unnamedplus
+          set nocompatible
           set cursorcolumn
           set cursorline
           set directory=$HOME/.local/share/vim/swap//
@@ -65,29 +65,42 @@ lib.mkIf config.foosteros.profiles.vim {
           set encoding=utf-8
           set formatoptions+=n,j
           set hidden
-          set history=50
+          set history=1000
+          set nohlsearch
           set ignorecase
           set incsearch
+          set nojoinspaces
+          set nolangremap
           set laststatus=2
           set listchars=eol:$,tab:>-,space:.,trail:#,extends:>,precedes:<,conceal:*,nbsp:+
           set mouse=a
-          set nocompatible
-          set nohlsearch
-          set nojoinspaces
-          set noruler
-          set noshowmode
-          set nrformats=hex,alpha
+          set mousemodel=popup_setpos
+          set nrformats=bin,hex,alpha
           set number
           set printoptions=number:y,paper:letter
+          set noruler
           set scrolloff=2
           set showcmd
           set showmatch
+          set noshowmode
+          set sidescroll=1
           set smartcase
           set smarttab
+          set spellfile=$HOME/.local/share/vim/spell/en.utf-8.add
+          set nostartofline
+          set switchbuf=uselast
+          set tabpagemax=50
+          set ttimeout
+          set ttimeoutlen=50
           set undodir=$HOME/.local/share/vim/undo/
           set undofile
           set viminfo='20,<500,h
           set wildmenu
+
+          " term
+          if $TERM != "linux"
+            set ttyfast
+          endif
 
           " tabbing
           set tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
@@ -126,11 +139,17 @@ lib.mkIf config.foosteros.profiles.vim {
           vmap <leader>q :!qalc<cr>
           nmap <leader><cr> :make %<cr>
 
+          " man.vim
+          runtime! ftplugin/man.vim
+
           " matchit.vim
           runtime! macros/matchit.vim
 
           " netrw
           let g:netrw_list_hide='\(^\|\s\s\)\zs\.\S\+'
+
+          " vim-syntax
+          let g:vimsyn_embed = "lPr"
 
           " lightline.vim
           let g:lightline={'colorscheme': 'jellybeans'}
