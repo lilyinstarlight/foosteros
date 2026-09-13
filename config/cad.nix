@@ -2,7 +2,9 @@
 
 lib.mkIf config.foosteros.profiles.cad {
   environment.systemPackages = with pkgs; [
-    freecad prusa-slicer
+    # TODO: re-add freecad once NixOS/nixpkgs#562782 is fixed
+    #freecad prusa-slicer
+    prusa-slicer
     kicad-small
   ];
 
