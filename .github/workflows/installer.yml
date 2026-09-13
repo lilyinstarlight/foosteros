@@ -99,6 +99,20 @@ jobs:
 
           nix run nixpkgs#rclone -- copyto --sftp-host "$SFTP_HOST" --sftp-user "$SFTP_USER" --sftp-key-file "$sftp_key" --sftp-set-modtime=false --copy-links ./result :sftp:"$SFTP_PATH"/"$FILENAME"
 
+      - name: Remove partial upload
+        if: ${{ cancelled() && steps.build.conclusion == 'success' }}
+        env:
+          SFTP_HOST: ${{ secrets.SFTP_HOST }}
+          SFTP_USER: ${{ secrets.SFTP_USER }}
+          SFTP_KEY: ${{ secrets.REPO_KEY }}
+          SFTP_PATH: ${{ secrets.SFTP_PATH }}
+          FILENAME: ${{ steps.build.outputs.filename }}
+        run: |
+          sftp_key="$(mktemp)"
+          printenv SFTP_KEY >"$sftp_key"
+
+          nix run nixpkgs#rclone -- delete --sftp-host "$SFTP_HOST" --sftp-user "$SFTP_USER" --sftp-key-file "$sftp_key" :sftp:"$SFTP_PATH"/"$FILENAME"
+
   sync:
     name: 'Sync Deployment'
     needs: [populate, build]
