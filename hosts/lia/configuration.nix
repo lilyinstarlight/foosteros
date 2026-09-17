@@ -16,7 +16,7 @@
     azure = true;
     bluetooth = true;
     cosmic = true;
-    fcitx5 = true;
+    fcitx5 = false;  # TODO: investigate compositor input issues
     firewalld = true;
     fwupd = true;
     gc = true;

@@ -17,7 +17,7 @@
     bluetooth = true;
     builders = true;
     cad = true;
-    fcitx5 = true;
+    fcitx5 = false;  # TODO: investigate compositor input issues
     firewalld = true;
     fprint = true;
     fwupd = true;
