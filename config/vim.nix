@@ -151,6 +151,11 @@ lib.mkIf config.foosteros.profiles.vim {
           " vim-syntax
           let g:vimsyn_embed = "lPr"
 
+          " vim-fakeclip
+          if !empty($WAYLAND_DISPLAY)
+            let g:fakeclip_provide_clipboard_key_mappings = 1
+          endif
+
           " lightline.vim
           let g:lightline={'colorscheme': 'jellybeans'}
 
@@ -260,6 +265,7 @@ lib.mkIf config.foosteros.profiles.vim {
             vim-elixir
             vim-eunuch
             vim-expand-region
+            vim-fakeclip
             vim-fugitive
             vim-ledger
             vim-lsp
@@ -275,7 +281,6 @@ lib.mkIf config.foosteros.profiles.vim {
             vim-unimpaired
             vim-vinegar
             vim-visual-increment
-            vim-wayland-clipboard
             vimwiki
 
             hexmode
