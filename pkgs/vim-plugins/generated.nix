@@ -33,6 +33,19 @@ final: prev: {
     meta.hydraPlatforms = [ ];
   };
 
+  vim-fakeclip = buildVimPlugin {
+    pname = "vim-fakeclip";
+    version = "0.4.0";
+    src = fetchFromGitHub {
+      owner = "kana";
+      repo = "vim-fakeclip";
+      tag = "0.4.0";
+      hash = "sha256-CKQeuUb/MCCDWSKklmpImam8Aek/PvH29XDrw3aILss=";
+    };
+    meta.homepage = "https://github.com/kana/vim-fakeclip/";
+    meta.hydraPlatforms = [ ];
+  };
+
   vim-fish = buildVimPlugin {
     pname = "vim-fish";
     version = "0-unstable-2022-03-06";
