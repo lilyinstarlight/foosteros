@@ -118,7 +118,11 @@ lib.mkIf config.foosteros.profiles.sway {
       programs.rofi = {
         enable = true;
         package = pkgs.rofi;
-        terminal = "alacritty";
+        settings = {
+          modi = "drun,run";
+          terminal = "alacritty";
+          font = "monospace 12";
+        };
         theme = let
           inherit (config.lib.formats.rasi) mkLiteral;
         in {
@@ -271,10 +275,6 @@ lib.mkIf config.foosteros.profiles.sway {
             border = 0;
           };
         };
-        extraConfig = {
-          modi = "drun,run";
-        };
-        font = "monospace 12";
       };
 
       services.playerctld.enable = true;
