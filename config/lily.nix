@@ -9,13 +9,6 @@ lib.mkIf config.foosteros.profiles.lily {
   };
 
   home-manager.users.lily = { pkgs, ... }: {
-    programs.fish = {
-      enable = true;
-      interactiveShellInit = ''
-        fish_vi_key_bindings
-      '';
-    };
-
     programs.git = {
       enable = true;
       signing = {

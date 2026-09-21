@@ -27,6 +27,14 @@ lib.mkIf config.foosteros.profiles.fish {
     # TODO: maybe try nix-your-shell?
     interactiveShellInit = ''
       ${pkgs.any-nix-shell}/bin/any-nix-shell fish --info-right | source
+
+      if test $USER = "lily" -o (string sub -l 5 $USER) = "lily@"
+        fish_vi_key_bindings
+      end
+
+      if test (pwd) = (readlink -f $HOME)
+        cd $HOME
+      end
     '';
   };
 
