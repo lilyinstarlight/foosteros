@@ -78,7 +78,6 @@
       "mobile"
       "wired"
       "wired-admin"
-      "josie"
       "mallory"
       "cynthia"
       "carolina"
@@ -87,6 +86,7 @@
       "ember"
       "mel"
       "alex"
+      "coda"
     ]));
   };
 

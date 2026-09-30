@@ -72,9 +72,9 @@
       "mobile"
       "wired"
       "wired-admin"
-      "josie"
       "emma"
       "mel"
+      "coda"
     ]));
   };
 
