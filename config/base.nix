@@ -106,10 +106,10 @@ lib.mkIf config.foosteros.profiles.base {
       trusted-public-keys = [ "foosteros.cachix.org-1:rrDalTfOT1YohJXiMv8upgN+mFLKZp7eWW1+OGbPRww=" ];
       experimental-features = [ "nix-command" "flakes" "auto-allocate-uids" "cgroups" ];
       flake-registry = "${inputs.flake-registry}/flake-registry.json";
+      nix-path = [ "nixpkgs/nixos=/etc/nix/path/nixos-config" ] ++ map (name: "${name}=/etc/nix/path/${name}") (lib.attrNames inputs ++ [ "foosteros" "nixpkgs-overlays" ]);
     };
 
     registry = (lib.mapAttrs (name: value: { flake = value; }) (lib.filterAttrs (name: value: value ? outputs) inputs)) // { foosteros = { flake = self; }; };
-    nixPath = [ "nixpkgs/nixos=/etc/nix/path/nixos-config" ] ++ map (name: "${name}=/etc/nix/path/${name}") (lib.attrNames inputs ++ [ "foosteros" "nixpkgs-overlays" ]);
   };
 
   nixpkgs = {
