@@ -155,6 +155,32 @@ lib.mkIf config.foosteros.profiles.vim {
           if !empty($WAYLAND_DISPLAY)
             let g:fakeclip_provide_clipboard_key_mappings = 1
           endif
+          silent! nmap y  <Plug>(fakeclip-y)
+          silent! nmap Y  <Plug>(fakeclip-Y)
+          silent! nmap yy  <Plug>(fakeclip-Y)
+          silent! vmap y  <Plug>(fakeclip-y)
+          silent! vmap Y  <Plug>(fakeclip-Y)
+          silent! nmap p  <Plug>(fakeclip-p)
+          silent! nmap P  <Plug>(fakeclip-P)
+          silent! nmap gp  <Plug>(fakeclip-gp)
+          silent! nmap gP  <Plug>(fakeclip-gP)
+          silent! nmap ]p  <Plug>(fakeclip-]p)
+          silent! nmap ]P  <Plug>(fakeclip-]P)
+          silent! nmap [p  <Plug>(fakeclip-[p)
+          silent! nmap [P  <Plug>(fakeclip-[P)
+          silent! vmap p  <Plug>(fakeclip-p)
+          silent! vmap P  <Plug>(fakeclip-P)
+          silent! vmap gp  <Plug>(fakeclip-gp)
+          silent! vmap gP  <Plug>(fakeclip-gP)
+          silent! vmap ]p  <Plug>(fakeclip-]p)
+          silent! vmap ]P  <Plug>(fakeclip-]P)
+          silent! vmap [p  <Plug>(fakeclip-[p)
+          silent! vmap [P  <Plug>(fakeclip-[P)
+          silent! nmap d  <Plug>(fakeclip-d)
+          silent! vmap d  <Plug>(fakeclip-d)
+          silent! nmap dd  <Plug>(fakeclip-dd)
+          silent! nmap D  <Plug>(fakeclip-D)
+          silent! vmap D  <Plug>(fakeclip-D)
 
           " lightline.vim
           let g:lightline={'colorscheme': 'jellybeans'}
@@ -265,7 +291,6 @@ lib.mkIf config.foosteros.profiles.vim {
             vim-elixir
             vim-eunuch
             vim-expand-region
-            vim-fakeclip
             vim-fugitive
             vim-ledger
             vim-lsp
@@ -284,6 +309,7 @@ lib.mkIf config.foosteros.profiles.vim {
             vimwiki
 
             hexmode
+            vim-fakeclip
             vim-fish
             vim-interestingwords
             vim-jdaddy
