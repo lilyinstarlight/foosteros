@@ -153,6 +153,7 @@ lib.mkIf config.foosteros.profiles.vim {
 
           " vim-fakeclip
           if !empty($WAYLAND_DISPLAY)
+            set clipboard=
             let g:fakeclip_provide_clipboard_key_mappings = 1
           endif
           silent! nmap y  <Plug>(fakeclip-y)
