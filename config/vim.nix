@@ -121,7 +121,7 @@ lib.mkIf config.foosteros.profiles.vim {
           augroup END
 
           " vim
-          nnoremap Y y$
+          nmap Y y$
           nmap <leader>n :ene<cr>
           nmap <leader>d :%d<cr>
           nmap <leader><tab> :set list!<cr>
@@ -157,7 +157,6 @@ lib.mkIf config.foosteros.profiles.vim {
             let g:fakeclip_provide_clipboard_key_mappings = 1
           endif
           silent! nmap y  <Plug>(fakeclip-y)
-          silent! nmap Y  <Plug>(fakeclip-Y)
           silent! nmap yy  <Plug>(fakeclip-Y)
           silent! vmap y  <Plug>(fakeclip-y)
           silent! vmap Y  <Plug>(fakeclip-Y)
