@@ -112,6 +112,10 @@ lib.mkIf config.foosteros.profiles.base {
     registry = (lib.mapAttrs (name: value: { flake = value; }) (lib.filterAttrs (name: value: value ? outputs) inputs)) // { foosteros = { flake = self; }; };
   };
 
+  lix = {
+    enableRpc = true;
+  };
+
   nixpkgs = {
     config = {
       allowAliases = false;
