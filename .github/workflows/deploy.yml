@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: samueldr/more-space-action@v2025-01-24.pre
 
-      - uses: samueldr/lix-gha-installer-action@v2025-10-27
+      - uses: samueldr/lix-gha-installer-action@v2026-06-15
 
       - uses: cachix/cachix-action@v17
         with:

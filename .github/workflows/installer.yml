@@ -22,7 +22,7 @@ jobs:
       filenames: ${{ steps.identify.outputs.filenames }}
       start: ${{ steps.identify.outputs.start }}
     steps:
-      - uses: samueldr/lix-gha-installer-action@v2025-10-27
+      - uses: samueldr/lix-gha-installer-action@v2026-06-15
 
       - uses: cachix/cachix-action@v17
         with:
@@ -69,7 +69,7 @@ jobs:
           lvm-span-mountpoint: '/nix'
           lvm-span-free-space: '{"/": "10737418240"}'
 
-      - uses: samueldr/lix-gha-installer-action@v2025-10-27
+      - uses: samueldr/lix-gha-installer-action@v2026-06-15
 
       - uses: cachix/cachix-action@v17
         with:
@@ -118,7 +118,7 @@ jobs:
     needs: [populate, build]
     runs-on: ubuntu-latest
     steps:
-      - uses: samueldr/lix-gha-installer-action@v2025-10-27
+      - uses: samueldr/lix-gha-installer-action@v2026-06-15
 
       - uses: cachix/cachix-action@v17
         with:
