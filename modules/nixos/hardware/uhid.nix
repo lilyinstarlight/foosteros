@@ -25,7 +25,7 @@ in
         name = "50-uhid.rules";
         destination = "/lib/udev/rules.d/50-uhid.rules";
         text = ''
-          ACTION=="add", SUBSYSTEMS=="misc", KERNEL=="uhid"${lib.optionalString (cfg.group != null) '', MODE="0660", GROUP="${cfg.group}"''}, TAG+="uaccess"
+          SUBSYSTEMS=="misc", KERNEL=="uhid"${lib.optionalString (cfg.group != null) '', MODE="0660", GROUP="${cfg.group}"''}, TAG+="uaccess"
         '';
       })
     ];
