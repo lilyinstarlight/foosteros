@@ -18,12 +18,12 @@ lib.mkIf config.foosteros.profiles.vim {
         pkgs.libx11
         pkgs.libxt
         # lua support
-        pkgs.lua5_5_compat
+        pkgs.lua5_4_compat
       ];
 
       configureFlags = (old.configureFlags or []) ++ [
         # lua support
-        "--with-lua-prefix=${pkgs.lua5_5_compat}"
+        "--with-lua-prefix=${pkgs.lua5_4_compat}"
         "--enable-luainterp"
         # python3 support
         "--enable-python3interp=yes"
