@@ -168,7 +168,23 @@
       }
     },
     "lix": {
-      "flake": false,
+      "inputs": {
+        "flake-compat": [
+          "flake-compat"
+        ],
+        "flakey-profile": [
+          "flakey-profile"
+        ],
+        "nix2container": [],
+        "nix_2_18": [],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "nixpkgs-regression": [],
+        "pre-commit-hooks": [
+          "pre-commit-hooks"
+        ]
+      },
       "locked": {
         "lastModified": 1791898992,
         "narHash": "sha256-wfhwZfmJwchzCYDYrrLTNZioFffwWK/tHvlL2O5EF2w=",
@@ -181,35 +197,6 @@
       "original": {
         "type": "git",
         "url": "https://git.lix.systems/lix-project/lix"
-      }
-    },
-    "lix-module": {
-      "inputs": {
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "flakey-profile": [
-          "flakey-profile"
-        ],
-        "lix": [
-          "lix"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1791014283,
-        "narHash": "sha256-7KBL8PF28zweSpAAb62Dxo1oznqGUiXLu4807aAFw4s=",
-        "ref": "refs/heads/main",
-        "rev": "9311ca94aac0ff3378ab4eea887284d11de94158",
-        "revCount": 189,
-        "type": "git",
-        "url": "https://git.lix.systems/lix-project/nixos-module"
-      },
-      "original": {
-        "type": "git",
-        "url": "https://git.lix.systems/lix-project/nixos-module"
       }
     },
     "nix-alien": {
@@ -323,7 +310,6 @@
         "home-manager": "home-manager",
         "lanzaboote": "lanzaboote",
         "lix": "lix",
-        "lix-module": "lix-module",
         "nix-alien": "nix-alien",
         "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs",

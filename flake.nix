@@ -45,14 +45,12 @@
 
     lix = {
       url = "git+https://git.lix.systems/lix-project/lix";
-      flake = false;
-    };
-
-    lix-module = {
-      url = "git+https://git.lix.systems/lix-project/nixos-module";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.lix.follows = "lix";
-      inputs.flake-utils.follows = "flake-utils";
+      inputs.nixpkgs-regression.follows = "";
+      inputs.nix_2_18.follows = "";
+      inputs.pre-commit-hooks.follows = "pre-commit-hooks";
+      inputs.nix2container.follows = "";
+      inputs.flake-compat.follows = "flake-compat";
       inputs.flakey-profile.follows = "flakey-profile";
     };
 
