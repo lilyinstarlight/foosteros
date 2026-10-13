@@ -116,8 +116,8 @@ lib.mkIf config.foosteros.profiles.vim {
           augroup vimrc
             autocmd!
             autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g`\"" | endif
-            autocmd BufNewFile,BufRead *.ly let b:commentary_format = '%%s' | compiler lilypond
-            autocmd BufNewFile,BufRead *.tex let b:tex_flavor = 'pdflatexmk' | compiler tex
+            autocmd BufNewFile,BufRead *.ly let b:commentary_format='%%s' | compiler lilypond
+            autocmd BufNewFile,BufRead *.tex let b:tex_flavor='pdflatexmk' | compiler tex
           augroup END
 
           " vim
@@ -149,12 +149,12 @@ lib.mkIf config.foosteros.profiles.vim {
           let g:netrw_list_hide='\(^\|\s\s\)\zs\.\S\+'
 
           " vim-syntax
-          let g:vimsyn_embed = "lPr"
+          let g:vimsyn_embed='lPr'
 
           " vim-fakeclip
           if !empty($WAYLAND_DISPLAY)
             set clipboard=
-            let g:fakeclip_provide_clipboard_key_mappings = 1
+            let g:fakeclip_provide_clipboard_key_mappings=1
           endif
           silent! nmap y  <Plug>(fakeclip-y)
           silent! nmap yy  <Plug>(fakeclip-Y)
@@ -203,10 +203,10 @@ lib.mkIf config.foosteros.profiles.vim {
           let g:sonic_pi_run_args=['--cue-server', 'external']
 
           " vim-lsp
-          let g:lsp_diagnostics_echo_cursor = 1
-          let g:lsp_diagnostics_float_cursor = 1
-          let g:lsp_diagnostics_virtual_text_enabled = 0
-          let g:lsp_document_code_action_signs_enabled = 0
+          let g:lsp_diagnostics_echo_cursor=1
+          let g:lsp_diagnostics_float_cursor=1
+          let g:lsp_diagnostics_virtual_text_enabled=0
+          let g:lsp_document_code_action_signs_enabled=0
 
           if executable('bash-language-server')
             autocmd User lsp_setup call lsp#register_server({
