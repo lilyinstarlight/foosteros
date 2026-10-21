@@ -13,7 +13,6 @@
 
     adb = true;
     alien = true;
-    azure = true;
     bluetooth = true;
     builders = true;
     cad = true;

@@ -25,8 +25,6 @@
 
       alien = lib.mkEnableOption "alien profile";
 
-      azure = lib.mkEnableOption "azure profile";
-
       bluetooth = lib.mkEnableOption "bluetooth profile";
 
       builders = lib.mkEnableOption "builders profile";

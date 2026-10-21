@@ -1,7 +1,6 @@
 [
   ./adb.nix
   ./alien.nix
-  ./azure.nix
   ./base.nix
   ./bluetooth.nix
   ./builders.nix

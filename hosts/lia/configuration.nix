@@ -13,7 +13,6 @@
 
     adb = true;
     alien = true;
-    azure = true;
     bluetooth = true;
     cosmic = true;
     fcitx5 = false;  # TODO: investigate compositor input issues
