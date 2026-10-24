@@ -128,10 +128,6 @@
       output eDP-1 resolution 2256x1504 position 0,0 scale 1.5
 
       ### inputs
-      input type:keyboard {
-          xkb_options caps:escape
-      }
-
       input "1:1:AT_Translated_Set_2_keyboard" {
           xkb_layout us
       }

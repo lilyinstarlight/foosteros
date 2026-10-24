@@ -535,6 +535,11 @@ lib.mkIf config.foosteros.profiles.sway {
       focus_follows_mouse yes
       mouse_warping output
 
+      ### inputs
+      input type:keyboard {
+          xkb_options caps:escape
+      }
+
       ### desktop settings
       default_border normal 2
       default_floating_border normal 2
