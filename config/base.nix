@@ -78,8 +78,6 @@ lib.mkIf config.foosteros.profiles.base {
   boot.kernelParams = [ "quiet" ];
 
   boot.initrd.systemd = {
-    enable = true;
-
     contents = {
       "/etc/os-release".source = lib.mkOverride 75 initrdRelease;  # 50 is force prio and 100 is default prio
       "/etc/initrd-release".source = lib.mkOverride 75 initrdRelease;
