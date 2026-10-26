@@ -181,7 +181,9 @@
     };
   };
 
-  environment.systemPackages = with pkgs; [ handbrake mkvtoolnix prismlauncher subtitleeditor ];
+  # TODO: re-add handbrake once NixOS/nixpkgs#576407 reaches nixos-unstable
+  #environment.systemPackages = with pkgs; [ handbrake mkvtoolnix prismlauncher subtitleeditor ];
+  environment.systemPackages = with pkgs; [ mkvtoolnix prismlauncher subtitleeditor ];
 
   services.fwupd.extraRemotes = [ "lvfs-testing" ];
 
