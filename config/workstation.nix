@@ -7,7 +7,9 @@ lib.mkIf config.foosteros.profiles.workstation {
     # TODO: re-add once element-desktop overrides are fixed
     #(element-desktop.override { element-web = element-web.override { conf.show_labs_settings = true; }; }) signal-desktop webcord
     element-desktop signal-desktop webcord
-    ffmpeg-full (lib.hiPrio (mpv.override { mpv-unwrapped = mpv-unwrapped.override { ffmpeg = ffmpeg-full; }; }))
+    # TODO: re-add when ffmpeg-full is fixed
+    #ffmpeg-full (lib.hiPrio (mpv.override { mpv-unwrapped = mpv-unwrapped.override { ffmpeg = ffmpeg-full; }; }))
+    ffmpeg mpv
     fq ripgrep-all
     magic-wormhole-rs
     mkusb mkwin
