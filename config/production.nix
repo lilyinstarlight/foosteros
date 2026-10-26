@@ -2,9 +2,7 @@
 
 lib.mkIf config.foosteros.profiles.production {
   environment.systemPackages = with pkgs; [
-    # TODO: add lqr plugin when fixed for 3.x
-    #inkscape (gimp-with-plugins.override { plugins = with gimpPlugins; [ lqrPlugin gmic ]; }) krita
-    inkscape (gimp-with-plugins.override { plugins = with gimpPlugins; [ gmic ]; }) krita
+    inkscape (gimp-with-plugins.override { plugins = with gimpPlugins; [ gmic resynthesizer ]; }) krita
     # TODO: try pw-viz?
     qpwgraph qjackctl qsynth vmpk calf
     ardour lmms
@@ -14,9 +12,7 @@ lib.mkIf config.foosteros.profiles.production {
     lilypond
     godot_4
     (wrapOBS {
-      # TODO: re-add obs-move-transition once NixOS/nixpkgs#556032 is merged
-      #plugins = with obs-studio-plugins; [ obs-gstreamer obs-move-transition obs-backgroundremoval ];
-      plugins = with obs-studio-plugins; [ obs-gstreamer obs-backgroundremoval ];
+      plugins = with obs-studio-plugins; [ obs-gstreamer obs-move-transition obs-backgroundremoval ];
     })
   ];
 
