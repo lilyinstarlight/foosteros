@@ -5,7 +5,7 @@ lib.mkIf config.foosteros.profiles.networkd {
 
   systemd.network.wait-online.anyInterface = lib.mkDefault true;
 
-  systemd.network.networks = lib.mkIf config.networking.useNetworkd (lib.mkDefault {
+  systemd.network.networks = lib.mkIf (config.networking.useNetworkd && !config.foosteros.profiles.vps) {
     "80-wl" = {
       name = "wl*";
       DHCP = "yes";
@@ -37,5 +37,5 @@ lib.mkIf config.foosteros.profiles.networkd {
         IPv6PrivacyExtensions = "kernel";
       };
     };
-  });
+  };
 }
