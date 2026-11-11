@@ -3,6 +3,8 @@
 , runCommand
 , fetchFromGitHub
 , makeWrapper
+, pkg-config
+, zstd
 , cargo
 , gcc-arm-embedded
 , playdate-sdk
@@ -33,7 +35,8 @@ rustPlatform.buildRustPackage {
 
   cargoHash = "sha256-cq/4700JBIfoCZfDf+pfcU1VQYDwwBZ8DpXimWmPBP4=";
 
-  nativeBuildInputs = [ makeWrapper ];
+  nativeBuildInputs = [ makeWrapper pkg-config ];
+  buildInputs = [ zstd ];
 
   postInstall = let
     # TODO: find better way to override sysroot for rust src
