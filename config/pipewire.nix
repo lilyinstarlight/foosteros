@@ -8,7 +8,8 @@ lib.mkIf config.foosteros.profiles.pipewire {
     audio.enable = true;
     alsa.enable = true;
     pulse.enable = true;
-    jack.enable = true;
+    # TODO: consider manually doing this so JACK apps work from graphical launcher?
+    # jack.enable = true;
   };
 
   preservation.preserveAt = lib.mkIf (config.preservation.enable && (config.users.users.lily.enable or false)) {
