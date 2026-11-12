@@ -51,14 +51,6 @@ stdenv.mkDerivation (finalAttrs: {
       buildInputs = [ gtk3 gtk4 libnotify ] ++ lib.optionals enableGtk2 [ gtk2 ];
 
       postPatch = ''
-        substituteInPlace src/Makefile.am \
-          --replace-fail '/usr/include/gtk-4.0/unix-print' '${lib.getDev gtk4}/include/gtk-4.0/unix-print' \
-          --replace-fail '/usr/include/gtk-3.0/unix-print' '${lib.getDev gtk3}/include/gtk-3.0/unix-print'
-      '' + lib.optionalString enableGtk2 ''
-        substituteInPlace src/Makefile.am \
-          --replace-fail '/usr/include/gtk-unix-print-2.0' '${lib.getDev gtk2}/include/gtk-unix-print-2.0'
-      '' + ''
-
         touch NEWS AUTHORS README ChangeLog
         mv LICENSE COPYING
       '';
