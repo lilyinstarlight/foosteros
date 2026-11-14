@@ -181,9 +181,7 @@
     };
   };
 
-  # TODO: re-add handbrake once NixOS/nixpkgs#576407 reaches nixos-unstable
-  #environment.systemPackages = with pkgs; [ handbrake mkvtoolnix prismlauncher subtitleeditor ];
-  environment.systemPackages = with pkgs; [ mkvtoolnix prismlauncher subtitleeditor ];
+  environment.systemPackages = with pkgs; [ handbrake mkvtoolnix prismlauncher subtitleeditor ];
 
   # TODO: remove when NixOS/nixpkgs#584791 is reverted (qutebrowser is not currently accepting eMudhra certs with host config)
   nixpkgs.config.permittedInsecurePackages = [
