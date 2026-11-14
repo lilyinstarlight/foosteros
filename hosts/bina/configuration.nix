@@ -185,6 +185,39 @@
   #environment.systemPackages = with pkgs; [ handbrake mkvtoolnix prismlauncher subtitleeditor ];
   environment.systemPackages = with pkgs; [ mkvtoolnix prismlauncher subtitleeditor ];
 
+  # TODO: remove when NixOS/nixpkgs#584791 is reverted (qutebrowser is not currently accepting eMudhra certs with host config)
+  nixpkgs.config.permittedInsecurePackages = [
+    "qutebrowser-3.7.0"
+  ];
+  # TODO: remove when NixOS/nixpkgs#587672 reaches nixos-unstable
+  nixpkgs.overlays = [
+    (final: prev: let
+      qt6Packages = final.qt6Packages.overrideScope (finalqt: prevqt: {
+        qtwebengine = prevqt.qtwebengine.overrideAttrs {
+          version = "6.140.0";
+          src = final.fetchzip {
+            url = "https://download.qt.io/official_releases/qtwebengine/6.140/6.140.0/src/qtwebengine-everywhere-src-6.140.0.tar.xz";
+            hash = "sha256-t8n34Ica4VIfe026Ubk4hvdJvIPMWrm6eKMITd6evJs=";
+          };
+        };
+      });
+
+      python3 = final.python3.override {
+        packageOverrides = (finalpy: prevpy: {
+          pyqt6-webengine = prevpy.pyqt6-webengine.override {
+            inherit qt6Packages;
+          };
+        });
+        self = python3;
+      };
+    in {
+      qutebrowser = prev.qutebrowser.override {
+        inherit qt6Packages;
+        inherit python3;
+      };
+    })
+  ];
+
   services.fwupd.extraRemotes = [ "lvfs-testing" ];
 
   services.tlp.enable = true;
