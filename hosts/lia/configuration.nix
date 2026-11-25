@@ -33,6 +33,7 @@
     pass = true;
     pki = true;
     preservation = true;
+    printing = true;
     podman = true;
     secureboot = true;
     sops = true;
